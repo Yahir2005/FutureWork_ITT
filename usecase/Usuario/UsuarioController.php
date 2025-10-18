@@ -9,6 +9,16 @@ class UsuarioController{
         $usuarioUseCase = new UsuarioUseCase($gatewayDB);
         $response = $usuarioUseCase->InsertarUsuario($usuario);
         return $response;
-
     }
 }
+
+$controller =  new UsuarioController();
+
+$usuarioObj = new Usuario();
+
+$usuarioObj->set("idRol",2);
+$usuarioObj->set("nombreCompleto","Juarez Duran Luis Yahir");
+$usuarioObj->set("email","yahir@gmail.com");
+$usuarioObj->set("contraseñaHash","1223533");
+$response = $controller->InsertarUsuario($usuarioObj);
+echo $response->message;
