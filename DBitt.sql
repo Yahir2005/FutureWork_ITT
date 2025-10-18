@@ -6,7 +6,7 @@ CREATE TABLE Rol(
     idRol INT AUTO_INCREMENT PRIMARY KEY,
     nombreRol VARCHAR(50)
 );
-
+INSERT INTO Rol(nombreRol) VALUES ("Empresa"),("Postulante"),("Administrador");
 CREATE TABLE Carrera(
     idCarrera INT AUTO_INCREMENT PRIMARY KEY,
     nombreCarrera VARCHAR(100)
@@ -28,14 +28,15 @@ CREATE TABLE Usuarios (
 -- Almacena la información del perfil de un usuario con rol 'Egresado'.
 -- --------------------------------------------------------
 
-CREATE TABLE InformacionUsuario (
-    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE InformacionPostulante (
+    idUsuario INT PRIMARY KEY,
     idCarrera INT,
+    idRol INT,
     numeroControl VARCHAR(20) ,
-    idCarrera INT,
     cvPath VARCHAR(255) /*COMMENT 'Ruta al archivo PDF del CV'*/,
     telefono VARCHAR(20),
     ubicacion VARCHAR(255),
+    FOREIGN KEY (idRol) REFERENCES Rol(idRol),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario),
     FOREIGN KEY (idCarrera) REFERENCES Carrera(idCarrera)
 );
@@ -53,13 +54,15 @@ CREATE TABLE estadoValidacionEmpresa(
 INSERT INTO estadoValidacionEmpresa(estadoValidacionEmpresa) VALUES ("Pendiente"),("Validado"),("Rechazado");
 
 CREATE TABLE Empresas (
-    idUsuario INT PRIMARY KEY,
+    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
     idEstadoValidacionEmpresa INT,
+    idRol INT,
     nombreEmpresa VARCHAR(255) NOT NULL,
     sector VARCHAR(100),
     representante VARCHAR(255),
     descripcion TEXT,
     sitioWeb VARCHAR(255),
+    FOREIGN KEY (idRol) REFERENCES Rol(idRol),
     FOREIGN KEY (idEstadoValidacionEmpresa) REFERENCES estadoValidacionEmpresa(idEstadoValidacionEmpresa),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE
 );
@@ -76,15 +79,15 @@ CREATE TABLE Habilidades (
 );
 
 -- --------------------------------------------------------
--- TABLA 5: EGRESADO_HABILIDADES (Tabla Pivote)
--- Relaciona a los egresados con sus habilidades (relación muchos a muchos).
+-- TABLA 5: POSTULANTE_HABILIDADES (Tabla Pivote)
+-- Relaciona a los POSTULADO con sus habilidades (relación muchos a muchos).
 -- --------------------------------------------------------
 
-CREATE TABLE Egresado_Habilidades (
+CREATE TABLE Postulante_Habilidades (
     idUsuario INT NOT NULL,
     idHabilidad INT NOT NULL,
     PRIMARY KEY (idUsuario, idHabilidad),
-    FOREIGN KEY (idUsuario) REFERENCES Egresados(idUsuario) ON DELETE CASCADE,
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE,
     FOREIGN KEY (idHabilidad) REFERENCES Habilidades(idHabilidad) ON DELETE CASCADE
 );
 
@@ -101,7 +104,7 @@ CREATE TABLE Experiencia_Laboral (
     descripcion TEXT,
     fechaInicio DATE NOT NULL,
     fechaFin DATE,
-    FOREIGN KEY (idUsuario) REFERENCES Egresados(idUsuario) ON DELETE CASCADE
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE
 );
 
 -- --------------------------------------------------------
@@ -116,7 +119,7 @@ CREATE TABLE Certificaciones (
     organizacionEmisora VARCHAR(255) NOT NULL,
     fechaObtencion DATE,
     urlCredencial VARCHAR(255),
-    FOREIGN KEY (idUsuario) REFERENCES Egresados(idUsuario) ON DELETE CASCADE
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE
 );
 
 -- --------------------------------------------------------
@@ -126,7 +129,7 @@ CREATE TABLE Certificaciones (
 
 CREATE Table estadoValidacionVacante(
     idEstadoValidacionVacante int AUTO_INCREMENT PRIMARY KEY,
-    estadoValidacion VARCHAR(20) NOT NULL;
+    estadoValidacion VARCHAR(20) NOT NULL
 );
 INSERT INTO estadoValidacionVacante(estadoValidacion) VALUES ("Abierta"),("Cerrada"),("Pausada");
 
@@ -146,7 +149,6 @@ CREATE TABLE Vacantes (
     descripcion TEXT NOT NULL,
     requisitos TEXT,
     ubicacion VARCHAR(255) NOT NULL,
-    tipoContrato ENUM(Tiempo Completo, Medio Tiempo, Por Proyecto, Pasantía) NOT NULL,
     salario DECIMAL(10, 2),
     fechaPublicacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     fechaLimite DATE,
@@ -163,7 +165,7 @@ CREATE TABLE estadoPostulacion(
     idEstadoPostulacion INT AUTO_INCREMENT PRIMARY KEY,
     estado VARCHAR(20) NOT NULL
 );
-INSERT INTO estadoPostulacion(estado) VALUES ("Enviada"),("En Revision"),("Aceptada"),("Rechazada")
+INSERT INTO estadoPostulacion(estado) VALUES ("Enviada"),("En Revision"),("Aceptada"),("Rechazada");
 
 CREATE TABLE Postulaciones (
     idPostulacion INT AUTO_INCREMENT PRIMARY KEY,
