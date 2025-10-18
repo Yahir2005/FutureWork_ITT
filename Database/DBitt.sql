@@ -17,7 +17,7 @@ CREATE TABLE Usuarios (
     idRol INT,
     nombreCompleto VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    contraseñaHash VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL,
     fechaRegistro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idRol) REFERENCES Rol(idRol) 
 ); 
