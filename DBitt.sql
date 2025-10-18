@@ -40,23 +40,29 @@ CREATE TABLE InformacionUsuario (
     FOREIGN KEY (idCarrera) REFERENCES Carrera(idCarrera)
 );
 
-
 -- --------------------------------------------------------
 -- TABLA 3: EMPRESAS
 -- Almacena la información del perfil de un usuario con rol 'Empresa'.
 -- --------------------------------------------------------
 
-CREATE TABLE Empresas (
+CREATE TABLE estadoValidacionEmpresa(
+    idEstadoValidacionEmpresa INT AUTO_INCREMENT PRIMARY KEY,
+    estadoValidacionEmpresa VARCHAR(15) NOT NULL
+); 
 
+INSERT INTO estadoValidacionEmpresa(estadoValidacionEmpresa) VALUES ("Pendiente"),("Validado"),("Rechazado");
+
+CREATE TABLE Empresas (
     idUsuario INT PRIMARY KEY,
+    idEstadoValidacionEmpresa INT,
     nombreEmpresa VARCHAR(255) NOT NULL,
     sector VARCHAR(100),
     representante VARCHAR(255),
     descripcion TEXT,
     sitioWeb VARCHAR(255),
-    estadoValidacion ENUM(Pendiente, Validado, Rechazado) NOT NULL DEFAULT Pendiente,
+    FOREIGN KEY (idEstadoValidacionEmpresa) REFERENCES estadoValidacionEmpresa(idEstadoValidacionEmpresa),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE
-) 
+);
 
 
 -- --------------------------------------------------------
@@ -67,7 +73,7 @@ CREATE TABLE Empresas (
 CREATE TABLE Habilidades (
     idHabilidad INT AUTO_INCREMENT PRIMARY KEY,
     nombreHabilidad VARCHAR(100) NOT NULL UNIQUE
-) 
+);
 
 -- --------------------------------------------------------
 -- TABLA 5: EGRESADO_HABILIDADES (Tabla Pivote)
@@ -80,7 +86,7 @@ CREATE TABLE Egresado_Habilidades (
     PRIMARY KEY (idUsuario, idHabilidad),
     FOREIGN KEY (idUsuario) REFERENCES Egresados(idUsuario) ON DELETE CASCADE,
     FOREIGN KEY (idHabilidad) REFERENCES Habilidades(idHabilidad) ON DELETE CASCADE
-) 
+);
 
 -- --------------------------------------------------------
 -- TABLA 6: EXPERIENCIA_LABORAL
@@ -96,7 +102,7 @@ CREATE TABLE Experiencia_Laboral (
     fechaInicio DATE NOT NULL,
     fechaFin DATE,
     FOREIGN KEY (idUsuario) REFERENCES Egresados(idUsuario) ON DELETE CASCADE
-) 
+);
 
 -- --------------------------------------------------------
 -- TABLA 7: CERTIFICACIONES
@@ -111,16 +117,31 @@ CREATE TABLE Certificaciones (
     fechaObtencion DATE,
     urlCredencial VARCHAR(255),
     FOREIGN KEY (idUsuario) REFERENCES Egresados(idUsuario) ON DELETE CASCADE
-) 
+);
 
 -- --------------------------------------------------------
 -- TABLA 8: VACANTES
 -- Almacena la información de las ofertas de trabajo publicadas por las empresas.
 -- --------------------------------------------------------
 
+CREATE Table estadoValidacionVacante(
+    idEstadoValidacionVacante int AUTO_INCREMENT PRIMARY KEY,
+    estadoValidacion VARCHAR(20) NOT NULL;
+);
+INSERT INTO estadoValidacionVacante(estadoValidacion) VALUES ("Abierta"),("Cerrada"),("Pausada");
+
+CREATE TABLE tipoContrato(
+    idTipoContrato INT AUTO_INCREMENT PRIMARY KEY,
+    estadoContrato  VARCHAR(20) NOT NULL
+);
+
+INSERT INTO tipoContrato(estadoContrato) VALUES ("Tiempo Completo"),("Medio Tiempo"),("Por Proyecto"),("Pasantía");
+
 CREATE TABLE Vacantes (
     idVacante INT AUTO_INCREMENT PRIMARY KEY,
     idEmpresa INT NOT NULL COMMENT 'FK a la tabla Empresas (que usa idUsuario)',
+    idEstadoValidacionVacante INT,
+    idTipoContrato INT,
     titulo VARCHAR(255) NOT NULL,
     descripcion TEXT NOT NULL,
     requisitos TEXT,
@@ -129,25 +150,32 @@ CREATE TABLE Vacantes (
     salario DECIMAL(10, 2),
     fechaPublicacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     fechaLimite DATE,
-    estado ENUM(Abierta, Cerrada, Pausada) NOT NULL DEFAULT Abierta,
+    FOREIGN KEY (idTipoContrato) REFERENCES tipoContrato(idTipoContrato),
+    FOREIGN KEY (idEstadoValidacionVacante) REFERENCES estadoValidacionVacante(idEstadoValidacionVacante),
     FOREIGN KEY (idEmpresa) REFERENCES Empresas(idUsuario) ON DELETE CASCADE
-) 
+);
 
 -- --------------------------------------------------------
 -- TABLA 9: POSTULACIONES
 -- Tabla que registra la aplicación de un egresado a una vacante.
 -- --------------------------------------------------------
+CREATE TABLE estadoPostulacion(
+    idEstadoPostulacion INT AUTO_INCREMENT PRIMARY KEY,
+    estado VARCHAR(20) NOT NULL
+);
+INSERT INTO estadoPostulacion(estado) VALUES ("Enviada"),("En Revision"),("Aceptada"),("Rechazada")
 
 CREATE TABLE Postulaciones (
     idPostulacion INT AUTO_INCREMENT PRIMARY KEY,
     idVacante INT NOT NULL,
     idEgresado INT NOT NULL,
+    idEstadoPostulacion INT,
     fechaPostulacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    estado ENUM(Enviada, En Revisión, Aceptada, Rechazada) NOT NULL DEFAULT Enviada,
+    FOREIGN KEY (idEstadoPostulacion) REFERENCES estadoPostulacion(idEstadoPostulacion),
     FOREIGN KEY (idVacante) REFERENCES Vacantes(idVacante) ON DELETE CASCADE,
     FOREIGN KEY (idEgresado) REFERENCES Egresados(idUsuario) ON DELETE CASCADE,
     UNIQUE (idVacante, idEgresado) COMMENT 'Evita que un egresado postule dos veces a la misma vacante'
-) 
+); 
 
 -- --------------------------------------------------------
 -- TABLA 10: NOTIFICACIONES
@@ -162,6 +190,6 @@ CREATE TABLE Notificaciones (
     fechaEnvio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     leido BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (idUsuarioDestino) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE
-) 
+);
 
 
