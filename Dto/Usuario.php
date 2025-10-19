@@ -5,7 +5,7 @@ class Usuario{
     private $idRol;
     private $nombreCompleto;
     private $email;
-    private $contraseñaHash;
+    private $Password;
     private $fechaRegistro;
     
     public function __construct(){

@@ -16,9 +16,9 @@ $controller =  new UsuarioController();
 
 $usuarioObj = new Usuario();
 
-$usuarioObj->set("idRol",2);
+$usuarioObj->set("idRol",1);
 $usuarioObj->set("nombreCompleto","Juarez Duran Luis Yahir");
 $usuarioObj->set("email","yahir@gmail.com");
-$usuarioObj->set("contraseñaHash","1223533");
+$usuarioObj->set("Password","sfdfds");
 $response = $controller->InsertarUsuario($usuarioObj);
-echo $response->message;
+echo $response->message ;

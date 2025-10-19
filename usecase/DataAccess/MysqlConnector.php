@@ -7,7 +7,7 @@ class MysqlConnector {
 	private $con;
 
     public function __construct(){
-		$array_ini = parse_ini_file(__DIR__ ."/configDev.ini");
+		$array_ini = parse_ini_file(__DIR__ ."/config.ini");
 		$this->host = $array_ini["host"];
 		$this->username = $array_ini["username"];
 		$this->pass = $array_ini["pass"];
