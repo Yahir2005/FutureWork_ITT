@@ -1,6 +1,11 @@
 <?php
 
+
 ?>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet">
+<link href="../css/responsive.css" rel="stylesheet">
 <section id="empresas" class="py-32 bg-white">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div class="text-center mb-20">

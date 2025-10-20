@@ -1,6 +1,8 @@
 <?php
 
 ?>
+<link href="css/styles.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
 <section id="contacto" class="py-32 gradient-bg text-white">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div class="text-center mb-20">
