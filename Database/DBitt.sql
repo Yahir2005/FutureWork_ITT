@@ -1,12 +1,14 @@
 -- Usamos InnoDB como motor para soportar transacciones y claves foráneas.
 -- Usamos utf8mb4 para una compatibilidad completa con emojis y caracteres especiales.
 
+/*Nombre de la base de datos: Futurework_ITT*/
 
 CREATE TABLE Rol(   
     idRol INT AUTO_INCREMENT PRIMARY KEY,
     nombreRol VARCHAR(50)
 );
 INSERT INTO Rol(nombreRol) VALUES ("Empresa"),("Postulante"),("Administrador");
+
 CREATE TABLE Carrera(
     idCarrera INT AUTO_INCREMENT PRIMARY KEY,
     nombreCarrera VARCHAR(100)
@@ -165,7 +167,7 @@ CREATE TABLE estadoPostulacion(
     idEstadoPostulacion INT AUTO_INCREMENT PRIMARY KEY,
     estado VARCHAR(20) NOT NULL
 );
-INSERT INTO estadoPostulacion(estado) VALUES ("Enviada"),("En Revision"),("Aceptada"),("Rechazada");
+INSERT INTO estadoPostulacion(estado) VALUES ("Enviada"),("Pendiente"),("Aceptada"),("Rechazada");
 
 CREATE TABLE Postulaciones (
     idPostulacion INT AUTO_INCREMENT PRIMARY KEY,
@@ -183,15 +185,3 @@ CREATE TABLE Postulaciones (
 -- TABLA 10: NOTIFICACIONES
 -- Almacena notificaciones para los usuarios.
 -- --------------------------------------------------------
-
-CREATE TABLE Notificaciones (
-    idNotificacion INT AUTO_INCREMENT PRIMARY KEY,
-    idUsuarioDestino INT NOT NULL,
-    mensaje TEXT NOT NULL,
-    tipo VARCHAR(50) COMMENT 'Ej: NuevaPostulacion, CambioEstado, MensajeAdmin',
-    fechaEnvio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    leido BOOLEAN NOT NULL DEFAULT FALSE,
-    FOREIGN KEY (idUsuarioDestino) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE
-);
-
-
