@@ -1,4 +1,4 @@
 <?php
 interface IPostulacionGateway{
-    public function InsertarPostulacion(IPostulacion $postulacion):int;
+    public function InsertarPostulacion(Postulaciones $postulacion):int;
 }
