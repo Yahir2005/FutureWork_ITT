@@ -11,7 +11,7 @@ class UsuarioController{
         return $response;
     }
 }
-
+/*
 $controller =  new UsuarioController();
 
 $usuarioObj = new Usuario();
@@ -22,3 +22,4 @@ $usuarioObj->set("email","yahir@gmail.com");
 $usuarioObj->set("Password","sfdfds");
 $response = $controller->InsertarUsuario($usuarioObj);
 echo $response->message ;
+*/
