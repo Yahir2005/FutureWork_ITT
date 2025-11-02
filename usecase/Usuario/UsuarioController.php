@@ -10,16 +10,27 @@ class UsuarioController{
         $response = $usuarioUseCase->InsertarUsuario($usuario);
         return $response;
     }
+
+    public function ListarUsuarios(): RespuestaGenerica {
+        $gatewayDB = new UsuarioGatewey();
+        $usuarioUseCase = new UsuarioUseCase($gatewayDB);
+        $response = $usuarioUseCase->ListarUsuarios();
+        return $response;
+    }
 }
 /*
 $controller =  new UsuarioController();
-
 $usuarioObj = new Usuario();
-
 $usuarioObj->set("Rol_idRol",1);
 $usuarioObj->set("nombreCompleto","Juarez Duran luis Yahir");
 $usuarioObj->set("email","yahir@gmail.com");
 $usuarioObj->set("Password","sfdfds");
 $response = $controller->InsertarUsuario($usuarioObj);
+echo $response->message ;
+*/
+
+/*
+$controller =  new UsuarioController();
+$response = $controller->ListarUsuarios();
 echo $response->message ;
 */
