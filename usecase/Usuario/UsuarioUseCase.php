@@ -26,4 +26,19 @@ class UsuarioUseCase {
         return $response;
     }
 
+    public function ListarUsuarios(): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        try {
+            $usuarios = $this->gatewayDB->ListarUsuarios();
+            $response->status = "ok";
+            $response->body = $usuarios;
+            $response->message = "Usuarios listados correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->body = [];
+            $response->message = "Error al listar usuarios: " . $e->getMessage();
+        }
+        return $response;
+    }
+
 }
