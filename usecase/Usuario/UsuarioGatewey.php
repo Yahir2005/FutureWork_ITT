@@ -5,7 +5,7 @@ require_once __DIR__ .'/IUsuarioGateway.php';
 class UsuarioGatewey implements IUsuarioGateway{
     public function InsertarUsuario(Usuario $usuario): int{
         $idInsertado=0;
-        $sqlQuery = "INSERT INTO Usuarios(idRol,nombreCompleto,email,Password) VALUES('{$usuario->get('idRol')}',
+        $sqlQuery = "INSERT INTO Usuarios(Rol_idRol,nombreCompleto,email,Password) VALUES('{$usuario->get('Rol_idRol')}',
         '{$usuario->get('nombreCompleto')}',
         '{$usuario->get('email')}',
         '{$usuario->get('Password')}')";
