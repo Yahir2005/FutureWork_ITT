@@ -18,4 +18,12 @@ class UsuarioGatewey implements IUsuarioGateway{
         }
         return $idInsertado;
     }
+
+    public function ListarUsuarios(): array
+    {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Usuarios";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }
