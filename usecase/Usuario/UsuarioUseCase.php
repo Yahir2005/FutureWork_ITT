@@ -1,7 +1,7 @@
 <?php
  require_once __DIR__ .'/IUsuarioGateway.php';
  require_once __DIR__ .'/../../Dto/RespuestaGenerica.php';
-class UsuarioUseCase{
+class UsuarioUseCase { 
     private $gatewayDB;
     public function __construct(IUsuarioGateway $gatewayDB){
         $this->gatewayDB = $gatewayDB;
