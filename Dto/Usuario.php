@@ -2,7 +2,7 @@
 
 class Usuario{
     private $idUsuario;
-    private $idRol;
+    private $Rol_idRol;
     private $nombreCompleto;
     private $email;
     private $Password;
