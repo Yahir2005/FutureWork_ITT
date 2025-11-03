@@ -26,4 +26,20 @@ class UsuarioGatewey implements IUsuarioGateway{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function ActualizarUsuarios($id, $usuario): bool{
+        $sqlQuery = "UPDATE Usuarios SET 
+        Rol_idRol='{$usuario->get('Rol_idRol')}',
+        nombreCompleto='{$usuario->get('nombreCompleto')}',
+        email='{$usuario->get('email')}',
+        Password='{$usuario->get('Password')}'
+        WHERE idUsuario={$id}";
+        $mysqlObj = new MysqlConnector();
+        try {
+            $mysqlObj->consultaSimple($sqlQuery);
+            return true;
+        } catch (Exception $e) {
+            throw new Exception("Error al actualizar usuario");
+        }
+    }
 }
