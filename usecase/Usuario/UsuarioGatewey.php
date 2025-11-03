@@ -33,7 +33,7 @@ class UsuarioGatewey implements IUsuarioGateway{
         nombreCompleto='{$usuario->get('nombreCompleto')}',
         email='{$usuario->get('email')}',
         Password='{$usuario->get('Password')}'
-        WHERE idUsuario={$id}";
+        WHERE idUsuarios={$id}";
         $mysqlObj = new MysqlConnector();
         try {
             $mysqlObj->consultaSimple($sqlQuery);
