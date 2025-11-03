@@ -41,4 +41,22 @@ class UsuarioUseCase {
         return $response;
     }
 
+    public function ActualizarUsuarios($id, $usuario):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        try {
+            $respuestaMetodo = $this->gatewayDB->ActualizarUsuarios($id, $usuario);
+            if($respuestaMetodo){
+                $response->status ="ok";
+                $response->body=$respuestaMetodo;
+                $response->message="Actualización Exitosa";
+            }else{
+                $response->status="error";
+                $response->body=false;
+                $response->message="Error al actualizar";
+            }
+        } catch (Exception $e) {
+            $response->message = $e->getMessage();
+        }
+        return $response;
+    }
 }
