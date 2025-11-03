@@ -42,4 +42,14 @@ class UsuarioGatewey implements IUsuarioGateway{
             throw new Exception("Error al actualizar usuario");
         }
     }
+    public function DeleteUsuario($id):bool{
+        $sqlQuery = "DELETE FROM Usuarios WHERE idUsuarios={$id}";
+        $mysqlObj = new MysqlConnector();
+        try {
+            $mysqlObj->consultaSimple($sqlQuery);
+            return true;
+        } catch (Exception $e) {
+            throw new Exception("Error al eliminar usuario");
+        }
+    }
 }

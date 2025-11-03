@@ -59,4 +59,24 @@ class UsuarioUseCase {
         }
         return $response;
     }
+
+    public function DeleteUsuario($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        try {
+            $respuestaMetodo = $this->gatewayDB->DeleteUsuario($id);
+            if($respuestaMetodo){
+                $response->status ="ok";
+                $response->body=$respuestaMetodo;
+                $response->message="Eliminación Exitosa";
+            }else{
+                $response->status="error";
+                $response->body=false;
+                $response->message="Error al eliminar";
+            }
+        } catch (Exception $e) {
+            $response->message = $e->getMessage();
+        }
+        return $response;
+    }
+    
 }
