@@ -1,0 +1,13 @@
+
+Tablas Lookup_Tables
+carrera
+EstadoValidacionEmpresa
+TipoContrato
+EstadoPostulacion
+
+itzel hacer tabla
+
+jose luis hacer tabla
+
+karol hacer tabla 
+
