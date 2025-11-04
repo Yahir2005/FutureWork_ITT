@@ -59,6 +59,36 @@ CREATE TABLE Empresas(
     FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios(idUsuarios)
 );
 
+-- TABLA : Imagenes de Empresa
+CREATE TABLE ImagenPerfilEmpresa(
+    idImagenEmpresa INT AUTO_INCREMENT PRIMARY KEY,
+    Empresas_idEmpresas INT NOT NULL,
+    urlImagenPerfilEmpresa VARCHAR(255),
+    FOREIGN KEY (Empresas_idEmpresas) REFERENCES Empresas(idEmpresas)
+);
+
+CREATE TABLE ImagenesEmpresa(
+    idImagenEmpresa INT AUTO_INCREMENT PRIMARY KEY,
+    Empresas_idEmpresas INT NOT NULL,
+    urlImagen VARCHAR(255),
+    FOREIGN KEY (Empresas_idEmpresas) REFERENCES Empresas(idEmpresas)
+);
+
+-- TABLA : Imagenes de Postulante
+CREATE TABLE ImagenesPerfilPostulante(
+    idImagenPostulante INT AUTO_INCREMENT PRIMARY KEY,
+    Postulante_idPostulante INT NOT NULL,
+    urlImagenPerfilPostulante VARCHAR(255),
+    FOREIGN KEY (Postulante_idPostulante) REFERENCES Postulante(idPostulante)
+);
+
+CREATE TABLE ImagenesPostulante(
+    idImagenPostulante INT AUTO_INCREMENT PRIMARY KEY,
+    Postulante_idPostulante INT NOT NULL,
+    urlImagen VARCHAR(255),
+    FOREIGN KEY (Postulante_idPostulante) REFERENCES Postulante(idPostulante)
+);
+
 -- TABLA : Certificaciones y Habilidades
 CREATE TABLE Certificaciones(
     idCertificacion INT AUTO_INCREMENT PRIMARY KEY,
