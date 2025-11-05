@@ -22,6 +22,20 @@ class EstadoValidacionEmpresaUseCase{
         }
         return $response;
     }
+
+    public function ListarValidacionesEmpresaId($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $responseMetodo = $this->gatewayDb->ListarValidacionesEmpresaId($id);
+        try {
+            $response ->status = "OK";
+            $response  ->body = $responseMetodo;
+            $response ->message = "Validaciones estado Empresa por id obtenidas correctamente";
+        } catch (Exception $e) {
+            $response ->status = "ERROR";
+            $response ->message = "Error al obtener las validaciones estado Empresa por id:" . $e->getMessage();
+        }
+        return $response;
+    }
 }
 
 /**
