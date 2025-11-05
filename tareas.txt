@@ -1,13 +1,12 @@
 
 Tablas Lookup_Tables
 carrera
-EstadoValidacionEmpresa
 TipoContrato
 EstadoPostulacion
 
-itzel hacer tabla
+itzel hacer tabla carrera 
 
-jose luis hacer tabla
+jose luis hacer tabla EstadoPostulacion
 
-karol hacer tabla 
+karol hacer tabla  TipoContrato 
 
