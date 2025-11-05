@@ -17,7 +17,17 @@ class EstadoValidacionEmpresaUseCase{
             $response  ->body = $responseMetodo;
             $response ->message = "Validaciones estado Empresa obtenidas correctamente";
         } catch (Exception $e) {
-            $reponse ->status = "ERROR";
+            $response ->status = "ERROR";
+            $response ->message = "Error al obtener las validaciones estado Empresa:" . $e->getMessage();
         }
+        return $response;
     }
 }
+
+/**
+ * comandos git hub
+ * * git add .  // cargar archivos 
+ * * git commit -m "mensaje" // mensaje de los cambios o commit
+ * * git push origin main // subir los cambios a github
+ * 
+ */
