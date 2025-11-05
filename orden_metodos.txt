@@ -1,0 +1,5 @@
+1.- crear primero DTO
+2.- Crear interfaz
+3.- Crear UseCase
+4 .-Crear Gatawey
+5.- Crear Controller
