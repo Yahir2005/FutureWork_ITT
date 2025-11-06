@@ -1,8 +1,6 @@
-
-Tablas Lookup_Tables
-carrera
-TipoContrato
-EstadoPostulacion
+Actividades por realizar
+tiempo 1 semana si no hay clases
+Si tenemos clases 2 semanas 
 
 itzel 
 hacer tabla carrera 
@@ -41,12 +39,14 @@ Actualizar
 karol 
 hacer tabla  TipoContrato 
 ListarPorId
+
 Hacer tabla Certificaciones
 Insertar
 Eliminar
 Listar
 Actualizar
 
+tipoModalidad va en Lookup_Tables
 Hacer tabla tipoModalidad
 Listar
 ListarPorId
@@ -62,7 +62,7 @@ Listar
 ListarPorNombre
 Hacer router
 
-hacer tabla ImagenesEmpresa y ImagenesPostulante
+hacer tablas ImagenesEmpresa y ImagenesPostulante son 4 tablas en total
 Insertar
 Listar
 Eliminar
