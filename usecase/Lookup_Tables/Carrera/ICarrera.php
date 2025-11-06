@@ -1,5 +1,5 @@
 <?php
 interface ICarrera{
-    public function listarCarrera ();
+    public function listarCarrera ():array;
     
 }

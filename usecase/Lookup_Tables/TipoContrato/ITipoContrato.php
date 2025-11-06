@@ -1,5 +1,5 @@
 <?php
 interface ITipoContrato{
 
-  public function listarTipoContrato();
+  public function listarTipoContrato():array;
 }

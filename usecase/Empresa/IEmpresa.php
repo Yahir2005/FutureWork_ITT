@@ -1,4 +1,4 @@
 <?php
 interface IEmpresa {
-    public function listarEmpresas();
+    public function listarEmpresas():array;
 }
