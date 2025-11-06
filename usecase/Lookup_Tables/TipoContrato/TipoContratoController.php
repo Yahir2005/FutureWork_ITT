@@ -8,5 +8,8 @@ class TipoContratoController{
         $UseCase = new TipoContratoUseCase($gatewayDB);
         return $UseCase->listarTipoContrato();
     }
-
 }
+
+$controller = new TipoContratoController();
+$response = $controller ->listarTipoContrato();
+echo $response->message;
