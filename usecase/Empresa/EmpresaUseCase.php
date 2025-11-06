@@ -20,4 +20,18 @@ class EmpresaUseCase{
         }
         return $response;
     }
+
+    public function insertarEmpresas(Empresa $empresa): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->insertarEmpresas($empresa);
+        try {
+            $response->status = "Ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Empresa insertada correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al insertar la empresa: " . $e->getMessage();
+        }
+        return $response;
+    }
 } 
