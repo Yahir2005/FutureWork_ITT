@@ -1,24 +1,25 @@
 <?php
-require_once __DIR__ ."/../../../RespuestaGenerica.php";
+require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
 class CarreraUseCase{
  private $gatewayDb;
 
 public function __construct(ICarrera $gatewayDb) {
-    $this-> gatwayDb = $gatewayDb;
+    $this->gatewayDb = $gatewayDb;
   }
 
-  public function listarCarrera (): RespuesaGenerica{
-    $response =new RespuestaGenerica()
-    $respuestaMetodo=$this->gatwayDb->listarCarrera();
+  public function listarCarrera (): RespuestaGenerica{
+    $response =new RespuestaGenerica();
+    $respuestaMetodo=$this->gatewayDb->listarCarrera();
     try {
-        $respense-> status ="OK";
-        $respense-> body =$respuestaMetodo;
-        $respense-> mesage="Empresas obtenidas correctamente";
+        $response-> status ="OK";
+        $response-> body =$respuestaMetodo;
+        $response-> message="Empresas obtenidas correctamente";
 
     } catch (Exception $e) {
-        $respense->status ="Error";
-        $respense->message="Error al obtener a las empresas: " .$e->getmessage();
+        $response->status ="Error";
+        $response->message="Error al obtener a las empresas: " .$e->getMessage();
     }
-    return $respense;
+    return $response;
   }
+  
 }
