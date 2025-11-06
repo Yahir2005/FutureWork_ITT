@@ -10,5 +10,5 @@ class CarreraController{
     }
     }
 $controller=new CarreraController();
-$$response =$contrroller ->listarCarrera();
+$response =$controller ->listarCarrera();
 echo $response-> message;
