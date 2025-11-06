@@ -30,4 +30,19 @@ class EmpresaGateway implements IEmpresa{
         $result = $mysqlConnector->consultaSimple($query);
         return $result;
     }
+
+    public function actualizarEmpresas($id, $empresa):int{
+        $mysqlConnector = new MysqlConnector();
+        $query = "UPDATE Empresas SET 
+        Usuarios_idUsuarios = '{$empresa->get('Usuarios_idUsuarios')}',
+        EstadoValidacionEmpresa_idEstadoValidacionEmpresa = '{$empresa->get('EstadoValidacionEmpresa_idEstadoValidacionEmpresa')}',
+        nombreEmpresa = '{$empresa->get('nombreEmpresa')}',
+        sector = '{$empresa->get('sector')}',
+        representante = '{$empresa->get('representante')}',
+        descripcion = '{$empresa->get('descripcion')}',
+        sitioWeb = '{$empresa->get('sitioWeb')}' 
+        WHERE idEmpresas = {$id}";
+        $result = $mysqlConnector->consultaSimple($query);
+        return $result;
+    }
 }

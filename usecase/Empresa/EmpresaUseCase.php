@@ -34,4 +34,18 @@ class EmpresaUseCase{
         }
         return $response;
     }
+
+    public function actualizarEmpresas($id, $empresa): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->actualizarEmpresas($id, $empresa);
+        try {
+            $response->status = "Ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Empresa actualizada correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al actualizar la empresa: " . $e->getMessage();
+        }
+        return $response;
+    }
 } 

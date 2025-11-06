@@ -4,18 +4,35 @@ carrera
 TipoContrato
 EstadoPostulacion
 
-itzel hacer tabla carrera 
+itzel 
+hacer tabla carrera 
+ListarPorId
+hacer tabla Postulantes 
+ListarPorNombre
+Listar
+Insertar
+Actualizar 
+Eliminar
 
+jose luis 
+hacer tabla EstadoPostulacion
 Listar
 ListarPorId
-
-jose luis hacer tabla EstadoPostulacion
-
+Hacer tabla Habilidades
+Insertar
+Eliminar
 Listar
+Actualizar
+
+karol 
+hacer tabla  TipoContrato 
 ListarPorId
-
-karol hacer tabla  TipoContrato 
-
+Hacer tabla Certificaciones
+Insertar
+Eliminar
 Listar
-ListarPorId
+Actualizar
+
+Walker hacer frotend 
+
 
