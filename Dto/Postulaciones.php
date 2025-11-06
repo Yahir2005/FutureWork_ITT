@@ -1,10 +1,10 @@
 <?php
 class Postulaciones{
     private $idPostulacion;
-    private $fechaPostulacion;
-    private $Postulante_idInformacionPostulante;
+    private $Postulante_idPostulante;
     private $Vacantes_idVacante;
     private $EstadoPostulacion_idEstadoPostulacion;
+    private $fechaPostulacion;
     
     public function __construct(){
         
