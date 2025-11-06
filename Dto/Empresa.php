@@ -1,6 +1,8 @@
 <?php
 class Empresa{
-    private $idEmpresa;
+    private $idEmpresas;
+    private $Usuarios_idUsuarios;
+    private $EstadoValidacionEmpresa_idEstadoValidacionEmpresa;
     private $nombreEmpresa;
     private $sector;
     private $representante;

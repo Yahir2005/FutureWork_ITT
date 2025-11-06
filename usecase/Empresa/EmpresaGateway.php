@@ -13,14 +13,13 @@ class EmpresaGateway implements IEmpresa{
 
     public function insertarEmpresas(Empresa $empresa):int{
         $mysqlConnector = new MysqlConnector();
-        $sqlQuery = "INSERT INTO Empresas (Nombre, Usuarios_idUsuarios,
+        $query = "INSERT INTO Empresas (Usuarios_idUsuarios,
         EstadoValidacionEmpresa_idEstadoValidacionEmpresa,
         nombreEmpresa,
         sector,
         representante, 
         descripcion, 
-        sitioWeb) VALUES ('{$empresa->get('Nombre')}',
-        '{$empresa->get('Usuarios_idUsuarios')}',
+        sitioWeb) VALUES ('{$empresa->get('Usuarios_idUsuarios')}',
         '{$empresa->get('EstadoValidacionEmpresa_idEstadoValidacionEmpresa')}',
         '{$empresa->get('nombreEmpresa')}',
         '{$empresa->get('sector')}',
@@ -28,7 +27,7 @@ class EmpresaGateway implements IEmpresa{
         '{$empresa->get('descripcion')}',
         '{$empresa->get('sitioWeb')}')";
         $mysqlConnector = new MysqlConnector();
-        $result = $mysqlConnector->consultaSimple($sqlQuery);
+        $result = $mysqlConnector->consultaSimple($query);
         return $result;
     }
 }
