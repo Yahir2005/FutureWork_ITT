@@ -20,6 +20,12 @@ class EmpresaController{
         $useCase = new EmpresaUseCase($gateway);
         return $useCase->actualizarEmpresas($id, $empresa);
     }
+
+    public function eliminarEmpresas($id):RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->eliminarEmpresas($id);
+    }
 }
 /*
 $controller = new EmpresaController();
@@ -39,7 +45,7 @@ $empresa->set("sitioWeb","Travelnet.com.mx");
 $response = $controller->insertarEmpresas($empresa);
 echo $response->message;
 */
-
+/*
 $controller = new EmpresaController();
 $empresa = new Empresa();
 $empresa->set("Usuarios_idUsuarios",2);
@@ -51,3 +57,8 @@ $empresa->set("descripcion","Instalaciones de internet Actualizado");
 $empresa->set("sitioWeb","Travelnet.com.mx Actualizado");
 $response = $controller->actualizarEmpresas(1, $empresa);
 echo $response->message;
+*/
+/*
+$controller = new EmpresaController();
+$response = $controller->eliminarEmpresas(2);
+echo $response->message;*/

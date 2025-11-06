@@ -45,4 +45,11 @@ class EmpresaGateway implements IEmpresa{
         $result = $mysqlConnector->consultaSimple($query);
         return $result;
     }
+
+    public function eliminarEmpresas($id):int{
+        $mysqlConnector = new MysqlConnector();
+        $query = "DELETE FROM Empresas WHERE idEmpresas = {$id}";
+        $result = $mysqlConnector->consultaSimple($query);
+        return $result;
+    }
 }

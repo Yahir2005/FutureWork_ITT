@@ -5,4 +5,6 @@ interface IEmpresa {
     public function insertarEmpresas(Empresa $empresa):int;
 
     public function actualizarEmpresas($id, $empresa):int;
+
+    public function eliminarEmpresas($id):int;
 }

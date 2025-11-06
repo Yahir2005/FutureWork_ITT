@@ -48,4 +48,18 @@ class EmpresaUseCase{
         }
         return $response;
     }
+
+    public function eliminarEmpresas($id): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        try {
+            $respuestaMetodo = $this->gatewayDb->eliminarEmpresas($id);
+            $response->status = "Ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Empresa eliminada correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al eliminar la empresa: " . $e->getMessage();
+        }
+        return $response;
+    }
 } 
