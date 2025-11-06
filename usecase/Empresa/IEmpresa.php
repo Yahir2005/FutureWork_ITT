@@ -7,4 +7,6 @@ interface IEmpresa {
     public function actualizarEmpresas($id, $empresa):int;
 
     public function eliminarEmpresas($id):int;
+
+    public function buscarEmpresasPorNombre($Nombre):array;
 }

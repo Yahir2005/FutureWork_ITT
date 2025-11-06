@@ -52,4 +52,12 @@ class EmpresaGateway implements IEmpresa{
         $result = $mysqlConnector->consultaSimple($query);
         return $result;
     }
+
+    public function buscarEmpresasPorNombre($Nombre):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Empresas WHERE nombreEmpresa LIKE '%$Nombre%'";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
 }

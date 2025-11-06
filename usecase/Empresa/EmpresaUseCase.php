@@ -62,4 +62,18 @@ class EmpresaUseCase{
         }
         return $response;
     }
+
+    public function buscarEmpresasPorNombre($Nombre): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->buscarEmpresasPorNombre($Nombre);
+        try {
+            $response->status = "Ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Empresas encontradas correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al buscar las empresas: " . $e->getMessage();
+        }
+        return $response;
+    }
 } 

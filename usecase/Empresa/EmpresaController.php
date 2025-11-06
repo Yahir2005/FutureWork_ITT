@@ -26,6 +26,12 @@ class EmpresaController{
         $useCase = new EmpresaUseCase($gateway);
         return $useCase->eliminarEmpresas($id);
     }
+
+    public function buscarEmpresasPorNombre($Nombre):RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->buscarEmpresasPorNombre($Nombre);
+    }
 }
 /*
 $controller = new EmpresaController();
@@ -62,3 +68,8 @@ echo $response->message;
 $controller = new EmpresaController();
 $response = $controller->eliminarEmpresas(2);
 echo $response->message;*/
+/*
+$controller = new EmpresaController();
+$response = $controller->buscarEmpresasPorNombre("Travelnet");
+echo $response->message;
+*/
