@@ -1,5 +1,5 @@
 <?php
-require_once _DIR_ ."/../../../Dto/RespuestaGenerica.php";
+require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
 
 class TipoContratoUseCase{
     private $gatewayDB;
@@ -8,8 +8,8 @@ class TipoContratoUseCase{
         $this->gatewayDB = $gatewayDB;
     }
 
-    public function listarTipoContrato():RespuestaGenerica{
-        $response = new RespuestaGenerica():
+    public function listarTipoContrato(): RespuestaGenerica{
+        $response = new RespuestaGenerica();
         $respuestaMetodo = $this ->gatewayDB-> listarTipoContrato();
         try{
             $response ->status = "Ok";
