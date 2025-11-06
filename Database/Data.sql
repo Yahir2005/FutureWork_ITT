@@ -53,7 +53,7 @@ CREATE TABLE Empresas(
     nombreEmpresa VARCHAR(45),
     sector VARCHAR(45),
     representante VARCHAR(45),
-    descripcion VARCHAR(45),
+    descripcion TEXT,
     sitioWeb VARCHAR(45),
     FOREIGN KEY (EstadoValidacionEmpresa_idEstadoValidacionEmpresa) REFERENCES EstadoValidacionEmpresa(idEstadoValidacionEmpresa),
     FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios(idUsuarios)

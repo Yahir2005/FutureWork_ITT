@@ -10,4 +10,25 @@ class EmpresaGateway implements IEmpresa{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function insertarEmpresas(Empresa $empresa):int{
+        $mysqlConnector = new MysqlConnector();
+        $sqlQuery = "INSERT INTO Empresas (Nombre, Usuarios_idUsuarios,
+        EstadoValidacionEmpresa_idEstadoValidacionEmpresa,
+        nombreEmpresa,
+        sector,
+        representante, 
+        descripcion, 
+        sitioWeb) VALUES ('{$empresa->get('Nombre')}',
+        '{$empresa->get('Usuarios_idUsuarios')}',
+        '{$empresa->get('EstadoValidacionEmpresa_idEstadoValidacionEmpresa')}',
+        '{$empresa->get('nombreEmpresa')}',
+        '{$empresa->get('sector')}',
+        '{$empresa->get('representante')}',
+        '{$empresa->get('descripcion')}',
+        '{$empresa->get('sitioWeb')}')";
+        $mysqlConnector = new MysqlConnector();
+        $result = $mysqlConnector->consultaSimple($sqlQuery);
+        return $result;
+    }
 }
