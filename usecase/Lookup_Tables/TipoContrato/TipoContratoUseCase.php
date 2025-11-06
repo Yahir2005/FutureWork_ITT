@@ -14,10 +14,10 @@ class TipoContratoUseCase{
         try{
             $response ->status = "Ok";
             $response ->body = $respuestaMetodo;
-            $response ->message = "Empresa obtenidas correctamente";
+            $response ->message = "Tipos de contrato obtenidos correctamente";
         } catch (Exception $e)  {
             $response ->status = "Error";
-            $response ->message = "Error al obtener las empresas: ".$e->getMessage();
+            $response ->message = "Error al obtener los tipos de contrato: ".$e->getMessage();
         }
         return $response;
     }

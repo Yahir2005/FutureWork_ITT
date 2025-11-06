@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ ."/../../DataAccess/MysqlConnector.php";
-require_once __DIR__ ."/ITipoContratoGateway.php";
+require_once __DIR__ ."/ITipoContrato.php";
 
 class TipoContratoGateway implements ITipoContrato{
 
