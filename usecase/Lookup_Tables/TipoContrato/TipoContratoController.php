@@ -9,7 +9,8 @@ class TipoContratoController{
         return $UseCase->listarTipoContrato();
     }
 }
-
+/*
 $controller = new TipoContratoController();
 $response = $controller ->listarTipoContrato();
 echo $response->message;
+*/

@@ -8,7 +8,8 @@ class CarreraController{
         $UseCase = new CarreraUseCase($gatewayDB);
         return $UseCase->listarCarrera();
     }
-    }
+}
+/*
 $controller=new CarreraController();
 $response =$controller ->listarCarrera();
-echo $response-> message;
+echo $response-> message;*/

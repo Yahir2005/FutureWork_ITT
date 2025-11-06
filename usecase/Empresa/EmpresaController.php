@@ -9,7 +9,8 @@ class EmpresaController{
         return $useCase->listarEmpresas();
     }
 }
-
+/*
 $controller = new EmpresaController();
 $response = $controller->listarEmpresas();
 echo $response->message;
+*/
