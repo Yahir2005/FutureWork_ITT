@@ -7,23 +7,37 @@ EstadoPostulacion
 itzel 
 hacer tabla carrera 
 ListarPorId
+
 hacer tabla Postulantes 
-ListarPorNombre
+ListarPorNombre //EL metodo se encuentra en Empresa.
 Listar
 Insertar
 Actualizar 
 Eliminar
 
+hacer tabla Postulante_Habilidades
+Insertar
+Eliminar
+Listar
+Actualizar
+--------------------------------------------------------------------
 jose luis 
 hacer tabla EstadoPostulacion
 Listar
 ListarPorId
+
 Hacer tabla Habilidades
 Insertar
 Eliminar
 Listar
 Actualizar
 
+hacer tabla PostulanteCertificaciones
+Insertar
+Listar
+Eliminar
+Actualizar
+------------------------------------------------------------------
 karol 
 hacer tabla  TipoContrato 
 ListarPorId
@@ -33,6 +47,32 @@ Eliminar
 Listar
 Actualizar
 
+Hacer tabla tipoModalidad
+Listar
+ListarPorId
+
+------------------------------------------------------------------
+
+Yahir
+hacer tabla Vacantes
+Insertar 
+Eliminar
+Actualizar
+Listar
+ListarPorNombre
+Hacer router
+
+hacer tabla ImagenesEmpresa y ImagenesPostulante
+Insertar
+Listar
+Eliminar
+
+------------------------------------------------------------------
+
 Walker hacer frotend 
+
+-----------------------------------
+cuando este hecho el backend, luego checo como nos vamos a dividir al momento de conectar, 
+los metodos con el frontend
 
 
