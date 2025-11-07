@@ -69,7 +69,7 @@ Eliminar
 
 ------------------------------------------------------------------
 
-Walker hacer frotend 
+Walker hacer frotend yahir
 
 -----------------------------------
 cuando este hecho el backend, luego checo como nos vamos a dividir al momento de conectar, 

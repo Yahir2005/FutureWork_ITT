@@ -11,6 +11,6 @@ class EstadoPostulacionController{
         return $useCase-> listarEstadoPostulacion();
      }
 }
-$controller = new EstadoPostulacion();
+$controller = new EstadoPostulacionController();
 $response = $controller-> listarEstadoPostulacion();
 echo $response-> message;
