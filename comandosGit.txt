@@ -3,5 +3,5 @@
  * * git add .  // cargar archivos 
  * * git commit -m "mensaje" // mensaje de los cambios o commit
  * * git push origin main // subir los cambios a github
- * 
+ * * git pull bajar cambios hacer siempre al iniciar 
  */
