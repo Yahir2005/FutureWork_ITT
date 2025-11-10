@@ -5,7 +5,7 @@ require_once __DIR__ ."/../DataAccess/MysqlConnector.php";
 class VacanteGateway implements IVacante{
     public function InsertarVacante(Vacantes $vacantes):int{
         $mysqlConnector = new MysqlConnector();
-        $sql = "INSERT INTO vacantes (
+        $sql = "INSERT INTO Vacantes (
             Empresa_idEmpresa,
             EstadoValidacionVacante_idEstadoValidacionVacante, 
             TipoContrato_idTipoContrato, 
