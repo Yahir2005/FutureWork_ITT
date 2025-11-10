@@ -6,14 +6,14 @@ itzel
 hacer tabla carrera 
 ListarPorId
 
-hacer tabla Postulantes 
+hacer tabla Postulantes (ya esta la tabla )
 ListarPorNombre //EL metodo se encuentra en Empresa.
 Listar
 Insertar
 Actualizar 
 Eliminar
 
-hacer tabla Postulante_Habilidades
+hacer tabla Postulante_Habilidades (ya esta la tabla)
 Insertar
 Eliminar
 Listar
