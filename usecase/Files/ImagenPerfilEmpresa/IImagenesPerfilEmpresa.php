@@ -1,0 +1,8 @@
+<?php
+interface IImagenesPerfilEmpresa{
+    public function InsertarImagenPerfilEmpresa(ImagenPerfilEmpresa $imagenPerfilEmpresa):int;
+
+    public function eliminarImagen($id):int;
+
+    public function obtenerImagenes($id):array;
+}
