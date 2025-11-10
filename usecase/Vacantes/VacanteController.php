@@ -50,3 +50,39 @@ $vacanteObject->set("fechaLimite","2024-12-31");
 $response = $controller->InsertarVacante($vacanteObject);
 echo $response->message;
 */
+/*
+$controller = new VacanteController();
+$response = $controller->ListarVacantesPorNombre("Desarrollador");
+
+$listar= array();
+$listar = $response->body;
+foreach($listar as $row){
+    echo $row['titulo']; 
+}
+echo $response->message;
+*/
+/*
+$controller = new VacanteController();
+$response = $controller->ListarVacantes();
+echo $response->message;
+*/
+/*
+$controller = new VacanteController();
+$objectVacante = new Vacantes();
+$objectVacante->set("Empresa_idEmpresa",1);
+$objectVacante->set("EstadoValidacionVacante_idEstadoValidacionVacante",2);
+$objectVacante->set("TipoContrato_idTipoContrato",3);
+$objectVacante->set("TipoModalidad_idTipoModalidad",2);
+$objectVacante->set("titulo","Desarrollador PHP Senior");
+$objectVacante->set("descripcion","Se busca desarrollador PHP con experiencia avanzada");
+$objectVacante->set("requisitos","PHP, MySQL, JavaScript, Laravel");
+$objectVacante->set("ubicacion","Ciudad de México");
+$objectVacante->set("salario",25000.00);
+$objectVacante->set("fechaLimite","2025-01-31");
+$response = $controller->ActualizarVacante(4,$objectVacante);
+echo $response->message;*/
+/*
+$controller = new VacanteController();
+$response = $controller->EliminarVacante(4);
+echo $response->message;
+*/
