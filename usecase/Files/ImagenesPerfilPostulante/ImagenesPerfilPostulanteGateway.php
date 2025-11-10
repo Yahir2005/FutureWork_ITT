@@ -11,4 +11,18 @@ class ImagenesPerfilPostulanteGateway implements IImagenesPerfilPostulante{
         $result = $mysqlConnector->consultaSimple($sql);
         return $result;
     }
+
+    public function EliminarImagenPerfilPostulante($id):int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "DELETE FROM ImagenesPerfilPostulante WHERE idImagenPostulante = '{$id}'";
+        $result = $mysqlConnector->consultaSimple($sql);
+        return $result;
+    }
+
+    public function MostrarImagenPerfilPostulante($id):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM ImagenesPerfilPostulante WHERE idImagenPostulante = '{$id}'";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }

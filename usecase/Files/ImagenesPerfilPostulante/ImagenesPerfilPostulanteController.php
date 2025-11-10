@@ -10,4 +10,15 @@ class ImagenesPerfilPostulanteController{
     return $useCase->InsertarImagenPerfilPostulante($imagenesPerfilPostulante);
     }
     
+   public function EliminarImagenPerfilPostulante($id): RespuestaGenerica{
+        $gatewayDb = new ImagenesPerfilPostulanteGateway();
+        $useCase = new ImagenesPerfilPostulanteUseCase($gatewayDb);
+        return $useCase->EliminarImagenPerfilPostulante($id);
+    }
+
+    public function MostrarImagenPerfilPostulante($id): RespuestaGenerica{
+        $gatewayDb = new ImagenesPerfilPostulanteGateway();
+        $useCase = new ImagenesPerfilPostulanteUseCase($gatewayDb);
+        return $useCase->MostrarImagenPerfilPostulante($id);
+    }
 }

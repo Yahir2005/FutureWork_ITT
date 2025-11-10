@@ -21,4 +21,32 @@ class ImagenesPerfilPostulanteUseCase{
         }
         return $response;
     }
+
+    public function EliminarImagenPerfilPostulante($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->EliminarImagenPerfilPostulante($id);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se ha eliminado correctamente la imagen del perfil ";
+        } catch (Exception $e) {
+            $response->status = "ERROR";
+            $response->message = "Error al eliminar la imagen" .$e->getMessage();
+        }
+        return $response;
+    }
+
+    public function MostrarImagenPerfilPostulante($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->MostrarImagenPerfilPostulante($id);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se ha obtenido correctamente la imagen del perfil ";
+        } catch (Exception $e) {
+            $response->status = "ERROR";
+            $response->message = "Error al obtener la imagen" .$e->getMessage();
+        }
+        return $response;
+    }
 }
