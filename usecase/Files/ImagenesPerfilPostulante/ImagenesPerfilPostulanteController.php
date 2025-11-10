@@ -30,3 +30,11 @@ $objImagen->set("Postulante_idPostulante",1);
 $objImagen->set("urlImagenPerfilPostulante","/sfdsdsf");
 $result = $controller->InsertarImagenPerfilPostulante($objImagen);
 echo $result->message;*/
+/*
+$controller = new ImagenesPerfilPostulanteController;
+$result = $controller->mostrarImagenPerfilPostulante(1);
+echo $result->message;
+*/
+$controller = new ImagenesPerfilPostulanteController();
+$result = $controller->EliminarImagenPerfilPostulante(3);
+echo $result->message;
