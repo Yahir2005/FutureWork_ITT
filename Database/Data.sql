@@ -31,7 +31,7 @@ CREATE TABLE Postulante(
     Carrera_idCarrera INT NOT NULL,
     Usuarios_idUsuarios INT NOT NULL,
     numeroControl VARCHAR(10),
-    cvPath VARCHAR(45),
+    cvPath VARCHAR(100),
     telefono VARCHAR(45),
     ubicacion VARCHAR(45),
     FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios(idUsuarios),
@@ -92,10 +92,10 @@ CREATE TABLE ImagenesPostulante(
 -- TABLA : Certificaciones y Habilidades
 CREATE TABLE Certificaciones(
     idCertificacion INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(45),
+    nombre VARCHAR(100),
     organizacionEmisora VARCHAR(45),
     fechaObtencion DATE,
-    urlCredencial VARCHAR(45)
+    urlCredencial VARCHAR(100)
 );
 
 CREATE TABLE Postulante_Certificacion(
