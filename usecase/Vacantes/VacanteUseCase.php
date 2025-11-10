@@ -23,4 +23,61 @@ class VacanteUseCase{
         return $response;
     }
 
+    public function ActualizarVacante($id, $vacantes):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ActualizarVacante($id, $vacantes);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Vacante actualizada correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al actualizar vacante: ". $e->getMessage();
+        }
+        return $response;
+    }
+
+    public function EliminarVacante($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->EliminarVacante($id);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Vacante eliminada correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al eliminar vacante: ". $e->getMessage();
+        }
+        return $response;
+    }
+
+    public function ListarVacantes():RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ListarVacantes();
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Vacantes listadas correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al listar vacantes: ". $e->getMessage();
+        }
+        return $response;
+    }
+
+    public function ListarVacantesPorNombre($nombre):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ListarVacantesPorNombre($nombre);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Vacantes listadas correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al listar vacantes: ". $e->getMessage();
+        }
+        return $response;
+    }
+
+
 }
