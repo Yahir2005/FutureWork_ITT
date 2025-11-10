@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ ."/../../../Dto/RespuestaGenerica.phps";
+require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
 
 class ImagenesPerfilPostulanteUseCase{
     private $gatewayDb;

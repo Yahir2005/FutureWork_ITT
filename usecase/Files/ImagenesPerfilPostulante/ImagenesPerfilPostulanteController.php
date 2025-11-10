@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/ImagenesPerfilPostulanteGateway.php";
 require_once __DIR__ ."/ImagenesPerfilPostulanteUseCase.php";
+require_once __DIR__ ."/../../../Dto/ImagenesPerfilPostulante.php";
 
 class ImagenesPerfilPostulanteController{
 
@@ -22,3 +23,10 @@ class ImagenesPerfilPostulanteController{
         return $useCase->MostrarImagenPerfilPostulante($id);
     }
 }
+/*
+$controller = new ImagenesPerfilPostulanteController;
+$objImagen = new ImagenesPerfilPostulante();
+$objImagen->set("Postulante_idPostulante",1);
+$objImagen->set("urlImagenPerfilPostulante","/sfdsdsf");
+$result = $controller->InsertarImagenPerfilPostulante($objImagen);
+echo $result->message;*/
