@@ -35,6 +35,8 @@ $controller = new ImagenesPerfilPostulanteController;
 $result = $controller->mostrarImagenPerfilPostulante(1);
 echo $result->message;
 */
+/*
 $controller = new ImagenesPerfilPostulanteController();
 $result = $controller->EliminarImagenPerfilPostulante(3);
 echo $result->message;
+*/
