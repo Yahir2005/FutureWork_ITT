@@ -9,6 +9,30 @@ class VacanteController{
         $usecase = new VacanteUseCase($gatewayDb);
         return $usecase->InsertarVacante($vacantes);
     }
+
+    public function ActualizarVacante($id, $vacantes): RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->ActualizarVacante($id, $vacantes);
+    }
+
+    public function EliminarVacante($id): RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->EliminarVacante($id);
+    }
+
+    public function ListarVacantes(): RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->ListarVacantes();
+    }
+
+    public function ListarVacantesPorNombre($nombre): RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->ListarVacantesPorNombre($nombre);
+    }
 }
 /*
 $controller = new VacanteController();
