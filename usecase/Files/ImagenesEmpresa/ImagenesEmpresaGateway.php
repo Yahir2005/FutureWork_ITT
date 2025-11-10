@@ -22,7 +22,7 @@ class ImagenesEmpresaGateway implements IImagenesEmpresa {
 
     public function eliminarImagenEmpresa($idEmpresa): int {
         $mysqlConnector = new MysqlConnector();
-        $sql = "DELETE FROM ImagenesEmpresa WHERE idImagen={$idEmpresa}";
+        $sql = "DELETE FROM ImagenesEmpresa WHERE idImagenEmpresa={$idEmpresa}";
         $result = $mysqlConnector->consultaSimple($sql);
         return $result;
     }
