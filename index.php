@@ -17,7 +17,7 @@ if (isset($_POST['enviar'])) {
     SessionManager::startSession();
     $_SESSION["idUsuarios"] = $response->body["idUsuarios"];
     $_SESSION["estudianteId"] = $response->body["EstudianteId"];
-    header("Location:viewsStudent/?cargar=StudentTestListView");
+    header("Location:views/view/index.php");
   } else {
     echo "Usuario o contraseña incorrecta";
   }
