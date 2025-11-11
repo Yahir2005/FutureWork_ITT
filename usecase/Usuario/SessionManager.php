@@ -1,3 +1,36 @@
 <?php
- require_once __DIR__ .'/IUsuarioGateway.php';
- require_once __DIR__ .'/../../Dto/RespuestaGenerica.php';
+ 
+ class SessionManager {
+    public static function startSession() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    // Verificar si el usuario ha iniciado sesión
+    public static function isUserLoggedIn() {
+        self::startSession();
+        return isset($_SESSION['usuarioId']);
+    }
+
+    // Obtener el ID del usuario
+    public static function getUserId() {
+        self::startSession();
+        return $_SESSION['usuarioId'] ?? null;
+    }
+
+    // Destruir la sesión
+    public static function destroySession() {
+        self::startSession();
+        $_SESSION = array();
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+       
+    }
+ }

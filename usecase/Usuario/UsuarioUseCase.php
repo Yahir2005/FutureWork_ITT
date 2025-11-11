@@ -78,5 +78,26 @@ class UsuarioUseCase {
         }
         return $response;
     }
+
+    public function iniciarSesion(string $usuario, string $contrasena):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        try {
+            $sesion = $this->gatewayDB->iniciarSesion($usuario, $contrasena);
+            if ($sesion > 0) {
+                $response->status = "ok";
+                $response->body = $sesion;
+                $response->message = "Inicio de sesión exitoso";
+            } else {
+                $response->status = "error";
+                $response->body = null;
+                $response->message = "Usuario o contraseña incorrecta";
+            }
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->body = null;
+            $response->message = "Error al iniciar sesión: " . $e->getMessage();
+        }
+        return $response;
+    }
     
 }

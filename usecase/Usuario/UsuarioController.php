@@ -31,6 +31,13 @@ class UsuarioController{
         $response = $usuarioUseCase->DeleteUsuario($id);
         return $response;
     }
+
+    public function iniciarSesion(string $usuario, string $contrasena):RespuestaGenerica{
+        $gatewayDB = new UsuarioGatewey();
+        $usuarioUseCase = new UsuarioUseCase($gatewayDB);
+        $response = $usuarioUseCase->iniciarSesion($usuario, $contrasena);
+        return $response;
+    }
 }
 /**Testeos de Metodos de un CRUD Basico :) */
 /*

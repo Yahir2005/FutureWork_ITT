@@ -52,4 +52,15 @@ class UsuarioGatewey implements IUsuarioGateway{
             throw new Exception("Error al eliminar usuario");
         }
     }
+
+    public function iniciarSesion(string $usuario, string $contrasena):Array{
+        $sqlQuery = "SELECT * FROM Usuarios WHERE email='{$usuario}' AND Password='{$contrasena}'";
+        $mysqlObj = new MysqlConnector();
+        try {
+            $result = $mysqlObj->consultaRetorno($sqlQuery);
+            return mysqli_fetch_all($result, MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception("Error al iniciar sesión");
+        }
+    }
 }
