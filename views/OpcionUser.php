@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutureWork ITT - Selecciona tu Tipo de Cuenta</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    /* Container */
+    .selection-container {
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* Header */
+    .selection-header {
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+    }
+
+    .logo-circle {
+      width: 100px;
+      height: 100px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #1e3c72;
+      font-size: 40px;
+      margin: 0 auto 25px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .selection-header h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .selection-header p {
+      font-size: 18px;
+      opacity: 0.95;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    /* Card */
+    .selection-card {
+      background: white;
+      border-radius: 20px;
+      padding: 45px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .selection-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .selection-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    }
+
+    .card-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(42, 82, 152, 0.3);
+    }
+
+    .card-title {
+      color: #1e3c72;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .card-description {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .card-features {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+
+    .card-features li {
+      color: #555;
+      font-size: 15px;
+      padding: 10px 0;
+      padding-left: 30px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .card-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #2a5298;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .card-button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .selection-card:hover .card-button {
+      background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+      transform: scale(1.02);
+    }
+
+    /* Login Link */
+    .login-link {
+      text-align: center;
+      color: white;
+      font-size: 16px;
+      margin-top: 30px;
+    }
+
+    .login-link a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid white;
+      padding-bottom: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .login-link a:hover {
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .selection-header h1 {
+        font-size: 32px;
+      }
+
+      .selection-header p {
+        font-size: 16px;
+      }
+
+      .logo-circle {
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
+      }
+
+      .selection-card {
+        padding: 35px 25px;
+      }
+
+      .card-title {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 15px;
+      }
+
+      .selection-header {
+        margin-bottom: 35px;
+      }
+
+      .selection-header h1 {
+        font-size: 28px;
+      }
+
+      .card-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 35px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="selection-container"><!-- Header -->
+   <div class="selection-header">
+    <div class="logo-circle">
+     FW
+    </div>
+    <h1>¡Bienvenido a FutureWork ITT!</h1>
+    <p>Selecciona el tipo de cuenta que deseas crear para comenzar tu experiencia en nuestra plataforma</p>
+   </div><!-- Cards Grid -->
+   <div class="cards-grid"><!-- Postulante Card --> <a href="registro-postulante.php" class="selection-card">
+     <div class="card-icon">
+      👤
+     </div><h2 class="card-title">Soy Postulante</h2><p class="card-description">Estudiante o egresado del Instituto Tecnológico de Tehuacán buscando oportunidades laborales</p>
+     <ul class="card-features">
+      <li>Explora vacantes de empresas asociadas</li>
+      <li>Crea y gestiona tu perfil profesional</li>
+      <li>Postúlate a ofertas laborales</li>
+      <li>Recibe notificaciones de nuevas vacantes</li>
+      <li>Da seguimiento a tus postulaciones</li>
+      <li>Conecta con empresas de la región</li>
+     </ul>
+     <div class="card-button">
+      Registrarme como Postulante →
+     </div></a> <!-- Empresa Card --> <a href="registro-empresa.php" class="selection-card">
+     <div class="card-icon">
+      🏢
+     </div><h2 class="card-title">Soy Empresa</h2><p class="card-description">Empresa buscando talento del Instituto Tecnológico de Tehuacán para fortalecer su equipo</p>
+     <ul class="card-features">
+      <li>Publica vacantes ilimitadas</li>
+      <li>Accede a talento calificado del ITT</li>
+      <li>Gestiona postulaciones recibidas</li>
+      <li>Crea perfil de tu empresa</li>
+      <li>Filtra candidatos por carrera y habilidades</li>
+      <li>Conecta con egresados y estudiantes</li>
+     </ul>
+     <div class="card-button">
+      Registrar mi Empresa →
+     </div></a>
+   </div><!-- Login Link -->
+   <div class="login-link">
+    ¿Ya tienes una cuenta? <a href="login.php">Inicia sesión aquí</a>
+   </div>
+  </div>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99cb6b92257eae76',t:'MTc2MjgzOTI2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
