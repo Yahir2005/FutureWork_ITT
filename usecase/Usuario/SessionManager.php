@@ -10,13 +10,13 @@
     // Verificar si el usuario ha iniciado sesión
     public static function isUserLoggedIn() {
         self::startSession();
-        return isset($_SESSION['usuarioId']);
+        return isset($_SESSION['idUsuarios']);
     }
 
     // Obtener el ID del usuario
     public static function getUserId() {
         self::startSession();
-        return $_SESSION['usuarioId'] ?? null;
+        return $_SESSION['idUsuarios'] ?? null;
     }
 
     // Destruir la sesión
