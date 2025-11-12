@@ -79,10 +79,10 @@ class UsuarioUseCase {
         return $response;
     }
 
-    public function iniciarSesion(string $usuario, string $contrasena):RespuestaGenerica{
+    public function iniciarSesion(string $usuario, string $contrasena, string $idRol ):RespuestaGenerica{
         $response = new RespuestaGenerica();
         try {
-            $sesion = $this->gatewayDB->iniciarSesion($usuario, $contrasena);
+            $sesion = $this->gatewayDB->iniciarSesion($usuario, $contrasena, string $idRol);
             if ($sesion > 0) {
                 $response->status = "ok";
                 $response->body = $sesion;

@@ -32,10 +32,10 @@ class UsuarioController{
         return $response;
     }
 
-    public function iniciarSesion(string $usuario, string $contrasena):RespuestaGenerica{
+    public function iniciarSesion(string $usuario, string $contrasena, string $idRol):RespuestaGenerica{
         $gatewayDB = new UsuarioGatewey();
         $usuarioUseCase = new UsuarioUseCase($gatewayDB);
-        $response = $usuarioUseCase->iniciarSesion($usuario, $contrasena);
+        $response = $usuarioUseCase->iniciarSesion($usuario, $contrasena, string $idRol);
         return $response;
     }
 }
