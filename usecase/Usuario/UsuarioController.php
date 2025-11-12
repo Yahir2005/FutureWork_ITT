@@ -31,14 +31,18 @@ class UsuarioController{
         $response = $usuarioUseCase->DeleteUsuario($id);
         return $response;
     }
-
-    public function iniciarSesion(string $usuario, string $contrasena, string $idRol):RespuestaGenerica{
+    public function iniciarSesion(string $usuario, string $contrasena ):RespuestaGenerica{
         $gatewayDB = new UsuarioGatewey();
         $usuarioUseCase = new UsuarioUseCase($gatewayDB);
-        $response = $usuarioUseCase->iniciarSesion($usuario, $contrasena,  $idRol);
+        $response = $usuarioUseCase->iniciarSesion($usuario, $contrasena);
         return $response;
     }
 }
+/*
+$controller = new UsuarioController();
+$result = $controller->iniciarSesion ("Carlos Alberto Gómez", "carlosPass101" );
+echo $result->message;
+*/
 /**Testeos de Metodos de un CRUD Basico :) */
 /*
 /**Metodo insertar */
