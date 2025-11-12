@@ -1,6 +1,6 @@
 <?php
-  require_once __DIR__ ."usecase/Usuario/UsuarioController.php";
-  require_once __DIR__ ."usecase/Usuario/SessionManager.php";
+  require_once __DIR__ ."/usecase/Usuario/UsuarioController.php";
+  require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
   if(isset($_POST["enviar"])) {
     $usuarioController = new UsuarioController();
     $sessionManager = new SessionManager();
@@ -12,12 +12,30 @@
 
     if($responseUserGues->status == 'ok') {
       SessionManager ::startSession();
-      $_SESSION["idRol"] = $responseUserGues->body["idRol"];
-      if($responseUserGues->body == "") {
-        header("Location:views/?cargar=navbar.php");
-      }else {
-        header("Location:views/viewEmpresa/?cargar=navbar.php");
+      
+      // Obtenemos el idRol de la respuesta
+      $idRol = $responseUserGues->body["idRol"];
+      
+      // Guardamos el idRol en la sesión
+      $_SESSION["idRol"] = $idRol;
+
+      // --- INICIO DE LA MODIFICACIÓN ---
+      
+      // Comprobamos el idRol para redirigir
+      // Según tus imágenes: 1 = Empresa, 2 = Postulante
+      
+      if ($idRol == 1) { 
+          // Es Empresa
+          header("Location:views/viewEmpresa/?cargar=navbar.php");
+          exit; // Buena práctica añadir exit() después de un header location
+      } else { 
+          // Es 2 (Postulante), 3 (Administrador) o cualquier otro rol
+          header("Location:views/?cargar=navbar.php");
+          exit; // Buena práctica añadir exit() después de un header location
       }
+      
+      // --- FIN DE LA MODIFICACIÓN ---
+
     }else{
       echo "<div class='alert alert-danger' role='alert'>
         Error al iniciar sesion
@@ -35,6 +53,7 @@
   <link rel="stylesheet" href="views/css/login.css">
  </head>
  <body>
+  <form action="" method="post">
   <div class="login-container"><div class="login-left">
     <div class="logo"><span class="logo-text">FW</span>
     </div>
@@ -105,5 +124,6 @@
     }
     ?>
   </script>
+  </form>
  </body>
 </html>
