@@ -1,35 +1,29 @@
 <?php
-  require_once __DIR__ . "/usecase/Usuario/SessionManager.php";
-  $sessionManager = new SessionManager(); // <-- CORRECCIÓN: Instanciar la clase
-  $sessionManager->startSession();     // <-- CORRECCIÓN: Llamar método desde el objeto
+  require_once __DIR__ ."usecase/Usuario/UsuarioController.php";
+  require_once __DIR__ ."usecase/Usuario/SessionManager.php";
+  if(isset($_POST["enviar"])) {
+    $usuarioController = new UsuarioController();
+    $sessionManager = new SessionManager();
+    if ($_POST['tipo_acceso'] === 'invitado') {
+        $responseUserGues = $usuarioController->iniciarSesion('invitado', 'invitado');
+    } else{
+        $responseUserGues = $usuarioController->iniciarSesion($_POST['usuario'], $_POST['password']);
+    }
 
-  require_once __DIR__ ."/usecase/Lookup_Tables/Rol/RolController.php";
-  $controllerRol = new RolController();
-  $resultRol = $controllerRol->ListarRoles();
-  $listarRol= array();
-  if($resultRol->status=='ok'){
-		$listarRol = $resultRol->body;
-	}else{  
-    $error = "Error al listar los roles.";
-	}
-
-  require_once __DIR__ . "/usecase/Usuario/UsuarioController.php";
-  
-  if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar'])) {
-      $usuario = $_POST['usuario'];
-      $password = $_POST['password'];
-      $idRol = $_POST['Rol']; 
-
-      $controller = new UsuarioController();
-      $resultado = $controller->iniciarSesion($usuario, $password, $idRol);
-
-      if ($resultado->status === 'ok') {
-          $sessionManager->crearSesion($resultado->body); // <-- CORRECCIÓN: Llamar método desde el objeto
-          header("Location: views/home.php");
-          exit();
-      } else {
-          $error = $resultado->message;
+    if($responseUserGues->status == 'ok') {
+      SessionManager ::startSession();
+      $_SESSION["idRol"] = $responseUserGues->body["idRol"];
+      if($responseUserGues->body == "") {
+        header("Location:views/?cargar=navbar.php");
+      }else {
+        header("Location:views/viewEmpresa/?cargar=navbar.php");
       }
+    }else{
+      echo "<div class='alert alert-danger' role='alert'>
+        Error al iniciar sesion
+        </div>";
+    }
+
   }
 ?>
 <!doctype html>
@@ -64,21 +58,7 @@
      </div>
     
     <form method="POST" action="login.php">
-     <div class="form-group"><label for="tipo_acceso">Tipo de Acceso</label>
-     				<select 
-					required
-					name="Rol" 
-					class="form-select form-select-sm mb-4" 
-					aria-label=".form-select-lg example">
-                    
-					<option value="">Seleccione un Tipo</option>
-					<?php
-					foreach ($listarRol as $row) {
-						echo "<option value='" . ($row['idRol']) . "'>" . $row['nombreRol'] . "</option>";
-					}
-					?>
-				</select>
-     </div>
+     
      <div class="form-group" id="usuarioGroup"><label for="usuario">Usuario o Correo Electrónico</label> <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu usuario o correo" required>
      </div>
      <div class="form-group password-toggle" id="passwordGroup"><label for="password">Contraseña</label> <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required> <button type="button" class="toggle-btn" onclick="togglePassword()">👁️</button>
