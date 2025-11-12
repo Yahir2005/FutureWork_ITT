@@ -4,6 +4,5 @@ interface IUsuarioGateway{
     public function ListarUsuarios():array;
     public function ActualizarUsuarios($id, $usuario):bool;
     public function DeleteUsuario($id):bool;
-
-    public function iniciarSesion(string $usuario, string $contrasena, string $idRol):array;
+    public function iniciarSesion(string $usuario, string $contrasena):array;
 }
