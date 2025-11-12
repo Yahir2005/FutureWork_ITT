@@ -13,13 +13,29 @@ public function __construct(ICarrera $gatewayDb) {
     try {
         $response-> status ="OK";
         $response-> body =$respuestaMetodo;
-        $response-> message="Empresas obtenidas correctamente";
+        $response-> message="Carrera obtenidas correctamente";
 
     } catch (Exception $e) {
         $response->status ="Error";
-        $response->message="Error al obtener a las empresas: " .$e->getMessage();
+        $response->message="Error al obtener a las carreras: " .$e->getMessage();
     }
     return $response;
   }
+
+    public function listarCarreraPorId($idCarrera): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->listarCarreraPorId($idCarrera);
+        try {
+            $response -> status = "OK";
+            $response -> body = $respuestaMetodo;
+            $response -> message = "carrera obtenido correctamente";
+
+        } catch (Exception $e) {
+            $response -> status = "ERROR";
+            $response -> body = null;
+            $response -> message = "Error al obtener Carrera: " . $e->getMessage();
+        }
+        return $response;
+    }
   
 }

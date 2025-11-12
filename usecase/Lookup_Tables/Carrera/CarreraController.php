@@ -8,8 +8,16 @@ class CarreraController{
         $UseCase = new CarreraUseCase($gatewayDB);
         return $UseCase->listarCarrera();
     }
+     public function listarCarreraPorId($idCarrera): RespuestaGenerica{
+        $gatewayDB= new CarreraGateway();
+        $UseCase= new CarreraUseCase($gatewayDB);
+        return $UseCase->listarCarreraPorId($idCarrera);
+     }
 }
 /*
 $controller=new CarreraController();
 $response =$controller ->listarCarrera();
 echo $response-> message;*/
+ $controller = new CarreraController();
+ $response = $controller ->listarCarreraPorId(1);
+ echo $response ->message;
