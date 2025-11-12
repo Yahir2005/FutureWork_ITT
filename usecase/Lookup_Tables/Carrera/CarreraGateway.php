@@ -14,7 +14,7 @@ class CarreraGateway implements ICarrera  {
         $result = [];
         try {
             $mysqlObj = new MysqlConnector();
-            $query = "SELECT * FROM carrera WHERE idCarrera =".$idCarrera;
+            $query = "SELECT * FROM Carrera WHERE idCarrera =".$idCarrera;
             $result = $mysqlObj->consultaRetorno($query);
             if($result!=false){
                 $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
