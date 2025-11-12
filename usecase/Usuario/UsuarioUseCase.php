@@ -82,7 +82,7 @@ class UsuarioUseCase {
     public function iniciarSesion(string $usuario, string $contrasena, string $idRol ):RespuestaGenerica{
         $response = new RespuestaGenerica();
         try {
-            $sesion = $this->gatewayDB->iniciarSesion($usuario, $contrasena, string $idRol);
+            $sesion = $this->gatewayDB->iniciarSesion($usuario, $contrasena,  $idRol);
             if ($sesion > 0) {
                 $response->status = "ok";
                 $response->body = $sesion;

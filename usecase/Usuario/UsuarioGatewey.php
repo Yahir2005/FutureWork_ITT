@@ -54,7 +54,7 @@ class UsuarioGatewey implements IUsuarioGateway{
     }
 
     public function iniciarSesion(string $usuario, string $contrasena, string $idRol):Array{
-        $sqlQuery = "SELECT * FROM Usuarios WHERE email='{$usuario}' AND Password='{$contrasena}' AND idRol = '{$contrasena}'";
+        $sqlQuery = "SELECT * FROM Usuarios WHERE email='{$usuario}' AND Password='{$contrasena}' AND idRol = '{$idRol}'";
         $mysqlObj = new MysqlConnector();
         try {
             $result = $mysqlObj->consultaRetorno($sqlQuery);
@@ -64,4 +64,3 @@ class UsuarioGatewey implements IUsuarioGateway{
         }
     }
 }
-, string $idRol
