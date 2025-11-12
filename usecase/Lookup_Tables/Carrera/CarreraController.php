@@ -18,6 +18,8 @@ class CarreraController{
 $controller=new CarreraController();
 $response =$controller ->listarCarrera();
 echo $response-> message;*/
+/*
  $controller = new CarreraController();
  $response = $controller ->listarCarreraPorId(1);
  echo $response ->message;
+ */
