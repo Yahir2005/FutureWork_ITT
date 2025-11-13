@@ -2,7 +2,7 @@ Actividades por realizar
 tiempo 1 semana si no hay clases
 Si tenemos clases 2 semanas 
 
-itzel 
+itzel (ya esta la tabla)
 hacer tabla carrera 
 ListarPorId
 

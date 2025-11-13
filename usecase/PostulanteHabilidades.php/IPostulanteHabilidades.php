@@ -1,8 +1,8 @@
 <?php
 interface IPostulanteHabilidades{
-    public function Insertar(Usuario $usuario):int;
-    public function Eliminar():array;
-    public function Listar($id, $usuario):bool;
-    public function Actualizar($id):bool;
+    public function InsertarPostulanteHabilidades(PostulanteHabilidades $postulanteHabilidades):int;
+    public function EliminarPostulanteHabilidades($id):int;
+    public function ListarPostulanteHabilidades():array;
+    public function ActualizarPostulanteHabilidades($id, $postulanteHabilidades):int;
 
 }
