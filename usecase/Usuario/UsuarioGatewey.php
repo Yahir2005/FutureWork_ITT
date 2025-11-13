@@ -53,14 +53,19 @@ class UsuarioGatewey implements IUsuarioGateway{
         }
     }
 
-    public function iniciarSesion(string $usuario, string $contrasena):array{
-        $sqlQuery = "SELECT * FROM Usuarios WHERE email='{$usuario}' OR nombreCompleto='{$usuario}' AND Password='{$contrasena}'";
+    public function iniciarSesion(string $usuario, string $contrasena): array {
+        $sql = "SELECT * FROM Usuarios 
+                WHERE email='$usuario'
+                AND Password='$contrasena'";
+
         $mysqlObj = new MysqlConnector();
-        try {
-            $result = $mysqlObj->consultaRetorno($sqlQuery);
-            return mysqli_fetch_all($result, MYSQLI_ASSOC);
-        } catch (Exception $e) {
-            throw new Exception("Error al iniciar sesión");
+        $result = $mysqlObj->consultaRetorno($sql);
+        $row = mysqli_fetch_assoc($result);
+        if ($row) {
+            return $row;
+        } else {
+            throw new Exception("Usuario o contraseña incorrecta");
         }
     }
+
 }

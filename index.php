@@ -1,48 +1,30 @@
 <?php
-  require_once __DIR__ ."/usecase/Usuario/UsuarioController.php";
-  require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
-  if(isset($_POST["enviar"])) {
-    $usuarioController = new UsuarioController();
-    $sessionManager = new SessionManager();
-    if ($_POST['tipo_acceso'] === 'invitado') {
-        $responseUserGues = $usuarioController->iniciarSesion('invitado', 'invitado');
-    } else{
-        $responseUserGues = $usuarioController->iniciarSesion($_POST['usuario'], $_POST['password']);
+    require_once __DIR__ ."/usecase/Usuario/UsuarioController.php";
+    require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
+
+    // --- CAMBIO 1: Inicializar la variable de error ---
+    $errorMessage = "";
+
+    if(isset($_POST['enviar'])){
+        $controller = new UsuarioController();
+        $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
+        if($response->status == "ok"){
+            SessionManager::startSession();
+            $_SESSION["idUsuarios"]=$response->body;
+            header("Location:views/index.php");
+            // --- CAMBIO 2: El 'echo' aquí no se ejecutará por el header(), así que se puede quitar ---
+            // echo "<div class='alert alert-success' role='alert'>Inicio de sesión exitoso</div>";
+        }else{
+            // --- CAMBIO 3: Guardar el error en la variable en lugar de imprimirlo ---
+            $errorMessage = "<div class='alert alert-danger' role='alert'>Error al iniciar sesion</div>";
+        }
     }
-
-    if($responseUserGues->status == 'ok') {
-      SessionManager ::startSession();
-      
-      // Obtenemos el idRol de la respuesta
-      $idRol = $responseUserGues->body["idRol"];
-      
-      // Guardamos el idRol en la sesión
-      $_SESSION["idRol"] = $idRol;
-
-      // --- INICIO DE LA MODIFICACIÓN ---
-      
-      // Comprobamos el idRol para redirigir
-      // Según tus imágenes: 1 = Empresa, 2 = Postulante
-      
-      if ($idRol == 1) { 
-          // Es Empresa
-          header("Location:views/viewEmpresa/?cargar=navbar.php");
-          exit; // Buena práctica añadir exit() después de un header location
-      } else { 
-          // Es 2 (Postulante), 3 (Administrador) o cualquier otro rol
-          header("Location:views/?cargar=navbar.php");
-          exit; // Buena práctica añadir exit() después de un header location
-      }
-      
-      // --- FIN DE LA MODIFICACIÓN ---
-
-    }else{
-      echo "<div class='alert alert-danger' role='alert'>
-        Error al iniciar sesion
-        </div>";
+    if(isset($_POST['enviarInvitado'])){
+        SessionManager::startSession();
+        $_SESSION["idUsuarios"]=0; // ID para usuario invitado
+        header("Location:views/index.php");
     }
-
-  }
+  
 ?>
 <!doctype html>
 <html lang="es">
@@ -50,10 +32,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureWork ITT - Iniciar Sesión</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="views/css/login.css">
  </head>
  <body>
-  <form action="" method="post">
   <div class="login-container"><div class="login-left">
     <div class="logo"><span class="logo-text">FW</span>
     </div>
@@ -71,16 +54,16 @@
     <div class="login-header">
      <h2>Iniciar Sesión</h2>
      <p>Accede a tu cuenta de FutureWork ITT</p>
+     <?php echo $errorMessage; ?>
     </div>
     
-    <div class="error-message" id="errorMessage">
-     </div>
-    
-    <form method="POST" action="login.php">
+    <form method="POST" action="">
      
-     <div class="form-group" id="usuarioGroup"><label for="usuario">Usuario o Correo Electrónico</label> <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu usuario o correo" required>
+     <div class="form-group" id="usuarioGroup"><label for="usuario">Correo Electrónico</label> <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu usuario o correo" required>
      </div>
-     <div class="form-group password-toggle" id="passwordGroup"><label for="password">Contraseña</label> <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required> <button type="button" class="toggle-btn" onclick="togglePassword()">👁️</button>
+     <div class="form-group password-toggle" id="passwordGroup"><label for="password">Contraseña</label> <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required>
+     
+      <button type="button" class="toggle-btn" onclick="togglePassword(this)">👁️</button>
      </div>
      <div class="remember-forgot"><label class="remember-me"> <input type="checkbox" name="remember"> <span>Recordarme</span> </label> <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
      </div>
@@ -90,40 +73,24 @@
      <div class="divider"><span>O</span>
      </div>
      
-     <button type="submit" name="enviar" class="btn-guest" onclick="setInvitado(event)"> 🌐 Acceder como Invitado </button>
+     <button type="submit" name="enviarInvitado" class="btn-guest"> 🌐 Acceder como Invitado </button>
     </form>
     <div class="register-link">
      ¿No tienes cuenta? <a href="views/OpcionUser.php">Regístrate aquí</a>
     </div>
    </div>
   </div>
-  
   <script>
-    function togglePassword() {
-      const passwordInput = document.getElementById('password');
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-      } else {
-        passwordInput.type = 'password';
-      }
+   function togglePassword(button) {
+    const passwordField = document.getElementById('password');
+    if (passwordField.type === 'password') {
+     passwordField.type = 'text';
+     button.textContent = '🙈'; // Cambia el ícono (opcional)
+    } else {
+     passwordField.type = 'password';
+     button.textContent = '👁️'; // Vuelve al ícono original
     }
-
-    function setInvitado(event) {
-        // Lógica para el acceso de invitado
-    }
-
-    <?php
-    if (isset($error)) { 
-        echo "
-        document.addEventListener('DOMContentLoaded', function() {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = '" . addslashes($error) . "';
-            errorDiv.classList.add('show');
-        });
-        "; 
-    }
-    ?>
+   }
   </script>
-  </form>
  </body>
 </html>

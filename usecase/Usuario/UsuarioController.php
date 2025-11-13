@@ -40,7 +40,7 @@ class UsuarioController{
 }
 /*
 $controller = new UsuarioController();
-$result = $controller->iniciarSesion ("Carlos Alberto Gómez", "carlosPass101" );
+$result = $controller->iniciarSesion ("PaolaRl@gmail.com", "fdsf1234" );
 echo $result->message;
 */
 /**Testeos de Metodos de un CRUD Basico :) */

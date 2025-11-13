@@ -89,7 +89,6 @@ class UsuarioUseCase {
                 $response->message="Inicio de sesión exitoso";
             }else{
                 $response->status="error";
-                $response->body=false;
                 $response->message="Credenciales inválidas";
             }
         } catch (Exception $e) {
