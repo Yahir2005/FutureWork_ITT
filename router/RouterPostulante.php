@@ -37,4 +37,11 @@ class Router{
         }
         
     }
+     public function validarGET($variable){
+            if(empty($variable)){
+                echo "<script> window.history.back();</script>";
+            } else{
+                return true;
+            }
+    }
 }

@@ -12,7 +12,7 @@ public function listarPostulante (): RespuestaGenerica{
 public function insertarPostulante (Postulante $Postulante):RespuestaGenerica{
     $gateway = new PostulanteGateway();
         $useCase = new PostulanteUseCase($gateway);
-        return $useCase->insertarPostulante($Postualnte);
+        return $useCase->insertarPostulante($Postulante);
     }
  public function actualizarPostulante ($id, $Postulante):RespuestaGenerica{
      $gateway = new PostulanteGateway();
@@ -30,3 +30,6 @@ public function insertarPostulante (Postulante $Postulante):RespuestaGenerica{
         return $useCase->listarPostulantePorNombre($Nombre);
     }
 }
+$controller = new PostulanteController();
+$response = $controller->listarPostulantePorNombre("Juan");
+echo $response->message;

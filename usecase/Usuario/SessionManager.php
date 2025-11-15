@@ -19,6 +19,11 @@
         return $_SESSION['idUsuarios'] ?? null;
     }
 
+    public static function getRoleId() {
+        self::startSession();
+        return $_SESSION['idRol'] ?? null;
+    }
+
     // Destruir la sesión
     public static function destroySession() {
         self::startSession();
