@@ -21,7 +21,7 @@
 
     public static function getRoleId() {
         self::startSession();
-        return $_SESSION['idRol'] ?? null;
+        return $_SESSION['Rol_idRol'] ?? null;
     }
 
     // Destruir la sesión

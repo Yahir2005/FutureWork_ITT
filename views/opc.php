@@ -3,8 +3,9 @@
 // Se asume que este archivo está dentro de la carpeta 'views'
 
 // 1. Incluimos el SessionManager y el Router de Empresa
-require_once __DIR__ .'/../usecase/Usuario/SessionManager.php';
-require_once __DIR__ .'/../router/RouterEmpresa.php';
+require_once __DIR__ .'/view/../../usecase/Usuario/SessionManager.php';
+require_once __DIR__ .'/view/../../router/RouterPostulante.php';
+require_once __DIR__ .'/view/../../router/RouterEmpresa.php';
 
 // 2. SEGURIDAD: Verificamos la sesión y el rol
 $idRol = SessionManager::getRoleId();
@@ -12,13 +13,19 @@ $idRol = SessionManager::getRoleId();
 // Si no es Rol 1 (Empresa), lo sacamos al login
 if ($idRol !== 1) { 
     // (Asumiendo que login.php está dos niveles arriba de 'views')
-    header("Location: ../login.php"); 
+    header("Location:navbarEmpresa.php "); 
     exit;
 }
 
+if ($idRol !== 2) { 
+    // (Asumiendo que login.php está dos niveles arriba de 'views')
+    header("Location:navbarPostulante.php"); 
+    exit;
+}
+
+
 // 3. Lógica del Router para cargar la vista
 $router = new RouterEmpresa();
-
 // Obtenemos la vista de la URL, ej: navbarEmpresa.php?vista=Inicio
 // Si no hay vista, cargamos "Inicio" por defecto
 $vista = $_GET['vista'] ?? 'Inicio'; 
