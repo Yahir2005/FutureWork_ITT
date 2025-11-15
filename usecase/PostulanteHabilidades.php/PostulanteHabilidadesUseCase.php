@@ -2,7 +2,7 @@
 require_once __DIR__ ."/../../Dto/RespuestaGenerica.php";
 class PostulanteHabilidadesUseCase{
 private $gatewayDb;
-        public function __construct(IVacante $gatewayDb) {
+        public function __construct(IPostulanteHabilidades $gatewayDb) {
         $this->gatewayDb = $gatewayDb;
 
     }

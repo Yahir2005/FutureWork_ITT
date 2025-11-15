@@ -1,5 +1,5 @@
  <?php
-require_once __DIR__ ."/PostulanteHabilidadesGateway.php";
+require_once __DIR__ ."/PostulanteHabilidadesGatawey.php";
 require_once __DIR__ ."/PostulanteHabilidadesUseCase.php";
 require_once __DIR__ ."/../../Dto/PostulanteHabilidades.php";
  class PostulanteHabilidadesController{
@@ -25,3 +25,7 @@ require_once __DIR__ ."/../../Dto/PostulanteHabilidades.php";
     }
 
  }
+ $controller = new PostulanteHabilidadesController();
+ $result = $controller -> ListarPostulanteHabilidades();
+ echo $result -> message;
+ 
