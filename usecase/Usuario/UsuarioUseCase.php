@@ -110,5 +110,19 @@ class UsuarioUseCase {
         }
         return $response;
     }
+
+    public function obtenerIdRolUsuarios($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDB->obtenerIdRolUsuarios($id);
+        try {
+            $response->status = "ok";
+            $response->body=$respuestaMetodo;
+            $response->message= "Error al obtener el rol del usuario";
+        } catch (Exception $e) {
+            $response->status= "error";
+            $response->message= "Error al obtener rol usuario".$e->getMessage();
+        }
+        return $response;
+    }
     
 }

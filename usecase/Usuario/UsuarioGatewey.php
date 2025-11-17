@@ -74,4 +74,11 @@ class UsuarioGatewey implements IUsuarioGateway{
         $result = $mysqlConnector->consultaRetorno( $sql );
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function obtenerIdRolUsuarios($id):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Usuarios WHERE Rol_idRol = {$id} ";
+        $result = $mysqlConnector->consultaRetorno( $sql );
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }
