@@ -1,43 +1,65 @@
 <?php
-require_once __DIR__ . '/../usecase/Usuario/SessionManager.php';
+// opc.php - Orquestador de redirección por rol
+
+// Rutas a los archivos, que has corregido correctamente.
+require_once __DIR__ . "/../usecase/Usuario/SessionManager.php";
 require_once __DIR__ . '/../usecase/Usuario/UsuarioController.php';
 
 SessionManager::startSession();
 
+// Verificamos si el usuario ha iniciado sesión
 if (!SessionManager::isUserLoggedIn()) {
-    header('Location: /../index.php');
+    // --- CORRECCIÓN DE RUTA ---
+    // Redirigimos al index.php en el directorio raíz.
+    header('Location: ../index.php');
     exit();
 }
 
-// Obtenemos el ID de usuario de la sesión
+// Obtenemos el ID de usuario que guardamos en la sesión durante el login
 $idUsuario = SessionManager::getUserId();
 
-// Creamos un controlador para buscar los datos del usuario
-$controller = new UsuarioController();
-$response = $controller->obtenerUsuarioPorId($idUsuario);
+// Si por alguna razón el ID es nulo o cero (invitado), lo sacamos.
+if (empty($idUsuario)) {
+    // --- CORRECCIÓN DE RUTA ---
+    header('Location: ../index.php');
+    exit();
+}
 
-if ($response->status == "ok") {
-    // Asumimos que $response->body es un objeto o array asociativo con los datos del usuario
-    $usuario = $response->body;
-    
-    // Guardamos el rol en la sesión para no tener que buscarlo en cada página
-    $_SESSION['Rol_idRol'] = $usuario['Rol_idRol']; // O $usuario->Rol_idRol si es un objeto
-    
-    // Redirigimos según el rol
-    if ($_SESSION['Rol_idRol'] == 1) {
-        header('Location: navbarEmpresa.php');
-        exit();
-    } elseif ($_SESSION['Rol_idRol'] == 2) {
-        header('Location: navbarPostulante.php');
-        exit();
-    } else {
-        echo "Error: Rol de usuario no válido.";
-    }
-
+// Comprobamos si ya tenemos el rol en la sesión para no consultar la BD cada vez
+if (SessionManager::getRoleId() !== null && SessionManager::getRoleId() != 0) { // Añadida comprobación para rol 0
+    $idRol = SessionManager::getRoleId();
 } else {
-    echo "Error: No se pudieron obtener los datos del usuario.";
-    // Opcional: destruir la sesión si no se encuentra el usuario
-    // SessionManager::destroySession();
-    // header('Location: index.php');
-    // exit();
+    // Si no tenemos el rol, lo buscamos en la base de datos
+    $controller = new UsuarioController();
+    $response = $controller->obtenerUsuarioPorId($idUsuario);
+
+    if ($response->status == "ok") {
+        $usuario = $response->body;
+        $idRol = $usuario['Rol_idRol'];
+        $_SESSION['Rol_idRol'] = $idRol;
+    } else {
+        // Si no se encuentra el usuario (quizás fue borrado), destruimos la sesión y lo mandamos al login
+        SessionManager::destroySession();
+        // --- CORRECIÓN DE RUTA ---
+        header('Location: ../index.php?error=user_not_found');
+        exit();
+    }
+}
+
+// --- Redirección final basada en el ROL ---
+// Asumimos: 1 = Postulante, 2 = Empresa
+// Tus cambios para redirigir a los navbars son correctos.
+if ($idRol == 1) {
+    // Redirigimos al navbar del Postulante
+    header('Location: navbarPostulante.php');
+    exit();
+} elseif ($idRol == 2) {
+    // Redirigimos al navbar de la Empresa
+    header('Location: navbarEmpresa.php');
+    exit();
+} else {
+    // Si el rol es desconocido, mostramos un error y destruimos la sesión.
+    SessionManager::destroySession();
+    echo "Error: Rol de usuario no reconocido. Por favor, contacta a soporte.";
+    exit();
 }
