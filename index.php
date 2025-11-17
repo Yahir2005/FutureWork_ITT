@@ -13,7 +13,7 @@
         if($response->status == "ok"){
             SessionManager::startSession();
             $_SESSION["idUsuarios"] = $response->body; // Guardamos solo el ID
-            header("Location: opc.php");
+            header("Location: views/opc.php");
             exit();
         } else {
             $errorMessage = "<div class='alert alert-danger' role='alert'>Error al iniciar sesion: Usuario o contraseña incorrectos.</div>";
