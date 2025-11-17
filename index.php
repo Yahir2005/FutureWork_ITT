@@ -11,7 +11,9 @@
         if($response->status == "ok"){
             SessionManager::startSession();
             $_SESSION["idUsuarios"]=$response->body;
+            $_SESSION["Rol_idRol"] = $response->body->Rol_idRol;
             header("Location:opc.php");
+            exit();
             // --- CAMBIO 2: El 'echo' aquí no se ejecutará por el header(), así que se puede quitar ---
             // echo "<div class='alert alert-success' role='alert'>Inicio de sesión exitoso</div>";
         }else{

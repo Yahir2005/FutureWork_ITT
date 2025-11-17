@@ -1,67 +1,36 @@
 <?php
-// navbarEmpresa.php
-// Se asume que este archivo está dentro de la carpeta 'views'
+// Incluimos el SessionManager para poder usar sus métodos
+require_once __DIR__ . '/usecase/Usuario/SessionManager.php';
 
-// 1. Incluimos el SessionManager y el Router de Empresa
-require_once __DIR__ .'/view/../../usecase/Usuario/SessionManager.php';
-require_once __DIR__ .'/view/../../router/RouterPostulante.php';
-require_once __DIR__ .'/view/../../router/RouterEmpresa.php';
+// Iniciamos la sesión para poder acceder a las variables de $_SESSION
+SessionManager::startSession();
 
-// 2. SEGURIDAD: Verificamos la sesión y el rol
+// Verificamos que el usuario haya iniciado sesión
+if (!SessionManager::isUserLoggedIn()) {
+    // Si no ha iniciado sesión, lo redirigimos al login
+    header('Location: index.php');
+    exit();
+}
+
+// Obtenemos el ID del rol de la sesión
 $idRol = SessionManager::getRoleId();
 
-// Si no es Rol 1 (Empresa), lo sacamos al login
-if ($idRol !== 1) { 
-    // (Asumiendo que login.php está dos niveles arriba de 'views')
-    header("Location:navbarEmpresa.php "); 
-    exit;
+// Redirigimos en base al idRol
+if ($idRol == 2) {
+    // Rol de Postulante
+    header('Location: navbarPostulante.php');
+    exit();
+} elseif ($idRol == 1) {
+    // Rol de Empresa
+    header('Location: navbarEmpresa.php');
+    exit();
+} else {
+    // Si el rol no es 1 ni 2, o es nulo, podemos redirigir a una página por defecto o mostrar un error.
+    // Por ejemplo, redirigir al login o a una página de error.
+    echo "Error: Rol de usuario no válido o no definido.";
+    // Opcionalmente, destruir la sesión y redirigir al login
+    // SessionManager::destroySession();
+    // header('Location: index.php');
+    // exit();
 }
-
-if ($idRol !== 2) { 
-    // (Asumiendo que login.php está dos niveles arriba de 'views')
-    header("Location:navbarPostulante.php"); 
-    exit;
-}
-
-
-// 3. Lógica del Router para cargar la vista
-$router = new RouterEmpresa();
-// Obtenemos la vista de la URL, ej: navbarEmpresa.php?vista=Inicio
-// Si no hay vista, cargamos "Inicio" por defecto
-$vista = $_GET['vista'] ?? 'Inicio'; 
-
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Empresa - FutureWork ITT</title>
-    <link rel="stylesheet" href="css/tu_estilo.css">
-</head>
-<body>
-
-    <header>
-        <nav>
-            <a href="navbarEmpresa.php?vista=Inicio">Inicio</a>
-            
-            <a href="navbarEmpresa.php?vista=Ver_Vacantes_Empresa">Mis Vacantes</a>
-            <a href="navbarEmpresa.php?vista=Ver_Postulantes">Ver Postulantes</a>
-            <a href="navbarEmpresa.php?vista=Perfil_Empresa_Usuario">Mi Perfil</a>
-            
-            <a href="navbarEmpresa.php?vista=EXIT">Cerrar Sesión</a>
-        </nav>
-    </header>
-
-    <main>
-        <?php
-            // El router decide qué archivo .php incluir aquí
-            $router->CargarVista($vista);
-        ?>
-    </main>
-
-    <footer>
-        </footer>
-
-</body>
-</html>

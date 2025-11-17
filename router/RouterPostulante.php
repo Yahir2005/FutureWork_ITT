@@ -1,5 +1,5 @@
 <?php
-class Router{
+class RouterPostulante{
     public function CargarVista($vista){
         switch ($vista) {
 

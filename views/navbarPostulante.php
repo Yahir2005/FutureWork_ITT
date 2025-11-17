@@ -1,5 +1,11 @@
 <?php
+    include_once("../FutureWork_ITT/router/RouterPostulante.php");
+    include_once __DIR__ . "/../usecase/Usuario/UsuarioController.php";
+    include_once __DIR__ ."/../usecase/Usuario/SessionManager.php";
 
+    if(!SessionManager::isUserLoggedIn()){
+      header("Location:../index.php");
+    }
 ?>
 <html lang="es">
  <head>
@@ -36,6 +42,18 @@
      </div><a href="login.php" class="btn-login">Iniciar Sesión</a> <a href="registro.php" class="btn-register">Registrarse</a>
     </div>
    </div>
+
+    <section>
+            <?php
+
+                $enrutador = new RouterPostulante();
+                if(isset($_GET['cargar']))
+                if($enrutador->validarGET($_GET['cargar'])){
+                    $enrutador->cargarVista($_GET['cargar']);
+                }
+            ?>
+    </section>
+
   </nav><!-- Contenido Principal -->
   <main class="main-content">
    <section class="welcome-section">
