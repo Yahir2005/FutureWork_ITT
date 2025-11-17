@@ -37,7 +37,18 @@ class UsuarioController{
         $response = $usuarioUseCase->iniciarSesion($usuario, $contrasena);
         return $response;
     }
+    public function obtenerUsuarioPorId($id):RespuestaGenerica{
+        $gatewayDB = new UsuarioGatewey();
+        $usuarioUseCase = new UsuarioUseCase($gatewayDB);
+        $response = $usuarioUseCase->obtenerUsuarioPorId($id);
+        return $response;
+    }
 }
+/*
+$controller = new UsuarioController();
+$result = $controller->obtenerUsuarioPorId(1);
+echo $result->message;
+*/
 /*
 $controller = new UsuarioController();
 $result = $controller->iniciarSesion ("PaolaRl@gmail.com", "fdsf1234" );

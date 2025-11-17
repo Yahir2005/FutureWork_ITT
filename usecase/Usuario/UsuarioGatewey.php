@@ -68,4 +68,10 @@ class UsuarioGatewey implements IUsuarioGateway{
         }
     }
 
+    public function obtenerUsuarioPorId($id):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Usuarios WHERE idUsuarios ={$id} ";
+        $result = $mysqlConnector->consultaRetorno( $sql );
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }

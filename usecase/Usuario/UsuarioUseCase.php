@@ -96,5 +96,19 @@ class UsuarioUseCase {
         }
         return $response;
     }
+
+    public function obtenerUsuarioPorId($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDB->obtenerUsuarioPorId($id);
+        try {
+            $response->status = "ok";
+            $response->body=$respuestaMetodo;
+            $response->message= "listado Por Id correctamente";
+        } catch (Exception $e) {
+            $response->status= "error";
+            $response->message= "error al listar por Id";
+        }
+        return $response;
+    }
     
 }

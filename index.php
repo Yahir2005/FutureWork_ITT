@@ -8,28 +8,30 @@
     if(isset($_POST['enviar'])){
         $controller = new UsuarioController();
         $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
-        if($response->status == "ok"){
+        
+        // Asumiendo que $response->body es un objeto con idUsuarios y Rol_idRol
+        if($response->status == "ok" && isset($response->body->idUsuarios) && isset($response->body->Rol_idRol)){
             SessionManager::startSession();
-            $_SESSION["idUsuarios"]=$response->body;
-            $_SESSION["Rol_idRol"] = $response->body->Rol_idRol;
+            $_SESSION["idUsuarios"] = $response->body->idUsuarios;
+            $_SESSION["Rol_idRol"] = $response->body->Rol_idRol; // <-- GUARDAMOS EL ROL
             header("Location:opc.php");
-            exit();
-            // --- CAMBIO 2: El 'echo' aquí no se ejecutará por el header(), así que se puede quitar ---
-            // echo "<div class='alert alert-success' role='alert'>Inicio de sesión exitoso</div>";
+            exit(); // Es buena práctica usar exit() después de un header("Location...")
         }else{
-            // --- CAMBIO 3: Guardar el error en la variable en lugar de imprimirlo ---
-            $errorMessage = "<div class='alert alert-danger' role='alert'>Error al iniciar sesion</div>";
+            $errorMessage = "<div class='alert alert-danger' role='alert'>Error al iniciar sesion: Usuario o contraseña incorrectos.</div>";
         }
     }
     if(isset($_POST['enviarInvitado'])){
         SessionManager::startSession();
         $_SESSION["idUsuarios"]=0; // ID para usuario invitado
+        $_SESSION["Rol_idRol"]=0; // Rol para invitado
         header("Location:views/index.php");
+        exit();
     }
   
 ?>
 <!doctype html>
 <html lang="es">
+ <!-- El resto de tu HTML sigue aquí... -->
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
