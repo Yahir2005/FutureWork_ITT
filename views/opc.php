@@ -8,7 +8,7 @@ SessionManager::startSession();
 // Verificamos que el usuario haya iniciado sesión
 if (!SessionManager::isUserLoggedIn()) {
     // Si no ha iniciado sesión, lo redirigimos al login
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit();
 }
 
@@ -29,8 +29,8 @@ if ($idRol == 2) {
     // Por ejemplo, redirigir al login o a una página de error.
     echo "Error: Rol de usuario no válido o no definido.";
     // Opcionalmente, destruir la sesión y redirigir al login
-    // SessionManager::destroySession();
-    // header('Location: index.php');
-    // exit();
+    SessionManager::destroySession();
+    header('Location: index.php');
+    exit();
 }
 ?>
