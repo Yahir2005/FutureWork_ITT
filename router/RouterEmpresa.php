@@ -4,13 +4,13 @@ require_once __DIR__ .'/../usecase/Usuario/SessionManager.php';
 class RouterEmpresa{
     public function CargarVista($vista){
         switch ($vista) {
-        
+
         case 'login':
-            include_once __DIR__ .'/../index.php';
+            header('Location: /../index.php');
         break;
 
         case "HomeEmpresa":
-            include_once __DIR__ .('/../views/viewEmpresa/'.$vista.'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/navbarEmpresa.php');
         break;
         
         case 'PerfilPostulante':
