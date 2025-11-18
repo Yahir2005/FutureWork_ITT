@@ -1,6 +1,8 @@
 <?php
     require_once __DIR__ ."/usecase/Usuario/UsuarioController.php";
     require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
+    include_once("router/RouterEmpresa.php");
+    include_once("router/RouterPostulante.php");
     
     
     $errorMessage = "";
@@ -22,7 +24,7 @@
             switch($idRol){
                 case 1:
                     //header("Location:views/viewEmpresa/?cargar=navbarEmpresa");
-                    header("Location:views/viewEmpresa/?cargar=HomeEmpresa");  
+                    header("Location:views/viewEmpresa/?cargar=navbarEmpresa");  
                     break;
 
                 case 2:
