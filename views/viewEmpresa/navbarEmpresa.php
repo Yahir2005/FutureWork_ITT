@@ -1,12 +1,17 @@
 <?php
-
+    include_once("../FutureWork_ITT/router/RouterEmpresa.php");
+    include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
+    
+    if(!SessionManager::isUserLoggedIn()){
+      header("Location: /../index.php");
+    }
 ?>
 <html lang="es">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureWork ITT - Inicio Invitado</title>
-    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="../css/navbar.css">
   <style>
     
   </style>
@@ -36,6 +41,17 @@
      </div><a href="login.php" class="btn-login">Iniciar Sesión</a> <a href="registro.php" class="btn-register">Registrarse</a>
     </div>
    </div>
+
+    <section>
+          <?php
+            $enrutador = new RouterEmpresa;
+            if(isset($_GET['cargar']))
+            if($enrutador->validarGET($_GET['cargar'])){
+                $enrutador->cargarVista($_GET['cargar']);
+              }
+          ?>
+    </section>
+
   </nav><!-- Contenido Principal -->
   <main class="main-content">
    <section class="welcome-section">

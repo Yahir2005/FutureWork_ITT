@@ -1,10 +1,9 @@
 <?php
     include_once("../FutureWork_ITT/router/RouterPostulante.php");
-    include_once __DIR__ . "/../usecase/Usuario/UsuarioController.php";
-    include_once __DIR__ ."/../usecase/Usuario/SessionManager.php";
+    include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
 
     if(!SessionManager::isUserLoggedIn()){
-      header("Location:../index.php");
+      header("Location: /../index.php");
     }
 ?>
 <html lang="es">
@@ -12,7 +11,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureWork ITT - Inicio Invitado</title>
-    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="../css/navbar.css">
   <style>
     
   </style>

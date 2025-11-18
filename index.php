@@ -1,7 +1,8 @@
 <?php
     require_once __DIR__ ."/usecase/Usuario/UsuarioController.php";
     require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
-
+    
+    
     $errorMessage = "";
     
     if(isset($_POST['enviar'])){
@@ -14,17 +15,18 @@
             // Guardamos tanto el ID del usuario como su Rol en la sesión
             $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
             $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
-            
+            //header("Location:viewsStudent/?cargar=StudentTestListView");
             // Obtenemos el rol de la sesión que acabamos de establecer
             $idRol = SessionManager::getRoleId();
 
             switch($idRol){
                 case 1:
-                    header("Location: views/navbarEmpresa.php"); 
+                    //header("Location:views/viewEmpresa/?cargar=navbarEmpresa");
+                    header("Location:views/viewEmpresa/?cargar=HomeEmpresa");  
                     break;
 
                 case 2:
-                    header("Location: views/navbarPostulante.php");
+                    header("Location: views/viewPostulante/navbarPostulante.php");
                     break;
 
                 default:

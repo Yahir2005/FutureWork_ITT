@@ -4,13 +4,24 @@ require_once __DIR__ .'/../usecase/Usuario/SessionManager.php';
 class RouterEmpresa{
     public function CargarVista($vista){
         switch ($vista) {
+        
+        case 'login':
+            include_once __DIR__ .'/../index.php';
+        break;
 
-        case "Inicio":
-            include __DIR__ .'/../view/InicioView.php';
+        case "HomeEmpresa":
+            include_once __DIR__ .('/../views/viewEmpresa/'.$vista.'.php');
         break;
         
         case 'PerfilPostulante':
             include __DIR__ .'/../view/PerfilPostulanteView.php';
+        break;
+
+        case 'closeSession':
+            SessionManager::destroySession();
+            echo "<script> window.location.href='../index.php';</script>";
+                    //header("Location:../index.php");
+                    //exit();
         break;
 
         case 'ṔerfilEmpresa':

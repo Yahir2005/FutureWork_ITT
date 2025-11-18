@@ -3,6 +3,10 @@ class RouterPostulante{
     public function CargarVista($vista){
         switch ($vista) {
 
+        case 'login':
+            include_once __DIR__ .'/../index.php';
+        break;
+
         case "Inicio":
             include __DIR__ .'/../view/InicioView.php';
         break;
