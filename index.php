@@ -3,7 +3,7 @@
     require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
 
     $errorMessage = "";
-
+    $idRol = SessionManager::getRoleId();
     if(isset($_POST['enviar'])){
         $controller = new UsuarioController();
         $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
@@ -12,8 +12,20 @@
         // Si el inicio de sesión es exitoso, $response->body contiene el ID del usuario.
         if($response->status == "ok"){
             SessionManager::startSession();
-            $_SESSION["idUsuarios"] = $response->body; // Guardamos solo el ID
-            header("Location: views/opc.php");
+            $_SESSION["idUsuarios"] = $response->body;
+            switch($idRol){
+                case 1:
+                    header("Location: views/navbarEmpresa.php"); 
+                break;
+
+                case 2:
+                    header("Location: views/navbarPostulante.php");
+                break;
+
+                default:
+                $errorMessage =  "<div class='alert alert-danger' role='alert'>Error al obtener el ID Rol</div>";
+                break;
+            }
             exit();
         } else {
             $errorMessage = "<div class='alert alert-danger' role='alert'>Error al iniciar sesion: Usuario o contraseña incorrectos.</div>";
