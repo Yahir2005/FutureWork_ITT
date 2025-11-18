@@ -54,7 +54,7 @@ class UsuarioGatewey implements IUsuarioGateway{
     }
 
     public function iniciarSesion(string $usuario, string $contrasena): array {
-        $sql = "SELECT * FROM Usuarios 
+        $sql = "SELECT idUsuarios, Rol_idRol FROM Usuarios 
                 WHERE email='$usuario'
                 AND Password='$contrasena'";
 
@@ -64,7 +64,8 @@ class UsuarioGatewey implements IUsuarioGateway{
         if ($row) {
             return $row;
         } else {
-            throw new Exception("Usuario o contraseña incorrecta");
+            // Lanzamos una excepción para que sea capturada por el UseCase
+            throw new Exception("Usuario o contraseña incorrectos");
         }
     }
 

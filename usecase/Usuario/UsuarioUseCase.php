@@ -82,16 +82,18 @@ class UsuarioUseCase {
     public function iniciarSesion(string $usuario, string $contrasena):RespuestaGenerica{
         $response = new RespuestaGenerica();
         try {
-            $sesion = $this->gatewayDB->iniciarSesion($usuario, $contrasena);
-            if($sesion > 0){
+            $datosUsuario = $this->gatewayDB->iniciarSesion($usuario, $contrasena);
+            if(!empty($datosUsuario)){
                 $response->status ="ok";
-                $response->body=$sesion;
+                $response->body = $datosUsuario; // Devolvemos todos los datos del usuario
                 $response->message="Inicio de sesión exitoso";
             }else{
+                // Este 'else' no es realmente necesario debido al 'throw' en el Gateway, pero es buena práctica.
                 $response->status="error";
                 $response->message="Credenciales inválidas";
             }
         } catch (Exception $e) {
+            $response->status = "error";
             $response->message = $e->getMessage();
         }
         return $response;

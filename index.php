@@ -3,34 +3,41 @@
     require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
 
     $errorMessage = "";
-    $idRol = SessionManager::getRoleId();
+    
     if(isset($_POST['enviar'])){
         $controller = new UsuarioController();
         $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
         
-        // --- CORRECCIÓN: Volvemos a la lógica original ---
-        // Si el inicio de sesión es exitoso, $response->body contiene el ID del usuario.
+        // Si el inicio de sesión es exitoso, $response->body contiene los datos del usuario.
         if($response->status == "ok"){
             SessionManager::startSession();
-            $_SESSION["idUsuarios"] = $response->body;
+            // Guardamos tanto el ID del usuario como su Rol en la sesión
+            $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
+            $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
+            
+            // Obtenemos el rol de la sesión que acabamos de establecer
+            $idRol = SessionManager::getRoleId();
+
             switch($idRol){
                 case 1:
                     header("Location: views/navbarEmpresa.php"); 
-                break;
+                    break;
 
                 case 2:
                     header("Location: views/navbarPostulante.php");
-                break;
+                    break;
 
                 default:
-                $errorMessage =  "<div class='alert alert-danger' role='alert'>Error al obtener el ID Rol</div>";
-                break;
+                    $errorMessage =  "<div class='alert alert-danger' role='alert'>Error: Rol de usuario no reconocido.</div>";
+                    break;
             }
             exit();
         } else {
-            $errorMessage = "<div class='alert alert-danger' role='alert'>Error al iniciar sesion: Usuario o contraseña incorrectos.</div>";
+            // Usamos el mensaje de error que viene desde el UseCase
+            $errorMessage = "<div class='alert alert-danger' role='alert'>".$response->message."</div>";
         }
     }
+
     if(isset($_POST['enviarInvitado'])){
         SessionManager::startSession();
         $_SESSION["idUsuarios"] = 0;
@@ -75,7 +82,7 @@
      
      <div class="form-group" id="usuarioGroup"><label for="usuario">Correo Electrónico</label> <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu usuario o correo" required>
      </div>
-     <div class="form-group password-toggle" id="passwordGroup"><label for="password">Contraseña</label> <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required>
+     <div class="form-group password-toggle" id="passwordGroup"><label for="password">Contraseña</label> <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required="">
      
       <button type="button" class="toggle-btn" onclick="togglePassword(this)">👁️</button>
      </div>
