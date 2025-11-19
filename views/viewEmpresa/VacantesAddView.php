@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureWork ITT - Agregar Vacante</title>
-  <link rel="stylesheet" href="../css/VacantesAddView.css">
+  <link rel="stylesheet" href="css/VacantesAddView.css">
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
