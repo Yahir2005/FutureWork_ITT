@@ -29,7 +29,34 @@
     <ul class="navbar-menu">
     
      <li><a class="nav-link" href="?cargar=Home">🏠 Inicio</a></li>
-     <li><a class="nav-link" href="?cargar=VacantesAddView">💼 Vacantes</a></li>
+     
+    <li class="relative group">
+      <a class="nav-link dropdown-toggle flex items-center cursor-pointer" 
+        id="vacantesDropdownToggle">
+          💼 Vacantes 
+          <span class="ml-1 text-xs">&#9660;</span> 
+      </a>
+
+      <ul class="absolute hidden group-hover:block w-48 bg-gray-700 shadow-lg rounded-md z-10 transition duration-300 ease-in-out py-1 mt-1 left-0" 
+          id="vacantesDropdownMenu">
+          
+          <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
+                href="?cargar=VacantesAddView">Vacantes Agregar Vacantes</a></li>
+                
+          <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
+                href="?cargar=VacantesMenuView&tipo=Admin">Vacantes Administrativas</a></li>
+                
+          <hr class="border-gray-600 my-1">
+          
+          <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
+                href="?cargar=PublicarVacante">Publicar Vacante</a></li>
+                
+          <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
+                href="?cargar=MisVacantes">Mis Vacantes</a></li>
+                
+      </ul>
+    </li>
+
      <li><a class="nav-link" href="?cargar=EmpresasMenuView">🏢 Empresas</a></li>
      <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
      <li><a class="nav-link" href="?cargar=ContactoView">📧 Contacto</a></li>
@@ -43,6 +70,28 @@
      </div></a>
     </div>
    </div>
+   <script>
+    // Obtener los elementos por sus IDs
+    const toggle = document.getElementById('vacantesDropdownToggle');
+    const menu = document.getElementById('vacantesDropdownMenu');
+
+    // Manejar el click en el botón de "Vacantes"
+    toggle.addEventListener('click', function(event) {
+        // Detiene la propagación para que el documento no lo cierre inmediatamente
+        event.stopPropagation(); 
+        // Alterna la clase 'hidden': si está oculta, la muestra; si está visible, la oculta.
+        menu.classList.toggle('hidden'); 
+    });
+
+    // Manejar el click en el documento entero para cerrar el menú
+    document.addEventListener('click', function(event) {
+        // Si el click no ocurrió dentro del botón (toggle) Y no ocurrió dentro del menú
+        if (!toggle.contains(event.target) && !menu.contains(event.target)) {
+            // Oculta el menú
+            menu.classList.add('hidden');
+        }
+    });
+  </script>
 
     <section>
           <?php
@@ -53,5 +102,6 @@
               }
           ?>
     </section>
+  </body>
 
  
