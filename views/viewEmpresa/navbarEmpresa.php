@@ -41,10 +41,10 @@
           id="vacantesDropdownMenu">
           
           <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
-                href="?cargar=VacantesAddView">Vacantes Agregar Vacantes</a></li>
+                href="?cargar=VacantesAddView">Publicar Vacantes</a></li>
                 
           <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
-                href="?cargar=VacantesMenuView&tipo=Admin">Vacantes Administrativas</a></li>
+                href="?cargar=VacantesListView">Ver Vacantes Empresas</a></li>
                 
           <hr class="border-gray-600 my-1">
           
@@ -57,7 +57,8 @@
       </ul>
     </li>
 
-     <li><a class="nav-link" href="?cargar=EmpresasMenuView">🏢 Empresas</a></li>
+     <li><a class="nav-link" href="?cargar=EmpresasListView">🏢 Empresas</a></li>
+     
      <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
      <li><a class="nav-link" href="?cargar=ContactoView">📧 Contacto</a></li>
      
