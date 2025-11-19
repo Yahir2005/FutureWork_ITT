@@ -21,6 +21,22 @@ class RouterEmpresa{
             include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
+        case 'VacantesMenuView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'EmpresasMenuView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+        
+        case 'AcercaDeNosotrosView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'ContactoView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
         case 'closeSession':
             SessionManager::destroySession();
             echo "<script> window.location.href='../index.php';</script>";

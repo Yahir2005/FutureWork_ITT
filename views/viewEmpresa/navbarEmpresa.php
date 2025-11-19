@@ -30,9 +30,9 @@
     
      <li><a class="nav-link" href="?cargar=Home">🏠 Inicio</a></li>
      <li><a class="nav-link" href="?cargar=VacantesMenuView">💼 Vacantes</a></li>
-     <li><a class="nav-link" href="?cargar=EmpresasMenuView"></a>🏢 Empresas</a></li>
-     <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView"></a>ℹ️ Nosotros</a></li>
-     <li><a class="nav-link" href="?cargar=ContactoView"></a>📧 Contacto</a></li>
+     <li><a class="nav-link" href="?cargar=EmpresasMenuView">🏢 Empresas</a></li>
+     <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
+     <li><a class="nav-link" href="?cargar=ContactoView">📧 Contacto</a></li>
      
     </ul><!-- Acciones -->
     <div class="navbar-actions">
@@ -40,7 +40,7 @@
       <div class="user-icon">
        👤
       </div><span>Empresa</span>
-     </div><a href="login.php" class="btn-login">Iniciar Sesión</a> <a href="registro.php" class="btn-register">Registrarse</a>
+     </div></a>
     </div>
    </div>
 
