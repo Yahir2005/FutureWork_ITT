@@ -42,17 +42,16 @@
           
           <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
                 href="?cargar=VacantesAddView">Publicar Vacantes</a></li>
+
+          <hr class="border-gray-600 my-1">
                 
           <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
                 href="?cargar=VacantesListView">Ver Vacantes Empresas</a></li>
                 
           <hr class="border-gray-600 my-1">
-          
-          <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
-                href="?cargar=PublicarVacante">Publicar Vacante</a></li>
                 
           <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
-                href="?cargar=MisVacantes">Mis Vacantes</a></li>
+                href="?cargar=MisVacantesListView">Mis Vacantes</a></li>
                 
       </ul>
     </li>
