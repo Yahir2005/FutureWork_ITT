@@ -149,7 +149,7 @@ $totalCandidatos = array_sum(array_column($vacantes, 'candidatos'));
               <td style="padding:14px 18px; text-align:center; vertical-align:middle;">
                 <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
                   <button onclick="location.href='?cargar=CandidatosListView&id=<?= $vac['idVacante'] ?>'" style="padding:8px 10px; border-radius:8px; border:none; background:#e3f2fd; color:#1976d2; cursor:pointer;">👥 Candidatos</button>
-                  <button onclick="location.href='?cargar=VacantesEditView&id=<?= $vac['idVacante'] ?>'" style="padding:8px 10px; border-radius:8px; border:none; background:#fff3e0; color:#f57c00; cursor:pointer;">✏️ Editar</button>
+                  <button onclick="location.href='?cargar=VacantesUpdateView&id=<?= $vac['idVacante'] ?>'" style="padding:8px 10px; border-radius:8px; border:none; background:#fff3e0; color:#f57c00; cursor:pointer;">✏️ Editar</button>
                   <button onclick="confirmarEstado(<?= $vac['idVacante'] ?>,'<?= $vac['estatus'] ?>')" style="padding:8px 10px; border-radius:8px; border:none; background:#fff7e6; color:#8a6d0a; cursor:pointer;">⏸️ Cambiar estado</button>
                   <button onclick="confirmarEliminacion(<?= $vac['idVacante'] ?>)" style="padding:8px 10px; border-radius:8px; border:none; background:#ffebee; color:#c62828; cursor:pointer;">🗑️ Eliminar</button>
                 </div>
