@@ -29,7 +29,7 @@
     <ul class="navbar-menu">
     
      <li><a class="nav-link" href="?cargar=Home">🏠 Inicio</a></li>
-     <li><a class="nav-link" href="?cargar=VacantesMenuView">💼 Vacantes</a></li>
+     <li><a class="nav-link" href="?cargar=VacantesAddView">💼 Vacantes</a></li>
      <li><a class="nav-link" href="?cargar=EmpresasMenuView">🏢 Empresas</a></li>
      <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
      <li><a class="nav-link" href="?cargar=ContactoView">📧 Contacto</a></li>

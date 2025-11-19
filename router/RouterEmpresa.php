@@ -37,6 +37,10 @@ class RouterEmpresa{
             include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
+        case 'VacantesAddView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
         case 'closeSession':
             SessionManager::destroySession();
             echo "<script> window.location.href='../index.php';</script>";
