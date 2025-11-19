@@ -29,10 +29,11 @@
     <ul class="navbar-menu">
     
      <li><a class="nav-link" href="?cargar=Home">🏠 Inicio</a></li>
-     <li><a class="nav-link" href="?cargar=VacantesView">💼 Vacantes</a></li>
-     <li><a href="empresas.php">🏢 Empresas</a></li>
-     <li><a href="nosotros.php">ℹ️ Nosotros</a></li>
-     <li><a href="contacto.php">📧 Contacto</a></li>
+     <li><a class="nav-link" href="?cargar=VacantesMenuView">💼 Vacantes</a></li>
+     <li><a class="nav-link" href="?cargar=EmpresasMenuView"></a>🏢 Empresas</a></li>
+     <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView"></a>ℹ️ Nosotros</a></li>
+     <li><a class="nav-link" href="?cargar=ContactoView"></a>📧 Contacto</a></li>
+     
     </ul><!-- Acciones -->
     <div class="navbar-actions">
      <div class="user-badge">
