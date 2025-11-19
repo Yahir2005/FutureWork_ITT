@@ -40,7 +40,11 @@ class RouterEmpresa{
         case 'VacantesAddView':
             include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
-        
+
+        case 'MisVacantesListView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
         case 'EmpresasListView':
             include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
