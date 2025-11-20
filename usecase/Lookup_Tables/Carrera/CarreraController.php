@@ -14,10 +14,10 @@ class CarreraController{
         return $UseCase->listarCarreraPorId($idCarrera);
      }
 }
-/*
+
 $controller=new CarreraController();
 $response =$controller ->listarCarrera();
-echo $response-> message;*/
+echo $response-> message;
 /*
  $controller = new CarreraController();
  $response = $controller ->listarCarreraPorId(1);
