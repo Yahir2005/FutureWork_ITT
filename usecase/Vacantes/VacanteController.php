@@ -52,9 +52,11 @@ class VacanteController{
         return $usecase->ContarCandidatosPorVacante($idVacante);
     }
 }
+/*
 $controller = new VacanteController();
 $result = $controller->ContarCandidatosPorVacante(1);
 echo $result->message;
+*/
 /*
 $controller = new VacanteController();
 $result = $controller->ListarVacantesPorEstadoEmpresaContrato(1);
