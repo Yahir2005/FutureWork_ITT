@@ -99,4 +99,13 @@ class VacanteGateway implements IVacante{
         if($result === false) return [];
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function ContarCandidatosPorVacante($idVacante):int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Postulaciones WHERE WHERE Vacante_idVacante = {$idVacante}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if ($result === false) return 0;
+        $row = mysqli_fetch_assoc($result);
+        return (int)($row['total'] ?? 0);
+    }
 }

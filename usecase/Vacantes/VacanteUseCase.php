@@ -106,4 +106,18 @@ class VacanteUseCase{
         }
         return $response;
     }
+
+    public function ContarCandidatosPorVacante($idVacante):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ContarCandidatosPorVacante($idVacante);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Contar candidatos Vacantes correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al contar candidatos Vacantes ". $e->getMessage();
+        }
+        return $response;
+    }
 }
