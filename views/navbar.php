@@ -4,7 +4,7 @@
     include_once __DIR__ ."/../usecase/Usuario/SessionManager.php";
 
     if(!SessionManager::isUserLoggedIn()){
-      header("Location: ../index.php");
+      header("Location: /../index.php");
     }
 ?>
 <html lang="es">
