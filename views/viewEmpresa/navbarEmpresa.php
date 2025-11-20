@@ -56,7 +56,33 @@
       </ul>
     </li>
 
-     <li><a class="nav-link" href="?cargar=EmpresasListView">🏢 Empresas</a></li>
+      <li class="relative group">
+        <a class="nav-link dropdown-toggle flex items-center cursor-pointer" 
+          id="vacantesDropdownToggle">
+            🏢 Empresas 
+            <span class="ml-1 text-xs">&#9660;</span> 
+        </a>
+
+        <ul class="absolute hidden group-hover:block w-48 bg-gray-700 shadow-lg rounded-md z-10 transition duration-300 ease-in-out py-1 mt-1 left-0" 
+            id="vacantesDropdownMenu">
+            
+            <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
+                  href="?cargar=VacantesAddView">Publicar Vacantes</a></li>
+
+            <hr class="border-gray-600 my-1">
+                  
+            <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
+                  href="?cargar=VacantesListView">Ver Vacantes Empresas</a></li>
+                  
+            <hr class="border-gray-600 my-1">
+                  
+            <li><a class="block px-4 py-2 text-sm text-white hover:bg-gray-600" 
+                  href="?cargar=MisVacantesListView">Mis Vacantes</a></li>
+                  
+        </ul>
+      </li>
+
+
      
      <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
      <li><a class="nav-link" href="?cargar=ContactoView">📧 Contacto</a></li>
