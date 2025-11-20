@@ -5,7 +5,7 @@
 
 // Conectar con el manejador de sesión y el controlador de vacantes.
 // Descomenta y ajusta las rutas si tu proyecto tiene esos archivos.
-// require_once __DIR__ . "/../../usecase/Usuario/SessionManager.php";
+// 
 // require_once __DIR__ . "/../../usecase/Vacante/VacanteController.php";
 
 // // Verificar sesión (opcional, la plantilla que incluye esta vista suele manejarla)
@@ -15,49 +15,22 @@
 // }
 
 // // Obtener vacantes de la empresa
-// $idEmpresa = SessionManager::getUserId(); // Ajustar según tu SessionManager
-// $controller = new VacanteController();
-// $vacantes = $controller->ListarVacantesPorEmpresa($idEmpresa); // Implementar en controller/usecase/gateway
+  require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+  require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
+  require_once __DIR__ . "/../../usecase/Usuario/SessionManager.php";
+  $idEmpresa = SessionManager::getUserId(); 
+  $controllerVacantes = new VacanteController();
+  $controllerEstado = new EstadoValidacionVacanteController();
+  $result = $controllerVacantes->ListarVacantesPorEmpresa($idEmpresa); 
+  $vacantes = array();
+   // Obtener datos
+  if($result->status == "ok"){
+    $vacantes = $result->body;
+  }else{
+    echo "<div class='alert alert-danger' role='alert'>Error al obtener las vacantes: ".$result->message."</div>";
+  }
 
-// Datos de ejemplo para diseño (elimina cuando conectes con el controlador)
-/*
-$vacantes = [
-    [
-        'idVacante' => 101,
-        'titulo' => 'Desarrollador PHP / Laravel',
-        'descripcion' => 'Se requiere desarrollador con experiencia en Laravel, APIs REST y MySQL.',
-        'fechaPublicacion' => '2025-10-01',
-        'estatus' => 'Abierta',
-        'candidatos' => 14,
-        'modalidad' => 'Remoto',
-        'tipoContrato' => 'Tiempo Completo'
-    ],
-    [
-        'idVacante' => 102,
-        'titulo' => 'Diseñador UI/UX',
-        'descripcion' => 'Diseñador con experiencia en Figma y prototipos interactivos.',
-        'fechaPublicacion' => '2025-09-20',
-        'estatus' => 'Cerrada',
-        'candidatos' => 9,
-        'modalidad' => 'Híbrido',
-        'tipoContrato' => 'Medio Tiempo'
-    ],
-    [
-        'idVacante' => 103,
-        'titulo' => 'Analista de Datos',
-        'descripcion' => 'Experiencia con Python, pandas y visualización de datos.',
-        'fechaPublicacion' => '2025-08-30',
-        'estatus' => 'Pausada',
-        'candidatos' => 5,
-        'modalidad' => 'Presencial',
-        'tipoContrato' => 'Por Proyecto'
-    ]
-];
 
-$totalVacantes = count($vacantes);
-$vacantesAbiertas = count(array_filter($vacantes, fn($v) => strtolower($v['estatus']) === 'abierta'));
-$totalCandidatos = array_sum(array_column($vacantes, 'candidatos'));
-*/
 ?>
 
 <!-- Contenido principal (fragmento para incluir dentro de navbarEmpresa.php) -->
@@ -132,7 +105,7 @@ $totalCandidatos = array_sum(array_column($vacantes, 'candidatos'));
                 </div>
               </td>
               <td style="padding:14px 18px; vertical-align:middle;"><?= date("d/m/Y", strtotime($vac['fechaPublicacion'])) ?></td>
-              <td style="padding:14px 18px; vertical-align:middle;"><?= htmlspecialchars($vac['modalidad']) ?> / <?= htmlspecialchars($vac['tipoContrato']) ?></td>
+              <td style="padding:14px 18px; vertical-align:middle;"><?= htmlspecialchars($vac['TipoModalidad']) ?> / <?= htmlspecialchars($vac['tipoContrato']) ?></td>
               <td style="padding:14px 18px; text-align:center; vertical-align:middle; font-weight:700; color:#1976d2;"><?= $vac['candidatos'] ?></td>
               <td style="padding:14px 18px; text-align:center; vertical-align:middle;">
                 <?php

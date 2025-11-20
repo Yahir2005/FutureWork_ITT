@@ -9,4 +9,6 @@ interface IVacante{
     public function ListarVacantes():array;
 
     public function ListarVacantesPorNombre($nombre):array;
+
+    public function ListarVacantesPorEmpresa($idEmpresa):array;
 }
