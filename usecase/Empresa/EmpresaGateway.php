@@ -60,4 +60,10 @@ class EmpresaGateway implements IEmpresa{
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
+    public function buscarEmpresasPorSector($Sector):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Empresas WHERE sector LIKE '%$Sector%'";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }

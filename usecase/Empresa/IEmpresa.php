@@ -9,4 +9,6 @@ interface IEmpresa {
     public function eliminarEmpresas($id):int;
 
     public function buscarEmpresasPorNombre($Nombre):array;
+
+    public function buscarEmpresasPorSector($Sector):array;
 }

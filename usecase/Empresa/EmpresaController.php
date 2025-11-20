@@ -32,7 +32,16 @@ class EmpresaController{
         $useCase = new EmpresaUseCase($gateway);
         return $useCase->buscarEmpresasPorNombre($Nombre);
     }
+
+    public function buscarEmpresasPorSector($Sector):RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->buscarEmpresasPorSector($Sector);
+    }
 }
+$controller = new EmpresaController();
+$result = $controller->buscarEmpresasPorSector("Tec");
+echo $result ->message;
 /*
 $controller = new EmpresaController();
 $response = $controller->listarEmpresas();
