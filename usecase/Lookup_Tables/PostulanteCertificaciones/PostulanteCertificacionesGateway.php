@@ -6,7 +6,7 @@ class PostulanteCertificacionesGateway implements IPostulanteCertificaciones{
 
      public function listarPostulanteCertificaciones():array{
         $objSQL = new MysqlConnector();
-        $sql = "SELECT * FROM Certificaciones";
+        $sql = "SELECT * FROM Postulante_Certificacion";
         $result = $objSQL ->consultaRetorno($sql);
         return mysqli_fetch_all($result,MYSQLI_ASSOC);
      }

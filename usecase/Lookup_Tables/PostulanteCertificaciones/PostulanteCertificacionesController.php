@@ -12,3 +12,6 @@ class   PostulanteCertificacionesController {
     }
 
 }
+$controller = new PostulanteCertificacionesController();
+$result  = $controller->listarPostulanteCertificaciones();
+echo $result->message;

@@ -25,7 +25,7 @@ class EstadoPostulacionUseCase{
     
     public function listarEstadoPostulacionId($id): RespuestaGenerica{
         $respose =  new RespuestaGenerica();
-        $respuestaMetodo = $this -> gatewayDb -> listarEstadoPostulacion();
+        $respuestaMetodo = $this -> gatewayDb -> listarEstadoPostulacion($id);
         try{
             $respose ->status = "ok";
             $respose ->body = $respuestaMetodo;
