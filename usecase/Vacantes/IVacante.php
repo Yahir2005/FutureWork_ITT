@@ -11,4 +11,6 @@ interface IVacante{
     public function ListarVacantesPorNombre($nombre):array;
 
     public function ListarVacantesPorEmpresa($idEmpresa):array;
+
+    public function ListarVacantesPorEstadoEmpresaContrato($idEstado):array;
 }
