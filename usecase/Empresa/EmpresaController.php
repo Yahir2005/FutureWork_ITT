@@ -44,7 +44,20 @@ class EmpresaController{
         $useCase = new EmpresaUseCase($gateway);
         return $useCase->buscarEmpresasPorTipoEstado($Tipo);
     }
+
+    public function actualizarEstadoEmpresa($id,$empresa):RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->actualizarEstadoEmpresa($id,$empresa);
+    }
 }
+/*
+$controller = new EmpresaController();
+$empresa = new Empresa();
+$empresa->set("EstadoValidacionEmpresa_idEstadoValidacionEmpresa",1);
+$result = $controller->actualizarEstadoEmpresa(1,$empresa);
+echo $result->message;
+*/
 /*
 $controller = new EmpresaController();
 $result = $controller->buscarEmpresasPorTipoEstado(1);

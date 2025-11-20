@@ -73,4 +73,13 @@ class EmpresaGateway implements IEmpresa{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function actualizarEstadoEmpresa($id,$empresa):int {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "UPDATE Empresas SET 
+        EstadoValidacionEmpresa_idEstadoValidacionEmpresa = '{$empresa->get('EstadoValidacionEmpresa_idEstadoValidacionEmpresa')}' 
+        WHERE idEmpresas = {$id}";
+        $result = $mysqlConnector->consultaSimple($sql);
+        return $result;
+    }
 }
