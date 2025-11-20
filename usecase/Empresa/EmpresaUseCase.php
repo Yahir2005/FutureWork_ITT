@@ -90,4 +90,18 @@ class EmpresaUseCase{
         }
         return $response;
     }
+
+    public function buscarEmpresasPorTipoEstado($Tipo): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->buscarEmpresasPorTipoEstado($Tipo);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se encontro el estado de la empresa Correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al encontrar el estado de la empresa". $e->getMessage();
+        }
+        return $response;
+    }
 } 

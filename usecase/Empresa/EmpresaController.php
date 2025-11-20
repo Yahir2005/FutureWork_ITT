@@ -38,10 +38,23 @@ class EmpresaController{
         $useCase = new EmpresaUseCase($gateway);
         return $useCase->buscarEmpresasPorSector($Sector);
     }
+
+    public function buscarEmpresasPorTipoEstado($Tipo):RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->buscarEmpresasPorTipoEstado($Tipo);
+    }
 }
+/*
+$controller = new EmpresaController();
+$result = $controller->buscarEmpresasPorTipoEstado(1);
+echo $result->message;
+*/
+/*
 $controller = new EmpresaController();
 $result = $controller->buscarEmpresasPorSector("Tec");
 echo $result ->message;
+*/
 /*
 $controller = new EmpresaController();
 $response = $controller->listarEmpresas();

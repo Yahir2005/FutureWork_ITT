@@ -66,4 +66,11 @@ class EmpresaGateway implements IEmpresa{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function buscarEmpresasPorTipoEstado($Tipo):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Empresas WHERE EstadoValidacionEmpresa_idEstadoValidacionEmpresa = {$Tipo}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }

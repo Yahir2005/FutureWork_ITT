@@ -11,4 +11,6 @@ interface IEmpresa {
     public function buscarEmpresasPorNombre($Nombre):array;
 
     public function buscarEmpresasPorSector($Sector):array;
+
+    public function buscarEmpresasPorTipoEstado($Tipo):array;
 }
