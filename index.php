@@ -1,32 +1,57 @@
 <?php
     require_once __DIR__ ."/usecase/Usuario/UsuarioController.php";
     require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
-
-    // --- CAMBIO 1: Inicializar la variable de error ---
+    include_once("router/RouterEmpresa.php");
+    include_once("router/RouterPostulante.php");
+    
+    
     $errorMessage = "";
-
+    
     if(isset($_POST['enviar'])){
         $controller = new UsuarioController();
         $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
+        
+        // Si el inicio de sesión es exitoso, $response->body contiene los datos del usuario.
         if($response->status == "ok"){
             SessionManager::startSession();
-            $_SESSION["idUsuarios"]=$response->body;
-            header("Location:views/index.php");
-            // --- CAMBIO 2: El 'echo' aquí no se ejecutará por el header(), así que se puede quitar ---
-            // echo "<div class='alert alert-success' role='alert'>Inicio de sesión exitoso</div>";
-        }else{
-            // --- CAMBIO 3: Guardar el error en la variable en lugar de imprimirlo ---
-            $errorMessage = "<div class='alert alert-danger' role='alert'>Error al iniciar sesion</div>";
+            // Guardamos tanto el ID del usuario como su Rol en la sesión
+            $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
+            $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
+            //header("Location:viewsStudent/?cargar=StudentTestListView");
+            // Obtenemos el rol de la sesión que acabamos de establecer
+            $idRol = SessionManager::getRoleId();
+
+            switch($idRol){
+                case 1:
+                    //header("Location:views/viewEmpresa/?cargar=navbarEmpresa");
+                    header("Location:views/viewEmpresa/navbarEmpresa.php");  
+                    break;
+
+                case 2:
+                    header("Location: views/viewPostulante/navbarPostulante.php");
+                    break;
+
+                default:
+                    $errorMessage =  "<div class='alert alert-danger' role='alert'>Error: Rol de usuario no reconocido.</div>";
+                    break;
+            }
+            exit();
+        } else {
+            // Usamos el mensaje de error que viene desde el UseCase
+            $errorMessage = "<div class='alert alert-danger' role='alert'>".$response->message."</div>";
         }
     }
+
     if(isset($_POST['enviarInvitado'])){
         SessionManager::startSession();
-        $_SESSION["idUsuarios"]=0; // ID para usuario invitado
-        header("Location:views/index.php");
+        $_SESSION["idUsuarios"] = 0;
+        $_SESSION["Rol_idRol"] = 0;
+        header("Location: views/navbar.php");
+        exit();
     }
-  
 ?>
 <!doctype html>
+<!-- El resto del HTML no cambia -->
 <html lang="es">
  <head>
   <meta charset="UTF-8">
@@ -61,7 +86,7 @@
      
      <div class="form-group" id="usuarioGroup"><label for="usuario">Correo Electrónico</label> <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu usuario o correo" required>
      </div>
-     <div class="form-group password-toggle" id="passwordGroup"><label for="password">Contraseña</label> <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required>
+     <div class="form-group password-toggle" id="passwordGroup"><label for="password">Contraseña</label> <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required="">
      
       <button type="button" class="toggle-btn" onclick="togglePassword(this)">👁️</button>
      </div>

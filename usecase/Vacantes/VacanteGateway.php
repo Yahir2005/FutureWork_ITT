@@ -70,4 +70,11 @@ class VacanteGateway implements IVacante{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function ListarVacantesPorEmpresa($idEmpresa):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Vacantes WHERE Empresa_idEmpresa = {$idEmpresa}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }

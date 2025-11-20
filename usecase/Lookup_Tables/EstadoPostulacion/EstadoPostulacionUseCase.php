@@ -22,5 +22,19 @@ class EstadoPostulacionUseCase{
         }
         return $respose;
     }
+    
+    public function listarEstadoPostulacionId($id): RespuestaGenerica{
+        $respose =  new RespuestaGenerica();
+        $respuestaMetodo = $this -> gatewayDb -> listarEstadoPostulacion();
+        try{
+            $respose ->status = "ok";
+            $respose ->body = $respuestaMetodo;
+            $respose ->message = "Estado Postlaciones por ID ordenado correctamente";
+        }catch(exception $e){
+            $respose -> status = "ERROR";
+            $respose ->message = "ERROR AL ORDDENAR POR ID". $e ->getMessage();
+        }
+        return $respose;
+    }
 
 }

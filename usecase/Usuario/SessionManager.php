@@ -21,8 +21,14 @@
 
     public static function getRoleId() {
         self::startSession();
-        return $_SESSION['idRol'] ?? null;
+        return $_SESSION['Rol_idRol'] ?? null;
     }
+
+    public static function getEmpresaId() {
+        self::startSession();
+        return $_SESSION['idEmpresas'] ?? null;
+    }
+
 
     // Destruir la sesión
     public static function destroySession() {

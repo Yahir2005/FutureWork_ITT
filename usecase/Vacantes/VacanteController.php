@@ -33,7 +33,18 @@ class VacanteController{
         $usecase = new VacanteUseCase($gatewayDb);
         return $usecase->ListarVacantesPorNombre($nombre);
     }
+
+    public function ListarVacantesPorEmpresa($idEmpresa): RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->ListarVacantesPorEmpresa($idEmpresa);
+    }
 }
+/*
+$controller = new VacanteController();
+$response = $controller->ListarVacantesPorEmpresa(1);
+echo $response->message;
+*/
 /*
 $controller = new VacanteController();
 $vacanteObject = new Vacantes();

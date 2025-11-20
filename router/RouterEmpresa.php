@@ -5,12 +5,59 @@ class RouterEmpresa{
     public function CargarVista($vista){
         switch ($vista) {
 
-        case "Inicio":
-            include __DIR__ .'/../view/InicioView.php';
+        case 'login':
+            header('Location: /../index.php');
+        break;
+
+        case "navbarEmpresa":
+            include_once __DIR__ . ('/../views/viewEmpresa/navbarEmpresa.php');
         break;
         
-        case 'PerfilPostulante':
-            include __DIR__ .'/../view/PerfilPostulanteView.php';
+        case 'VacantesView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'Home':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'VacantesListView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'EmpresasMenuView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+        
+        case 'AcercaDeNosotrosView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'ContactoView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'VacantesAddView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'MisVacantesListView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'EmpresasListView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'VacantesUpdateView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
+        case 'closeSession':
+            SessionManager::destroySession();
+            echo "<script> window.location.href='../index.php';</script>";
+                    //header("Location:../index.php");
+                    //exit();
         break;
 
         case 'ṔerfilEmpresa':
