@@ -21,7 +21,6 @@ Actualizar
 --------------------------------------------------------------------
 jose luis 
 hacer tabla EstadoPostulacion
-Listar
 ListarPorId
 
 Hacer tabla Habilidades
