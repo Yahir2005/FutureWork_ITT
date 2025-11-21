@@ -11,8 +11,8 @@ class RouterPostulante{
             include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
-        case 'PerfilPostulante':
-            include __DIR__ .'/../view/PerfilPostulanteView.php';
+        case 'PerfilPostulanteView':
+            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
         case 'ṔerfilEmpresa':
