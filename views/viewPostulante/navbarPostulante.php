@@ -30,7 +30,7 @@
      <li><a class="nav-link" href="?cargar=Home" >🏠 Inicio</a></li>
      <li><a class="nav-link" href="?cargar=">💼 Vacantes</a></li>
      <li><a class="nav-link" href="?cargar=EmpresasListView">🏢 Empresas</a></li>
-     <li><a class="nav-link" href="?cargar=">ℹ️ Nosotros</a></li>
+     <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
      <li><a class="nav-link" href="?cargar=">📧 Contacto</a></li>
     </ul><!-- Acciones -->
     <div class="navbar-actions">
