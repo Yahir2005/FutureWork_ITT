@@ -24,7 +24,7 @@
             switch($idRol){
                 case 1:
                     //header("Location:views/viewEmpresa/?cargar=navbarEmpresa");
-                    header("Location:views/viewEmpresa/navbarEmpresa.php");  
+                    header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
                 case 2:
