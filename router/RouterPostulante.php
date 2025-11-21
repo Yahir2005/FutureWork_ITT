@@ -7,8 +7,8 @@ class RouterPostulante{
             include_once __DIR__ .'/../index.php';
         break;
 
-        case "Inicio":
-            include __DIR__ .'/../view/InicioView.php';
+        case "Home":
+            include __DIR__ .'/../views/viewPostulante'.$vista.'.php';
         break;
 
         case 'PerfilPostulante':

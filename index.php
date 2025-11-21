@@ -30,7 +30,7 @@
                     break;
 
                 case 2:
-                    header("Location: views/viewPostulante/navbarPostulante.php");
+                    header("Location: views/viewPostulante/navbarPostulante.php?cargar=Home");
                     break;
 
                 default:
