@@ -3,35 +3,44 @@ require_once __DIR__ ."/PostulanteGateway.php";
 require_once __DIR__ ."/PostulanteUseCase.php";
 require_once __DIR__ ."/../../../Dto/Postulante.php";
 class PostulanteController {
-public function listarPostulante (): RespuestaGenerica{
+
+    public function listarPostulante (): RespuestaGenerica{
     $gateway = new PostulanteGateway();
     $useCase = new PostulanteUseCase($gateway);
         return $useCase->listarPostulante();
     }
-/*public function listarPostulantePorNombre($Nombre): RespuestaGenerica{ 
-     $gateway = new PostulanteGateway();
-    $useCase = new PostulanteUseCase($gateway);
-        return $useCase->listarPostulantePorNombre($Nombre);
-    }*/
-public function insertarPostulante (Postulante $postulante):RespuestaGenerica{
+
+    public function insertarPostulante (Postulante $postulante):RespuestaGenerica{
     $gateway = new PostulanteGateway();
     $useCase = new PostulanteUseCase($gateway);
         return $useCase->insertarPostulante($postulante);
 
     }
-public function actualizarPostulante ($id, $postulante):RespuestaGenerica{
+
+    public function actualizarPostulante ($id, $postulante):RespuestaGenerica{
      $gateway = new PostulanteGateway();
     $useCase = new PostulanteUseCase($gateway);
         return $useCase->actualizarPostulante($id, $postulante);
     }
 
-public function eliminarPostulante ($id): RespuestaGenerica{
+    public function eliminarPostulante ($id): RespuestaGenerica{
         $gateway = new PostulanteGateway();
         $useCase = new PostulanteUseCase($gateway);
         return $useCase->eliminarPostulante($id);
     }
 
+    public function listarPostulantePorNombre($Nombre): RespuestaGenerica{
+        $gateway = new PostulanteGateway();
+        $useCase = new PostulanteUseCase($gateway);
+        return $useCase->listarPostulantePorNombre($Nombre);
+    }
+
 }
+/*
+$controller = new PostulanteController();
+$result = $controller->listarPostulantePorNombre("Carlos");
+echo $result->message;
+*/
 /*$controller = new PostulanteController();
 $response = $controller -> listarPostulante();
 echo $response-> message; */
