@@ -44,6 +44,12 @@ require_once __DIR__ ."/IPostulante.php";
         $result = $mysqlConnector->consultaSimple($query);
         return $result;
     }
+     public function eliminarPostulante ($id):int{
+        $mysqlConnector = new MysqlConnector();
+        $query = "DELETE FROM Postulante WHERE idPostulante = {$id}";
+        $result = $mysqlConnector->consultaSimple($query);
+        return $result;
+    }
 
 }
 

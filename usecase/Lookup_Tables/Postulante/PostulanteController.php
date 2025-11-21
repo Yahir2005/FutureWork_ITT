@@ -25,6 +25,12 @@ public function actualizarPostulante ($id, $postulante):RespuestaGenerica{
         return $useCase->actualizarPostulante($id, $postulante);
     }
 
+public function eliminarPostulante ($id): RespuestaGenerica{
+        $gateway = new PostulanteGateway();
+        $useCase = new PostulanteUseCase($gateway);
+        return $useCase->eliminarPostulante($id);
+    }
+
 }
 /*$controller = new PostulanteController();
 $response = $controller -> listarPostulante();
@@ -39,7 +45,6 @@ $postulante = new Postulante ();
 $postulante -> set("Carrera_idCarrera",1);
 $postulante -> set("Usuarios_idUsuarios",2);
 $postulante -> set("numeroControl","12");
-$postulante -> set("Carrera_idCarrera","44");
 $postulante -> set("cvPath","11");
 $postulante -> set("telefono","224532");
 $postulante -> set("ubicacion","3");
@@ -51,13 +56,14 @@ $postulante = new Postulante ();
 $postulante -> set("Carrera_idCarrera",1);
 $postulante -> set("Usuarios_idUsuarios",2);
 $postulante -> set("numeroControl","12");
-$postulante -> set("Carrera_idCarrera","44");
 $postulante -> set("cvPath","11");
 $postulante -> set("telefono","224532");
 $postulante -> set("ubicacion","3");
 $response = $controller->actualizarPostulante(4,$postulante);
 echo $response->message;*/
-
+$controller = new PostulanteController();
+$response = $controller->eliminarPostulante(1);
+echo $response->message;
 
 
 

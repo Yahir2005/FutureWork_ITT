@@ -46,7 +46,7 @@ class PostulanteUseCase{
         return $response;
     }
     
-       public function actualizarPostulante ($id, $postulante):RespuestaGenerica{
+     public function actualizarPostulante ($id, $postulante):RespuestaGenerica{
       $response = new RespuestaGenerica();
         $respuestaMetodo = $this->gatewayDb->actualizarPostulante($id, $postulante);
         try {
@@ -59,6 +59,17 @@ class PostulanteUseCase{
         }
         return $response;
     }
-
-    
+     public function eliminarPostulante ($id): RespuestaGenerica{
+          $response = new RespuestaGenerica();
+        try {
+            $respuestaMetodo = $this->gatewayDb->eliminarPostulante($id);
+            $response->status = "Ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Postulante eliminado correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al eliminar postulante: " . $e->getMessage();
+        }
+        return $response;
+    }
 }

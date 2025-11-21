@@ -8,6 +8,7 @@ interface IPostulante{
 
     public function actualizarPostulante ($id,$postulante):int;
 
+   /*public function eliminar */
     
 
 }
