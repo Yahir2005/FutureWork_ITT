@@ -31,6 +31,19 @@ require_once __DIR__ ."/IPostulante.php";
         $result = $mysqlConnector->consultaSimple($query);
         return $result;
     }
+    public function actualizarPostulante ($id, $postulante):int {
+         $mysqlConnector = new MysqlConnector();
+        $query = "UPDATE Postulante SET 
+         Carrera_idCarrera= '{$postulante->get('Carrera_idCarrera')}',
+         Usuarios_idUsuarios = '{$postulante->get('Usuarios_idUsuarios')}',
+         numeroControl = '{$postulante->get('numeroControl')}',
+         cvPath = '{$postulante->get('cvPath')}',
+         telefono = '{$postulante->get('telefono')}',
+         ubicacion = '{$postulante->get('ubicacion')}', 
+        WHERE idPostulante = {$id}";
+        $result = $mysqlConnector->consultaSimple($query);
+        return $result;
+    }
 
 }
 

@@ -6,6 +6,8 @@ interface IPostulante{
 
     public function insertarPostulante (Postulante $postulante):int;
 
+    public function actualizarPostulante ($id,$postulante):int;
+
     
 
 }

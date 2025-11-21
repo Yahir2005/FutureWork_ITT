@@ -46,5 +46,19 @@ class PostulanteUseCase{
         return $response;
     }
     
+       public function actualizarPostulante ($id, $postulante):RespuestaGenerica{
+      $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->actualizarPostulante($id, $postulante);
+        try {
+            $response->status = "Ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Postulante actualizado correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al actualizar postulante: " . $e->getMessage();
+        }
+        return $response;
+    }
+
     
 }
