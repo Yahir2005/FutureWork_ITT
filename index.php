@@ -20,11 +20,13 @@
             //header("Location:viewsStudent/?cargar=StudentTestListView");
             // Obtenemos el rol de la sesión que acabamos de establecer
             $idRol = SessionManager::getRoleId();
-
+            
             switch($idRol){
                 case 1:
+                    $idEmpresa = SessionManager::getEmpresaId();
+                    $_SESSION["idEmpresas"] = $response->body['idEmpresas"'];
                     //header("Location:views/viewEmpresa/?cargar=navbarEmpresa");
-                    header("Location:views/viewEmpresa/navbarEmpresa.php");  
+                    header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
                 case 2:
