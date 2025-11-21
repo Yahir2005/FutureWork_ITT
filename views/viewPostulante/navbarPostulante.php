@@ -3,7 +3,7 @@
     include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
 
     if(!SessionManager::isUserLoggedIn()){
-      header("Location: /../index.php");
+      header("Location: ../index.php");
     }
 ?>
 <html lang="es">
@@ -28,17 +28,16 @@
      </div><span class="logo-text">FutureWork ITT</span> </a> <!-- Menú de Navegación -->
     <ul class="navbar-menu">
      <li><a class="nav-link" href="?cargar=Home" >🏠 Inicio</a></li>
-     <li><a href="vacantes.php">💼 Vacantes</a></li>
-     <li><a href="empresas.php">🏢 Empresas</a></li>
-     <li><a href="nosotros.php">ℹ️ Nosotros</a></li>
-     <li><a href="contacto.php">📧 Contacto</a></li>
+     <li><a class="nav-link" href="?cargar=">💼 Vacantes</a></li>
+     <li><a class="nav-link" href="?cargar=EmpresasListView">🏢 Empresas</a></li>
+     <li><a class="nav-link" href="?cargar=">ℹ️ Nosotros</a></li>
+     <li><a class="nav-link" href="?cargar=">📧 Contacto</a></li>
     </ul><!-- Acciones -->
     <div class="navbar-actions">
      <div class="user-badge">
       <div class="user-icon">
        👤
-      </div><span>Postulante</span>
-     </div><a href="login.php" class="btn-login">Iniciar Sesión</a> <a href="registro.php" class="btn-register">Registrarse</a>
+      </div><a class="nav-link" href="?cargar=PerfilPostulanteView"><span>Postulante</span></a>
     </div>
    </div>
 

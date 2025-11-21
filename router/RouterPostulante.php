@@ -7,11 +7,19 @@ class RouterPostulante{
             header('Location: /../index.php');
         break;
 
+        case "navbarPostulante":
+            include_once __DIR__ . ('/../views/viewEmpresa/navbarPostulante.php');
+        break;
+
         case "Home":
             include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
         case 'PerfilPostulanteView':
+            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
+        break;
+
+        case 'EmpresasListView':
             include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
