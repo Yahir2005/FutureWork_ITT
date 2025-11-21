@@ -49,4 +49,19 @@ class ImagenesPerfilEmpresaUseCase{
         }
         return $response;
     }
+
+    public function perfilEmpresa($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->perfilEmpresa($id);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo ;
+            $response->message = "Se listaron correctamente los datos del perfil";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al listar datos del perfil".$e->getMessage();
+        }
+        return $response;
+    }
+
 }
