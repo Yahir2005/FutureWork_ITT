@@ -61,9 +61,10 @@ $postulante -> set("telefono","224532");
 $postulante -> set("ubicacion","3");
 $response = $controller->actualizarPostulante(4,$postulante);
 echo $response->message;*/
-$controller = new PostulanteController();
+
+/*$controller = new PostulanteController();
 $response = $controller->eliminarPostulante(1);
-echo $response->message;
+echo $response->message;*/
 
 
 
