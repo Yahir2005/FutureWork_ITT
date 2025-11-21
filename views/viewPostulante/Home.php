@@ -2,7 +2,7 @@
 
 ?>
  <body><!-- Navbar -->
-<!-- Contenido Principal -->
+  </nav><!-- Contenido Principal -->
   <main class="main-content">
    <section class="welcome-section">
     <h1>¡Bienvenido a FutureWork ITT! 👋</h1>
