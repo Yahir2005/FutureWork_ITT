@@ -1,7 +1,7 @@
 <?php
 interface IEstadoPostulacion{
 
-    public function listarEstadoPostulacion();
+    public function listarEstadoPostulacion():array;
 
     public function listarEstadoPostulacionId(int $id);
 

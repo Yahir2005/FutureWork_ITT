@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ ."/../../DataAccess/MysqlConnector.php";
-require_once __DIR__ . "/IEstadoPostulacion.php";
+require_once __DIR__ ."/IHabilidades.php";
 
-class EstadoHabilidadesGateway implements IEstadoHabilidades{
+class HabilidadesGateway implements IHabilidades{
 
-     public function listarEstadoHabilidades():array{
+     public function listarHabilidades():array{
         $objSQL = new MysqlConnector();
-        $sql = "SELECT * FROM EstadoHabilidades";
+        $sql = "SELECT * FROM Habilidades";
         $result = $objSQL ->consultaRetorno($sql);
         return mysqli_fetch_all($result,MYSQLI_ASSOC);
      }
