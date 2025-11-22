@@ -56,8 +56,7 @@
       </ul>
     </li>
 
-     <li><a class="nav-link" href="?cargar=EmpresasListView">🏢 Empresas</a></li>
-     
+    <li><a class="nav-link" href="?cargar=EmpresasListView">🏢 Empresas</a></li> 
      <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
      <li><a class="nav-link" href="?cargar=ContactoView">📧 Contacto</a></li>
      
@@ -66,7 +65,7 @@
      <div class="user-badge">
       <div class="user-icon">
        👤
-      </div><span>Empresa</span>
+      </div><a class="nav-link" href="?cargar=PerfilEmpresaView"><span>Empresa</span></a>
      </div></a>
     </div>
    </div>

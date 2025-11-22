@@ -22,7 +22,18 @@ class ImagenesPerfilEmpresaController{
         return $useCase->obtenerImagenes($id);
     }
     
+    public function perfilEmpresa($id):RespuestaGenerica{
+        $gateway = new ImagenesPerfilEmpresaGateway();
+        $useCase = new ImagenesPerfilEmpresaUseCase($gateway);
+        return $useCase->perfilEmpresa($id);
+    }
+
 }
+/*
+$controller = new ImagenesPerfilEmpresaController();
+$result = $controller->perfilEmpresa(1);
+echo $result->message;
+*/
 /*
 $controller = new ImagenesPerfilEmpresaController();
 $obj = new ImagenPerfilEmpresa();

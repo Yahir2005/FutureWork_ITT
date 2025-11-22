@@ -1,14 +1,13 @@
 <?php
-require_once __DIR__ ."/../../Dto/RespuestaGenerica.php";
+require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
 class PostulanteUseCase{
     private $gatewayDb;
     public function __construct(IPostulante $gatewayDb){
         $this->gatewayDb = $gatewayDb;
     }
-
     public function listarPostulante (): RespuestaGenerica{
     $response = new RespuestaGenerica();
-        $respuestaMetodo = $this->gatewayDb->listarPostulante ();
+    $respuestaMetodo = $this->gatewayDb->listarPostulante ();
         try {
             $response ->status = "Ok";
             $response ->body = $respuestaMetodo;
@@ -19,23 +18,10 @@ class PostulanteUseCase{
         }
         return $response;
     }
-
-    public function listarPostulantePorNombre($Nombre): RespuestaGenerica{
-       $response = new RespuestaGenerica();
-        $respuestaMetodo = $this->gatewayDb->listarPostulantePorNombre($Nombre);
-        try {
-            $response->status = "Ok";
-            $response->body = $respuestaMetodo;
-            $response->message = "Postulante encontrado correctamente";
-        } catch (Exception $e) {
-            $response->status = "Error";
-            $response->message = "Error al buscar Postulante: " . $e->getMessage();
-        }
-        return $response;
-    }
-     public function insertarPostulante (Postulante $Postulante):RespuestaGenerica{
+    
+     public function insertarPostulante (Postulante $postulante):RespuestaGenerica{
       $response = new RespuestaGenerica();
-        $respuestaMetodo = $this->gatewayDb->insertarPostulante($Postulante);
+        $respuestaMetodo = $this->gatewayDb->insertarPostulante($postulante);
         try {
             $response->status = "Ok";
             $response->body = $respuestaMetodo;
@@ -46,10 +32,10 @@ class PostulanteUseCase{
         }
         return $response;
     }
-
-     public function actualizarPostulante ($id, $Postulante):RespuestaGenerica{
+    
+     public function actualizarPostulante ($id, $postulante):RespuestaGenerica{
       $response = new RespuestaGenerica();
-        $respuestaMetodo = $this->gatewayDb->actualizarPostulante($id, $Postulante);
+        $respuestaMetodo = $this->gatewayDb->actualizarPostulante($id, $postulante);
         try {
             $response->status = "Ok";
             $response->body = $respuestaMetodo;
@@ -60,8 +46,7 @@ class PostulanteUseCase{
         }
         return $response;
     }
-
-    public function eliminarPostulante ($id): RespuestaGenerica{
+     public function eliminarPostulante ($id): RespuestaGenerica{
           $response = new RespuestaGenerica();
         try {
             $respuestaMetodo = $this->gatewayDb->eliminarPostulante($id);
@@ -74,4 +59,18 @@ class PostulanteUseCase{
         }
         return $response;
     }
-  }
+
+    public function listarPostulantePorNombre($Nombre): RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $responseMetodo = $this->gatewayDb->listarPostulantePorNombre($Nombre);
+        try {
+            $response->status = "ok";
+            $response->body = $responseMetodo;
+            $response->message = "Exito al listar los postulantes por nombre";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al listar los postulante por nombre". $e->getMessage();
+        }
+        return $response;
+    }
+}

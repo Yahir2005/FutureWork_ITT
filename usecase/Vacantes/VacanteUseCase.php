@@ -92,4 +92,32 @@ class VacanteUseCase{
         }
         return $response;
     }
+
+    public function ListarVacantesPorEstadoEmpresaContrato($idEstado):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ListarVacantesPorEstadoEmpresaContrato($idEstado);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Vacantes Listadas Por Empresa y contrato Correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al listar Vacantes Por Empresa y contrato Correctamente". $e->getMessage();
+        }
+        return $response;
+    }
+
+    public function ContarCandidatosPorVacante($idVacante):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ContarCandidatosPorVacante($idVacante);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Contar candidatos Vacantes correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al contar candidatos Vacantes ". $e->getMessage();
+        }
+        return $response;
+    }
 }

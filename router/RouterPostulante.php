@@ -4,15 +4,23 @@ class RouterPostulante{
         switch ($vista) {
 
         case 'login':
-            include_once __DIR__ .'/../index.php';
+            header('Location: /../index.php');
         break;
 
-        case "Inicio":
-            include __DIR__ .'/../view/InicioView.php';
+        case "navbarPostulante":
+            include_once __DIR__ . ('/../views/viewEmpresa/navbarPostulante.php');
         break;
 
-        case 'PerfilPostulante':
-            include __DIR__ .'/../view/PerfilPostulanteView.php';
+        case "Home":
+            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
+        break;
+
+        case 'PerfilPostulanteView':
+            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
+        break;
+
+        case 'EmpresasListView':
+            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
         case 'ṔerfilEmpresa':

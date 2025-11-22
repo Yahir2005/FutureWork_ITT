@@ -25,4 +25,21 @@ class ImagenesPerfilEmpresaGateway implements IImagenesPerfilEmpresa{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+    public function perfilEmpresa($id):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT PE.urlImagenPerfilEmpresa,
+        E.idEmpresas,
+        E.EstadoValidacionEmpresa_idEstadoValidacionEmpresa,
+        E.Usuarios_idUsuarios,
+        E.nombreEmpresa,
+        E.sector,
+        E.representante,
+        E.descripcion,
+        E.sitioWeb
+        FROM ImagenPerfilEmpresa PE 
+        JOIN Empresas E ON PE.Empresas_idEmpresas = E.idEmpresas 
+        WHERE idEmpresas = {$id}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }

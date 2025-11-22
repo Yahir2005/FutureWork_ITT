@@ -39,7 +39,29 @@ class VacanteController{
         $usecase = new VacanteUseCase($gatewayDb);
         return $usecase->ListarVacantesPorEmpresa($idEmpresa);
     }
+
+    public function ListarVacantesPorEstadoEmpresaContrato($idEstado): RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->ListarVacantesPorEstadoEmpresaContrato($idEstado);
+    }
+
+    public function ContarCandidatosPorVacante($idVacante): RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->ContarCandidatosPorVacante($idVacante);
+    }
 }
+/*
+$controller = new VacanteController();
+$result = $controller->ContarCandidatosPorVacante(1);
+echo $result->message;
+*/
+/*
+$controller = new VacanteController();
+$result = $controller->ListarVacantesPorEstadoEmpresaContrato(1);
+echo $result->message;
+*/
 /*
 $controller = new VacanteController();
 $response = $controller->ListarVacantesPorEmpresa(1);

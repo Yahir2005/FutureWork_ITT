@@ -77,4 +77,35 @@ class VacanteGateway implements IVacante{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function ListarVacantesPorEstadoEmpresaContrato($idEstado):array{
+        $mysqlConnector = new MysqlConnector();
+        $idEmpresa = (int)$idEstado; // seguridad básica
+        $sql = "
+            SELECT 
+                v.*,
+                tc.estadoContrato AS tipoContrato,
+                tm.tipoModalidad AS modalidad,
+                COUNT(p.idPostulacion) AS candidatos
+            FROM Vacantes v
+            LEFT JOIN Postulaciones p ON p.Vacante_idVacante = v.idVacante
+            LEFT JOIN TipoContrato tc ON tc.idTipoContrato = v.TipoContrato_idTipoContrato
+            LEFT JOIN TipoModalidad tm ON tm.idTipoModalidad = v.TipoModalidad_idTipoModalidad
+            WHERE v.Empresa_idEmpresa = {$idEstado}
+            GROUP BY v.idVacante
+            ORDER BY v.fechaPublicacion DESC
+        ";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if($result === false) return [];
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
+    public function ContarCandidatosPorVacante($idVacante):int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Postulaciones WHERE WHERE Vacante_idVacante = {$idVacante}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if ($result === false) return 0;
+        $row = mysqli_fetch_assoc($result);
+        return (int)($row['total'] ?? 0);
+    }
 }

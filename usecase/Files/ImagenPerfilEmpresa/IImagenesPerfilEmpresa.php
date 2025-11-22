@@ -5,4 +5,6 @@ interface IImagenesPerfilEmpresa{
     public function eliminarImagen($id):int;
 
     public function obtenerImagenes($id):array;
+
+    public function perfilEmpresa($id):array;
 }
