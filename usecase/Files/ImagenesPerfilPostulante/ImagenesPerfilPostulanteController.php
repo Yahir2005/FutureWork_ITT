@@ -22,7 +22,18 @@ class ImagenesPerfilPostulanteController{
         $useCase = new ImagenesPerfilPostulanteUseCase($gatewayDb);
         return $useCase->MostrarImagenPerfilPostulante($id);
     }
+
+    public function perfilPostulante($id): RespuestaGenerica{
+        $gatewayDb = new ImagenesPerfilPostulanteGateway();
+        $useCase = new ImagenesPerfilPostulanteUseCase($gatewayDb);
+        return $useCase->perfilPostulante($id);
+    }
 }
+/*
+$controller = new ImagenesPerfilPostulanteController;
+$result = $controller->perfilPostulante(1);
+echo $result->message;
+*/
 /*
 $controller = new ImagenesPerfilPostulanteController;
 $objImagen = new ImagenesPerfilPostulante();

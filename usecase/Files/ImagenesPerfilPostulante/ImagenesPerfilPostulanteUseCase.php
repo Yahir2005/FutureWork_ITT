@@ -49,4 +49,18 @@ class ImagenesPerfilPostulanteUseCase{
         }
         return $response;
     }
+
+    public function perfilPostulante($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->perfilPostulante($id);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se listaron correctamente los datos del perfil";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al listar correctamente los datos del perfil".$e->getMessage();
+        }
+        return $response;
+    }
 }

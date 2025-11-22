@@ -27,4 +27,19 @@ class ImagenesPerfilPostulanteGateway implements IImagenesPerfilPostulante{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function perfilPostulante($id):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT PP.urlImagenPerfilPostulante,
+        P.idPostulante,
+        P.numeroControl,
+        P.cvPath,
+        P.telefono,
+        P.ubicacion
+        FROM ImagenesPerfilPostulante PP
+        JOIN Postulante P ON PP.Postulante_idPostulante = P.idPostulante,
+        WHERE idPostulante = {$id}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }
