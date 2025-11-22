@@ -10,4 +10,5 @@ class PostulanteCertificacionesGateway implements IPostulanteCertificaciones{
         $result = $objSQL ->consultaRetorno($sql);
         return mysqli_fetch_all($result,MYSQLI_ASSOC);
      }
-}
+     
+} 
