@@ -5,4 +5,7 @@ interface IImagenesPerfilPostulante{
     public function EliminarImagenPerfilPostulante($id):int;
 
     public function MostrarImagenPerfilPostulante($id):array;
+
+    public function perfilPostulante($id):array;
+    
 }
