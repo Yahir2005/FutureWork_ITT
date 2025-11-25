@@ -3,15 +3,10 @@ interface IPostulanteCertificaciones{
     
     public function listarPostulanteCertificaciones():array;
     
-    public function listarPostulante ():array;
+    public function insertarPostulanteCertificaciones (Postulante $postulante):int;
 
-    public function insertarPostulante (Postulante $postulante):int;
+    public function actualizarPostulanteCertificaciones ($id,$postulante):int;
 
-    public function actualizarPostulante ($id,$postulante):int;
-
-    public function eliminarPostulante($id) :int;
-    
-    public function listarPostulantePorNombre($Nombre):array;
-
+    public function eliminarPostulanteCertificaciones($id) :int;
     
 }

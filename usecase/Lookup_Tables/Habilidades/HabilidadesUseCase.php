@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/IHabilidades.php';
-require_once __DIR__ . '/HabilidadesGateway.php';
+require_once __DIR__ . "/IHabilidades.php";
+require_once __DIR__ . "/HabilidadesGateway.php";
 require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
 
 class HabilidadesUseCase{
@@ -25,7 +25,18 @@ class HabilidadesUseCase{
         return $respose;
     }
 
-
-
+    public function InsertarHabilidades(Habilidades $habilidades):RespuestaGenerica{
+            $response = new RespuestaGenerica(); 
+        $respuestaMetodo = $this->gatewayDb->InsertarHabilidades($habilidades);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Tabla Habilidades insertado correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al insertar Habilidades: ". $e->getMessage();
+        }
+        return $response;
+    }
 }
 

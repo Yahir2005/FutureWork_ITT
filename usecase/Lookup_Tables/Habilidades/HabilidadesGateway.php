@@ -10,4 +10,16 @@ class HabilidadesGateway implements IHabilidades{
         $result = $objSQL ->consultaRetorno($sql);
         return mysqli_fetch_all($result,MYSQLI_ASSOC);
      }
+
+      public function insertarHabilidades(Habilidades $habilidades):int {
+        $$objSQL = new MysqlConnector();
+        $sql = "INSERT INTO Habilidades (
+        nombre_Habilidad
+        ) VALUES (
+        '{$habilidades->get('nombre_Habilidad')}'
+        )";
+        $result = $$objSQL->consultaSimple($sql);
+        return $result;
+    }
 }
+
