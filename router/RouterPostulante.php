@@ -1,10 +1,15 @@
 <?php
+require_once __DIR__ .'/../usecase/Usuario/SessionManager.php';
 class RouterPostulante{
     public function CargarVista($vista){
         switch ($vista) {
 
         case 'login':
             header('Location: /../index.php');
+        break;
+
+        case 'AcercaDeNosotrosView':
+            include_once __DIR__ .('/../views/viewPostulante/'.$vista.".php");
         break;
 
         case "navbarPostulante":
@@ -21,10 +26,6 @@ class RouterPostulante{
 
         case 'EmpresasListView':
             include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
-        break;
-
-        case 'ṔerfilEmpresa':
-            include __DIR__ .'';
         break;
 
         case "Ver_Vacantes":
