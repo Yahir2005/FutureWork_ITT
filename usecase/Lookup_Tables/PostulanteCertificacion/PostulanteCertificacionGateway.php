@@ -11,7 +11,7 @@ class PostulanteCertificacionGateway implements IPostulanteCertificacion{
         return mysqli_fetch_all($result,MYSQLI_ASSOC);
      }
 
-     public function insertarPostulanteCertificacion($postulanteCertificacion):int {
+     public function insertarPostulanteCertificacion(PostulanteCertificacion $postulanteCertificacion):int {
         $objSQL = new MysqlConnector();
         $sql = "INSERT INTO Postulante_Certificacion (
         postulante_idPostulante,

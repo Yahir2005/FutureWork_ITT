@@ -11,7 +11,7 @@ class   PostulanteCertificacionController {
         $response = $useCase->listarPostulanteCertificacion();
         return $response;
     }
-    public function InsertarPostulanteCertificacion( $postulanteCertificacion):RespuestaGenerica{
+    public function InsertarPostulanteCertificacion(PostulanteCertificacion $postulanteCertificacion):RespuestaGenerica{
         $gatewayDb = new PostulanteCertificacionGateway();
         $usecase = new PostulanteCertificacionUseCase($gatewayDb);
         $response = $usecase->InsertarPostulanteCertificacion($postulanteCertificacion);

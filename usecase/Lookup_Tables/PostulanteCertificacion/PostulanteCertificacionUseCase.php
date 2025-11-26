@@ -24,7 +24,7 @@ class PostulanteCertificacionUseCase{
         }
         return $respose;
     }
-    public function InsertarPostulanteCertificacion( $postulanteCertificacion):RespuestaGenerica{
+    public function InsertarPostulanteCertificacion(PostulanteCertificacion $postulanteCertificacion):RespuestaGenerica{
         $response = new RespuestaGenerica(); 
         $respuestaMetodo = $this->gatewayDb->InsertarPostulanteCertificacion($postulanteCertificacion);
         try {
