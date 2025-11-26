@@ -29,13 +29,13 @@ class PostulanteCertificacionGateway implements IPostulanteCertificacion{
         $sql = "UPDATE Postulante_Certificacion SET 
             postulante_idPostulante = '{$postulanteCertificacion->get('postulante_idPostulante')}',
             certificaciones_idCertificacion = '{$postulanteCertificacion->get('certificaciones_idCertificacion')}'
-        WHERE idPostulante_Certificacion = {$id}";
+        WHERE Postulante_idCertificacion = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }
     public function EliminarPostulanteCertificacion($id): int{
         $objSQL = new MysqlConnector();
-        $sql = "DELETE FROM Postulante_Certificacion WHERE idPostulante_Certificacion = {$id}";
+        $sql = "DELETE FROM Postulante_Certificacion WHERE Postulante_idCertificacion = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }

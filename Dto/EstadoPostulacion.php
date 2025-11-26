@@ -7,6 +7,7 @@ class EstadoPostulacion{
     public function __construct(){
 
     }
+    
     public function get($property){
         return $this->$property;
     }

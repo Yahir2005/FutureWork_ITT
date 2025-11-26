@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/IEstadoPostulacion.php';
-require_once __DIR__ . '/EstadoPostulacionGateway.php';
+require_once __DIR__ . "/IEstadoPostulacion.php";
+require_once __DIR__ . "/EstadoPostulacionGateway.php";
 require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
 
 class EstadoPostulacionUseCase{
@@ -12,17 +12,31 @@ class EstadoPostulacionUseCase{
     }
 
     public function listarEstadoPostulacion(): RespuestaGenerica{
-        $respose = new RespuestaGenerica();
+        $response = new RespuestaGenerica();
         $respuestaMetodo = $this ->gatewayDb ->listarEstadoPostulacion();
         try {
-            $respose ->status = "ok";
-            $respose ->body = $respuestaMetodo;
-            $respose ->message = "Estado Postulaciones Listados Correctamente";
+            $response ->status = "ok";
+            $response ->body = $respuestaMetodo;
+            $response ->message = "Estado Postulaciones Listados Correctamente";
         } catch (Exception $e) {
-            $respose ->status = "ERROR";
-            $respose ->message = "ERROR AL LISTRAR". $e ->getMessage();
+            $response ->status = "ERROR";
+            $response ->message = "ERROR AL LISTRAR". $e ->getMessage();
         }
-        return $respose;
+        return $response;
+    }
+
+    public function listarEstadoPostulacionPorId($idEstadoPostulacion): RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this ->gatewayDb ->listarEstadoPostulacionPorId($idEstadoPostulacion);
+        try {
+            $response ->status = "ok";
+            $response ->body = $respuestaMetodo;
+            $response ->message = "Estado Postulacion Por Id Listados Correctamente";
+        } catch (Exception $e) {
+            $response ->status = "ERROR";
+            $response ->message = "ERROR AL ENTABLAR Estado Postulacion Por Id". $e ->getMessage();
+        }
+        return $response;
     }
 
 }

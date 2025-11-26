@@ -1,41 +1,32 @@
 <?php
 require_once __DIR__ ."/EstadoPostulacionGateway.php";
 require_once __DIR__ ."/EstadoPostulacionUseCase.php";
-require_once __DIR__ . "/../../../Dto/EstadoPostulacion.php";
+require_once __DIR__ ."/../../../Dto/EstadoPostulacion.php";
+require_once __DIR__ ."/IEstadoPostulacion.php";
 
-class EstadoPostulacionController {
-    private $usecase;
+class   EstadoPostulacionController {
 
-    public function __construct($dbConnection) {
-        $gateway = new EstadoPostulacionGateway($dbConnection);
-        $this->usecase = new EstadoPostulacionUseCase($gateway);
-    }
+    public function listarEstadoPostulacion():RespuestaGenerica{
+        $gatewayDb = new EstadoPostulacionGateway();
+        $usecase = new EstadoPostulacionUseCase($gatewayDb);
+        return $usecase-> listarEstadoPostulacion();
+     }
 
-    public function listar() {
-        $result = $this->usecase->listarEstadoPostulacion();
-        echo json_encode($result);
-    }
+    public function listarEstadoPostulacionPorId($idEstadoPostulacion):RespuestaGenerica{
+        $gatewayDb = new EstadoPostulacionGateway();
+        $usecase = new EstadoPostulacionUseCase($gatewayDb);
+        return $usecase-> listarEstadoPostulacionPorId($idEstadoPostulacion);
+     }
 
-    public function listarPorId($id) {
-        $result = $this->usecase->listarEstadoPostulacionId(intval($id));
-        echo json_encode($result);
-    }
-
-    public function insertar($body) {
-        $result = $this->usecase->insertarEstadoPostulacion($body);
-        echo json_encode($result);
-    }
-
-    public function actualizar($id, $body) {
-        $result = $this->usecase->actualizarEstadoPostulacion(intval($id), $body);
-        echo json_encode($result);
-    }
-
-    public function eliminar($id) {
-        $result = $this->usecase->eliminarEstadoPostulacion(intval($id));
-        echo json_encode($result);
-    }
 }
+
+/*$controller = new EstadoPostulacionController();
+$response = $controller->listarEstadoPostulacion();
+echo $response-> message;
+
+$controller = new EstadoPostulacionController();
+$response = $controller->listarEstadoPostulacionPorId($idEstadoPostulacion);
+echo $response-> message;*/
 
 /**class EstadoPostulacionController{
 
@@ -45,8 +36,3 @@ class EstadoPostulacionController {
         return $useCase-> listarEstadoPostulacion();
      }
 }*/
-
-
-$controller = new EstadoPostulacionController();
-$response = $controller->listarEstadoPostulacion();
-echo $response-> message;
