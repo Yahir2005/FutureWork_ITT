@@ -7,44 +7,32 @@ require_once __DIR__ ."/HabilidadesUseCase.php";
 require_once __DIR__ . "/IHabilidades.php";
 
 class   HabilidadesController {
-     public function listarHabilidades():RespuestaGenerica{
+    
+    public function listarHabilidades():RespuestaGenerica{
         $gatewayDb = new HabilidadesGateway();
         $usecase = new HabilidadesUseCase($gatewayDb);
         return $usecase-> listarHabilidades();
      }
      
-    public function InsertarHabilidades(Habilidades $habilidades):RespuestaGenerica{
+    public function InsertarHabilidades( $habilidades):RespuestaGenerica{
         $gatewayDb = new HabilidadesGateway();
         $usecase = new HabilidadesUseCase($gatewayDb);
         return $usecase->InsertarHabilidades($habilidades);
     }
-
-
-    /*public function ActualizarPostulanteHabilidades($id, $postulanteHabilidades):RespuestaGenerica {
-        $gatewayDb = new PostulanteHabilidadesGatawey();
-        $usecase = new PostulanteHabilidadesUseCase($gatewayDb);
-        return $usecase->ActualizarPostulanteHabilidades($id, $postulanteHabilidades);
+    
+    public function ActualizarHabilidades($id, $habilidades):RespuestaGenerica{
+        $gatewayDb = new HabilidadesGateway();
+        $usecase = new HabilidadesUseCase($gatewayDb);
+        return $usecase->ActualizarHabilidades($id,$habilidades);
     }
 
-    public function EliminarPostulanteHabilidades($id): RespuestaGenerica{
-        $gatewayDb = new PostulanteHabilidadesGatawey();
-        $usecase = new PostulanteHabilidadesUseCase($gatewayDb);
-        return $usecase->EliminarPostulanteHabilidades($id);
+    public function EliminarHabilidades($id): RespuestaGenerica{
+        $gatewayDb = new HabilidadesGateway();
+        $usecase = new HabilidadesUseCase($gatewayDb);
+        return $usecase->EliminarHabilidades($id);
     }
-*/
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*$controller = new HabilidadesController();
 $Result = $controller-> listarHabilidades();

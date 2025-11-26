@@ -46,8 +46,7 @@ class EstadoPostulacionController {
      }
 }*/
 
-/*
+
 $controller = new EstadoPostulacionController();
 $response = $controller->listarEstadoPostulacion();
 echo $response-> message;
-*/

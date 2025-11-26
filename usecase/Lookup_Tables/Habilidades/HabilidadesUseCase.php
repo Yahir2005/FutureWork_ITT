@@ -25,8 +25,8 @@ class HabilidadesUseCase{
         return $respose;
     }
 
-    public function InsertarHabilidades(Habilidades $habilidades):RespuestaGenerica{
-            $response = new RespuestaGenerica(); 
+    public function InsertarHabilidades( $habilidades):RespuestaGenerica{
+        $response = new RespuestaGenerica(); 
         $respuestaMetodo = $this->gatewayDb->InsertarHabilidades($habilidades);
         try {
             $response->status = "ok";
@@ -35,6 +35,34 @@ class HabilidadesUseCase{
         } catch (Exception $e) {
             $response->status = "Error";
             $response->message = "Error al insertar Habilidades: ". $e->getMessage();
+        }
+        return $response;
+    }
+
+     public function ActualizarHabilidades($id, $habilidades):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ActualizarHabilidades($id, $habilidades);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Tabla de Habiliidades actualizada correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al actualizar la Tabla Habilidades: ". $e->getMessage();
+        }
+        return $response;
+    }
+
+    public function EliminarHabilidades($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->EliminarHabilidades($id);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Tabla Habilidades eliminada correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al eliminar Tabla Habilidades: ". $e->getMessage();
         }
         return $response;
     }
