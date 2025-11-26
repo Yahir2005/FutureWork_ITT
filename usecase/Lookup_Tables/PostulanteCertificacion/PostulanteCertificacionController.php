@@ -33,6 +33,6 @@ class   PostulanteCertificacionController {
     }
 
 }
-$controller = new PostulanteCertificacionController();
+/*$controller = new PostulanteCertificacionController();
 $result  = $controller->listarPostulanteCertificacion();
-echo $result->message;
+echo $result->message;*/

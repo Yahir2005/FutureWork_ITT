@@ -2,7 +2,7 @@
 interface IHabilidades {
     public function listarHabilidades(): array;
 
-    public function insertarHabilidades ( $habilidades):int;
+    public function insertarHabilidades (habilidades $habilidades):int;
 
     public function actualizarHabilidades ($id, $habilidades):int;
 
