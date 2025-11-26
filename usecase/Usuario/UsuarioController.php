@@ -31,25 +31,43 @@ class UsuarioController{
         $response = $usuarioUseCase->DeleteUsuario($id);
         return $response;
     }
+
     public function iniciarSesion(string $usuario, string $contrasena ):RespuestaGenerica{
         $gatewayDB = new UsuarioGatewey();
         $usuarioUseCase = new UsuarioUseCase($gatewayDB);
         $response = $usuarioUseCase->iniciarSesion($usuario, $contrasena);
         return $response;
     }
+
     public function obtenerUsuarioPorId($id):RespuestaGenerica{
         $gatewayDB = new UsuarioGatewey();
         $usuarioUseCase = new UsuarioUseCase($gatewayDB);
         $response = $usuarioUseCase->obtenerUsuarioPorId($id);
         return $response;
     }
+
     public function obtenerIdRolUsuarios($id):RespuestaGenerica{
         $gatewayDB = new UsuarioGatewey();
         $usuarioUseCase = new UsuarioUseCase($gatewayDB);
         $response = $usuarioUseCase->obtenerIdRolUsuarios($id);
         return $response;
     }
+
+    public function iniciarSesionEmpresa(string $usuario, string $contrasena):RespuestaGenerica{
+        $gatewayDB = new UsuarioGatewey();
+        $usuarioUseCase = new UsuarioUseCase($gatewayDB);
+        $response = $usuarioUseCase->iniciarSesionEmpresa($usuario, $contrasena);
+        return $response;
+    }
+
 }
+
+
+/*
+$controller = new UsuarioController();
+$result = $controller->iniciarSesionEmpresa("PaolaRl@gmail.com", "fdsf1234" );
+echo $result->message;
+*/
 /*
 $controller = new UsuarioController();
 $response = $controller->obtenerIdRolUsuarios(2);

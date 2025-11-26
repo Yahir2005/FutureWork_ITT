@@ -126,5 +126,19 @@ class UsuarioUseCase {
         }
         return $response;
     }
+
+    public function iniciarSesionEmpresa(string $usuario, string $contrasena):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuesMetodo = $this->gatewayDB->iniciarSesionEmpresa($usuario, $contrasena);
+        try {
+            $response->status = "ok";
+            $response->body=$respuesMetodo;
+            $response->message= "Se inicio correctamente la sesion empresa";
+        } catch (Exception $e) {
+            $response->status= "error";
+            $response->message= "Error al iniciar sesion empresa".$e->getMessage();
+        }
+        return $response;
+    }
     
 }
