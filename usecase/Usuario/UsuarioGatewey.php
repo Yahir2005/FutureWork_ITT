@@ -5,7 +5,11 @@ require_once __DIR__ .'/IUsuarioGateway.php';
 class UsuarioGatewey implements IUsuarioGateway{
     public function InsertarUsuario(Usuario $usuario): int{
         $idInsertado=0;
-        $sqlQuery = "INSERT INTO Usuarios(Rol_idRol,nombreCompleto,email,Password) VALUES('{$usuario->get('Rol_idRol')}',
+        $sqlQuery = "INSERT INTO Usuarios(Rol_idRol,
+        nombreCompleto,
+        email,
+        Password) VALUES
+        ('{$usuario->get('Rol_idRol')}',
         '{$usuario->get('nombreCompleto')}',
         '{$usuario->get('email')}',
         '{$usuario->get('Password')}')";
@@ -64,7 +68,7 @@ class UsuarioGatewey implements IUsuarioGateway{
         if ($row) {
             return $row;
         } else {
-            // Lanzamos una excepción para que sea capturada por el UseCase
+
             throw new Exception("Usuario o contraseña incorrectos");
         }
     }
@@ -82,4 +86,30 @@ class UsuarioGatewey implements IUsuarioGateway{
         $result = $mysqlConnector->consultaRetorno( $sql );
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function iniciarSesionEmpresa(string $usuario, string $contrasena): array {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT 
+                    U.idUsuarios,
+                    U.Rol_idRol,
+                    U.email,
+                    U.Password,
+                    E.idEmpresas
+                FROM Empresas E
+                JOIN Usuarios U ON E.Usuarios_idUsuarios = U.idUsuarios
+                WHERE U.email = '$usuario'
+                AND U.Password = '$contrasena'";
+
+        $result = $mysqlConnector->consultaRetorno($sql);
+        $row = mysqli_fetch_assoc($result);
+
+        if ($row) {
+            return $row;
+        } else {
+            throw new Exception("Usuario o contraseña incorrectos");
+        }
+    }
+
+
+
 }

@@ -9,8 +9,8 @@
     
     if(isset($_POST['enviar'])){
         $controller = new UsuarioController();
-        $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
-        
+        //$response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
+        $responseEmpresa = $controller->iniciarSesionEmpresa($_POST['usuario'],$_POST['password']);
         // Si el inicio de sesión es exitoso, $response->body contiene los datos del usuario.
         if($response->status == "ok"){
             SessionManager::startSession();
