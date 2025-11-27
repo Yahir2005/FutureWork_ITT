@@ -12,8 +12,8 @@ require_once __DIR__ ."/../../Dto/PostulanteHabilidades.php";
  }
  /*$controller = new PostulanteHabilidadesController();
  $postulanteHabilidades= new PostulanteHabilidades();
- $postulanteHabilidades -> set ("Postulante_idPostulante",1);
- $postulanteHabilidades-> set ("Habilidades_idHabilidad",1);
+ $postulanteHabilidades -> set ("Postulante_idPostulante",8);
+ $postulanteHabilidades-> set ("Habilidades_idHabilidad",30);
  $result = $controller -> insertarPostulanteHabilidades($postulanteHabilidades);
- echo $result -> message;*/
- 
+ echo $result -> message;
+ */
