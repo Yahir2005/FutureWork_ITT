@@ -1,7 +1,7 @@
 <?php
 class habilidades{
     private $idHabilidad;
-    private $nombre_Habilidad;
+    private $nombreHabilidad;
 
     public function __construct()
     {

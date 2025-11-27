@@ -34,7 +34,7 @@ class   HabilidadesController {
 /*
 $controller = new HabilidadesController();
 $objHabilidades = new Habilidades();
-$objHabilidades->set("nombre_Habilidad","aplicado");
+$objHabilidades->set("nombreHabilidad","aplicado");
 $result = $controller->InsertarHabilidades($objHabilidades);
 echo $result->message;
 */

@@ -13,8 +13,8 @@ class HabilidadesGateway implements IHabilidades{
 
       public function insertarHabilidades(habilidades $habilidades):int {
         $objSQL = new MysqlConnector();
-        $sql = "INSERT INTO Habilidades (nombre_Habilidad) 
-        VALUES ('{$habilidades->get('nombre_Habilidad')}')";
+        $sql = "INSERT INTO Habilidades (nombreHabilidad) 
+        VALUES ('{$habilidades->get('nombreHabilidad')}')";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }
@@ -22,7 +22,7 @@ class HabilidadesGateway implements IHabilidades{
     public function ActualizarHabilidades($id, $habilidades):int {
         $objSQL = new MysqlConnector();
         $sql = "UPDATE Habilidades SET 
-            nombre_Habilidad = '{$habilidades->get('nombre_Habilidad')}',
+            nombreHabilidad = '{$habilidades->get('nombreHabilidad')}',
         WHERE idHabilidades = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
