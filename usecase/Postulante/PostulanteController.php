@@ -54,7 +54,7 @@ $postulante -> set("cvPath","ruta");
 $postulante -> set("telefono","224532");
 $postulante -> set("ubicacion","3");
 $response = $controller->insertarPostulante($postulante);
-echo $response->message;\
+echo $response->message;
 */
 /*
 $controller = new PostulanteController();

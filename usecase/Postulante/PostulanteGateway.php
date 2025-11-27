@@ -34,7 +34,7 @@ require_once __DIR__ ."/IPostulante.php";
          numeroControl = '{$postulante->get('numeroControl')}',
          cvPath = '{$postulante->get('cvPath')}',
          telefono = '{$postulante->get('telefono')}',
-         ubicacion = '{$postulante->get('ubicacion')}', 
+         ubicacion = '{$postulante->get('ubicacion')}'
         WHERE idPostulante = {$id}";
         $result = $mysqlConnector->consultaSimple($query);
         return $result;
