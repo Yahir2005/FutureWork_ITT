@@ -21,7 +21,7 @@ require_once __DIR__ ."/IPostulante.php";
         '{$postulante->get('numeroControl')}',
         '{$postulante->get('cvPath')}',
         '{$postulante->get('telefono')}',
-        '{$postulante->get('ubicacion')}'')";
+        '{$postulante->get('ubicacion')}')";
         $mysqlConnector = new MysqlConnector();
         $result = $mysqlConnector->consultaSimple($query);
         return $result;

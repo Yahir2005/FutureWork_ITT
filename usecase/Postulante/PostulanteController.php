@@ -44,23 +44,20 @@ echo $result->message;
 /*$controller = new PostulanteController();
 $response = $controller -> listarPostulante();
 echo $response-> message; */
-
-/*$controller = new PostulanteController();
-$response = $controller->listarPostulantePorNombre ();
-echo $response->message;*/
-
-/*$controller = new PostulanteController();
+/*
+$controller = new PostulanteController();
 $postulante = new Postulante ();
 $postulante -> set("Carrera_idCarrera",1);
 $postulante -> set("Usuarios_idUsuarios",2);
-$postulante -> set("numeroControl","12");
-$postulante -> set("cvPath","11");
+$postulante -> set("numeroControl","12434322");
+$postulante -> set("cvPath","ruta");
 $postulante -> set("telefono","224532");
 $postulante -> set("ubicacion","3");
 $response = $controller->insertarPostulante($postulante);
-echo $response->message;*/
-
-/*$controller = new PostulanteController();
+echo $response->message;\
+*/
+/*
+$controller = new PostulanteController();
 $postulante = new Postulante ();
 $postulante -> set("Carrera_idCarrera",1);
 $postulante -> set("Usuarios_idUsuarios",2);
@@ -69,11 +66,12 @@ $postulante -> set("cvPath","11");
 $postulante -> set("telefono","224532");
 $postulante -> set("ubicacion","3");
 $response = $controller->actualizarPostulante(4,$postulante);
-echo $response->message;*/
-
-/*$controller = new PostulanteController();
+echo $response->message;
+*/
+/*
+$controller = new PostulanteController();
 $response = $controller->eliminarPostulante(1);
-echo $response->message;*/
-
+echo $response->message;
+*/
 
 
