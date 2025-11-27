@@ -9,10 +9,3 @@ interface IHabilidades {
     public function eliminarHabilidades($id) :int;
 
 }
-
-/*<?php
-interface IEstadoHabilidades{
-    
-    public function listarEstadoHabilidades():array;
-    
-}*/

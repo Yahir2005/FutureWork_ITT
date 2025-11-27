@@ -1,10 +1,8 @@
 <?php
 
-use LDAP\Result;
-
 require_once __DIR__ ."/HabilidadesGateway.php";
 require_once __DIR__ ."/HabilidadesUseCase.php";
-require_once __DIR__ . "/IHabilidades.php";
+require_once __DIR__ ."/../../Dto/habilidades.php";
 
 class   HabilidadesController {
 
@@ -33,10 +31,19 @@ class   HabilidadesController {
     }
 
 }
+/*
+$controller = new HabilidadesController();
+$objHabilidades = new Habilidades();
+$objHabilidades->set("nombre_Habilidad","aplicado");
+$result = $controller->InsertarHabilidades($objHabilidades);
+echo $result->message;
+*/
 
+/*
 $controller = new HabilidadesController();
 $Result = $controller-> listarHabilidades();
 echo $Result -> message;
+*/
 
 
 
