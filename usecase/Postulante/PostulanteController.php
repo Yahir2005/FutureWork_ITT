@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ ."/PostulanteGateway.php";
 require_once __DIR__ ."/PostulanteUseCase.php";
-require_once __DIR__ ."/../../../Dto/Postulante.php";
+require_once __DIR__ ."/../../Dto/Postulante.php";
 class PostulanteController {
 
     public function listarPostulante (): RespuestaGenerica{
