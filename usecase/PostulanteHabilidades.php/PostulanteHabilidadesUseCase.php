@@ -1,13 +1,14 @@
 <?php
 require_once __DIR__ ."/../../Dto/RespuestaGenerica.php";
 class PostulanteHabilidadesUseCase{
+    
 private $gatewayDb;
         public function __construct(IPostulanteHabilidades $gatewayDb) {
         $this->gatewayDb = $gatewayDb;
 
     }
       public function insertarPostulanteHabilidades(PostulanteHabilidades $postulanteHabilidades):RespuestaGenerica{
-            $response = new RespuestaGenerica(); 
+        $response = new RespuestaGenerica(); 
         $respuestaMetodo = $this->gatewayDb->insertarPostulanteHabilidades($postulanteHabilidades);
         try {
             $response->status = "ok";

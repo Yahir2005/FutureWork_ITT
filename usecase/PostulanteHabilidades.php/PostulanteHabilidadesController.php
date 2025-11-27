@@ -2,7 +2,9 @@
 require_once __DIR__ ."/PostulanteHabilidadesGatawey.php";
 require_once __DIR__ ."/PostulanteHabilidadesUseCase.php";
 require_once __DIR__ ."/../../Dto/PostulanteHabilidades.php";
+
  class PostulanteHabilidadesController{
+    
     public function insertarPostulanteHabilidades(PostulanteHabilidades $postulanteHabilidades):RespuestaGenerica{
         $gatewayDb = new PostulanteHabilidadesGatawey();
         $usecase = new PostulanteHabilidadesUseCase($gatewayDb);

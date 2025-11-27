@@ -7,10 +7,10 @@ class PostulanteHabilidadesGatawey implements IPostulanteHabilidades{
         $sql = "INSERT INTO Postulante_Habilidades (
            Postulante_idPostulante,
            Habilidades_idHabilidad
-        ) VALUES (
+        )
+        VALUES (
             '{$postulanteHabilidades->get('Postulante_idPostulante')}',
-            '{$postulanteHabilidades->get('Habilidades_idHabilidad')}',
-        )";
+            '{$postulanteHabilidades->get('Habilidades_idHabilidad')}')";
         $result = $mysqlConnector->consultaSimple($sql);
         return $result;
     }
