@@ -18,14 +18,4 @@ class Certificaciones{
         $this->$property = $value;
     }
 
-
 }
-/**
- * CREATE TABLE Certificaciones(
-    idCertificacion INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100),
-    organizacionEmisora VARCHAR(45),
-    fechaObtencion DATE,
-    urlCredencial VARCHAR(100)
-);
- */
