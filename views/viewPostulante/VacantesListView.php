@@ -15,15 +15,7 @@
  </head>
  <body><!-- Header -->
   <header class="header">
-   <div class="header-content">
-    <div class="header-top">
-     <div class="company-info">
-      <h1>🏢 <!-- Aquí PHP mostrará el nombre de la empresa --></h1>
-      <p>Gestión de vacantes publicadas por la empresa</p>
-     </div>
-     <div class="header-actions"><a href="agregar-vacante.php?idEmpresa=" class="btn-add">➕ Agregar Vacante</a> <a href="empresas.php" class="btn-back">← Volver a Empresas</a>
-     </div>
-    </div><!-- Stats Cards -->
+   <div class="header-content"><!-- Stats Cards -->
     <div class="stats-container">
      <div class="stat-card">
       <div class="stat-label">
@@ -140,8 +132,8 @@
      <div class="empty-state-icon">
       📭
      </div>
-     <h3>No hay vacantes publicadas</h3>
-     <p>Esta empresa aún no ha publicado ninguna vacante.</p><a href="agregar-vacante.php?idEmpresa=" class="btn-add">➕ Publicar Primera Vacante</a>
+     <h3>No se han encontrado vacantes publicadas</h3>
+     <p>No hay vacantes disponibles.</p>
     </div>
    </div>
   </main>
