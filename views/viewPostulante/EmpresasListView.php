@@ -105,7 +105,7 @@
       🏢
      </div>
      <h3>No se encontraron empresas</h3>
-     <p>No hay empresas registradas en el sistema o no coinciden con los filtros aplicados.</p><a href="agregar-empresa.php" class="btn-add">➕ Registrar Primera Empresa</a>
+     <p>No hay empresas registradas en el sistema o no coinciden con los filtros aplicados.</p>
     </div>
    </div>
   </main>
