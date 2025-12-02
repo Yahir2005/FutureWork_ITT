@@ -33,6 +33,10 @@ class RouterPostulante{
             include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
         break;
 
+        case 'ContactoView':
+            include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
+        break;
+
         case "Ver_Vacantes":
             include __DIR__ .'/../view/InicioView.php';
         break;
