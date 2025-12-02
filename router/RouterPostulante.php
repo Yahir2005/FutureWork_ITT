@@ -9,52 +9,53 @@ class RouterPostulante{
         break;
 
         case 'AcercaDeNosotrosView':
-            include_once __DIR__ .('/../views/viewPostulante/'.$vista.".php");
+            include_once __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
-        case "navbarPostulante":
-            include_once __DIR__ . ('/../views/viewEmpresa/navbarPostulante.php');
+        case 'navbarPostulante':
+            include_once __DIR__ .'/../views/viewPostulante/navbarPostulante.php';
         break;
 
-        case "Home":
-            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
+        case 'Home':
+            include_once __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
         case 'PerfilPostulanteView':
-            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
+            include_once __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
         case 'EmpresasListView':
-            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
+            include_once __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
-        case "Ver_Vacantes":
-            include __DIR__ .'/../view/InicioView.php';
+        case 'VacantesListView':
+            include_once __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
-        case "Ver_Postulantes":
-            include __DIR__ .'/../view/VerPostulantesView.php';
+        case 'ContactoView':
+            include_once __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
         break;
 
-        case "Ver_Vacante":
-            include __DIR__ .'/../view/VerVacanteView.php';
+        case 'closeSession':
+            SessionManager::destroySession();
+            echo "<script> window.location.href='../../index.php';</script>";
         break;
 
-        case "Ver_Contacto":
-            include __DIR__ .'/../view/InicioView.php';
-        break;
-
-        case "EXIT":
+        case 'EXIT':
                 
+        break;
+
+        default:
+            // Redirect to Home for unknown routes
+            include_once __DIR__ .'/../views/viewPostulante/Home.php';
         break;
         }
         
     }
-     public function validarGET($variable){
-            if(empty($variable)){
-                echo "<script> window.history.back();</script>";
-            } else{
-                return true;
-            }
+    public function validarGET($variable){
+        if(!isset($variable) || trim($variable) === ''){
+            return false;
+        }
+        return true;
     }
 }

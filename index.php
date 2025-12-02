@@ -24,7 +24,7 @@
                     break;
 
                 case 2:
-                    header("Location:views/viewPostulante/navbarPostulante.php?cargar=Home");
+                    header("Location:views/viewPostulante/index.php?cargar=Home");
                     break;
 
                 default:
