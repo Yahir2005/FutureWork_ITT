@@ -43,9 +43,9 @@ echo $response->message;*/
 $response = $controller->ListarPostulanteHabilidades();
 echo $response->message ;*/
 
-/*controller = new PostulanteHabilidadesController();
+$controller = new PostulanteHabilidadesController();
 $postulanteHabilidades = new PostulanteHabilidades();
 $postulanteHabilidades->set("Postulante_idPostulante",4);
-$postulanteHabilidades->set("Habilidades_idHabilidad",8);
+$postulanteHabilidades->set("Habilidades_idHabilidad",4);
 $result = $controller->ActualizarPostulanteHabilidades(1,$postulanteHabilidades);
-echo $result->message;*/
+echo $result->message;

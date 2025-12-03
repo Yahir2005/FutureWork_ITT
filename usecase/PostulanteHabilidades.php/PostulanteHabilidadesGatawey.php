@@ -26,13 +26,15 @@ class PostulanteHabilidadesGatawey implements IPostulanteHabilidades{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
-      public function ActualizarPostulanteHabilidades($id, $postulanteHabilidades):int {
-         $mysqlConnector = new MysqlConnector();
+     
+    public function ActualizarPostulanteHabilidades($id, $postulanteHabilidades): int {
+    $mysqlConnector = new MysqlConnector();
         $sql = "UPDATE Postulante_Habilidades SET 
-            Postulante_idPostulante = '{$postulanteHabilidades->get('Postulante_idPostulante')}',
-            Habilidades_idHabilidad = '{$postulanteHabilidades->get('Habilidades_idHabilidad')}'
+        Postulante_idPostulante = '{$postulanteHabilidades->get('Postulante_idPostulante')}',
+        Habilidades_idHabilidad = '{$postulanteHabilidades->get('Habilidades_idHabilidad')}'
         WHERE idPostulante_Habilidad = {$id}";
         $result = $mysqlConnector->consultaSimple($sql);
-        return $result;
+    return $result;
     }
+
 }
