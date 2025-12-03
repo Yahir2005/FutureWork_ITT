@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
+require_once __DIR__ ."/../../Dto/RespuestaGenerica.php";
 require_once __DIR__ ."/IPostulanteCertificacion.php";
 require_once __DIR__ ."/PostulanteCertificacionGateway.php";
 

@@ -9,28 +9,22 @@
     
     if(isset($_POST['enviar'])){
         $controller = new UsuarioController();
-        //$response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
+        
         $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
-        // Si el inicio de sesión es exitoso, $response->body contiene los datos del usuario.
+        
         if($response->status == "ok"){
             SessionManager::startSession();
-            // Guardamos tanto el ID del usuario como su Rol en la sesión
+            
             $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
             $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
-            //header("Location:viewsStudent/?cargar=StudentTestListView");
-            // Obtenemos el rol de la sesión que acabamos de establecer
             
             switch($_SESSION['Rol_idRol']){
                 case 1:
-                    //$idEmpresa = SessionManager::getEmpresaId();
-                    //$_SESSION["idEmpresas"] = $response->body['idEmpresas"'];
-                    //header("Location:views/viewEmpresa/?cargar=navbarEmpresa");
                     header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
                 case 2:
                     header("Location:views/viewPostulante/navbarPostulante.php?cargar=Home");
-                   //echo "inicio sesion postulante".$_SESSION['Rol_idRol'];
                     break;
 
                 default:

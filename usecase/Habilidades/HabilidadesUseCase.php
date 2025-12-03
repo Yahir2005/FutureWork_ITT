@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/IHabilidades.php";
 require_once __DIR__ . "/HabilidadesGateway.php";
-require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
+require_once __DIR__ ."/../../Dto/RespuestaGenerica.php";
 
 class HabilidadesUseCase{
     private $gatewayDb;

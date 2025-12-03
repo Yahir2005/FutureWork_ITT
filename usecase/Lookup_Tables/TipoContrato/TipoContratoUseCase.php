@@ -21,4 +21,18 @@ class TipoContratoUseCase{
         }
         return $response;
     }
+
+    public function listarTipoContratoPorId($id): RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $responseMetodo = $this ->gatewayDB->listarTipoContratoPorId($id);
+        try {
+            $response->status = "ok";
+            $response ->body = $responseMetodo;
+            $response ->message = "Se listo por id tipo contrato correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response ->message = "Error al listar por id tipo contrato".$e->getMessage();
+        }
+        return $response;
+    }
 }

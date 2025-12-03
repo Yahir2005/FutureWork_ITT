@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ ."/../../DataAccess/MysqlConnector.php";
+require_once __DIR__ ."/../DataAccess/MysqlConnector.php";
 require_once __DIR__ . "/IPostulanteCertificacion.php";
 
 class PostulanteCertificacionGateway implements IPostulanteCertificacion{

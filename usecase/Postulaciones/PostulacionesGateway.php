@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ ."/../DataAccess";
+require_once __DIR__ ."/../DataAccess/MysqlConnector.php";
 require_once __DIR__ ."/IPostulaciones.php";
 require_once __DIR__ ."/../../Dto/Postulacion.php";
 class PostulacionesGateway implements IPostulaciones{

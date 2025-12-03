@@ -7,12 +7,32 @@ class PostulanteHabilidadesGatawey implements IPostulanteHabilidades{
         $sql = "INSERT INTO Postulante_Habilidades (
            Postulante_idPostulante,
            Habilidades_idHabilidad
-        ) VALUES (
+        )
+        VALUES (
             '{$postulanteHabilidades->get('Postulante_idPostulante')}',
-            '{$postulanteHabilidades->get('Habilidades_idHabilidad')}',
-        )";
+            '{$postulanteHabilidades->get('Habilidades_idHabilidad')}')";
         $result = $mysqlConnector->consultaSimple($sql);
         return $result;
     }
-
+    public function EliminarPostulanteHabilidades($id): int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "DELETE FROM Postulante_Habilidades WHERE idPostulante_Habilidad = {$id}";
+        $result = $mysqlConnector->consultaSimple($sql);
+        return $result;
+    }
+     public function ListarPostulanteHabilidades():array{
+     $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Postulante_Habilidades";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+      public function ActualizarPostulanteHabilidades($id, $postulanteHabilidades):int {
+         $mysqlConnector = new MysqlConnector();
+        $sql = "UPDATE Postulante_Habilidades SET 
+            Postulante_idPostulante = '{$postulanteHabilidades->get('Postulante_idPostulante')}',
+            Habilidades_idHabilidad = '{$postulanteHabilidades->get('Habilidades_idHabilidad')}'
+        WHERE idPostulante_Habilidad = {$id}";
+        $result = $mysqlConnector->consultaSimple($sql);
+        return $result;
+    }
 }

@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ ."/../../Dto/RespuestaGenerica.php";
-require_once __DIR__ ."/IPostulacionesGateway.php";
 
 class PostulacionesUseCase{
     private $gatewayDb;

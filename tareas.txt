@@ -4,14 +4,8 @@ Si tenemos clases 2 semanas
 
 itzel (ya esta la tabla)
 hacer tabla carrera 
-ListarPorId
 
 hacer tabla Postulantes (ya esta la tabla )
-ListarPorNombre //EL metodo se encuentra en Empresa.
-Listar
-Insertar
-Actualizar 
-Eliminar
 
 hacer tabla Postulante_Habilidades (ya esta la tabla)
 Insertar
@@ -21,12 +15,9 @@ Actualizar
 --------------------------------------------------------------------
 jose luis 
 hacer tabla EstadoPostulacion
-ListarPorId
 
 Hacer tabla Habilidades
-Insertar
 Eliminar
-Listar
 Actualizar
 
 hacer tabla PostulanteCertificaciones
@@ -54,17 +45,10 @@ ListarPorId
 
 Yahir
 hacer tabla Vacantes
-Insertar 
-Eliminar
-Actualizar
-Listar
-ListarPorNombre
+
 Hacer router
 
 hacer tablas ImagenesEmpresa y ImagenesPostulante son 4 tablas en total
-Insertar
-Listar
-Eliminar
 
 ------------------------------------------------------------------
 
