@@ -1,5 +1,5 @@
 <?php
-class habilidades{
+class Habilidades{
     private $idHabilidad;
     private $nombre_Habilidad;
 
@@ -14,4 +14,3 @@ class habilidades{
         $this->$property = $value;
     } 
 }
-

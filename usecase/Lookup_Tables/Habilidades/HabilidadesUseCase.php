@@ -25,7 +25,7 @@ class HabilidadesUseCase{
         return $respose;
     }
 
-    public function InsertarHabilidades(habilidades $habilidades):RespuestaGenerica{
+    public function InsertarHabilidades(Habilidades $habilidades):RespuestaGenerica{
         $response = new RespuestaGenerica(); 
         $respuestaMetodo = $this->gatewayDb->InsertarHabilidades($habilidades);
         try {

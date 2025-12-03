@@ -14,7 +14,7 @@ class   HabilidadesController {
         return $usecase-> listarHabilidades();
      }
      
-    public function InsertarHabilidades(habilidades $habilidades):RespuestaGenerica{
+    public function InsertarHabilidades(Habilidades $habilidades):RespuestaGenerica{
         $gatewayDb = new HabilidadesGateway();
         $usecase = new HabilidadesUseCase($gatewayDb);
         return $usecase->InsertarHabilidades($habilidades);
