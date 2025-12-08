@@ -1,11 +1,21 @@
 <?php
   require_once __DIR__ . '/../../usecase/Empresa/EmpresaController.php';
+  require_once __DIR__ . '/../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php';
+
+  $listarValidaciones = array();
+  $estadoValidacionEmpresaController = new EstadoValidacionEmpresaController();
+  $resultValidaciones = $estadoValidacionEmpresaController->ListarValidacionesEmpresa();
+  if($resultValidaciones->status == "ok"){
+    $listarValidaciones = $resultValidaciones->body;
+  }
+
   $controller = new EmpresaController();
   $listar = array();
   $resultEmpresas = $controller->listarEmpresas(); 
   if($resultEmpresas->status == "ok"){
     $listar = $resultEmpresas->body;
   }
+
   
 ?>
 <!doctype html>
