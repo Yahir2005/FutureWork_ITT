@@ -87,30 +87,36 @@ class UsuarioGatewey implements IUsuarioGateway{
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
-    public function iniciarSesionG(string $usuario, string $contrasena): array {
-    $mysqlConnector = new MysqlConnector();
-    $sql = "SELECT 
-            U.idUsuarios AS usuarioId,
-            U.Rol_idRol AS rolId,
-            U.email AS usuarioEmail,
-            U.Password AS usuarioPassword,
-            E.idEmpresas AS empresaId,
-            P.idPostulante AS postulanteId
-        FROM Usuarios U
-        LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
-        LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
-        WHERE U.email = '$usuario'
-        AND U.Password = '$contrasena'";
+    public function iniciarSesionG(string $usuario, string $contrasena): object {
+        $sql = "SELECT idUsuarios, Rol_idRol FROM Usuarios 
+                WHERE email='$usuario'
+                AND Password='$contrasena'";
 
-        $result = $mysqlConnector->consultaRetorno($sql);
+        $mysqlObj = new MysqlConnector();
+        $result = $mysqlObj->consultaRetorno($sql);
         $row = mysqli_fetch_assoc($result);
 
         if ($row) {
-            return $row;
+            // Obtenemos idEmpresa o idPostulante
+            $entidad = $this->obtenerEntidadPorUsuario($row['idUsuarios']);
+
+            // Unimos todo en el body
+            $body = array_merge($row, $entidad);
+
+            return (object)[
+                "status" => "ok",
+                "body" => $body,
+                "message" => "Inicio de sesión correcto"
+            ];
         } else {
-            throw new Exception("Usuario o contraseña incorrectos");
+            return (object)[
+                "status" => "error",
+                "body" => [],
+                "message" => "Usuario o contraseña incorrectos"
+            ];
         }
     }
+
 
     public function getIdByRol($idRol): array {
         $mysqlConnector = new MysqlConnector();
@@ -119,4 +125,64 @@ class UsuarioGatewey implements IUsuarioGateway{
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
     
+    public function obtenerEntidadPorUsuario(int $idUsuario): array {
+    $mysqlObj = new MysqlConnector();
+    $sql = "SELECT 
+                E.idEmpresas AS empresaId,
+                P.idPostulante AS postulanteId
+            FROM Usuarios U
+            LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
+            LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
+            WHERE U.idUsuarios = $idUsuario";
+
+        $result = $mysqlObj->consultaRetorno($sql);
+        $row = mysqli_fetch_assoc($result);
+
+        if ($row) {
+            return $row; // Devuelve empresaId y/o postulanteId
+        } else {
+            return ["empresaId" => null, "postulanteId" => null];
+        }
+    }
+
 }
+/*
+ public function obtenerEntidadPorUsuario(int $idUsuario): array {
+    $mysqlObj = new MysqlConnector();
+
+    $sql = "SELECT 
+                E.idEmpresas AS empresaId,
+                P.idPostulante AS postulanteId
+            FROM Usuarios U
+            LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
+            LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
+            WHERE U.idUsuarios = $idUsuario";
+
+    $result = $mysqlObj->consultaRetorno($sql);
+    $row = mysqli_fetch_assoc($result);
+
+    if ($row) {
+        return $row; // Devuelve empresaId y/o postulanteId
+    } else {
+        return ["empresaId" => null, "postulanteId" => null];
+    }
+}
+
+____________________________
+
+    public function obtenerEntidadPorUsuario(int $idUsuario): array {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT 
+                    U.idUsuarios AS usuarioId,
+                    U.Rol_idRol AS rolId,
+                    E.idEmpresas AS empresaId,
+                    P.idPostulante AS postulanteId
+                FROM Usuarios U
+                LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
+                LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
+                WHERE U.idUsuarios = {$idUsuario}";
+
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+ */

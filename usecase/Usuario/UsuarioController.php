@@ -67,6 +67,13 @@ class UsuarioController{
         return $response;
     }
 
+    public function obtenerEntidadPorUsuario(int $idUsuario):RespuestaGenerica{
+        $gatewayDB = new UsuarioGatewey();
+        $usuarioUseCase = new UsuarioUseCase($gatewayDB);
+        $response = $usuarioUseCase->obtenerEntidadPorUsuario($idUsuario);
+        return $response;
+    }
+
 }
 
 

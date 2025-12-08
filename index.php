@@ -10,7 +10,7 @@
     if(isset($_POST['enviar'])){
         $controller = new UsuarioController();
         
-        $response = $controller->iniciarSesionG($_POST['usuario'],$_POST['password']);
+        $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
         
         if($response->status == "ok"){
             SessionManager::startSession();

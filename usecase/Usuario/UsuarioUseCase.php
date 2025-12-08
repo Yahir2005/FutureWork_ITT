@@ -155,4 +155,18 @@ class UsuarioUseCase {
         return $response;
     }
 
+    public function obtenerEntidadPorUsuario(int $idUsuario):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        try {
+            $respuestaMetodo = $this->gatewayDB->obtenerEntidadPorUsuario($idUsuario);
+            $response->status = "ok";
+            $response->body=$respuestaMetodo;
+            $response->message= "Se obtuvo la entidad por usuario correctamente";
+        } catch (Exception $e) {
+            $response->status= "error";
+            $response->message= "Error al obtener entidad por usuario".$e->getMessage();
+        }
+        return $response;
+    }
+
 }
