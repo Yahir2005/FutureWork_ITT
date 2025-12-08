@@ -31,19 +31,56 @@ class   HabilidadesController {
     }
 
 }
-/*
-$controller = new HabilidadesController();
-$objHabilidades = new Habilidades();
-$objHabilidades->set("nombreHabilidad","aplicado");
-$result = $controller->InsertarHabilidades($objHabilidades);
-echo $result->message;
-*/
 
 /*
 $controller = new HabilidadesController();
 $Result = $controller-> listarHabilidades();
 echo $Result -> message;
 */
+
+/*
+//-----------------------------------------
+// PRUEBA: Insertar habilidad
+//-----------------------------------------*//*
+$controller = new HabilidadesController();
+$objhabilidad = new Habilidades();
+$objhabilidad->set("nombreHabilidad", "PruebaPolaski");
+$result = $controller->InsertarHabilidades($objhabilidad);
+echo $result->message;*/
+
+
+/*
+-----------------------------------------
+ PRUEBA: Actualizar habilidad
+-----------------------------------------*//*
+$controller = new HabilidadesController();
+$habilidad = new Habilidades();
+$habilidad->set("nombreHabilidad", "Actualizacion pruba Polaski 2.0");
+$result = $controller->ActualizarHabilidades(2, $habilidad);
+echo $result->message;*/
+
+
+/*
+//-----------------------------------------
+/// PRUEBA: Eliminar habilidad
+//-----------------------------------------*//*
+$controller = new HabilidadesController();
+$result = $controller->EliminarHabilidades(1);
+echo $result->message;*/
+
+
+/*
+-----------------------------------------
+ PRUEBA: Listar habilidades
+-----------------------------------------*//*
+$controller = new HabilidadesController();
+$response = $controller->listarHabilidades();
+
+$listar = $response->body;
+foreach ($listar as $row) {
+    echo $row['nombreHabilidad'] . "<br>";
+}
+echo $response->message;*/
 
 
 

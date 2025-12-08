@@ -23,14 +23,14 @@ class HabilidadesGateway implements IHabilidades{
         $objSQL = new MysqlConnector();
         $sql = "UPDATE Habilidades SET 
             nombreHabilidad = '{$habilidades->get('nombreHabilidad')}'
-        WHERE idHabilidades = {$id}";
+        WHERE idHabilidad = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }
 
     public function EliminarHabilidades($id): int {
         $objSQL = new MysqlConnector();
-        $sql = "DELETE FROM Habilidades WHERE idHabilidades = {$id}";
+        $sql = "DELETE FROM Habilidades WHERE idHabilidad = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }

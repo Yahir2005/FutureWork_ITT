@@ -45,7 +45,7 @@ class HabilidadesUseCase{
         try {
             $response->status = "ok";
             $response->body = $respuestaMetodo;
-            $response->message = "Tabla de Habiliidades actualizada correctamente";
+            $response->message = "Tabla de Habilidades actualizada correctamente";
         } catch (Exception $e) {
             $response->status = "Error";
             $response->message = "Error al actualizar la Tabla Habilidades: ". $e->getMessage();
