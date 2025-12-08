@@ -21,45 +21,62 @@ if(strtolower($resultEmpresas->status) == "ok"){
 }
 
 // --- Filtros ---
-if(isset($_GET["buscar"])){
-  $nombre = $_GET["nombre"] ?? "";
-  $sector = $_GET["sector"] ?? "";
-  $validacion = $_GET["validacion"] ?? "";
+// --- Filtros ---
+if (isset($_GET["buscar"])) {
 
-  $filtrado = $listar;
+    $nombre = trim($_GET["nombre"] ?? "");
+    $sector = trim($_GET["sector"] ?? "");
+    $validacion = trim($_GET["validacion"] ?? "");
 
-  if(!empty($nombre)){
-    $filtrado = array_filter($filtrado, function($empresa) use ($nombre){
-      return stripos($empresa['nombreEmpresa'], $nombre) !== false;
-    });
-  }
-  if(!empty($sector)){
-    $filtrado = array_filter($filtrado, function($empresa) use ($sector){
-      return stripos($empresa['sector'], $sector) !== false;
-    });
-  }
-  if(!empty($validacion)){
-    $filtrado = array_filter($filtrado, function($empresa) use ($validacion){
-      return $empresa['EstadoValidacionEmpresa_idEstadoValidacionEmpresa'] == $validacion;
-    });
-  }
+    $soloNombre = !empty($nombre) && empty($sector) && empty($validacion);
+    $soloSector = empty($nombre) && !empty($sector) && empty($validacion);
+    $soloValidacion = empty($nombre) && empty($sector) && !empty($validacion);
 
-  $listar = array_values($filtrado);
-}
-
-// --- Ordenar ---
-if(isset($_GET["ordenar"])){
-  $orden = $_GET["ordenar"];
-  usort($listar, function($a, $b) use ($orden){
-    switch($orden){
-      case "nombre_asc": return strcmp($a['nombreEmpresa'], $b['nombreEmpresa']);
-      case "nombre_desc": return strcmp($b['nombreEmpresa'], $a['nombreEmpresa']);
-      case "fecha_desc": return strtotime($b['fechaRegistro']) - strtotime($a['fechaRegistro']);
-      case "fecha_asc": return strtotime($a['fechaRegistro']) - strtotime($b['fechaRegistro']);
-      default: return 0;
+    // Buscar solo por nombre ( en BD )
+    if ($soloNombre) {
+        $result = $controller->buscarEmpresasPorNombre($nombre);
+        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
     }
-  });
+
+    // Buscar solo por sector ( en BD )
+    elseif ($soloSector) {
+        $result = $controller->buscarEmpresasPorSector($sector);
+        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
+    }
+
+    // Buscar solo por validación ( en BD )
+    elseif ($soloValidacion) {
+        $result = $controller->buscarEmpresasPorTipoEstado($validacion);
+        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
+    }
+
+    // Combinación de filtros → filtrar en PHP
+    else {
+        $filtrado = $listar;
+
+        if (!empty($nombre)) {
+            $filtrado = array_filter($filtrado, function ($empresa) use ($nombre) {
+                return stripos($empresa["nombreEmpresa"], $nombre) !== false;
+            });
+        }
+
+        if (!empty($sector)) {
+            $filtrado = array_filter($filtrado, function ($empresa) use ($sector) {
+                return stripos($empresa["sector"], $sector) !== false;
+            });
+        }
+
+        if (!empty($validacion)) {
+            $filtrado = array_filter($filtrado, function ($empresa) use ($validacion) {
+                return $empresa["EstadoValidacionEmpresa_idEstadoValidacionEmpresa"] == $validacion;
+            });
+        }
+
+        $listar = array_values($filtrado);
+    }
 }
+
+
 ?>
 <!doctype html>
 <html lang="es">
