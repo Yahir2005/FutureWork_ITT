@@ -54,8 +54,8 @@ echo $result->message;*/
  PRUEBA: Actualizar habilidad
 -----------------------------------------*//*
 $controller = new HabilidadesController();
-$habilidad = new Habilidades();
-$habilidad->set("nombreHabilidad", "Actualizacion pruba Polaski 2.0");
+$objhabilidad = new Habilidades();
+$objhabilidad->set("nombreHabilidad", "Actualizacion pruba Polaski 2.0");
 $result = $controller->ActualizarHabilidades(2, $habilidad);
 echo $result->message;*/
 

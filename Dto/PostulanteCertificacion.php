@@ -1,8 +1,8 @@
 <?php
 class PostulanteCertificacion{
     private $idPostulanteCertificacion;
-    private $postulante_idPostulante;
-    private $certificaciones_idCertificacion;
+    private $Postulante_idInformacionPolstulante;
+    private $Certificaciones_idCertificacion;
 
 
     public function __construct()

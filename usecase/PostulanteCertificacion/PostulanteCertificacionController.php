@@ -36,3 +36,50 @@ class   PostulanteCertificacionController {
 /*$controller = new PostulanteCertificacionController();
 $result  = $controller->listarPostulanteCertificacion();
 echo $result->message;*/
+
+/*
+-----------------------------------------
+ PRUEBA: Insertar PostulanteCertificacion
+-----------------------------------------*//*
+$controller = new PostulanteCertificacionController();
+$objpostulanteCertificacion = new PostulanteCertificacion();
+$objpostulanteCertificacion->set("Postulante_idInformacionPolstulante", "Prueba de don dimadon");
+$objpostulanteCertificacion->set("Certificaciones_idCertificacion", "El torero");
+$result = $controller->InsertarPostulanteCertificacion($objpostulanteCertificacion);
+echo $result->message;*/
+
+
+/*
+-----------------------------------------
+ PRUEBA: Actualizar PostulanteCertificacion
+-----------------------------------------
+$controller = new PostulanteCertificacionController();
+$objpostulanteCertificacion = new PostulanteCertificacion();
+$objpostulanteCertificacion->set("Postulante_idInformacionPolstulante", "Actualizacion de los terrenos nuevos");
+$objpostulanteCertificacion->set("Certificaciones_idCertificacion", "El toro bailarin");
+$result = $controller->ActualizarPostulanteCertificacion(1, $objpostulanteCertificacion);
+echo $result->message;
+*/
+
+/*
+-----------------------------------------
+ PRUEBA: Eliminar PostulanteCertificacion
+-----------------------------------------
+$controller = new PostulanteCertificacionController();
+$result = $controller->EliminarPostulanteCertificacion(1);
+echo $result->message;
+*/
+
+/*
+-----------------------------------------
+ PRUEBA: Listar PostulanteCertificacion
+-----------------------------------------*//*
+$controller = new PostulanteCertificacionController();
+$response = $controller->listarPostulanteCertificacion();
+
+$listar = $response->body;
+foreach ($listar as $row) {
+    echo $row['banana'] . "<br>";
+}
+echo $response->message;
+*/

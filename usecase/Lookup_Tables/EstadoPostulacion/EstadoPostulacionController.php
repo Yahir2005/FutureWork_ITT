@@ -36,3 +36,54 @@ echo $response-> message;*/
         return $useCase-> listarEstadoPostulacion();
      }
 }*/
+
+
+
+/*$controller = new PostulanteCertificacionController();
+$result  = $controller->listarPostulanteCertificacion();
+echo $result->message;*/
+
+/*
+-----------------------------------------
+ PRUEBA: Insertar PostulanteCertificacion
+-----------------------------------------
+$controller = new PostulanteCertificacionController();
+$objPostulanteCertificacion = new PostulanteCertificacion();
+$objPostulanteCertificacion->set("nombreHabilidad", "Trabajo en equipo PO");
+$result = $controller->InsertarPostulanteCertificacion($objPostulanteCertificacion);
+echo $result->message;
+*/
+
+/*
+-----------------------------------------
+ PRUEBA: Actualizar PostulanteCertificacion
+-----------------------------------------
+$controller = new PostulanteCertificacionController();
+$objPostulanteCertificacion = new objPostulanteCertificacion();
+$objPostulanteCertificacion->set("nombreHabilidad", "Comunicación efectiva");
+$result = $controller->ActualizarPostulanteCertificacion(1, $objPostulanteCertificacion);
+echo $result->message;
+*/
+
+/*
+-----------------------------------------
+ PRUEBA: Eliminar PostulanteCertificacion
+-----------------------------------------
+$controller = new PostulanteCertificacionController();
+$result = $controller->EliminarPostulanteCertificacion(1);
+echo $result->message;
+*/
+
+/*
+-----------------------------------------
+ PRUEBA: Listar PostulanteCertificacion
+-----------------------------------------
+$controller = new PostulanteCertificacionController();
+$response = $controller->listarPostulanteCertificacion();
+
+$listar = $response->body;
+foreach ($listar as $row) {
+    echo $row['nombreHabilidad'] . "<br>";
+}
+echo $response->message;
+*/

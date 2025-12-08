@@ -14,11 +14,11 @@ class PostulanteCertificacionGateway implements IPostulanteCertificacion{
      public function insertarPostulanteCertificacion(PostulanteCertificacion $postulanteCertificacion):int {
         $objSQL = new MysqlConnector();
         $sql = "INSERT INTO Postulante_Certificacion (
-        postulante_idPostulante,
-        certificaciones_idCertificacion
+        Postulante_idInformacionPolstulante,
+        Certificaciones_idCertificacion
         ) VALUES (
-        '{$postulanteCertificacion->get('postulante_idPostulante')}',
-        '{$postulanteCertificacion->get('certificaciones_idCertificacion')}'
+        '{$postulanteCertificacion->get('Postulante_idInformacionPolstulante')}',
+        '{$postulanteCertificacion->get('Certificaciones_idCertificacion')}'
         )";
         $result = $objSQL->consultaSimple($sql);
         return $result;
@@ -27,15 +27,15 @@ class PostulanteCertificacionGateway implements IPostulanteCertificacion{
     public function ActualizarPostulanteCertificacion($id, $postulanteCertificacion):int {
         $objSQL = new MysqlConnector();
         $sql = "UPDATE Postulante_Certificacion SET 
-            postulante_idPostulante = '{$postulanteCertificacion->get('postulante_idPostulante')}',
-            certificaciones_idCertificacion = '{$postulanteCertificacion->get('certificaciones_idCertificacion')}'
-        WHERE Postulante_idCertificacion = {$id}";
+            Postulante_idInformacionPolstulante = '{$postulanteCertificacion->get('Postulante_idInformacionPolstulante')}',
+            Certificaciones_idCertificacion = '{$postulanteCertificacion->get('Certificaciones_idCertificacion')}'
+        WHERE idPostulanteCertificacion = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }
     public function EliminarPostulanteCertificacion($id): int{
         $objSQL = new MysqlConnector();
-        $sql = "DELETE FROM Postulante_Certificacion WHERE Postulante_idCertificacion = {$id}";
+        $sql = "DELETE FROM Postulante_Certificacion WHERE idPostulanteCertificacion = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }
