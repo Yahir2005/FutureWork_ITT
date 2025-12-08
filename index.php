@@ -14,18 +14,18 @@
         
         if($response->status == "ok"){
             SessionManager::startSession();
-            
+            $result = $controller->obtenerEntidadPorUsuario($response->body['idUsuarios']);
             $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
             $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
 
             switch($_SESSION['Rol_idRol']){
                 case 1:
-                    $_SESSION["idEmpresas"] = $response->body['idEmpresas'];
+                    $_SESSION["idEmpresas"] = $result->body['idEmpresas'];
                     header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
                 case 2:
-                    $_SESSION["idPostulante"] = $response->body['idPostulante'];
+                    $_SESSION["idPostulante"] = $result->body['idPostulante'];
                     header("Location:views/viewPostulante/navbarPostulante.php?cargar=Home");
                     break;
 
