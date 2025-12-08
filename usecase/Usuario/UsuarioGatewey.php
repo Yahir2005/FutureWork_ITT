@@ -90,17 +90,17 @@ class UsuarioGatewey implements IUsuarioGateway{
     public function iniciarSesionG(string $usuario, string $contrasena): array {
     $mysqlConnector = new MysqlConnector();
     $sql = "SELECT 
-                U.idUsuarios,
-                U.Rol_idRol,
-                U.email,
-                U.Password,
-                E.idEmpresas,
-                P.idPostulante
-            FROM Usuarios U
-            LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
-            LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
-            WHERE U.email = '$usuario'
-            AND U.Password = '$contrasena'";
+            U.idUsuarios AS usuarioId,
+            U.Rol_idRol AS rolId,
+            U.email AS usuarioEmail,
+            U.Password AS usuarioPassword,
+            E.idEmpresas AS empresaId,
+            P.idPostulante AS postulanteId
+        FROM Usuarios U
+        LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
+        LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
+        WHERE U.email = '$usuario'
+        AND U.Password = '$contrasena'";
 
         $result = $mysqlConnector->consultaRetorno($sql);
         $row = mysqli_fetch_assoc($result);
@@ -110,6 +110,13 @@ class UsuarioGatewey implements IUsuarioGateway{
         } else {
             throw new Exception("Usuario o contraseña incorrectos");
         }
+    }
+
+    public function getIdByRol($idRol): array {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT idUsuarios FROM Usuarios WHERE Rol_idRol = {$idRol} ";
+        $result = $mysqlConnector->consultaRetorno( $sql );
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
     
 }

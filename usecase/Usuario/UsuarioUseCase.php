@@ -141,4 +141,18 @@ class UsuarioUseCase {
         return $response;
     }
     
+    public function getIdByRol($idRol):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        try {
+            $respuestaMetodo = $this->gatewayDB->getIdByRol($idRol);
+            $response->status = "ok";
+            $response->body=$respuestaMetodo;
+            $response->message= "Se obtuvo el id por rol correctamente";
+        } catch (Exception $e) {
+            $response->status= "error";
+            $response->message= "Error al obtener id por rol".$e->getMessage();
+        }
+        return $response;
+    }
+
 }

@@ -16,4 +16,6 @@ interface IUsuarioGateway{
 
     public function iniciarSesionG(string $usuario, string $contrasena):array;
 
+    public function getIdByRol($idRol):array;
+
 }

@@ -60,6 +60,13 @@ class UsuarioController{
         return $response;
     }
 
+    public function getIdByRol($idRol):RespuestaGenerica{
+        $gatewayDB = new UsuarioGatewey();
+        $usuarioUseCase = new UsuarioUseCase($gatewayDB);
+        $response = $usuarioUseCase->getIdByRol($idRol);
+        return $response;
+    }
+
 }
 
 
