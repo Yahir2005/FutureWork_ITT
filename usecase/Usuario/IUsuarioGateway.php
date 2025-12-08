@@ -14,6 +14,6 @@ interface IUsuarioGateway{
 
     public function obtenerIdRolUsuarios($id):array;
 
-    public function iniciarSesionEmpresa(string $usuario, string $contrasena):array;
+    public function iniciarSesionG(string $usuario, string $contrasena):array;
 
 }

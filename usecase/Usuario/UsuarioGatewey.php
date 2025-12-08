@@ -87,18 +87,20 @@ class UsuarioGatewey implements IUsuarioGateway{
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
-    public function iniciarSesionEmpresa(string $usuario, string $contrasena): array {
-        $mysqlConnector = new MysqlConnector();
-        $sql = "SELECT 
-                    U.idUsuarios,
-                    U.Rol_idRol,
-                    U.email,
-                    U.Password,
-                    E.idEmpresas
-                FROM Empresas E
-                JOIN Usuarios U ON E.Usuarios_idUsuarios = U.idUsuarios
-                WHERE U.email = '$usuario'
-                AND U.Password = '$contrasena'";
+    public function iniciarSesionG(string $usuario, string $contrasena): array {
+    $mysqlConnector = new MysqlConnector();
+    $sql = "SELECT 
+                U.idUsuarios,
+                U.Rol_idRol,
+                U.email,
+                U.Password,
+                E.idEmpresas,
+                P.idPostulante
+            FROM Usuarios U
+            LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
+            LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
+            WHERE U.email = '$usuario'
+            AND U.Password = '$contrasena'";
 
         $result = $mysqlConnector->consultaRetorno($sql);
         $row = mysqli_fetch_assoc($result);
@@ -109,7 +111,5 @@ class UsuarioGatewey implements IUsuarioGateway{
             throw new Exception("Usuario o contraseña incorrectos");
         }
     }
-
-
-
+    
 }

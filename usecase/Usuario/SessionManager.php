@@ -28,7 +28,10 @@
         self::startSession();
         return $_SESSION['idEmpresas'] ?? null;
     }
-
+    public static function getPostulanteId() {
+        self::startSession();
+        return $_SESSION['idPostulante'] ?? null;
+    }
 
     // Destruir la sesión
     public static function destroySession() {

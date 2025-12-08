@@ -53,10 +53,10 @@ class UsuarioController{
         return $response;
     }
 
-    public function iniciarSesionEmpresa(string $usuario, string $contrasena):RespuestaGenerica{
+    public function iniciarSesionG(string $usuario, string $contrasena):RespuestaGenerica{
         $gatewayDB = new UsuarioGatewey();
         $usuarioUseCase = new UsuarioUseCase($gatewayDB);
-        $response = $usuarioUseCase->iniciarSesionEmpresa($usuario, $contrasena);
+        $response = $usuarioUseCase->iniciarSesionG($usuario, $contrasena);
         return $response;
     }
 

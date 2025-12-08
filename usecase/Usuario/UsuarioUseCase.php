@@ -127,9 +127,9 @@ class UsuarioUseCase {
         return $response;
     }
 
-    public function iniciarSesionEmpresa(string $usuario, string $contrasena):RespuestaGenerica{
+    public function iniciarSesionG(string $usuario, string $contrasena):RespuestaGenerica{
         $response = new RespuestaGenerica();
-        $respuesMetodo = $this->gatewayDB->iniciarSesionEmpresa($usuario, $contrasena);
+        $respuesMetodo = $this->gatewayDB->iniciarSesionG($usuario, $contrasena);
         try {
             $response->status = "ok";
             $response->body=$respuesMetodo;

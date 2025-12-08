@@ -10,20 +10,22 @@
     if(isset($_POST['enviar'])){
         $controller = new UsuarioController();
         
-        $response = $controller->iniciarSesion($_POST['usuario'],$_POST['password']);
+        $response = $controller->iniciarSesionG($_POST['usuario'],$_POST['password']);
         
         if($response->status == "ok"){
             SessionManager::startSession();
             
             $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
             $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
-            
+
             switch($_SESSION['Rol_idRol']){
                 case 1:
+                    $_SESSION["idEmpresas"] = $response->body['idEmpresas'];
                     header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
                 case 2:
+                    $_SESSION["idPostulante"] = $response->body['idPostulante'];
                     header("Location:views/viewPostulante/navbarPostulante.php?cargar=Home");
                     break;
 
