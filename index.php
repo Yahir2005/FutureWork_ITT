@@ -14,10 +14,10 @@
         
         if($response->status == "ok"){
             SessionManager::startSession();
-            $result = $controller->obtenerEntidadPorUsuario($response->body['idUsuarios']);
+            
             $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
             $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
-
+            $result = $controller->obtenerEntidadPorUsuario($response->body['idUsuarios']);
             switch($_SESSION['Rol_idRol']){
                 case 1:
                     $_SESSION["idEmpresas"] = $result->body['idEmpresas'];
