@@ -39,7 +39,7 @@ echo $result->message;*/
 
 /*
 -----------------------------------------
- PRUEBA: Insertar PostulanteCertificacion
+PRUEBA: Insertar PostulanteCertificacion
 -----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
 $objpostulanteCertificacion = new PostulanteCertificacion();
@@ -51,7 +51,7 @@ echo $result->message;*/
 
 /*
 -----------------------------------------
- PRUEBA: Actualizar PostulanteCertificacion
+PRUEBA: Actualizar PostulanteCertificacion
 -----------------------------------------
 $controller = new PostulanteCertificacionController();
 $objpostulanteCertificacion = new PostulanteCertificacion();
@@ -63,7 +63,7 @@ echo $result->message;
 
 /*
 -----------------------------------------
- PRUEBA: Eliminar PostulanteCertificacion
+PRUEBA: Eliminar PostulanteCertificacion
 -----------------------------------------
 $controller = new PostulanteCertificacionController();
 $result = $controller->EliminarPostulanteCertificacion(1);
