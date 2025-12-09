@@ -2,7 +2,7 @@
 
 //$idEmpresa = $_GET['idEmpresas'] ?? null;
 //echo "ID de la empresa: " . $idEmpresa;
-    include_once("../../router/RouterEmpresa.php");
+    include_once("../../router/Router.php");
     include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
     
     if(!SessionManager::isUserLoggedIn()){
@@ -13,7 +13,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FutureWork ITT - Inicio Invitado</title>
+  <title>FutureWork ITT - Administrador</title>
     <link rel="stylesheet" href="../css/navbar.css">
   <style>
     
@@ -97,7 +97,7 @@
 
     <section>
           <?php
-            $enrutador = new RouterEmpresa;
+            $enrutador = new Router;
             if(isset($_GET['cargar']))
             if($enrutador->validarGET($_GET['cargar'])){
                 $enrutador->cargarVista($_GET['cargar']);

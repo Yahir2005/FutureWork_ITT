@@ -1,5 +1,26 @@
 <?php
-
+$idEmpresa = $_GET['idEmpresas'] ?? null;
+  require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+  require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
+  require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";
+  require_once __DIR__ . "/../../usecase/Lookup_Tables";
+  require_once __DIR__ . "/../../Dto/Vacantes.php";
+  $vacanteController = new VacanteController();
+  if(isset($_POST["registrarVacante"])){
+    $vacanteObject = new Vacantes();
+    $vacanteObject->set("Empresa_idEmpresa",$idEmpresa);
+    $vacanteObject->set("EstadoValidacionVacante_idEstadoValidacionVacante",$_POST["idEstadoValidacionVacante"]);
+    $vacanteObject->set("TipoContrato_idTipoContrato",$_POST["idTipoContrato"]);
+    $vacanteObject->set("TipoModalidad_idTipoModalidad",$_POST["idTipoModalidad"]);
+    $vacanteObject->set("titulo",$_POST["titulo"]);
+    $vacanteObject->set("descripcion",$_POST["descripcion"]);
+    $vacanteObject->set("requisitos",$_POST["requisitos"]);
+    $vacanteObject->set("ubicacion",$_POST["ubicacion"]);
+    $vacanteObject->set("salario",$_POST["salario"]);
+    $vacanteObject->set("fechaLimite",$_POST["fechaLimite"]);
+    $resultVacante = $vacanteController->InsertarVacante($vacanteObject);
+  }
+  
 ?>
 <!doctype html>
 <html lang="es">

@@ -5,8 +5,8 @@ class Router{
     public function CargarVista($vista){
         switch ($vista) {
             
-        case 'login':
-            include_once __DIR__ .'/../index.php';
+        case 'navbarAdmin':
+            include_once __DIR__ .'/../views/viewAdmin/'.$vista.'.php';
         break;
         
         case "Inicio":

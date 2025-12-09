@@ -22,7 +22,7 @@
  </head>
  <body><!-- Navbar -->
   <nav class="navbar">
-   <div class="navbar-container"><!-- Logo --> <a href="index.php" class="navbar-logo">
+   <div class="navbar-container"><!-- Logo --> <a href="?cargar=Home" class="navbar-logo">
      <div class="logo-circle">
       FW
      </div><span class="logo-text">FutureWork ITT</span> </a> <!-- Menú de Navegación -->
