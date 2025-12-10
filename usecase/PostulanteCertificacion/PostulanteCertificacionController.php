@@ -2,6 +2,7 @@
 require_once __DIR__ ."/PostulanteCertificacionGateway.php";
 require_once __DIR__ ."/PostulanteCertificacionUseCase.php";
 require_once __DIR__ ."/IPostulanteCertificacion.php";
+require_once __DIR__ ."/../../Dto/PostulanteCertificacion.php";
 
 class   PostulanteCertificacionController {
 
@@ -40,13 +41,13 @@ echo $result->message;*/
 /*
 -----------------------------------------
  PRUEBA: Insertar PostulanteCertificacion
------------------------------------------*//*
+-----------------------------------------*/
 $controller = new PostulanteCertificacionController();
-$objpostulanteCertificacion = new PostulanteCertificacion();
-$objpostulanteCertificacion->set("Postulante_idInformacionPolstulante", "Prueba de don dimadon");
-$objpostulanteCertificacion->set("Certificaciones_idCertificacion", "El torero");
-$result = $controller->InsertarPostulanteCertificacion($objpostulanteCertificacion);
-echo $result->message;*/
+$objpostulante = new PostulanteCertificacion();
+$objpostulante->set("Postulante_idPostulante", "Prueba de don dimadon");
+$objpostulante->set("Certificaciones_idCertificacion", "El torero");
+$result = $controller->InsertarPostulanteCertificacion($objpostulante);
+echo $result->message;
 
 
 /*
@@ -55,7 +56,7 @@ echo $result->message;*/
 -----------------------------------------
 $controller = new PostulanteCertificacionController();
 $objpostulanteCertificacion = new PostulanteCertificacion();
-$objpostulanteCertificacion->set("Postulante_idInformacionPolstulante", "Actualizacion de los terrenos nuevos");
+$objpostulanteCertificacion->set("Postulante_idPostulante", "Actualizacion de los terrenos nuevos");
 $objpostulanteCertificacion->set("Certificaciones_idCertificacion", "El toro bailarin");
 $result = $controller->ActualizarPostulanteCertificacion(1, $objpostulanteCertificacion);
 echo $result->message;

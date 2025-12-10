@@ -14,10 +14,10 @@ class PostulanteCertificacionGateway implements IPostulanteCertificacion{
      public function insertarPostulanteCertificacion(PostulanteCertificacion $postulanteCertificacion):int {
         $objSQL = new MysqlConnector();
         $sql = "INSERT INTO Postulante_Certificacion (
-        Postulante_idInformacionPolstulante,
+        Postulante_idPostulante,
         Certificaciones_idCertificacion
         ) VALUES (
-        '{$postulanteCertificacion->get('Postulante_idInformacionPolstulante')}',
+        '{$postulanteCertificacion->get('Postulante_idPostulante')}',
         '{$postulanteCertificacion->get('Certificaciones_idCertificacion')}'
         )";
         $result = $objSQL->consultaSimple($sql);
@@ -27,15 +27,15 @@ class PostulanteCertificacionGateway implements IPostulanteCertificacion{
     public function ActualizarPostulanteCertificacion($id, $postulanteCertificacion):int {
         $objSQL = new MysqlConnector();
         $sql = "UPDATE Postulante_Certificacion SET 
-            Postulante_idInformacionPolstulante = '{$postulanteCertificacion->get('Postulante_idInformacionPolstulante')}',
+            Postulante_idPostulante = '{$postulanteCertificacion->get('Postulante_idPostulante')}',
             Certificaciones_idCertificacion = '{$postulanteCertificacion->get('Certificaciones_idCertificacion')}'
-        WHERE idPostulanteCertificacion = {$id}";
+        WHERE Postulante_idPostulante = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }
     public function EliminarPostulanteCertificacion($id): int{
         $objSQL = new MysqlConnector();
-        $sql = "DELETE FROM Postulante_Certificacion WHERE idPostulanteCertificacion = {$id}";
+        $sql = "DELETE FROM Postulante_Certificacion WHERE Postulante_idPostulante = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }
