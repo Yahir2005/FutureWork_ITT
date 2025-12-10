@@ -21,10 +21,10 @@ $idEmpresa = $_GET['idEmpresas'] ?? null;
   $resultListarTipoModalidad = $TipoModalidadController->listarTipoModalidad();
 
   /**listar */
-  if($resultListarValidacionVacante->status == "ok"){
+  if($resultListarValidacionVacante->status == "OK"){
     $listarValidacionVacante = $resultListarValidacionVacante->body;
   }
-  if($resultListarTipoContrato->status == "ok"){
+  if($resultListarTipoContrato->status == "Ok"){
     $listarTipoContrato = $resultListarTipoContrato->body;
   }
 
