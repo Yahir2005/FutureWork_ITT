@@ -58,4 +58,8 @@ Walker hacer frotend yahir
 cuando este hecho el backend, luego checo como nos vamos a dividir al momento de conectar, 
 los metodos con el frontend
 
+______________________________________________________
+Jose Luis, Itzel, Walker hacer las conexiones del backend al frontend todas las vistas Postulante
+
+yahir conexiones del backend al frontend todas la vistas de Empresa
 

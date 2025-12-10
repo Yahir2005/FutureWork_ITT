@@ -46,6 +46,14 @@ $idEmpresa = $_GET['idEmpresas'] ?? null;
     $vacanteObject->set("salario",$_POST["salario"]);
     $vacanteObject->set("fechaLimite",$_POST["fechaLimite"]);
     $resultVacante = $vacanteController->InsertarVacante($vacanteObject);
+    if ($resultVacante->status == 'ok') {
+        echo "<div class='alert alert-success' role='alert'> Registro exitoso
+            </div>";
+          } else {
+        echo "<div class='alert alert-danger' role='alert'>
+            Error al registrar".$resultVacante->message;" 
+          </div>";
+      }
   }
   
 ?>
@@ -146,7 +154,7 @@ $idEmpresa = $_GET['idEmpresas'] ?? null;
       </div>
      </div>
     </div><!-- Form Actions -->
-    <div class="form-actions"><button type="submit" name = class="btn-submit">💼 Publicar Vacante</button> <a href="vacantes.php" class="btn-cancel">✖ Cancelar</a>
+    <div class="form-actions"><button type="submit" name = class="btn-submit">💼 Publicar Vacante</button> <a href="?cargar=Home" class="btn-cancel">✖ Cancelar</a>
     </div>
    </form>
   </main>
