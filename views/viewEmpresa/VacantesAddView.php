@@ -1,11 +1,38 @@
 <?php
 $idEmpresa = $_GET['idEmpresas'] ?? null;
+
   require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
   require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
   require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";
-  require_once __DIR__ . "/../../usecase/Lookup_Tables";
+  require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoModalidad/TipoModalidadController.php";
   require_once __DIR__ . "/../../Dto/Vacantes.php";
+  /*Arrays*/
+  $listarValidacionVacante = array();
+  $listarTipoContrato = array();
+  $listarTipoModalidad = array();
+  /*Controllers*/
   $vacanteController = new VacanteController();
+  $vacanteValidacionController = new EstadoValidacionVacanteController();
+  $TipoContratoController = new TipoContratoController();
+  $TipoModalidadController = new TipoModalidadController();
+  /*resultListar */
+  $resultListarValidacionVacante = $vacanteValidacionController->listarEstadoValidacionVacante();
+  $resultListarTipoContrato = $TipoContratoController->listarTipoContrato();
+  $resultListarTipoModalidad = $TipoModalidadController->listarTipoModalidad();
+
+  /**listar */
+  if($resultListarValidacionVacante->status == "OK"){
+    $listarValidacionVacante = $resultListarValidacionVacante->body;
+  }
+  if($resultListarTipoContrato->status == "Ok"){
+    $listarTipoContrato = $resultListarTipoContrato->body;
+  }
+
+  if($resultListarTipoModalidad->status == "ok"){
+    $listarTipoModalidad = $resultListarTipoModalidad->body;
+  }
+
+  /**Insertar  */
   if(isset($_POST["registrarVacante"])){
     $vacanteObject = new Vacantes();
     $vacanteObject->set("Empresa_idEmpresa",$idEmpresa);
@@ -19,6 +46,14 @@ $idEmpresa = $_GET['idEmpresas'] ?? null;
     $vacanteObject->set("salario",$_POST["salario"]);
     $vacanteObject->set("fechaLimite",$_POST["fechaLimite"]);
     $resultVacante = $vacanteController->InsertarVacante($vacanteObject);
+    if ($resultVacante->status == 'ok') {
+        echo "<div class='alert alert-success' role='alert'> Registro exitoso
+            </div>";
+          } else {
+        echo "<div class='alert alert-danger' role='alert'>
+            Error al registrar".$resultVacante->message;" 
+          </div>";
+      }
   }
   
 ?>
@@ -70,12 +105,46 @@ $idEmpresa = $_GET['idEmpresas'] ?? null;
     <div class="form-section">
      <h3 class="section-title">💼 Detalles del Contrato</h3>
      <div class="form-grid">
-      <div class="form-group"><label for="idEstadoValidacionVacante">Estado de la Vacante<span class="required">*</span></label> <select id="idEstadoValidacionVacante" name="idEstadoValidacionVacante" required> <option value="">Selecciona el estado</option> <option value="1">Abierta</option> <option value="2">Cerrada</option> <option value="3">Pausada</option> </select>
+     
+     <!-- Estado de la Vacante -->
+        <div class="form-group">
+          <label for="idEstadoValidacionVacante">Estado de la Vacante<span class="required">*</span></label>
+          <select id="idEstadoValidacionVacante" name="idEstadoValidacionVacante" required>
+            <option value="">Selecciona el estado</option>
+            <?php foreach($listarValidacionVacante as $item): ?>
+              <option value="<?= $item['idEstadoValidacionVacante'] ?>">
+                <?= $item['estadoValidacionVacante'] ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+
+      <!-- Tipo de Contrato -->
+      <div class="form-group">
+        <label for="idTipoContrato">Tipo de Contrato<span class="required">*</span></label>
+        <select id="idTipoContrato" name="idTipoContrato" required>
+          <option value="">Selecciona el tipo de contrato</option>
+          <?php foreach($listarTipoContrato as $tipo): ?>
+            <option value="<?= $tipo['idTipoContrato'] ?>">
+              <?= $tipo['estadoContrato'] ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
       </div>
-      <div class="form-group"><label for="idTipoContrato">Tipo de Contrato<span class="required">*</span></label> <select id="idTipoContrato" name="idTipoContrato" required> <option value="">Selecciona el tipo de contrato</option> <option value="1">Tiempo Completo</option> <option value="2">Medio Tiempo</option> <option value="3">Por Proyecto</option> <option value="4">Pasantía</option> </select>
+
+      <!-- Modalidad de Trabajo -->
+      <div class="form-group">
+        <label for="idTipoModalidad">Modalidad de Trabajo<span class="required">*</span></label>
+        <select id="idTipoModalidad" name="idTipoModalidad" required>
+          <option value="">Selecciona la modalidad</option>
+          <?php foreach($listarTipoModalidad as $modalidad): ?>
+            <option value="<?= $modalidad['idTipoModalidad'] ?>">
+              <?= $modalidad['tipoModalidad'] ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
       </div>
-      <div class="form-group"><label for="idTipoModalidad">Modalidad de Trabajo<span class="required">*</span></label> <select id="idTipoModalidad" name="idTipoModalidad" required> <option value="">Selecciona la modalidad</option> <option value="1">Presencial</option> <option value="2">Remoto</option> <option value="3">Híbrido</option> </select>
-      </div>
+
      </div>
     </div><!-- Requisitos -->
     <div class="form-section">
@@ -85,7 +154,7 @@ $idEmpresa = $_GET['idEmpresas'] ?? null;
       </div>
      </div>
     </div><!-- Form Actions -->
-    <div class="form-actions"><button type="submit" class="btn-submit">💼 Publicar Vacante</button> <a href="vacantes.php" class="btn-cancel">✖ Cancelar</a>
+    <div class="form-actions"><button type="submit" name = class="btn-submit">💼 Publicar Vacante</button> <a href="?cargar=Home" class="btn-cancel">✖ Cancelar</a>
     </div>
    </form>
   </main>
