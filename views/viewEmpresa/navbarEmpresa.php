@@ -1,7 +1,6 @@
 <?php
 
-//$idEmpresa = $_GET['idEmpresas'] ?? null;
-//echo "ID de la empresa: " . $idEmpresa;
+
     include_once("../../router/RouterEmpresa.php");
     include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
     
