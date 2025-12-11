@@ -3,7 +3,7 @@ interface IPostulanteCertificacion{
 
     public function ListarPostulanteCertificacion():array;
 
-    public function insertarPostulanteCertificacion (PostulanteCertificacion $postulanteCertificacion):int;
+    public function InsertarPostulanteCertificacion (PostulanteCertificacion $postulanteCertificacion):int;
 
     public function ActualizarPostulanteCertificacion ($id, $postulanteCertificacion):int;
      

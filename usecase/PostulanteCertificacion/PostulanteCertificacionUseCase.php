@@ -11,9 +11,9 @@ class PostulanteCertificacionUseCase{
         $this ->gatewayDb = $gatewayDb;
     }
 
-    public function listarPostulanteCertificacion(): RespuestaGenerica{
+    public function ListarPostulanteCertificacion(): RespuestaGenerica{
         $respose = new RespuestaGenerica();
-        $respuestaMetodo = $this ->gatewayDb ->listarPostulanteCertificacion();
+        $respuestaMetodo = $this ->gatewayDb ->ListarPostulanteCertificacion();
         try {
             $respose ->status = "ok";
             $respose ->body = $respuestaMetodo;

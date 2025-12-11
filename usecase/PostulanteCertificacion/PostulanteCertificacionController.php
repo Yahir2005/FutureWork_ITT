@@ -6,7 +6,7 @@ require_once __DIR__ ."/../../Dto/PostulanteCertificacion.php";
 
 class   PostulanteCertificacionController {
 
-    public function listarPostulanteCertificacion():RespuestaGenerica {
+    public function ListarPostulanteCertificacion():RespuestaGenerica {
         $gatewayDb = new PostulanteCertificacionGateway();
         $useCase = new PostulanteCertificacionUseCase($gatewayDb);
         $response = $useCase->listarPostulanteCertificacion();
@@ -41,13 +41,13 @@ echo $result->message;*/
 /*
 -----------------------------------------
  PRUEBA: Insertar PostulanteCertificacion
------------------------------------------*/
+-----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
 $objpostulante = new PostulanteCertificacion();
 $objpostulante->set("Postulante_idPostulante", "Prueba de don dimadon");
 $objpostulante->set("Certificaciones_idCertificacion", "El torero");
 $result = $controller->InsertarPostulanteCertificacion($objpostulante);
-echo $result->message;
+echo $result->message;*/
 
 
 /*

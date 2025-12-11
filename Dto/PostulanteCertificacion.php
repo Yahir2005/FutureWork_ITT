@@ -1,6 +1,6 @@
 <?php
 class PostulanteCertificacion{
-    //private $idPostulanteCertificacion;
+    private $idPostulanteCertificacion;
     private $Postulante_idPostulante;
     private $Certificaciones_idCertificacion;
 
