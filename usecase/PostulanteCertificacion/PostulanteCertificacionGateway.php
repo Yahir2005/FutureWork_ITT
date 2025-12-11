@@ -3,6 +3,8 @@ require_once __DIR__ ."/../DataAccess/MysqlConnector.php";
 require_once __DIR__ . "/IPostulanteCertificacion.php";
 
 class PostulanteCertificacionGateway implements IPostulanteCertificacion{
+
+    
    
     public function listarPostulanteCertificacion():array{
         $objSQL = new MysqlConnector();
@@ -29,13 +31,15 @@ class PostulanteCertificacionGateway implements IPostulanteCertificacion{
         $sql = "UPDATE Postulante_Certificacion SET 
             Postulante_idPostulante = '{$postulanteCertificacion->get('Postulante_idPostulante')}',
             Certificaciones_idCertificacion = '{$postulanteCertificacion->get('Certificaciones_idCertificacion')}'
-        WHERE Postulante_idPostulante = {$id}";
+        WHERE idPostulanteCertificacion = {$id}";
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }
     public function EliminarPostulanteCertificacion($id): int{
         $objSQL = new MysqlConnector();
-        $sql = "DELETE FROM Postulante_Certificacion WHERE Postulante_idPostulante = {$id}";
+        $sql = "DELETE FROM Postulante_Certificacion 
+                WHERE idPostulanteCertificacion = {$id}";
+
         $result = $objSQL->consultaSimple($sql);
         return $result;
     }

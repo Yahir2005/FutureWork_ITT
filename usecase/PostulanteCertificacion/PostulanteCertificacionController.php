@@ -44,21 +44,21 @@ echo $result->message;*/
 -----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
 $objpostulante = new PostulanteCertificacion();
-$objpostulante->set("Postulante_idPostulante", "Prueba de don dimadon");
-$objpostulante->set("Certificaciones_idCertificacion", "El torero");
+$objpostulante->set("Postulante_idPostulante", 1);
+$objpostulante->set("Certificaciones_idCertificacion", 2);
 $result = $controller->InsertarPostulanteCertificacion($objpostulante);
-echo $result->message;*/
-
+echo $result->message;
+*/
 
 /*
 -----------------------------------------
  PRUEBA: Actualizar PostulanteCertificacion
 -----------------------------------------
 $controller = new PostulanteCertificacionController();
-$objpostulanteCertificacion = new PostulanteCertificacion();
-$objpostulanteCertificacion->set("Postulante_idPostulante", "Actualizacion de los terrenos nuevos");
-$objpostulanteCertificacion->set("Certificaciones_idCertificacion", "El toro bailarin");
-$result = $controller->ActualizarPostulanteCertificacion(1, $objpostulanteCertificacion);
+$objpostulante = new PostulanteCertificacion();
+$objpostulante->set("Postulante_idPostulante", 3);
+$objpostulante->set("Certificaciones_idCertificacion", 4);
+$result = $controller->ActualizarPostulanteCertificacion(1, $objpostulante);
 echo $result->message;
 */
 
@@ -71,9 +71,27 @@ $result = $controller->EliminarPostulanteCertificacion(1);
 echo $result->message;
 */
 
+
 /*
 -----------------------------------------
- PRUEBA: Listar PostulanteCertificacion
+ PRUEBA: Listar PostulanteCertificacion MEJORADO
+-----------------------------------------
+$controller = new PostulanteCertificacionController();
+$response = $controller->listarPostulanteCertificacion();
+
+foreach ($response->body as $row) {
+    echo "ID: " . $row['idPostulanteCertificacion'] . " - ";
+    echo "Postulante: " . $row['Postulante_idPostulante'] . " - ";
+    echo "Certificación: " . $row['Certificaciones_idCertificacion'] . "<br>";
+}
+
+echo $response->message;
+*/
+
+
+/*
+-----------------------------------------
+ PRUEBA: Listar PostulanteCertificacion BASICA
 -----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
 $response = $controller->listarPostulanteCertificacion();
