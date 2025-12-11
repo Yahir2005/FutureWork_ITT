@@ -2,10 +2,11 @@
 require_once __DIR__ ."/PostulanteCertificacionGateway.php";
 require_once __DIR__ ."/PostulanteCertificacionUseCase.php";
 require_once __DIR__ ."/IPostulanteCertificacion.php";
+require_once __DIR__ ."/../../Dto/PostulanteCertificacion.php";
 
 class   PostulanteCertificacionController {
 
-    public function listarPostulanteCertificacion():RespuestaGenerica {
+    public function ListarPostulanteCertificacion():RespuestaGenerica {
         $gatewayDb = new PostulanteCertificacionGateway();
         $useCase = new PostulanteCertificacionUseCase($gatewayDb);
         $response = $useCase->listarPostulanteCertificacion();
@@ -42,22 +43,22 @@ echo $result->message;*/
 PRUEBA: Insertar PostulanteCertificacion
 -----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
-$objpostulanteCertificacion = new PostulanteCertificacion();
-$objpostulanteCertificacion->set("Postulante_idInformacionPolstulante", "Prueba de don dimadon");
-$objpostulanteCertificacion->set("Certificaciones_idCertificacion", "El torero");
-$result = $controller->InsertarPostulanteCertificacion($objpostulanteCertificacion);
-echo $result->message;*/
-
+$objpostulante = new PostulanteCertificacion();
+$objpostulante->set("Postulante_idPostulante", 1);
+$objpostulante->set("Certificaciones_idCertificacion", 2);
+$result = $controller->InsertarPostulanteCertificacion($objpostulante);
+echo $result->message;
+*/
 
 /*
 -----------------------------------------
 PRUEBA: Actualizar PostulanteCertificacion
 -----------------------------------------
 $controller = new PostulanteCertificacionController();
-$objpostulanteCertificacion = new PostulanteCertificacion();
-$objpostulanteCertificacion->set("Postulante_idInformacionPolstulante", "Actualizacion de los terrenos nuevos");
-$objpostulanteCertificacion->set("Certificaciones_idCertificacion", "El toro bailarin");
-$result = $controller->ActualizarPostulanteCertificacion(1, $objpostulanteCertificacion);
+$objpostulante = new PostulanteCertificacion();
+$objpostulante->set("Postulante_idPostulante", 3);
+$objpostulante->set("Certificaciones_idCertificacion", 4);
+$result = $controller->ActualizarPostulanteCertificacion(1, $objpostulante);
 echo $result->message;
 */
 
@@ -70,9 +71,27 @@ $result = $controller->EliminarPostulanteCertificacion(1);
 echo $result->message;
 */
 
+
 /*
 -----------------------------------------
- PRUEBA: Listar PostulanteCertificacion
+ PRUEBA: Listar PostulanteCertificacion MEJORADO
+-----------------------------------------
+$controller = new PostulanteCertificacionController();
+$response = $controller->listarPostulanteCertificacion();
+
+foreach ($response->body as $row) {
+    echo "ID: " . $row['idPostulanteCertificacion'] . " - ";
+    echo "Postulante: " . $row['Postulante_idPostulante'] . " - ";
+    echo "Certificación: " . $row['Certificaciones_idCertificacion'] . "<br>";
+}
+
+echo $response->message;
+*/
+
+
+/*
+-----------------------------------------
+ PRUEBA: Listar PostulanteCertificacion BASICA
 -----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
 $response = $controller->listarPostulanteCertificacion();

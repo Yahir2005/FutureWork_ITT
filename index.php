@@ -18,21 +18,23 @@
             $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
             $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
             $result = $controller->obtenerEntidadPorUsuario($response->body['idUsuarios']);
+            
             switch($_SESSION['Rol_idRol']){
-                case 1:
-                    $_SESSION["idEmpresas"] = $result->body['idEmpresas'];
-                    header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
+                case 1: // Empresa
+                    $_SESSION["idEmpresas"] = $result->body['empresaId']; // usa la clave correcta
+                    header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home&idEmpresas=" . $result->body['idEmpresas']);  
                     break;
 
-                case 2:
-                    $_SESSION["idPostulante"] = $result->body['idPostulante'];
+                case 2: // Postulante
+                    $_SESSION["idPostulante"] = $result->body['postulanteId']; // usa la clave correcta
                     header("Location:views/viewPostulante/navbarPostulante.php?cargar=Home");
                     break;
 
                 default:
-                    $errorMessage =  "<div class='alert alert-danger' role='alert'>Error: Rol de usuario no reconocido.</div>";
+                    $errorMessage = "<div class='alert alert-danger' role='alert'>Error: Rol de usuario no reconocido.</div>";
                     break;
             }
+
             exit();
         } else {
             // Usamos el mensaje de error que viene desde el UseCase

@@ -33,28 +33,30 @@ $idEmpresa = $_GET['idEmpresas'] ?? null;
   }
 
   /**Insertar  */
-  if(isset($_POST["registrarVacante"])){
+if(isset($_POST["registrarVacante"])){
     $vacanteObject = new Vacantes();
-    $vacanteObject->set("Empresa_idEmpresa",$idEmpresa);
-    $vacanteObject->set("EstadoValidacionVacante_idEstadoValidacionVacante",$_POST["idEstadoValidacionVacante"]);
-    $vacanteObject->set("TipoContrato_idTipoContrato",$_POST["idTipoContrato"]);
-    $vacanteObject->set("TipoModalidad_idTipoModalidad",$_POST["idTipoModalidad"]);
-    $vacanteObject->set("titulo",$_POST["titulo"]);
-    $vacanteObject->set("descripcion",$_POST["descripcion"]);
-    $vacanteObject->set("requisitos",$_POST["requisitos"]);
-    $vacanteObject->set("ubicacion",$_POST["ubicacion"]);
-    $vacanteObject->set("salario",$_POST["salario"]);
-    $vacanteObject->set("fechaLimite",$_POST["fechaLimite"]);
+
+    $vacanteObject->set("Empresa_idEmpresa", $idEmpresa);
+
+    $vacanteObject->set("EstadoValidacionVacante_idEstadoValidacionVacante", $_POST["idEstadoValidacionVacante"]);
+    $vacanteObject->set("TipoContrato_idTipoContrato", $_POST["idTipoContrato"]);
+    $vacanteObject->set("TipoModalidad_idTipoModalidad", $_POST["idTipoModalidad"]);
+    $vacanteObject->set("titulo", $_POST["titulo"]);
+    $vacanteObject->set("descripcion", $_POST["descripcion"]);
+    $vacanteObject->set("requisitos", $_POST["requisitos"]);
+    $vacanteObject->set("ubicacion", $_POST["ubicacion"]);
+    $vacanteObject->set("salario", $_POST["salario"]);
+    $vacanteObject->set("fechaLimite", $_POST["fechaLimite"]);
+
     $resultVacante = $vacanteController->InsertarVacante($vacanteObject);
+
     if ($resultVacante->status == 'ok') {
-        echo "<div class='alert alert-success' role='alert'> Registro exitoso
-            </div>";
-          } else {
-        echo "<div class='alert alert-danger' role='alert'>
-            Error al registrar".$resultVacante->message;" 
-          </div>";
-      }
-  }
+        echo "<div class='alert alert-success' role='alert'>✓ Registro exitoso</div>";
+    } else {
+        echo "<div class='alert alert-danger' role='alert'>✗ Error al registrar: ".$resultVacante->message."</div>";
+    }
+}
+
   
 ?>
 <!doctype html>
@@ -154,7 +156,8 @@ $idEmpresa = $_GET['idEmpresas'] ?? null;
       </div>
      </div>
     </div><!-- Form Actions -->
-    <div class="form-actions"><button type="submit" name = class="btn-submit">💼 Publicar Vacante</button> <a href="?cargar=Home" class="btn-cancel">✖ Cancelar</a>
+    <div class="form-actions"><button type="submit" name="registrarVacante" class="btn-submit">💼 Publicar Vacante</button>
+<a href="?cargar=Home" class="btn-cancel">✖ Cancelar</a>
     </div>
    </form>
   </main>
