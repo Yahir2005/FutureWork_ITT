@@ -50,22 +50,22 @@ $result = $controller->InsertarPostulanteCertificacion($objpostulante);
 echo $result->message;
 */
 
-/*
------------------------------------------
+
+/*-----------------------------------------
 PRUEBA: Actualizar PostulanteCertificacion
------------------------------------------
+-----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
 $objpostulante = new PostulanteCertificacion();
 $objpostulante->set("Postulante_idPostulante", 3);
 $objpostulante->set("Certificaciones_idCertificacion", 4);
 $result = $controller->ActualizarPostulanteCertificacion(1, $objpostulante);
-echo $result->message;
-*/
+echo $result->message;*/
+
 
 /*
 -----------------------------------------
 PRUEBA: Eliminar PostulanteCertificacion
------------------------------------------
+-----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
 $result = $controller->EliminarPostulanteCertificacion(1);
 echo $result->message;
@@ -75,7 +75,7 @@ echo $result->message;
 /*
 -----------------------------------------
  PRUEBA: Listar PostulanteCertificacion MEJORADO
------------------------------------------
+-----------------------------------------*//*
 $controller = new PostulanteCertificacionController();
 $response = $controller->listarPostulanteCertificacion();
 
