@@ -3,7 +3,7 @@
     require_once __DIR__ ."/usecase/Usuario/SessionManager.php";
     include_once("router/RouterEmpresa.php");
     include_once("router/RouterPostulante.php");
-    
+    $usuariosList = array();
     
     $errorMessage = "";
     
