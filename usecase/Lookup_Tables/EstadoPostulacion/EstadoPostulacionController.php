@@ -20,10 +20,11 @@ class   EstadoPostulacionController {
 
 }
 
-/*$controller = new EstadoPostulacionController();
+/*
+$controller = new EstadoPostulacionController();
 $response = $controller->listarEstadoPostulacion();
 echo $response-> message;
-
+*/
 $controller = new EstadoPostulacionController();
 $response = $controller->listarEstadoPostulacionPorId($idEstadoPostulacion);
-echo $response-> message;*/
+echo $response-> message;
