@@ -25,6 +25,8 @@ $controller = new EstadoPostulacionController();
 $response = $controller->listarEstadoPostulacion();
 echo $response-> message;
 */
+/*
 $controller = new EstadoPostulacionController();
-$response = $controller->listarEstadoPostulacionPorId($idEstadoPostulacion);
+$response = $controller->listarEstadoPostulacionPorId(1);
 echo $response-> message;
+*/
