@@ -13,7 +13,7 @@ class EstadoPostulacionGateway implements IEstadoPostulacion{
 
      public function listarEstadoPostulacionPorId($idEstadoPostulacion): array {
         $objSQL  = new MysqlConnector();
-        $sql = "SELECT * FROM EstadoPostulacion WHERE Estado_idPostulacion = {$idEstadoPostulacion}";
+        $sql = "SELECT * FROM EstadoPostulacion WHERE idEstadoPostulacion = {$idEstadoPostulacion}";
         $result = $objSQL ->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
      }
