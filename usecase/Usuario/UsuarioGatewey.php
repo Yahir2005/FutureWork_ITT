@@ -134,16 +134,14 @@ class UsuarioGatewey implements IUsuarioGateway{
             LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
             LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
             WHERE U.idUsuarios = $idUsuario";
-        $result = $mysqlObj->consultaSimple($sql);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
-        /*
+        
         $result = $mysqlObj->consultaRetorno($sql);
         $row = mysqli_fetch_assoc($result);
         if ($row) {
             return $row; // Devuelve empresaId y/o postulanteId
         } else {
             return ["empresaId" => null, "postulanteId" => null];
-        }*/
+        }
     }
 
 }
