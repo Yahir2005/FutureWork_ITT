@@ -1,4 +1,59 @@
 <?php
+  /**Controladores */
+  require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+  require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
+  require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
+  require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";
+  require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoModalidad/TipoModalidadController.php";
+  /**Arrays*/
+  $listarVacantes = array(); // Aquí se almacenarán las vacantes obtenidas
+  $listarEmpresa = array(); // Aquí se almacenará la información de la empresa
+  $listarValidacionVacante = array();
+  $listarTipoContrato = array();
+  $listarTipoModalidad = array();
+
+  /**Contadores */
+  $totalVacantes = 0;
+  $totalAbiertas = 0;
+  $totalCerradas = 0;
+  $totalPausadas = 0;
+
+  /**Instancias */
+  $vacanteController = new VacanteController();
+  $empresaController = new EmpresaController();
+  $vacanteValidacionController = new EstadoValidacionVacanteController();
+  $TipoContratoController = new TipoContratoController();
+  $TipoModalidadController = new TipoModalidadController();
+  /**Listar */
+  if($resultListarValidacionVacante->status == "OK"){
+    $listarValidacionVacante = $resultListarValidacionVacante->body;
+  }
+  if($resultListarTipoContrato->status == "Ok"){
+    $listarTipoContrato = $resultListarTipoContrato->body;
+  }
+
+  if($resultListarTipoModalidad->status == "ok"){
+    $listarTipoModalidad = $resultListarTipoModalidad->body;
+  }
+  if ($resultVacantes && $resultVacantes->status == "ok" && is_array($resultVacantes->body)) {
+    $listarVacantes = $resultVacantes->body;
+    $totalVacantes = count($listarVacantes);
+
+    foreach ($listarVacantes as $vacante) {
+        // Estado de la vacante: campo EstadoValidacionVacante_idEstadoValidacionVacante
+        switch ($vacante['EstadoValidacionVacante_idEstadoValidacionVacante']) {
+            case 1: // Abierta
+                $totalAbiertas++;
+                break;
+            case 2: // Cerrada
+                $totalCerradas++;
+                break;
+            case 3: // Pausada
+                $totalPausadas++;
+                break;
+        }
+    }
+  }
 
 ?>
 <!doctype html>
@@ -13,6 +68,7 @@
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
+
  <body><!-- Header -->
   <header class="header">
    <div class="header-content">
@@ -59,6 +115,7 @@
      </div>
     </div>
    </div>
+   
   </header><!-- Main Container -->
   <main class="container"><!-- Aquí irán los mensajes de éxito o error desde PHP --> <!-- 
     <div class="alert alert-success">
