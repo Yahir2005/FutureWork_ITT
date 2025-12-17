@@ -17,16 +17,16 @@
             
             $_SESSION["idUsuarios"] = $response->body['idUsuarios'];
             $_SESSION["Rol_idRol"] = $response->body['Rol_idRol'];
-            $result = $controller->obtenerEntidadPorUsuario($response->body['idUsuarios']);
+            //$result = $controller->obtenerEntidadPorUsuario($response->body['idUsuarios']);
             
             switch($_SESSION['Rol_idRol']){
                 case 1: // Empresa
-                    $_SESSION["idEmpresas"] = $result->body['empresaId']; // usa la clave correcta
+                    $_SESSION["idEmpresas"] = $response->body['idEmpresas']; // usa la clave correcta
                     header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
                 case 2: // Postulante
-                    $_SESSION["idPostulante"] = $result->body['postulanteId']; // usa la clave correcta
+                    $_SESSION["idPostulante"] = $response->body['idPostulante']; // usa la clave correcta
                     header("Location:views/viewPostulante/navbarPostulante.php?cargar=Home");
                     break;
 
