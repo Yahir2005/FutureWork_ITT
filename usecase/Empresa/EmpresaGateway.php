@@ -82,4 +82,11 @@ class EmpresaGateway implements IEmpresa{
         $result = $mysqlConnector->consultaSimple($sql);
         return $result;
     }
+
+    public function obtenerEmpresaPorIdUsuario($id):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM Empresas WHERE Usuarios_idUsuarios = {$id}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }

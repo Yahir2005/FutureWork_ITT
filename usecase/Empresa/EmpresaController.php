@@ -50,6 +50,12 @@ class EmpresaController{
         $useCase = new EmpresaUseCase($gateway);
         return $useCase->actualizarEstadoEmpresa($id,$empresa);
     }
+
+    public function obtenerEmpresaPorIdUsuario($id):RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->obtenerEmpresaPorIdUsuario($id);
+    }
 }
 /*
 $controller = new EmpresaController();
