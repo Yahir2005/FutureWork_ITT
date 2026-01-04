@@ -144,6 +144,10 @@ if (isset($_GET["buscar"])) {
     <!-- Companies Grid -->
     <div class="companies-grid">
       <?php if (count($listar) > 0): ?>
+        <?php 
+          // Calculate current date once, outside the loop
+          $currentDate = date('Y-m-d');
+        ?>
         <?php foreach ($listar as $empresa): ?>
           <?php
             // Fetch vacancies for this company
@@ -156,7 +160,6 @@ if (isset($_GET["buscar"])) {
               $countVacantes = count($resultVacantes->body);
               
               // Count open vacancies (fechaLimite >= current date)
-              $currentDate = date('Y-m-d');
               foreach ($resultVacantes->body as $vacante) {
                 if (isset($vacante['fechaLimite']) && $vacante['fechaLimite'] >= $currentDate) {
                   $countAbiertas++;
