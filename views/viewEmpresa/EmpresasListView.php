@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../usecase/Empresa/EmpresaController.php';
 require_once __DIR__ . '/../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php';
+require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
 
 // --- Validaciones ---
 $listarValidaciones = array();
@@ -11,6 +12,15 @@ if(strtolower($resultValidaciones->status) == "ok"){
     $listarValidaciones[$estado["idEstadoValidacionEmpresa"]] = $estado["estadoValidacionEmpresa"];
   }
 }
+//Vacantes
+$listarVacantesPorEmpresa = array(); 
+$vacanteController = new VacanteController();
+$resultVacantes = $vacanteController->ListarVacantesPorEmpresa(1);
+if($resultVacantes->body == "ok"){
+  $listarVacantesPorEmpresa = $resultVacantes->body;
+}
+
+//Vacantes Abiertas
 
 // --- Empresas ---
 $controller = new EmpresaController();
@@ -21,60 +31,6 @@ if(strtolower($resultEmpresas->status) == "ok"){
 }
 
 // --- Filtros ---
-// --- Filtros ---
-if (isset($_GET["buscar"])) {
-
-    $nombre = trim($_GET["nombre"] ?? "");
-    $sector = trim($_GET["sector"] ?? "");
-    $validacion = trim($_GET["validacion"] ?? "");
-
-    $soloNombre = !empty($nombre) && empty($sector) && empty($validacion);
-    $soloSector = empty($nombre) && !empty($sector) && empty($validacion);
-    $soloValidacion = empty($nombre) && empty($sector) && !empty($validacion);
-
-    // Buscar solo por nombre ( en BD )
-    if ($soloNombre) {
-        $result = $controller->buscarEmpresasPorNombre($nombre);
-        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
-    }
-
-    // Buscar solo por sector ( en BD )
-    elseif ($soloSector) {
-        $result = $controller->buscarEmpresasPorSector($sector);
-        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
-    }
-
-    // Buscar solo por validación ( en BD )
-    elseif ($soloValidacion) {
-        $result = $controller->buscarEmpresasPorTipoEstado($validacion);
-        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
-    }
-
-    // Combinación de filtros → filtrar en PHP
-    else {
-        $filtrado = $listar;
-
-        if (!empty($nombre)) {
-            $filtrado = array_filter($filtrado, function ($empresa) use ($nombre) {
-                return stripos($empresa["nombreEmpresa"], $nombre) !== false;
-            });
-        }
-
-        if (!empty($sector)) {
-            $filtrado = array_filter($filtrado, function ($empresa) use ($sector) {
-                return stripos($empresa["sector"], $sector) !== false;
-            });
-        }
-
-        if (!empty($validacion)) {
-            $filtrado = array_filter($filtrado, function ($empresa) use ($validacion) {
-                return $empresa["EstadoValidacionEmpresa_idEstadoValidacionEmpresa"] == $validacion;
-            });
-        }
-
-        $listar = array_values($filtrado);
-    }
-}
 
 
 ?>
