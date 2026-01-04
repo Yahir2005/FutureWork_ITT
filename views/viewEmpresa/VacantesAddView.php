@@ -1,6 +1,10 @@
 <?php
-$idEmpresa = $_GET['idEmpresas'] ?? null;
-
+require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+$controllerUsuario = new UsuarioController();
+$resultEmpresa = $controllerUsuario->obtenerUsuarioPorId($_SESSION['idUsuarios']);
+$empresaData = $resultEmpresa->body;
+$idEmpresa = $empresaData['idEmpresas'] ?? null;
+echo $idEmpresa; // muestra el valor
   require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
   require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
   require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";

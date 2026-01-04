@@ -1,15 +1,18 @@
 <?php
   include_once("../../router/RouterEmpresa.php");
   include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
-/*
+
 require_once __DIR__ ."/../../usecase/Usuario/UsuarioController.php";
 
 session_start(); // siempre al inicio del script
-$idUsuario = $_SESSION["idEmpresas"];
-
+$idUsuario = $_SESSION["idUsuarios"];
 echo $idUsuario; // muestra el valor
-*/
-    
+
+  /*  $controllerUsuario = new UsuarioController();
+$resultEmpresa = $controllerUsuario->obtenerUsuarioPorId($_SESSION['idUsuarios']);
+$empresaData = $resultEmpresa->body;
+$idEmpresa = $empresaData['idEmpresas'] ?? null;
+echo $idEmpresa;*/
     if(!SessionManager::isUserLoggedIn()){
       header("Location: ../index.php");
     }
