@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../usecase/Empresa/EmpresaController.php';
 require_once __DIR__ . '/../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php';
-require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+require_once __DIR__ . '/../../usecase/Vacantes/VacanteController.php';
 
 // --- Validaciones ---
 $listarValidaciones = array();
@@ -12,15 +12,6 @@ if(strtolower($resultValidaciones->status) == "ok"){
     $listarValidaciones[$estado["idEstadoValidacionEmpresa"]] = $estado["estadoValidacionEmpresa"];
   }
 }
-//Vacantes
-$listarVacantesPorEmpresa = array(); 
-$vacanteController = new VacanteController();
-$resultVacantes = $vacanteController->ListarVacantesPorEmpresa(1);
-if($resultVacantes->body == "ok"){
-  $listarVacantesPorEmpresa = $resultVacantes->body;
-}
-
-//Vacantes Abiertas
 
 // --- Empresas ---
 $controller = new EmpresaController();
@@ -30,7 +21,64 @@ if(strtolower($resultEmpresas->status) == "ok"){
   $listar = $resultEmpresas->body;
 }
 
+// --- Vacantes ---
+$vacanteController = new VacanteController();
+
 // --- Filtros ---
+// --- Filtros ---
+if (isset($_GET["buscar"])) {
+
+    $nombre = trim($_GET["nombre"] ?? "");
+    $sector = trim($_GET["sector"] ?? "");
+    $validacion = trim($_GET["validacion"] ?? "");
+
+    $soloNombre = !empty($nombre) && empty($sector) && empty($validacion);
+    $soloSector = empty($nombre) && !empty($sector) && empty($validacion);
+    $soloValidacion = empty($nombre) && empty($sector) && !empty($validacion);
+
+    // Buscar solo por nombre ( en BD )
+    if ($soloNombre) {
+        $result = $controller->buscarEmpresasPorNombre($nombre);
+        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
+    }
+
+    // Buscar solo por sector ( en BD )
+    elseif ($soloSector) {
+        $result = $controller->buscarEmpresasPorSector($sector);
+        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
+    }
+
+    // Buscar solo por validación ( en BD )
+    elseif ($soloValidacion) {
+        $result = $controller->buscarEmpresasPorTipoEstado($validacion);
+        $listar = (strtolower($result->status) == "ok") ? $result->body : [];
+    }
+
+    // Combinación de filtros → filtrar en PHP
+    else {
+        $filtrado = $listar;
+
+        if (!empty($nombre)) {
+            $filtrado = array_filter($filtrado, function ($empresa) use ($nombre) {
+                return stripos($empresa["nombreEmpresa"], $nombre) !== false;
+            });
+        }
+
+        if (!empty($sector)) {
+            $filtrado = array_filter($filtrado, function ($empresa) use ($sector) {
+                return stripos($empresa["sector"], $sector) !== false;
+            });
+        }
+
+        if (!empty($validacion)) {
+            $filtrado = array_filter($filtrado, function ($empresa) use ($validacion) {
+                return $empresa["EstadoValidacionEmpresa_idEstadoValidacionEmpresa"] == $validacion;
+            });
+        }
+
+        $listar = array_values($filtrado);
+    }
+}
 
 
 ?>
@@ -96,7 +144,29 @@ if(strtolower($resultEmpresas->status) == "ok"){
     <!-- Companies Grid -->
     <div class="companies-grid">
       <?php if (count($listar) > 0): ?>
+        <?php 
+          // Calculate current date once, outside the loop
+          $currentDate = date('Y-m-d');
+        ?>
         <?php foreach ($listar as $empresa): ?>
+          <?php
+            // Fetch vacancies for this company
+            $resultVacantes = $vacanteController->ListarVacantesPorEmpresa($empresa['idEmpresas']);
+            $countVacantes = 0;
+            $countAbiertas = 0;
+            
+            // Check if the result is valid
+            if (isset($resultVacantes->status) && strtolower($resultVacantes->status) == "ok" && is_array($resultVacantes->body)) {
+              $countVacantes = count($resultVacantes->body);
+              
+              // Count open vacancies (fechaLimite >= current date)
+              foreach ($resultVacantes->body as $vacante) {
+                if (isset($vacante['fechaLimite']) && $vacante['fechaLimite'] >= $currentDate) {
+                  $countAbiertas++;
+                }
+              }
+            }
+          ?>
           <div class="company-card">
             <div class="company-header">
               <div class="company-icon">🏢</div>
@@ -121,11 +191,11 @@ if(strtolower($resultEmpresas->status) == "ok"){
             <div class="company-stats">
               <div class="stat-item">
                 <span class="stat-label">Vacantes</span>
-                <span class="stat-value">0</span>
+                <span class="stat-value"><?php echo $countVacantes; ?></span>
               </div>
               <div class="stat-item">
                 <span class="stat-label">Abiertas</span>
-                <span class="stat-value">0</span>
+                <span class="stat-value"><?php echo $countAbiertas; ?></span>
               </div>
             </div>
 
