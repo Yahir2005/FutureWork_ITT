@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../usecase/Empresa/EmpresaController.php';
 require_once __DIR__ . '/../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php';
+require_once __DIR__ . '/../../usecase/Vacantes/VacanteController.php';
 
 // --- Validaciones ---
 $listarValidaciones = array();
@@ -19,6 +20,9 @@ $resultEmpresas = $controller->listarEmpresas();
 if(strtolower($resultEmpresas->status) == "ok"){
   $listar = $resultEmpresas->body;
 }
+
+// --- Vacantes ---
+$vacanteController = new VacanteController();
 
 // --- Filtros ---
 // --- Filtros ---
@@ -141,6 +145,25 @@ if (isset($_GET["buscar"])) {
     <div class="companies-grid">
       <?php if (count($listar) > 0): ?>
         <?php foreach ($listar as $empresa): ?>
+          <?php
+            // Fetch vacancies for this company
+            $resultVacantes = $vacanteController->ListarVacantesPorEmpresa($empresa['idEmpresas']);
+            $countVacantes = 0;
+            $countAbiertas = 0;
+            
+            // Check if the result is valid
+            if (isset($resultVacantes->status) && strtolower($resultVacantes->status) == "ok" && is_array($resultVacantes->body)) {
+              $countVacantes = count($resultVacantes->body);
+              
+              // Count open vacancies (fechaLimite >= current date)
+              $currentDate = date('Y-m-d');
+              foreach ($resultVacantes->body as $vacante) {
+                if (isset($vacante['fechaLimite']) && $vacante['fechaLimite'] >= $currentDate) {
+                  $countAbiertas++;
+                }
+              }
+            }
+          ?>
           <div class="company-card">
             <div class="company-header">
               <div class="company-icon">🏢</div>
@@ -165,11 +188,11 @@ if (isset($_GET["buscar"])) {
             <div class="company-stats">
               <div class="stat-item">
                 <span class="stat-label">Vacantes</span>
-                <span class="stat-value">0</span>
+                <span class="stat-value"><?php echo $countVacantes; ?></span>
               </div>
               <div class="stat-item">
                 <span class="stat-label">Abiertas</span>
-                <span class="stat-value">0</span>
+                <span class="stat-value"><?php echo $countAbiertas; ?></span>
               </div>
             </div>
 
