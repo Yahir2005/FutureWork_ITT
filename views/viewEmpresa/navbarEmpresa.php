@@ -1,18 +1,19 @@
 <?php
   include_once("../../router/RouterEmpresa.php");
   include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
+  require_once __DIR__ ."/../../usecase/Usuario/UsuarioController.php";
+  /*
+  $controller = new UsuarioController();
 
-require_once __DIR__ ."/../../usecase/Usuario/UsuarioController.php";
+    session_start(); // siempre al inicio del script
+    $idUsuario = $_SESSION["idUsuarios"];
+    $result = $controller->obtenerEntidadPorUsuario($idUsuario);
+    if ($result->status == "ok"){
+      $datos = $result->body;
+      $idEmpresa = $datos['empresaId'];
+      echo "El usuario es una Empresa con ID: " . $idEmpresa;
+    }*/
 
-session_start(); // siempre al inicio del script
-$idUsuario = $_SESSION["idUsuarios"];
-echo $idUsuario; // muestra el valor
-
-  /*  $controllerUsuario = new UsuarioController();
-$resultEmpresa = $controllerUsuario->obtenerUsuarioPorId($_SESSION['idUsuarios']);
-$empresaData = $resultEmpresa->body;
-$idEmpresa = $empresaData['idEmpresas'] ?? null;
-echo $idEmpresa;*/
     if(!SessionManager::isUserLoggedIn()){
       header("Location: ../index.php");
     }

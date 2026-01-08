@@ -1,10 +1,7 @@
 <?php
-require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
-$controllerUsuario = new UsuarioController();
-$resultEmpresa = $controllerUsuario->obtenerUsuarioPorId($_SESSION['idUsuarios']);
-$empresaData = $resultEmpresa->body;
-$idEmpresa = $empresaData['idEmpresas'] ?? null;
-echo $idEmpresa; // muestra el valor
+  $MessageID = "";
+ // muestra el valor
+  require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
   require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
   require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
   require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";
@@ -15,6 +12,7 @@ echo $idEmpresa; // muestra el valor
   $listarTipoContrato = array();
   $listarTipoModalidad = array();
   /*Controllers*/
+  $usuarioController = new UsuarioController();
   $vacanteController = new VacanteController();
   $vacanteValidacionController = new EstadoValidacionVacanteController();
   $TipoContratoController = new TipoContratoController();
@@ -34,6 +32,31 @@ echo $idEmpresa; // muestra el valor
 
   if($resultListarTipoModalidad->status == "ok"){
     $listarTipoModalidad = $resultListarTipoModalidad->body;
+  }
+  /**Extraer el ID de la empresa*/
+  $idUsuario = $_SESSION["idUsuarios"];
+  $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
+  if ($result->status == "ok") {
+    
+    // 2. Obtener el arreglo del body
+    $datos = $result->body;
+
+    // 3. Acceder a las propiedades específicas dentro del arreglo
+    $idEmpresa = $datos['empresaId'];
+    $idPostulante = $datos['postulanteId'];
+
+    // Ejemplo de uso:
+    /*
+    if ($idEmpresa != null) {
+        $MessageID = "El usuario es una Empresa con ID: " . $idEmpresa;
+    }*/
+
+    // Si solo quieres ver qué trae para depurar, usa print_r o var_dump
+    // print_r($result->body);
+
+  } else {
+    // Manejo de errores
+    echo "<div class='alert alert-danger' role='alert'>✗ Error al registrar: ".$result->message."</div>";
   }
 
   /**Insertar  */
@@ -76,6 +99,7 @@ if(isset($_POST["registrarVacante"])){
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body><!-- Header -->
+ <?php echo $MessageID; ?>
   <header class="header">
    <div class="header-content">
     <h1>💼 Agregar Nueva Vacante</h1>
