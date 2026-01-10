@@ -1,10 +1,18 @@
 <?php
+  // Session validation
+  if (!isset($_SESSION["idUsuarios"])) {
+    echo "<div class='alert alert-danger' role='alert'>✗ Error: No hay sesión activa. Por favor inicia sesión.</div>";
+    exit;
+  }
+
   $MessageID = "";
   $idUsuario = $_SESSION["idUsuarios"];
   /** Ruta del controlador */
   require_once __DIR__ . '/../../usecase/Vacantes/VacanteController.php';
+  require_once __DIR__ . '/../../usecase/Usuario/UsuarioController.php';
   /** Instancias */
   $vacanteController = new VacanteController();
+  $usuarioController = new UsuarioController();
   /**Arrays */
   $vacanteArray = array();
   /**resultListar*/
@@ -18,7 +26,7 @@
 
     $idEmpresa = $datos['empresaId'];
 
-    $resultListarVacantes = $vacanteController->ListarVacantesPorEmpresa(3);
+    $resultListarVacantes = $vacanteController->ListarVacantesPorEmpresa($idEmpresa);
     if($resultListarVacantes->status == "ok"){
       $vacanteArray = $resultListarVacantes->body;
     }
@@ -99,4 +107,3 @@
     </div>
   <?php endif; ?>
 </div>
-<
