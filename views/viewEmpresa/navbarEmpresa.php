@@ -1,9 +1,19 @@
 <?php
+  include_once("../../router/RouterEmpresa.php");
+  include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
+  require_once __DIR__ ."/../../usecase/Usuario/UsuarioController.php";
+  /*
+  $controller = new UsuarioController();
 
+    session_start(); // siempre al inicio del script
+    $idUsuario = $_SESSION["idUsuarios"];
+    $result = $controller->obtenerEntidadPorUsuario($idUsuario);
+    if ($result->status == "ok"){
+      $datos = $result->body;
+      $idEmpresa = $datos['empresaId'];
+      echo "El usuario es una Empresa con ID: " . $idEmpresa;
+    }*/
 
-    include_once("../../router/RouterEmpresa.php");
-    include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
-    
     if(!SessionManager::isUserLoggedIn()){
       header("Location: ../index.php");
     }

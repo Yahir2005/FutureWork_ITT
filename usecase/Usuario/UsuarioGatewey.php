@@ -87,33 +87,23 @@ class UsuarioGatewey implements IUsuarioGateway{
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
-    public function iniciarSesionG(string $usuario, string $contrasena): object {
-        $sql = "SELECT idUsuarios, Rol_idRol FROM Usuarios 
-                WHERE email='$usuario'
-                AND Password='$contrasena'";
-
+    public function iniciarSesionG(string $usuario, string $contrasena): array{
+        $sql = "SELECT 
+                E.idEmpresas,
+                P.idPostulante 
+            FROM Usuarios U
+            LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
+            LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
+            WHERE email='$usuario'
+            AND Password='$contrasena'";
         $mysqlObj = new MysqlConnector();
         $result = $mysqlObj->consultaRetorno($sql);
-        $row = mysqli_fetch_assoc($result);
-
+               $row = mysqli_fetch_assoc($result);
         if ($row) {
-            // Obtenemos idEmpresa o idPostulante
-            $entidad = $this->obtenerEntidadPorUsuario($row['idUsuarios']);
-
-            // Unimos todo en el body
-            $body = array_merge($row, $entidad);
-
-            return (object)[
-                "status" => "ok",
-                "body" => $body,
-                "message" => "Inicio de sesión correcto"
-            ];
+            return $row;
         } else {
-            return (object)[
-                "status" => "error",
-                "body" => [],
-                "message" => "Usuario o contraseña incorrectos"
-            ];
+
+            throw new Exception("Usuario o contraseña incorrectos");
         }
     }
 
@@ -134,16 +124,14 @@ class UsuarioGatewey implements IUsuarioGateway{
             LEFT JOIN Empresas E ON E.Usuarios_idUsuarios = U.idUsuarios
             LEFT JOIN Postulante P ON P.Usuarios_idUsuarios = U.idUsuarios
             WHERE U.idUsuarios = $idUsuario";
-        $result = $mysqlObj->consultaSimple($sql);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
-        /*
+        
         $result = $mysqlObj->consultaRetorno($sql);
         $row = mysqli_fetch_assoc($result);
         if ($row) {
             return $row; // Devuelve empresaId y/o postulanteId
         } else {
             return ["empresaId" => null, "postulanteId" => null];
-        }*/
+        }
     }
 
 }

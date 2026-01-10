@@ -16,4 +16,6 @@ interface IEmpresa {
 
     public function actualizarEstadoEmpresa($id,$empresa):int;
 
+    public function obtenerEmpresaPorIdUsuario($id):array;
+
 }

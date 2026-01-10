@@ -75,7 +75,37 @@ class UsuarioController{
     }
 
 }
+/*
+$controller = new UsuarioController();
+$result = $controller->obtenerEntidadPorUsuario(2);
 
+// 1. Verificar si la operación fue exitosa
+if ($result->status == "ok") {
+    
+    // 2. Obtener el arreglo del body
+    $datos = $result->body;
+
+    // 3. Acceder a las propiedades específicas dentro del arreglo
+    $idEmpresa = $datos['empresaId'];
+    $idPostulante = $datos['postulanteId'];
+
+    // Ejemplo de uso:
+    if ($idEmpresa != null) {
+        echo "El usuario es una Empresa con ID: " . $idEmpresa;
+    } elseif ($idPostulante != null) {
+        echo "El usuario es un Postulante con ID: " . $idPostulante;
+    } else {
+        echo "El usuario no tiene ni empresa ni postulante asignado (posiblemente Admin).";
+    }
+
+    // Si solo quieres ver qué trae para depurar, usa print_r o var_dump
+    // print_r($result->body);
+
+} else {
+    // Manejo de errores
+    echo "Ocurrió un error: " . $result->message;
+}
+*/
 
 /*
 $controller = new UsuarioController();
