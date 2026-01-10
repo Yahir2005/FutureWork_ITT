@@ -22,7 +22,7 @@
             switch($_SESSION['Rol_idRol']){
                 case 1: // Empresa
                     $_SESSION["idEmpresas"] = $result->body['empresaId']; // usa la clave correcta
-                    header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home&idEmpresas=" . $result->body['idEmpresas']);  
+                    header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
                 case 2: // Postulante
