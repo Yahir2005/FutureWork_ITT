@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-require_once __DIR__ . '/../../usecase/Vacante/VacanteController.php';
-require_once __DIR__ . '/../../usecase/Empresa/EmpresaController.php'; 
-=======
   /**Controladores */
   require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
   require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
@@ -17,6 +13,7 @@ require_once __DIR__ . '/../../usecase/Empresa/EmpresaController.php';
   $listarTipoModalidad = array();
 
   /**Contadores */
+  
   $totalVacantes = 0;
   $totalAbiertas = 0;
   $totalCerradas = 0;
@@ -58,7 +55,6 @@ require_once __DIR__ . '/../../usecase/Empresa/EmpresaController.php';
         }
     }
   }
->>>>>>> 0d1f0c7be41ad916d8702e0cd54bcadc3476f6fc
 
 $vacanteController = new VacanteController();
 $empresaController = new EmpresaController();
