@@ -21,11 +21,9 @@
             
             switch($_SESSION['Rol_idRol']){
                 case 1: // Empresa
-<<<<<<< HEAD
+
                     $_SESSION["idEmpresas"] = $result->body['empresaId']; // usa la clave correcta
-=======
                     $_SESSION["idEmpresas"] = $result->body['idEmpresa']; // usa la clave correcta
->>>>>>> 0d1f0c7be41ad916d8702e0cd54bcadc3476f6fc
                     header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
