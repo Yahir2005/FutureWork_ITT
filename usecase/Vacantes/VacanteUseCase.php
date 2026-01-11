@@ -120,4 +120,18 @@ class VacanteUseCase{
         }
         return $response;
     }
+
+    public function contarVacantes():RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->contarVacantes();
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Contar candidatos Vacantes correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al contar candidatos Vacantes ". $e->getMessage();
+        }
+        return $response;
+    }
 }
