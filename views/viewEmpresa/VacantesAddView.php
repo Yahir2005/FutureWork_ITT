@@ -36,35 +36,14 @@
   /**Extraer el ID de la empresa*/
   $idUsuario = $_SESSION["idUsuarios"];
   $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
-  if ($result->status == "ok") {
-    
-    // 2. Obtener el arreglo del body
-    $datos = $result->body;
-
-    // 3. Acceder a las propiedades específicas dentro del arreglo
-    $idEmpresa = $datos['empresaId'];
-    $idPostulante = $datos['postulanteId'];
-
-    // Ejemplo de uso:
-    /*
-    if ($idEmpresa != null) {
-        $MessageID = "El usuario es una Empresa con ID: " . $idEmpresa;
-    }*/
-
-    // Si solo quieres ver qué trae para depurar, usa print_r o var_dump
-    // print_r($result->body);
-
-  } else {
-    // Manejo de errores
-    echo "<div class='alert alert-danger' role='alert'>✗ Error al registrar: ".$result->message."</div>";
-  }
-
-  /**Insertar  */
+  $datos = $result->body;
+  $idEmpresa = $datos['empresaId'];
+  
+/**Insertar  */
 if(isset($_POST["registrarVacante"])){
     $vacanteObject = new Vacantes();
 
     $vacanteObject->set("Empresa_idEmpresa", $idEmpresa);
-
     $vacanteObject->set("EstadoValidacionVacante_idEstadoValidacionVacante", $_POST["idEstadoValidacionVacante"]);
     $vacanteObject->set("TipoContrato_idTipoContrato", $_POST["idTipoContrato"]);
     $vacanteObject->set("TipoModalidad_idTipoModalidad", $_POST["idTipoModalidad"]);
