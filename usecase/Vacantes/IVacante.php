@@ -15,5 +15,7 @@ interface IVacante{
     public function ListarVacantesPorEstadoEmpresaContrato($idEstado):array;
 
     public function ContarCandidatosPorVacante($idVacante): int;
+
+    public function contarVacantes():int;
         
 }

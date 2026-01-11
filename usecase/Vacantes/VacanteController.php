@@ -51,7 +51,18 @@ class VacanteController{
         $usecase = new VacanteUseCase($gatewayDb);
         return $usecase->ContarCandidatosPorVacante($idVacante);
     }
+
+    public function contarVacantes():RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->contarVacantes();
+    }
 }
+/*
+$controller = new VacanteController();
+$result = $controller->contarVacantes();
+echo $result->body;
+*/
 /*
 $controller = new VacanteController();
 $result = $controller->ContarCandidatosPorVacante(1);

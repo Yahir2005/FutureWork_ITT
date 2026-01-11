@@ -1,25 +1,32 @@
 <?php
-$MessageID = "";
-$idUsuario = $_SESSION["idUsuarios"];
+  $MessageID = "";
+  $idUsuario = $_SESSION["idUsuarios"];
 
-/**Agregar direcciones*/
-require_once __DIR__ . '/../../usecase/Usuario/UsuarioController.php';
-require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+  /**Agregar direcciones*/
+  require_once __DIR__ . '/../../usecase/Usuario/UsuarioController.php';
+  require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
 
-/**Instancias */
-$usuarioController = new UsuarioController();
-$vacanteController = new VacanteController();
+  /**Instancias */
+  $usuarioController = new UsuarioController();
+  $vacanteController = new VacanteController();
 
-/**Métodos */
-$result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
-$datos = $result->body;
-$idEmpresa = $datos['empresaId'];
+  /**Arrays */
+  $listaVacantes = array();
+  
 
-if($idEmpresa != null){
-  $MessageID = "El usuario es una Empresa con ID: " . $idEmpresa;
-    $vacantes = $vacanteController->ListarVacantesPorEmpresa($idEmpresa);
-}
+  /**Métodos */
+  $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
+  $datos = $result->body;
+  $idEmpresa = $datos['empresaId'];
 
+  if($idEmpresa != null){
+    $MessageID = "El usuario es una Empresa con ID: " . $idEmpresa;
+      $vacantes = $vacanteController->ListarVacantesPorEmpresa($idEmpresa);
+      if($vacantes->status == "ok"){
+        $listaVacantes = $vacantes->body;
+      }
+  }
+  
 
 ?>
 <!doctype html>
@@ -111,6 +118,7 @@ if($idEmpresa != null){
     </div>
     <form method="GET" action="" class="sort-form"><label for="ordenar">Ordenar por:</label> <select id="ordenar" name="ordenar"> <option value="fecha_desc">Más recientes</option> <option value="fecha_asc">Más antiguas</option> <option value="titulo_asc">Título A-Z</option> <option value="titulo_desc">Título Z-A</option> <option value="salario_desc">Salario mayor</option> <option value="salario_asc">Salario menor</option> </select>
     </form>
+    
    </div><!-- Vacancies Grid -->
    <div class="vacancies-grid"><!-- Aquí se generarán dinámicamente las tarjetas de vacantes --> <!-- Estructura de ejemplo (comentada para referencia):
       
