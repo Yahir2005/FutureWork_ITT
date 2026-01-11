@@ -1,3 +1,27 @@
+<?php
+$MessageID = "";
+$idUsuario = $_SESSION["idUsuarios"];
+
+/**Agregar direcciones*/
+require_once __DIR__ . '/../../usecase/Usuario/UsuarioController.php';
+require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+
+/**Instancias */
+$usuarioController = new UsuarioController();
+$vacanteController = new VacanteController();
+
+/**Métodos */
+$result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
+$datos = $result->body;
+$idEmpresa = $datos['empresaId'];
+
+if($idEmpresa != null){
+  $MessageID = "El usuario es una Empresa con ID: " . $idEmpresa;
+    $vacantes = $vacanteController->ListarVacantesPorEmpresa($idEmpresa);
+}
+
+
+?>
 <!doctype html>
 <html lang="es">
  <head>
