@@ -20,18 +20,14 @@
   <section class="hero-section">
    <div class="hero-content">
     <h1 class="hero-title">🎓 Instituto Tecnológico de Tehuacán</h1>
-    <p class="hero-subtitle">Formando profesionales de excelencia desde 1975. Comprometidos con la educación de calidad y el desarrollo tecnológico de la región.</p>
+    <p class="hero-subtitle"></p>
    </div>
   </section><!-- Contenido Principal -->
   <main class="main-content"><!-- Stats Banner -->
    <div class="stats-banner">
-    <div class="stat-item"><span class="stat-number">49</span> <span class="stat-label">Años de Historia</span>
+    <div class="stat-item"><span class="stat-number">Talento de excelencia, conexiones de impacto</span>
     </div>
-    <div class="stat-item"><span class="stat-number">81.9%</span> <span class="stat-label">Tasa de Admisión</span>
-    </div>
-    <div class="stat-item"><span class="stat-number">6</span> <span class="stat-label">Carreras Profesionales</span>
-    </div>
-    <div class="stat-item"><span class="stat-number">1000+</span> <span class="stat-label">Egresados Anuales</span>
+  
     </div>
    </div><!-- Información Institucional -->
    <div class="info-grid">
@@ -40,7 +36,7 @@
       📍
      </div>
      <h3 class="info-card-title">Dirección</h3>
-     <p class="info-card-text">Libramiento Tecnológico S/N-A.P. 247, Santa María Coapan, Sta María Coapan, 75770 Tehuacán, Pue.</p><a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="info-card-link">Ver en mapa →</a>
+     <p class="info-card-text"> Libramiento Tecnológico S/N,. 247, Santa María Coapan, Tehuacán, Puebla, C.P. 75770.:</p><a href=https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqCAgBEAAYFhgeMgYIABBFGDkyCAgBEAAYFhgeMggIAhAAGBYYHjIICAMQABgWGB4yBwgEEAAY7wUyCggFEAAYgAQYogQyCggGEAAYogQYiQUyBwgHEAAY7wUyCggIEAAYgAQYogTSAQoxNjAwMWowajE1qAIMsAIB8QUkn3qL_ADdQA&um=1&ie=UTF-8&fb=1&gl=mx&sa=X&geocode=KTGjeNoCvcWFMS5BbV-OpZpp&daddr=Libramiento+Tecnol%C3%B3gico+S/N-A.P.+247,+Santa+Mar%C3%ADa+Coapan,+Sta+Mar%C3%ADa+Coapan,+75770+Tehuac%C3%A1n,+Pue." target="_blank" rel="noopener noreferrer" class="info-card-link">Ver en mapa →</a>
     </div>
     <div class="info-card">
      <div class="info-card-icon">
@@ -95,7 +91,7 @@
      </div>
      <div class="timeline-item">
       <div class="timeline-year">
-       2024
+       2025
       </div>
       <p class="timeline-text">Lanzamiento de FutureWork ITT, plataforma digital para conectar egresados con oportunidades laborales.</p>
      </div>
@@ -106,13 +102,13 @@
      <div class="card-header"><span class="card-icon">🎯</span>
       <h2 class="card-title">Misión</h2>
      </div>
-     <p class="card-text">Formar profesionales competentes en ingeniería y tecnología, con valores éticos y compromiso social, capaces de contribuir al desarrollo sustentable de la región y del país, mediante programas educativos de calidad, investigación aplicada y vinculación con los sectores productivo y social.</p>
+     <p class="card-text">Impulsar el éxito profesional de la comunidad del Instituto Tecnológico de Tehuacán mediante una plataforma tecnológica de vanguardia que trascienda la búsqueda de empleo tradicional. Nos comprometemos a conectar de forma segura, eficiente y estratégica el talento humano excepcional de nuestros egresados con las organizaciones líderes que están construyendo el futuro del país.</p>
     </div>
     <div class="vision-card">
      <div class="card-header"><span class="card-icon">🔭</span>
       <h2 class="card-title">Visión</h2>
      </div>
-     <p class="card-text">Ser una institución de educación superior reconocida a nivel nacional e internacional por la calidad de sus programas educativos, su contribución a la innovación tecnológica y su impacto en el desarrollo económico y social de la región, formando profesionales altamente competitivos y comprometidos con la excelencia.</p>
+     <p class="card-text">Ser el referente tecnológico de vinculación laboral en el estado, transformando la manera en que el talento del ITT se integra al mundo global. Aspiramos a evolucionar de una plataforma de búsqueda a un ecosistema de inteligencia profesional que anticipe las tendencias del mercado, garantizando que cada estudiante y egresado cuente con las herramientas digitales para liderar la industria del mañana.</p>
     </div>
    </div><!-- Formulario de Comentarios -->
    <section class="comentarios-section">

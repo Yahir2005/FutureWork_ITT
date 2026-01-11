@@ -307,11 +307,18 @@
     }
 
     .stat-number {
-      font-size: 48px;
-      font-weight: 700;
-      display: block;
-      margin-bottom: 10px;
-    }
+    font-size: 24px !important;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+
+    /* Configuración para el degradado del texto */
+    background: linear-gradient(to right, #ffffff, #a5c7ff) !important; /* Blanco a azul claro */
+    -webkit-background-clip: text !important; /* Recorta el fondo a la forma de las letras */
+    -webkit-text-fill-color: transparent !important; /* Hace el color del texto transparente */
+    background-clip: text;
+    color: transparent; /* Respaldo para navegadores modernos */
+}
 
     .stat-label {
       font-size: 16px;
