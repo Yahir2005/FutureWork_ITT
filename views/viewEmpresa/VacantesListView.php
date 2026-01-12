@@ -323,7 +323,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
             📅 Publicado: <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
           </div>
           <div class="vacancy-actions">
-            <a href="detalle-vacante.php?id=1" class="btn-details">Ver Detalles</a>
+            <a href="?cargar=VacanteView&idVacante=<?php echo $row['idVacante']; ?>" class="btn-details">Ver Detalles</a>
             <a href="editar-vacante.php?id=1" class="btn-edit">✏️ Editar</a>
             <form method="POST" action="eliminar-vacante.php" style="display:inline;">
               <input type="hidden" name="id" value="1">

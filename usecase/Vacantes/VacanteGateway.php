@@ -77,6 +77,7 @@ class VacanteGateway implements IVacante{
             EVV.estadoValidacionVacante,
             TC.estadoContrato,
             TM.tipoModalidad,
+            V.idVacante,
             V.titulo,
             V.descripcion,
             V.requisitos,
