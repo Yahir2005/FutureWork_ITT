@@ -299,7 +299,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
             <h3> <?php echo htmlspecialchars($vacantes['titulo']); ?></h3>
             <div class="vacancy-id">ID: 123</div>
           </div>
-          <span class="vacancy-status status-abierta">Abierta</span>
+            <span class="tag contract"> <?php echo htmlspecialchars($vacantes['estadoValidacionVacante']); ?></span>
         </div>
 
         <div class="vacancy-details">
@@ -313,9 +313,9 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
         </p>
 
         <div class="vacancy-tags">
-          <span class="tag contract">Tiempo</span>
-          <span class="tag modality">Remoto</span>
-          <span class="tag salary">$15,000</span>
+          <span class="tag contract"><?php echo htmlspecialchars($vacantes['estadoContrato']); ?></span>
+          <span class="tag modality"><?php echo htmlspecialchars($vacantes['tipoModalidad']); ?></span>
+          <span class="tag salary">$ <?php echo htmlspecialchars($vacantes['salario']); ?></span>
         </div>
 
         <div class="vacancy-footer">

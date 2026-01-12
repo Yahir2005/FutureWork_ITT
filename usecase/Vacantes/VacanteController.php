@@ -80,7 +80,7 @@ class VacanteController{
     public function ListarVacantesTotalesCard(): RespuestaGenerica{
         $gatewayDb = new VacanteGateway();
         $usecase = new VacanteUseCase($gatewayDb);
-        return $usecase->ListarVacantes();
+        return $usecase->ListarVacantesTotalesCard();
     }
 
 
