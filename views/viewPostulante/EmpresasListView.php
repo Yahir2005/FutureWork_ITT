@@ -6,8 +6,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Intenta subir TRES niveles (por si la inclusión es más profunda)
-require_once __DIR__ . "/../../../usecase/Empresas/EmpresaController.php"; 
-require_once __DIR__ . "/../../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php";
+require_once __DIR__ . "'/../../usecase/Empresas/EmpresaController.php"; 
+require_once __DIR__ . "'/../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php";
 
 /* Inicialización de variables */
 $listarEmpresas = array();
