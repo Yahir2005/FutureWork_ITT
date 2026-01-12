@@ -59,7 +59,7 @@ class RouterEmpresa{
 
         case 'closeSession':
             SessionManager::destroySession();
-            echo "<script> window.location.href='../index.php';</script>";
+            echo "<script> window.location.href='../../index.php';</script>";
                     //header("Location:../index.php");
                     //exit();
         break;

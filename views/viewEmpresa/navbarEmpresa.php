@@ -80,6 +80,11 @@
       </div><a class="nav-link" href="?cargar=PerfilEmpresaView"><span>Empresa</span></a>
      </div></a>
     </div>
+      <a href="?cargar=closeSession" 
+            class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded transition duration-300 ease-in-out shadow-md">
+              <span>🚪</span> 
+            <span>Salir</span>
+      </a>
    </div>
    <script>
     // Obtener los elementos por sus IDs
