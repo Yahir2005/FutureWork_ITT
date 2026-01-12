@@ -101,7 +101,18 @@ class VacanteController{
         return $usecase->contarVacantesPausadasPorEmpresa($idEmpresa);
     }
 
+    public function contarVacantesPorEmpresa($idEmpresa):RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->contarVacantesPorEmpresa($idEmpresa);
+    }
+
 }
+/*
+$controller = new VacanteController();
+$result = $controller->contarVacantesPorEmpresa(1);
+echo $result->body;
+*/
 /*
 $controller = new VacanteController();
 $result = $controller->contarVacantesPausadasPorEmpresa(1);
