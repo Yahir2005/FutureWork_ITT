@@ -83,33 +83,40 @@ class VacanteController{
         return $usecase->ListarVacantesTotalesCard();
     }
 
+    public function contarVacantesAbiertasPorEmpresa($idEmpresa):RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->contarVacantesAbiertasPorEmpresa($idEmpresa);
+    }
 
+    public function contarVacantesCerradasPorEmpresa($idEmpresa):RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->contarVacantesCerradasPorEmpresa($idEmpresa);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public function contarVacantesPausadasPorEmpresa($idEmpresa):RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->contarVacantesPausadasPorEmpresa($idEmpresa);
+    }
 
 }
-
-
-
-
-
-
-
-
-
+/*
+$controller = new VacanteController();
+$result = $controller->contarVacantesPausadasPorEmpresa(1);
+echo $result->body;
+*/
+/*
+$controller = new VacanteController();
+$result = $controller->contarVacantesCerradasPorEmpresa(1);
+echo $result->body;
+*/
+/*
+$controller = new vacanteController();
+$result = $controller->contarVacantesAbiertasPorEmpresa(1);
+echo $result->body;
+*/
 /*
 $controller = new VacanteController();
 $result = $controller->contarVacantes();

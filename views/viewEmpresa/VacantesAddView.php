@@ -35,12 +35,13 @@
   }
   /**Extraer el ID de la empresa*/
   $idUsuario = $_SESSION["idUsuarios"];
-  $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
-  $datos = $result->body;
-  $idEmpresa = $datos['empresaId'];
+  
   
 /**Insertar  */
 if(isset($_POST["registrarVacante"])){
+    $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
+    $datos = $result->body;
+    $idEmpresa = $datos['empresaId'];
     $vacanteObject = new Vacantes();
 
     $vacanteObject->set("Empresa_idEmpresa", $idEmpresa);

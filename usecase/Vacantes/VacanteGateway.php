@@ -172,4 +172,32 @@ class VacanteGateway implements IVacante{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     } 
+
+        public function contarVacantesAbiertasPorEmpresa($idEmpresa):int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Vacantes WHERE EstadoValidacionVacante_idEstadoValidacionVacante = 1 AND Empresa_idEmpresa = {$idEmpresa}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if ($result === false) return 0;
+        $row = mysqli_fetch_assoc($result);
+        return (int)($row['total'] ?? 0);
+    }
+
+    public function contarVacantesCerradasPorEmpresa($idEmpresa):int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Vacantes WHERE EstadoValidacionVacante_idEstadoValidacionVacante = 2 AND Empresa_idEmpresa = {$idEmpresa}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if ($result === false) return 0;
+        $row = mysqli_fetch_assoc($result);
+        return (int)($row['total'] ?? 0);
+    }
+
+    public function contarVacantesPausadasPorEmpresa($idEmpresa):int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Vacantes WHERE EstadoValidacionVacante_idEstadoValidacionVacante = 3 AND Empresa_idEmpresa = {$idEmpresa}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if ($result === false) return 0;
+        $row = mysqli_fetch_assoc($result);
+        return (int)($row['total'] ?? 0);
+    }
+
 }

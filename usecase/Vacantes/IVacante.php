@@ -17,11 +17,18 @@ interface IVacante{
     public function ContarCandidatosPorVacante($idVacante): int;
 
     public function contarVacantes():int;
+
     public function contarVacantesAbiertas():int;
+    
     public function contarVacantesCerradas():int;
+    
     public function contarVacantesPausadas():int;
 
     public function ListarVacantesTotalesCard():array;
 
+    public function contarVacantesAbiertasPorEmpresa($idEmpresa):int;
+
+    public function contarVacantesCerradasPorEmpresa($idEmpresa):int;
         
+    public function contarVacantesPausadasPorEmpresa($idEmpresa):int;    
 }
