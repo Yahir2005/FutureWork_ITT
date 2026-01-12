@@ -26,7 +26,10 @@
         $listaVacantes = $vacantes->body;
       }
   }
-  
+  $resultVacantePausa = $vacanteController->contarVacantesPausadasPorEmpresa($idEmpresa);
+  $resultVacanteAbierta =$vacanteController->contarVacantesAbiertasPorEmpresa($idEmpresa);
+  $resultVacanteCerrada = $vacanteController->contarVacantesCerradasPorEmpresa($idEmpresa);
+  $resultVacantesTotal = $vacanteController ->contarVacantesPorEmpresa($idEmpresa);
 
 ?>
 <!doctype html>
@@ -56,7 +59,7 @@
        📊 Total de Vacantes
       </div>
       <div class="stat-value">
-       <!-- Total -->
+       <?php echo $resultVacantesTotal->body ?>
       </div>
      </div>
      <div class="stat-card">
@@ -64,15 +67,15 @@
        ✅ Aprobadas
       </div>
       <div class="stat-value">
-       <!-- Aprobadas -->
+       <?php echo $resultVacanteAbierta->body ?>
       </div>
      </div>
      <div class="stat-card">
       <div class="stat-label">
-       ⏳ Pendientes
+       ⏳ En Pausa
       </div>
       <div class="stat-value">
-       <!-- Pendientes -->
+       <?php echo $resultVacantePausa ->body ?>
       </div>
      </div>
      <div class="stat-card">
@@ -80,7 +83,7 @@
        ❌ Rechazadas
       </div>
       <div class="stat-value">
-       <!-- Rechazadas -->
+       <?php echo $resultVacantePausa ->body ?>
       </div>
      </div>
     </div>
@@ -119,6 +122,9 @@
     <form method="GET" action="" class="sort-form"><label for="ordenar">Ordenar por:</label> <select id="ordenar" name="ordenar"> <option value="fecha_desc">Más recientes</option> <option value="fecha_asc">Más antiguas</option> <option value="titulo_asc">Título A-Z</option> <option value="titulo_desc">Título Z-A</option> <option value="salario_desc">Salario mayor</option> <option value="salario_asc">Salario menor</option> </select>
     </form>
     
+
+
+
    </div><!-- Vacancies Grid -->
    <div class="vacancies-grid"><!-- Aquí se generarán dinámicamente las tarjetas de vacantes --> <!-- Estructura de ejemplo (comentada para referencia):
       
@@ -178,6 +184,8 @@
           </div>
         </div>
       </div>
+      
+
       
       --> <!-- Empty State (mostrar cuando no hay vacantes) -->
     <div class="empty-state">

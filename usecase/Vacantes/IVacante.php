@@ -30,5 +30,8 @@ interface IVacante{
 
     public function contarVacantesCerradasPorEmpresa($idEmpresa):int;
         
-    public function contarVacantesPausadasPorEmpresa($idEmpresa):int;    
+    public function contarVacantesPausadasPorEmpresa($idEmpresa):int;
+    
+    public function contarVacantesPorEmpresa($idEmpresa):int;
+
 }
