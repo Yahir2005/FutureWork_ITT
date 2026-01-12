@@ -38,6 +38,13 @@
       <div class="user-icon">
        👤
       </div><a class="nav-link" href="?cargar=PerfilPostulanteView"><span>Postulante</span></a>
+          </div>
+      <a href="?cargar=closeSession" 
+            class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded transition duration-300 ease-in-out shadow-md">
+              <span>🚪</span> 
+      <span>Salir</span>
+      </a>
+   </div>
     </div>
    </div>
   </nav>
