@@ -134,4 +134,48 @@ class VacanteUseCase{
         }
         return $response;
     }
+
+
+
+        public function contarVacantesAbiertas():RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->contarVacantesAbiertas();
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Contar  Vacantes abiertas";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al contar vacantes abiertas". $e->getMessage();
+        }
+        return $response;
+    }
+
+            public function contarVacantesCerradas():RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->contarVacantesCerradas();
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Contar  Vacantes cerradas";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al contar vacantes cerradas". $e->getMessage();
+        }
+        return $response;
+    }
+
+                public function contarVacantesPausadas():RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->contarVacantesPausadas();
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Contar  Vacantes Pausadas";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al contar vacantes pausadas". $e->getMessage();
+        }
+        return $response;
+    }
 }

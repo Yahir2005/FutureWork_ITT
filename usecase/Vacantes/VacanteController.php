@@ -57,6 +57,25 @@ class VacanteController{
         $usecase = new VacanteUseCase($gatewayDb);
         return $usecase->contarVacantes();
     }
+
+    public function contarVacantesAbiertas():RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->contarVacantesAbiertas();
+    }
+
+
+    public function contarVacantesCerradas():RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->contarVacantesCerradas();
+    }
+
+    public function contarVacantesPausadas():RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->contarVacantesPausadas();
+    }
 }
 /*
 $controller = new VacanteController();

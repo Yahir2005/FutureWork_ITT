@@ -117,4 +117,59 @@ class VacanteGateway implements IVacante{
         $row = mysqli_fetch_assoc($result);
         return (int)($row['total'] ?? 0);
     }
+
+        public function contarVacantesAbiertas():int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Vacantes WHERE EstadoValidacionVacante_idEstadoValidacionVacante= 1";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if ($result === false) return 0;
+        $row = mysqli_fetch_assoc($result);
+        return (int)($row['total'] ?? 0);
+    }
+
+    public function contarVacantesCerradas():int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Vacantes WHERE EstadoValidacionVacante_idEstadoValidacionVacante= 2";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if ($result === false) return 0;
+        $row = mysqli_fetch_assoc($result);
+        return (int)($row['total'] ?? 0);
+    }
+
+        public function contarVacantesPausadas():int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Vacantes WHERE EstadoValidacionVacante_idEstadoValidacionVacante= 2";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        if ($result === false) return 0;
+        $row = mysqli_fetch_assoc($result);
+        return (int)($row['total'] ?? 0);
+    }
+
+
+    public function ListarVacantesTotalesCard():array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "
+        SELECT
+            EVV.estadoValidacionVacante,
+            TC.estadoContrato ,
+            TM.tipoModalidad,
+            V.titulo,
+            V.descripcion,
+            V.requisitos,
+            V.ubicacion,
+            V.salario,
+            V.fechaPublicacion,
+            V.fechaLimite
+        FROM
+            Vacantes AS V
+        JOIN
+            EstadoValidacionVacante AS EVV ON V.EstadoValidacionVacante_idEstadoValidacionVacante = EVV.idEstadoValidacionVacante
+        JOIN
+            TipoContrato AS TC ON V.TipoContrato_idTipoContrato = TC.idTipoContrato
+        JOIN
+            TipoModalidad AS TM ON V.TipoModalidad_idTipoModalidad = TM.idTipoModalidad
+        ";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } 
 }

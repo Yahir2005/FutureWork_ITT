@@ -17,5 +17,11 @@ interface IVacante{
     public function ContarCandidatosPorVacante($idVacante): int;
 
     public function contarVacantes():int;
+    public function contarVacantesAbiertas():int;
+    public function contarVacantesCerradas():int;
+    public function contarVacantesPausadas():int;
+
+    public function ListarVacantesTotalesCard():array;
+
         
 }
