@@ -76,7 +76,40 @@ class VacanteController{
         $usecase = new VacanteUseCase($gatewayDb);
         return $usecase->contarVacantesPausadas();
     }
+
+    public function ListarVacantesTotalesCard(): RespuestaGenerica{
+        $gatewayDb = new VacanteGateway();
+        $usecase = new VacanteUseCase($gatewayDb);
+        return $usecase->ListarVacantes();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
 /*
 $controller = new VacanteController();
 $result = $controller->contarVacantes();

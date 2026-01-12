@@ -9,6 +9,19 @@ $totalVacantesAbiertas = $vacanteController->contarVacantesAbiertas();
 $totalVacantesCerradas = $vacanteController->contarVacantesCerradas();
 $totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
 
+
+
+
+// --- Empresas ---
+$listarVacantesCard = array();
+$resultEmpresas = $vacanteController->ListarVacantesTotalesCard() ;
+if(strtolower($resultEmpresas->status) == "ok"){
+  $listarVacantesCard = $resultEmpresas->body;
+}
+
+
+
+
 /**Controladores */
 /*
 require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
@@ -181,7 +194,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
           </div>
           <div class="stat-value">
             <?php echo $totalVacantesPausadas->body ?>
-            
+
           </div><!-- Aquí PHP mostrará las pausadas -->
         </div>
       </div>
@@ -269,7 +282,11 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
 
 
 
-
+<?php if (count($listarVacantesCard) > 0): ?>
+        <?php 
+          $currentDate = date('Y-m-d');
+        ?>
+        <?php foreach ($listarVacantesCard as $vacantes): ?>
 
     <!-- Vacancies Grid -->
     <div class="vacancies-grid">
@@ -317,10 +334,17 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
           </div>
         </div>
       </div>
-
-
-
-
+  <?php endforeach; ?>
+      <?php else: ?>
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            📭
+          </div>
+          <h3>No se han encontrado vacantes publicadas</h3>
+          <p>No hay vacantes disponibles.</p>
+          </div>
+        </div>
+      <?php endif; ?>
 
 
 
