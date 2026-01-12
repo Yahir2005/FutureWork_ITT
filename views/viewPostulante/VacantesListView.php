@@ -1,88 +1,146 @@
 <?php
-require_once __DIR__ . '/../../usecase/Vacantes/VacanteController.php';
-require_once __DIR__ . '/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php';
+require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
 
-// ================= EMPRESA =================
-$idEmpresa = $_GET["idEmpresa"] ?? "";
-
-// ================= ESTADOS DE VALIDACIÓN =================
-$estadosVacante = [];
-$estadoController = new EstadoValidacionVacanteController();
-$resEstados = $estadoController->ListarEstadoValidacionVacante();
-
-if (strtolower($resEstados->status) == "ok") {
-    foreach ($resEstados->body as $e) {
-        $estadosVacante[$e["idEstadoValidacionVacante"]] = $e["estadoValidacionVacante"];
-    }
-}
-
-// ================= VACANTES =================
 $vacanteController = new VacanteController();
+
+/**Contar total de vacantes */
+$totalVacantes = $vacanteController->contarVacantes();
+$totalVacantesAbiertas = $vacanteController->contarVacantesAbiertas();
+$totalVacantesCerradas = $vacanteController->contarVacantesCerradas();
+$totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
+
+
+
+
+// --- Empresas ---
+$listarVacantesCard = array();
+$resultVacantes = $vacanteController->ListarVacantesTotalesCard() ;
+if(strtolower($resultVacantes->status) == "ok"){
+  $listarVacantesCard = $resultVacantes->body;
+}
+
+
+
+
+/**Controladores */
+/*
+require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
+require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
+require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";
+require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoModalidad/TipoModalidadController.php";
+*/
+/**Arrays*/
+/*
+$listarVacantes = array(); // Aquí se almacenarán las vacantes obtenidas
+$listarEmpresa = array(); // Aquí se almacenará la información de la empresa
+$listarValidacionVacante = array();
+$listarTipoContrato = array();
+$listarTipoModalidad = array();*/
+
+/**Contadores */
+/*
+$totalVacantes = 0;
+$totalAbiertas = 0;
+$totalCerradas = 0;
+$totalPausadas = 0;*/
+
+/**Instancias */
+/*
+$vacanteController = new VacanteController();
+$empresaController = new EmpresaController();
+$vacanteValidacionController = new EstadoValidacionVacanteController();
+$TipoContratoController = new TipoContratoController();
+$TipoModalidadController = new TipoModalidadController();*/
+
+/**Listar */
+/*
+if($resultListarValidacionVacante->status == "OK"){
+  $listarValidacionVacante = $resultListarValidacionVacante->body;
+}
+if($resultListarTipoContrato->status == "Ok"){
+  $listarTipoContrato = $resultListarTipoContrato->body;
+}
+
+if($resultListarTipoModalidad->status == "ok"){
+  $listarTipoModalidad = $resultListarTipoModalidad->body;
+}
+if ($resultVacantes && $resultVacantes->status == "ok" && is_array($resultVacantes->body)) {
+  $listarVacantes = $resultVacantes->body;
+  $totalVacantes = count($listarVacantes);
+
+  foreach ($listarVacantes as $vacante) {
+      // Estado de la vacante: campo EstadoValidacionVacante_idEstadoValidacionVacante
+      switch ($vacante['EstadoValidacionVacante_idEstadoValidacionVacante']) {
+          case 1: // Abierta
+              $totalAbiertas++;
+              break;
+          case 2: // Cerrada
+              $totalCerradas++;
+              break;
+          case 3: // Pausada
+              $totalPausadas++;
+              break;
+      }
+  }
+}
+
+$vacanteController = new VacanteController();
+$empresaController = new EmpresaController();
+*/
+// 1. Obtener ID de la empresa de la URL
+/*
+$idEmpresa = $_GET['idEmpresa'] ?? null;
+$nombreEmpresa = "Empresa no encontrada";
+*/
+/*if ($idEmpresa) {
+    $resEmpresa = $empresaController->obtenerEmpresaPorId($idEmpresa);
+   if(strtolower($resEmpresa->status()) == "ok") {
+        // Ajusta 'nombreEmpresa' según el nombre real en tu base de datos
+        $nombreEmpresa = $resEmpresa->body['nombreEmpresa'] ?? "Nombre de Empresa";
+    }
+}*/
+// 2. Carga inicial de vacantes
+/*
 $listar = [];
-
-if (!empty($idEmpresa)) {
-    $resVacantes = $vacanteController->listarVacantesPorEmpresa($idEmpresa);
-} else {
-    $resVacantes = $vacanteController->listarVacantes();
+$resultVacantes = $vacanteController->listarVacantesPorEmpresa($idEmpresa);
+if(strtolower($resultVacantes->status) == "ok"){
+    $listar = $resultVacantes->body;
 }
 
-if (strtolower($resVacantes->status) == "ok") {
-    $listar = $resVacantes->body;
-}
+// 3. Lógica de Filtros (Estilo de tu compañero)
+if (isset($_GET["titulo"]) || isset($_GET["estado"]) || isset($_GET["modalidad"])) {
+    $titulo = trim($_GET["titulo"] ?? "");
+    $estado = trim($_GET["estado"] ?? "");
+    $modalidad = trim($_GET["modalidad"] ?? "");
 
-// ================= ESTADÍSTICAS =================
-$totalVacantes = count($listar);
-$abiertas = 0;
-$cerradas = 0;
-$pausadas = 0;
-
-foreach ($listar as $v) {
-    if ($v["EstadoValidacionVacante_idEstadoValidacionVacante"] == 1) $abiertas++;
-    if ($v["EstadoValidacionVacante_idEstadoValidacionVacante"] == 2) $cerradas++;
-    if ($v["EstadoValidacionVacante_idEstadoValidacionVacante"] == 3) $pausadas++;
-}
-
-// ================= FILTROS =================
-$titulo = trim($_GET["titulo"] ?? "");
-$estado = trim($_GET["estado"] ?? "");
-
-if ($titulo || $estado) {
     $filtrado = $listar;
 
-    if ($titulo) {
-        $filtrado = array_filter($filtrado, fn($v) =>
-            stripos($v["tituloVacante"], $titulo) !== false
-        );
+    if (!empty($titulo)) {
+        $filtrado = array_filter($filtrado, function ($v) use ($titulo) {
+            return stripos($v["tituloVacante"], $titulo) !== false;
+        });
     }
-
-    if ($estado) {
-        $filtrado = array_filter($filtrado, fn($v) =>
-            $v["EstadoValidacionVacante_idEstadoValidacionVacante"] == $estado
-        );
+    if (!empty($estado)) {
+        $filtrado = array_filter($filtrado, function ($v) use ($estado) {
+            return $v["idEstadoVacante"] == $estado;
+        });
     }
-
+    if (!empty($modalidad)) {
+        $filtrado = array_filter($filtrado, function ($v) use ($modalidad) {
+            return $v["idModalidad"] == $modalidad;
+        });
+    }
     $listar = array_values($filtrado);
 }
-
-// ================= ORDEN =================
-$orden = $_GET["ordenar"] ?? "fecha_desc";
-
-usort($listar, function ($a, $b) use ($orden) {
-    switch ($orden) {
-        case "fecha_asc":
-            return strtotime($a["fechaPublicacion"]) - strtotime($b["fechaPublicacion"]);
-        case "fecha_desc":
-            return strtotime($b["fechaPublicacion"]) - strtotime($a["fechaPublicacion"]);
-        case "titulo_asc":
-            return strcmp($a["tituloVacante"], $b["tituloVacante"]);
-        case "titulo_desc":
-            return strcmp($b["tituloVacante"], $a["tituloVacante"]);
-        default:
-            return 0;
-    }
-});
-
-$totalFiltradas = count($listar);
+*/
+// 4. Estadísticas
+/*
+$totalVacantes = count($listar);
+$abiertas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) == 1));
+$cerradas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) == 2));
+$pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) == 3));
+*/
 ?>
 <!doctype html>
 <html lang="es">
