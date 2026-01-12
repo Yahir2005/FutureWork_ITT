@@ -1,5 +1,66 @@
 <?php
 
+// Aseguramos la sesión si es una vista de administración
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// 1. Importar controladores (Asumiendo que también necesitas la tabla de validación)
+require_once __DIR__ . "/../../usecase/Empresas/EmpresaController.php";
+require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php"; // Para cargar el select de filtros
+
+/* Inicialización de variables */
+$listarEmpresas = array();
+$listarValidacion = array(); // Para el dropdown de Validación
+$MessageID = "";
+$filtros = array(
+    'nombre' => $_GET['nombre'] ?? null,
+    'sector' => $_GET['sector'] ?? null,
+    'validacion' => $_GET['validacion'] ?? null,
+    'ordenar' => $_GET['ordenar'] ?? 'nombre_asc'
+);
+
+/* Instanciar Controladores */
+$empresaController = new EmpresaController();
+$validacionController = new EstadoValidacionEmpresaController();
+
+
+// --- Lógica de LISTADO DE EMPRESAS con Filtros y Ordenamiento ---
+// Usaremos un nuevo método que acepta los filtros. Asume que listarEmpresas ahora maneja los argumentos.
+$resultListarEmpresas = $empresaController->listarEmpresas($filtros);
+
+if($resultListarEmpresas && ($resultListarEmpresas->status == "ok" || $resultListarEmpresas->status == "OK")){
+    $listarEmpresas = $resultListarEmpresas->body;
+} else {
+    $MessageID = "<div class='alert alert-error' role='alert'>✗ Error al cargar empresas: ".$resultListarEmpresas->message."</div>";
+}
+
+// --- Lógica para cargar el Dropdown de Validación (Opcional, si tienes una tabla de lookup) ---
+$resultValidacion = $validacionController->ListarValidacionesEmpresa(); 
+if($resultValidacion && ($resultValidacion->status == "ok" || $resultValidacion->status == "OK")){
+    // Asume que la tabla de validación tiene 'idEstadoValidacionEmpresa' y 'estado'
+    $listarValidacion = $resultValidacion->body; 
+}
+/** Función de Ayuda para generar el nombre de la clase de estado */
+function getStatusClass($id) {
+    switch ($id) {
+        case 1: return 'status-validada';
+        case 2: return 'status-pendiente';
+        case 3: return 'status-rechazada';
+        default: return 'status-desconocido';
+    }
+}
+function getStatusName($id) {
+    switch ($id) {
+        case 1: return '✓ Validada';
+        case 2: return '⌛ Pendiente';
+        case 3: return '✗ Rechazada';
+        default: return 'Estado Desconocido';
+    }
+}
+
+?>
+
 ?>
 
 <!doctype html>
