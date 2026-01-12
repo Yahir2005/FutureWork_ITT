@@ -151,7 +151,7 @@ class VacanteGateway implements IVacante{
         $sql = "
         SELECT
             EVV.estadoValidacionVacante,
-            TC.estadoContrato ,
+            TC.estadoContrato,
             TM.tipoModalidad,
             V.titulo,
             V.descripcion,

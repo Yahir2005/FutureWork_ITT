@@ -14,9 +14,9 @@ $totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
 
 // --- Empresas ---
 $listarVacantesCard = array();
-$resultEmpresas = $vacanteController->ListarVacantesTotalesCard() ;
-if(strtolower($resultEmpresas->status) == "ok"){
-  $listarVacantesCard = $resultEmpresas->body;
+$resultVacantes = $vacanteController->ListarVacantesTotalesCard() ;
+if(strtolower($resultVacantes->status) == "ok"){
+  $listarVacantesCard = $resultVacantes->body;
 }
 
 
@@ -290,31 +290,30 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
 
     <!-- Vacancies Grid -->
     <div class="vacancies-grid">
-
       <!-- Aquí PHP generará las tarjetas de vacantes dinámicamente -->
       <!-- Ejemplo de estructura de una tarjeta (comentado para referencia):--->
 
       <div class="vacancy-card">
         <div class="vacancy-header">
           <div class="vacancy-title">
-            <h3>Título de la Vacante</h3>
+            <h3> <?php echo htmlspecialchars($vacantes['titulo']); ?></h3>
             <div class="vacancy-id">ID: 123</div>
           </div>
           <span class="vacancy-status status-abierta">Abierta</span>
         </div>
 
         <div class="vacancy-details">
-          <div class="detail-item">📍 Ubicación</div>
-          <div class="detail-item">💰 $15,000.00</div>
-          <div class="detail-item">📅 Límite: 31/12/2024</div>
+          <div class="detail-item">📍 Ubicación: <?php echo htmlspecialchars($vacantes['ubicacion']); ?></div>
+          <div class="detail-item">💰 Salario: $ <?php echo htmlspecialchars($vacantes['salario']); ?></div>
+          <div class="detail-item">📅 Límite: <?php echo htmlspecialchars($vacantes['fechaLimite']); ?></div>
         </div>
 
         <p class="vacancy-description">
-          Descripción de la vacante...
+          <?php echo htmlspecialchars($vacantes['descripcion']); ?>
         </p>
 
         <div class="vacancy-tags">
-          <span class="tag contract">Tiempo Completo</span>
+          <span class="tag contract">Tiempo</span>
           <span class="tag modality">Remoto</span>
           <span class="tag salary">$15,000</span>
         </div>
