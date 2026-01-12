@@ -85,7 +85,25 @@ class EmpresaGateway implements IEmpresa{
 
     public function obtenerEmpresaPorIdUsuario($id):array{
         $mysqlConnector = new MysqlConnector();
-        $sql = "SELECT * FROM Empresas WHERE Usuarios_idUsuarios = {$id}";
+        $sql = "
+        SELECT
+            e.idEmpresas,
+            e.nombreEmpresa,
+            e.sector,
+            e.representante,
+            e.descripcion,
+            e.sitioWeb,
+            u.idUsuarios, 
+            u.nombreCompleto,
+            u.email,
+            eve.estadoValidacionEmpresa
+        FROM
+            empresas e
+        INNER JOIN
+            Usuarios u ON e.Usuarios_idUsuarios = u.idUsuarios
+        INNER JOIN
+            EstadoValidacionEmpresa eve ON e.EstadoValidacionEmpresa_idEstadoValidacionEmpresa = eve.idEstadoValidacionEmpresa
+        WHERE e.Usuarios_idUsuarios = {$id}";
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
