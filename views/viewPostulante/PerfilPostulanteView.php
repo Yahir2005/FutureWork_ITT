@@ -1,3 +1,59 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+require_once __DIR__ . "/../../usecase/Postulante/PostulantesController.php";
+require_once __DIR__ . "/../../usecase/Carrera/CarreraController.php";
+require_once __DIR__ . "/../../Dto/Postulantes.php";
+
+
+
+
+/* Variables */
+$datosUsuario = [];
+$datosPostulante = [];
+$nombreCarrera = "No asignada";
+
+/* Controladores */
+$usuarioController = new UsuarioController();
+
+$carreraController = new CarreraController();
+
+/* ID de sesión */
+$idUsuario = $_SESSION["idUsuarios"] ?? null;
+
+if ($idUsuario) {
+
+    // 1. Usuario
+    $resultUsuario = $usuarioController->obtenerUsuarioPorId($idUsuario);
+    if ($resultUsuario && strtolower($resultUsuario->status) === "ok") {
+        $datosUsuario = (array) $resultUsuario->body;
+    }
+
+    // 2. Postulante
+    $resultPostulante = $postulanteController->obtenerPostulantePorUsuario($idUsuario);
+    if ($resultPostulante && strtolower($resultPostulante->status) === "ok") {
+        $datosPostulante = (array) $resultPostulante->body;
+
+        // 3. Carrera
+        if (!empty($datosPostulante['Carrera_idCarrera'])) {
+            // 👇 ESTE era el error (nombre del método)
+            $resultCarrera = $carreraController->listarCarreraPorId(
+                $datosPostulante['Carrera_idCarrera']
+            );
+
+            if ($resultCarrera && strtolower($resultCarrera->status) === "ok") {
+                $nombreCarrera = $resultCarrera->body['nombreCarrera'] ?? "No asignada";
+            }
+        }
+    }
+}
+?>
+
+
+
 <!doctype html>
 <html lang="es">
  <head>
