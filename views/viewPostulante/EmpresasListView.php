@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // 1. Importar controladores (Asumiendo que también necesitas la tabla de validación)
-require_once __DIR__ . "/../../usecase/Empresas/EmpresaController.php";
+require_once __DIR__ . "/../../../usecase/Empresas/EmpresaController.php";
 require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php"; // Para cargar el select de filtros
 
 /* Inicialización de variables */
