@@ -98,7 +98,7 @@ class EmpresaGateway implements IEmpresa{
             u.email,
             eve.estadoValidacionEmpresa
         FROM
-            empresas e
+            Empresas e
         INNER JOIN
             Usuarios u ON e.Usuarios_idUsuarios = u.idUsuarios
         INNER JOIN
