@@ -307,11 +307,13 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
           <div class="detail-item">💰 Salario: $ <?php echo htmlspecialchars($vacantes['salario']); ?></div>
           <div class="detail-item">📅 Límite: <?php echo htmlspecialchars($vacantes['fechaLimite']); ?></div>
         </div>
-
         <p class="vacancy-description">
           <?php echo htmlspecialchars($vacantes['descripcion']); ?>
         </p>
-
+        <div class="vacancy-footer">
+        <div class="detail-item">* Requisitos: <br /><?php echo htmlspecialchars($vacantes['requisitos']); ?></div>
+        </div>
+        <br />
         <div class="vacancy-tags">
           <span class="tag contract"><?php echo htmlspecialchars($vacantes['estadoContrato']); ?></span>
           <span class="tag modality"><?php echo htmlspecialchars($vacantes['tipoModalidad']); ?></span>
@@ -322,15 +324,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
           <div class="posted-date">
             📅 Publicado: <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
           </div>
-          <div class="vacancy-actions">
-            <a href="?cargar=VacanteView&idVacante=<?php echo $row['idVacante']; ?>" class="btn-details">Ver Detalles</a>
-            <a href="editar-vacante.php?id=1" class="btn-edit">✏️ Editar</a>
-            <form method="POST" action="eliminar-vacante.php" style="display:inline;">
-              <input type="hidden" name="id" value="1">
-              <button type="submit" class="btn-delete"
-                onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">🗑️ Eliminar</button>
-            </form>
-          </div>
+
         </div>
       </div>
   <?php endforeach; ?>

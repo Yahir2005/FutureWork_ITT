@@ -221,12 +221,11 @@
                 </div>
               </div>
               <div class="vacancy-actions">
-                <a href="detalle-vacante.php?id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-details">👁️ Ver</a>
                 <a href="editar-vacante.php?id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-edit">✏️ Editar</a>
                 
                 <form method="POST" action="eliminar-vacante.php" style="display:inline;">
                     <input type="hidden" name="id" value="<?php echo $vacante['idVacante'] ?? 0; ?>">
-                    <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">🗑️</button>
+                    <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">🗑️ Eliminar</button>
                 </form>
               </div>
             </div>
