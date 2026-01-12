@@ -138,7 +138,7 @@ class VacanteGateway implements IVacante{
 
         public function contarVacantesPausadas():int{
         $mysqlConnector = new MysqlConnector();
-        $sql = "SELECT COUNT(*) AS total FROM Vacantes WHERE EstadoValidacionVacante_idEstadoValidacionVacante= 2";
+        $sql = "SELECT COUNT(*) AS total FROM Vacantes WHERE EstadoValidacionVacante_idEstadoValidacionVacante= 3";
         $result = $mysqlConnector->consultaRetorno($sql);
         if ($result === false) return 0;
         $row = mysqli_fetch_assoc($result);

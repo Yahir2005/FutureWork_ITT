@@ -178,4 +178,25 @@ class VacanteUseCase{
         }
         return $response;
     }
+
+    public function ListarVacantesTotalesCard():RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ListarVacantesTotalesCard();
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Vacantes listadas correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al listar vacantes: ". $e->getMessage();
+        }
+        return $response;
+    }
+
+
+
+
+
+
+
 }

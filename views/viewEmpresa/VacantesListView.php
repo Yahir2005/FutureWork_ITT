@@ -181,6 +181,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
           </div>
           <div class="stat-value">
             <?php echo $totalVacantesPausadas->body ?>
+            
           </div><!-- Aquí PHP mostrará las pausadas -->
         </div>
       </div>
