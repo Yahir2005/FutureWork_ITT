@@ -93,10 +93,15 @@
     <h2 class="section-title">🗺️ Encuéntranos</h2>
     <p class="section-subtitle">Visítanos en nuestras instalaciones del Instituto Tecnológico de Tijuana.</p><!-- Placeholder para mapa (aquí se integraría Google Maps o similar) -->
     <div class="map-placeholder">
-     <div class="map-placeholder-icon">
-      🗺️
-     </div>
-     <p>Aquí se integrará el mapa de ubicación</p>
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1892.5137890264825!2d-97.39848426153875!3d18.437056940198197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85c5bd02da78a331%3A0x699aa58e5f6d412e!2sInstituto%20Tecnol%C3%B3gico%20de%20Tehuac%C3%A1n!5e0!3m2!1ses-419!2smx!4v1768283293567!5m2!1ses-419!2smx" 
+            width="100%" 
+            height="100%" 
+            style="border:0; display:block;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
     </div>
    </div><!-- FAQ Section -->
    <div class="faq-section">

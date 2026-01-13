@@ -223,17 +223,15 @@
     }
 
     .map-placeholder {
-      width: 100%;
-      height: 400px;
-      background: #e9ecef;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 15px;
-      color: #6c757d;
-    }
+  width: 100%;
+  height: 400px;
+  background: #e9ecef;
+  border-radius: 8px;
+  overflow: hidden; /* Importante para que el mapa no se salga de las esquinas */
+  position: relative;
+  display: block;   /* Cambiamos de flex a block */
+  padding: 0;       /* Quitamos cualquier espacio interno */
+}
 
     .map-placeholder-icon {
       font-size: 64px;
