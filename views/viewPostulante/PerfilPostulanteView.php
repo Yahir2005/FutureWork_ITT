@@ -1,32 +1,45 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
 
-// ✅ Protege la vista (si no hay sesión, manda al login o a donde corresponda)
+
+
+require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+require_once __DIR__ . "/../../usecase/Postulantes/PostulantesController.php";
+
+// Proteger vista
 $idUsuario = $_SESSION["idUsuarios"] ?? null;
 if (!$idUsuario) {
-    // Ajusta esta ruta si tu login está en otra ubicación
     header("Location: /FutureWork_ITT/");
     exit;
 }
 
-/* Variables */
-$datosUsuario = [];
-$datosPostulante = [];   // por ahora vacío hasta ubicar el módulo correcto
-$nombreCarrera = "No asignada";
-
-/* Controladores */
+// Controllers
 $usuarioController = new UsuarioController();
+$postulantesController = new PostulantesController();
 
-/* 1) Usuario */
+// Consultas
 $resultUsuario = $usuarioController->obtenerUsuarioPorId($idUsuario);
-if ($resultUsuario && strtolower($resultUsuario->status ?? '') === "ok") {
-    $datosUsuario = (array) $resultUsuario->body;
-}
+$datosUsuario = ($resultUsuario && strtolower($resultUsuario->status ?? '') === 'ok')
+    ? (array)$resultUsuario->body
+    : [];
+
+$resultPostulante = $postulantesController->obtenerPostulantePorIdUsuario($idUsuario);
+$datosPostulante = ($resultPostulante && strtolower($resultPostulante->status ?? '') === 'ok')
+    ? (array)$resultPostulante->body
+    : [];
+
+
+
 ?>
+
+
 
 
 
@@ -69,8 +82,9 @@ if ($resultUsuario && strtolower($resultUsuario->status ?? '') === "ok") {
        👤
       </div>
      </div><!-- Nombre Completo (nombreCompleto de Usuarios) -->
-     <h2 class="user-name"><!-- nombreCompleto --></h2><!-- Carrera (nombreCarrera de Carrera) -->
-     <p class="user-career"><!-- nombreCarrera --></p><!-- Estado --> <span class="user-status"> ✓ Perfil Activo </span> <!-- Estadísticas -->
+     <h2 class="user-name"><?= $datosUsuario['nombreCompleto'] ?? '' ?>
+</h2><!-- Carrera (nombreCarrera de Carrera) -->
+     <p class="user-career"><?= $datosPostulante['Carrera_idCarrera'] ?? '' ?></p><!-- Estado --> <span class="user-status"> ✓ Perfil Activo </span> <!-- Estadísticas -->
      <div class="profile-stats">
       <div class="stat-item">
        <div class="stat-value">
@@ -89,7 +103,7 @@ if ($resultUsuario && strtolower($resultUsuario->status ?? '') === "ok") {
        </div>
       </div>
      </div><!-- Acciones -->
-     <div class="profile-actions"><a href="buscar-vacantes.html" class="btn-action btn-primary">🔍 Buscar Vacantes</a> <a href="mis-postulaciones.html" class="btn-action btn-secondary">📋 Mis Postulaciones</a> <a href="<!-- cvPath -->" class="btn-action btn-success" download>📄 Descargar CV</a>
+     <div class="profile-actions"><a href="buscar-vacantes.html" class="btn-action btn-primary">🔍 Buscar Vacantes</a> <a href="mis-postulaciones.html" class="btn-action btn-secondary">📋 Mis Postulaciones</a> <a href="<?= $datosPostulante['cvPath'] ?? '#' ?>" class="btn-action btn-success" download>📄 Descargar CV</a>
      </div>
     </aside><!-- Info Section (Main Content) -->
     <div class="info-section"><!-- Información Personal -->
@@ -98,17 +112,21 @@ if ($resultUsuario && strtolower($resultUsuario->status ?? '') === "ok") {
        <h3 class="info-card-title">📋 Información Personal</h3><a href="editar-perfil-postulante.html" class="btn-edit-section">✏️ Editar</a>
       </div>
       <div class="info-grid"><!-- Nombre Completo -->
-       <div class="info-item"><span class="info-label">Nombre Completo</span> <span class="info-value"><!-- nombreCompleto --></span>
+       <div class="info-item"><span class="info-label">Nombre Completo</span> <span class="info-value"><?= $datosUsuario['nombreCompleto'] ?? '' ?></span>
        </div><!-- Email -->
-       <div class="info-item"><span class="info-label">Correo Electrónico</span> <span class="info-value"> <a href="mailto:<!-- email -->">📧 <!-- email --></a> </span>
+       <div class="info-item"><span class="info-label">Correo Electrónico</span> <span class="info-value"> <a href="mailto:<?= $datosUsuario['email'] ?? '' ?>
+">
+📧      <?= $datosUsuario['email'] ?? '' ?>
+        </a>
+        </span>
        </div><!-- Tel��fono -->
-       <div class="info-item"><span class="info-label">Teléfono</span> <span class="info-value">📞 <!-- telefono --></span>
+       <div class="info-item"><span class="info-label">Teléfono</span> <span class="info-value">📞 <?= $datosPostulante['telefono'] ?? '' ?></span>
        </div><!-- Fecha de Nacimiento -->
        <div class="info-item"><span class="info-label">Fecha de Nacimiento</span> <span class="info-value">🎂 <!-- fechaNacimiento --></span>
        </div><!-- Dirección -->
-       <div class="info-item"><span class="info-label">Dirección</span> <span class="info-value">📍 <!-- direccion --></span>
+       <div class="info-item"><span class="info-label">Dirección</span> <span class="info-value">📍 <?= $datosPostulante['ubicacion'] ?? '' ?></span>
        </div><!-- Fecha de Registro -->
-       <div class="info-item"><span class="info-label">Miembro Desde</span> <span class="info-value">📅 <!-- fechaRegistro --></span>
+       <div class="info-item"><span class="info-label">Miembro Desde</span> <span class="info-value">📅 <?= $datosUsuario['fechaRegistro'] ?? '' ?></span>
        </div>
       </div>
      </div><!-- Información Académica -->

@@ -3,6 +3,8 @@ require_once __DIR__ . "/PostulantesUseCase.php";
 require_once __DIR__ . "/PostulanteGateway.php";
 require_once __DIR__ . "/../../Dto/Postulante.php";
 require_once __DIR__ . "/../../Dto/RespuestaGenerica.php";
+require_once __DIR__ . "/PostulantesUseCase.php";
+require_once __DIR__ . "/PostulanteGateway.php";
 
 class PostulantesController {
     
@@ -16,6 +18,12 @@ class PostulantesController {
         $gatewayDb = new PostulanteGateway();
         $useCase = new PostulantesUseCase($gatewayDb);
         return $useCase->ListarPostulantes();
+    }
+
+    public function obtenerPostulantePorIdUsuario($idUsuario): RespuestaGenerica {
+    $gatewayDb = new PostulanteGateway();
+    $useCase = new PostulantesUseCase($gatewayDb);
+    return $useCase->obtenerPostulantePorIdUsuario($idUsuario);
     }
 
     public function ActualizarPostulante($id, Postulante $postulante): RespuestaGenerica {

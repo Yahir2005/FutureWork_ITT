@@ -2,6 +2,8 @@
 require_once __DIR__ ."/../DataAccess/MysqlConnector.php";
 require_once __DIR__ . "/IPostulantes.php";
 require_once __DIR__ . "/../../Dto/Postulante.php";
+require_once __DIR__ . "/../../Dto/RespuestaGenerica.php";
+
 
 class PostulanteGateway implements IPostulantes {
 
@@ -56,4 +58,35 @@ class PostulanteGateway implements IPostulantes {
         $result = $mysqlConnector->consultaSimple($sql);
         return $result;
     }
+
+    public function obtenerPostulantePorIdUsuario(int $idUsuario): RespuestaGenerica {
+    $response = new RespuestaGenerica();
+
+    try {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT * FROM postulante WHERE Usuarios_idUsuarios = {$idUsuario} LIMIT 1";
+        $result = $mysqlConnector->consultaRetorno($sql);
+
+        $row = mysqli_fetch_assoc($result);
+
+        if (!$row) {
+            $response->status = "error";
+            $response->message = "Postulante no encontrado para este usuario";
+            $response->body = null;
+            return $response;
+        }
+
+        $response->status = "ok";
+        $response->message = "Postulante encontrado";
+        $response->body = $row;
+        return $response;
+
+    } catch (Exception $e) {
+        $response->status = "error";
+        $response->message = "Error en Gateway: " . $e->getMessage();
+        $response->body = null;
+        return $response;
+    }
+}
+
 }

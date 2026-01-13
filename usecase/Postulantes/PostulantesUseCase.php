@@ -70,4 +70,19 @@ class PostulantesUseCase {
         }
         return $response;
     }
+
+        public function obtenerPostulantePorIdUsuario($idUsuario): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+
+        if (!$idUsuario || !is_numeric($idUsuario)) {
+            $response->status = "error";
+            $response->message = "idUsuario inválido";
+            $response->body = null;
+            return $response;
+        }
+
+        return $this->gatewayDb->obtenerPostulantePorIdUsuario((int)$idUsuario);
+    }
+
+
 }
