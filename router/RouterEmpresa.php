@@ -39,6 +39,9 @@ class RouterEmpresa{
 
         case 'VacantesAddView':
             include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        
+        case 'VacantesEditView':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'MisVacantesListView':

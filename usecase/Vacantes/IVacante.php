@@ -4,6 +4,8 @@ interface IVacante{
 
     public function ActualizarVacante($id, $vacantes):int;
 
+    public function obtenerVacanteporId($id):array;
+
     public function EliminarVacante($id):int;
 
     public function ListarVacantes():array;
