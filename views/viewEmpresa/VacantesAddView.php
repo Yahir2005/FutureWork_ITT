@@ -108,7 +108,6 @@ if(isset($_POST["registrarVacante"])){
       </div>
       <div class="form-group"><label for="fechaLimite">Fecha Límite de Postulación</label> <input type="date" id="fechaLimite" name="fechaLimite"> <span class="input-hint">Opcional - Fecha límite para recibir postulaciones</span>
       </div>
-      <div class="form-group"><label for="idEmpresa">ID de Empresa<span class="required">*</span></label> <input type="number" id="idEmpresa" name="idEmpresa" required placeholder="ID de la empresa"> <span class="input-hint">Identificador de la empresa que publica la vacante</span>
       </div>
      </div>
     </div><!-- Detalles del Contrato -->
