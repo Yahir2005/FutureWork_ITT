@@ -149,6 +149,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureWork ITT - Vacantes de Empresa</title>
   <link rel="stylesheet" href="css/VacantesListView.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
@@ -307,26 +308,126 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
    </div>
   </main>
   <script>
-    function postular(button, idVacante) {
-      // Cambiar el estado del botón
-      button.classList.add('postulado');
-      button.innerHTML = '✔️ Postulado';
+    // Configuración
+    const API_URL = 'http://tuservidor.com/api'; // Cambia esto por tu URL real
+    const ID_POSTULANTE = 1; // Esto debería venir de la sesión del usuario
+
+    // Función para postular
+    async function postular(button, idVacante) {
+      // Cambiar estado del botón a "cargando"
+      button.classList.add('loading');
+      button.innerHTML = '⏳ Procesando...';
       button.disabled = true;
 
-      // Crear mensaje de éxito (toast)
+      try {
+        // Enviar la postulación al backend
+        const response = await fetch(`${API_URL}/postular.php`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            idPostulante: ID_POSTULANTE,
+            idVacante: idVacante
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Cambiar el estado del botón a "postulado"
+          button.classList.remove('loading');
+          button.classList.add('postulado');
+          button.innerHTML = '✔️ Postulado';
+
+          // Crear mensaje de éxito (toast) con opciones
+          mostrarToastExito(idVacante);
+        } else {
+          // Error en la postulación
+          throw new Error(data.message || 'Error al procesar la postulación');
+        }
+
+      } catch (error) {
+        console.error('Error:', error);
+        
+        // Restaurar el botón
+        button.classList.remove('loading');
+        button.disabled = false;
+        button.innerHTML = '✅ Postularme';
+
+        // Mostrar mensaje de error
+        mostrarToastError(error.message);
+      }
+    }
+
+    // Función para mostrar toast de éxito
+    function mostrarToastExito(idVacante) {
       const toast = document.createElement('div');
       toast.className = 'toast show';
-      toast.innerHTML = '🎉 ¡Postulación exitosa! Te contactaremos pronto.';
+      toast.innerHTML = `
+        <div class="toast-header">
+          <span>🎉</span>
+          <span>¡Postulación exitosa!</span>
+        </div>
+        <div class="toast-body">
+          Tu postulación ha sido registrada. Te contactaremos pronto.
+        </div>
+        <div class="toast-actions">
+          <a href="mis-postulaciones.html" class="btn-toast btn-toast-primary">
+            Ver Mis Postulaciones
+          </a>
+          <button class="btn-toast btn-toast-secondary" onclick="cerrarToast(this)">
+            Cerrar
+          </button>
+        </div>
+      `;
       document.body.appendChild(toast);
 
-      // Eliminar el mensaje después de 3 segundos
+      // Eliminar el toast después de 10 segundos
       setTimeout(() => {
-        toast.remove();
-      }, 3000);
+        if (toast.parentElement) {
+          toast.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, 10000);
+    }
 
-      // Aquí puedes agregar código para enviar la postulación al servidor
-      console.log('Postulado a vacante ID:', idVacante);
+    // Función para mostrar toast de error
+    function mostrarToastError(mensaje) {
+      const toast = document.createElement('div');
+      toast.className = 'toast show';
+      toast.style.background = '#dc3545';
+      toast.innerHTML = `
+        <div class="toast-header">
+          <span>❌</span>
+          <span>Error en la postulación</span>
+        </div>
+        <div class="toast-body">
+          ${mensaje}
+        </div>
+        <div class="toast-actions">
+          <button class="btn-toast btn-toast-secondary" onclick="cerrarToast(this)" style="width: 100%">
+            Cerrar
+          </button>
+        </div>
+      `;
+      document.body.appendChild(toast);
+
+      // Eliminar el toast después de 5 segundos
+      setTimeout(() => {
+        if (toast.parentElement) {
+          toast.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, 5000);
+    }
+
+    // Función para cerrar el toast manualmente
+    function cerrarToast(button) {
+      const toast = button.closest('.toast');
+      toast.style.animation = 'slideOut 0.3s ease';
+      setTimeout(() => toast.remove(), 300);
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd24bdfc415f863',t:'MTc2ODI4MDA3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd3274c7344f863',t:'MTc2ODI4OTA2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
