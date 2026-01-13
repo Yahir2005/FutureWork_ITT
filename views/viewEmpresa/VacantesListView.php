@@ -22,223 +22,206 @@ if(strtolower($resultVacantes->status) == "ok"){
 ?>
 <!doctype html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FutureWork ITT - Vacantes de Empresa</title>
-  <link rel="stylesheet" href="css/VacantesListView.css">
-  <style>
-    @view-transition {
-      navigation: auto;
-    }
-  </style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  <title>FutureWork ITT - Listado de Empresas</title>
+  <link rel="stylesheet" href="css/EmpresasListView.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body><!-- Header -->
+<body>
+  <!-- Header -->
   <header class="header">
-    <div class="header-content"><!-- Stats Cards -->
-      <div class="stats-container">
-        <div class="stat-card">
-          <div class="stat-label">
-            📊 Total de Vacantes
-          </div>
-          <div class="stat-value">
-            <?php echo $totalVacantes->body ?>
-          </div><!-- Aquí PHP mostrará el total -->
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">
-            ✅ Vacantes Abiertas
-          </div>
-          <div class="stat-value">
-            <?php echo $totalVacantesAbiertas->body ?>
-          </div><!-- Aquí PHP mostrará las abiertas -->
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">
-            ❌ Vacantes Cerradas
-          </div>
-          <div class="stat-value">
-            <?php echo $totalVacantesCerradas->body ?>
-          </div><!-- Aquí PHP mostrará las cerradas -->
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">
-            ⏸️ Vacantes Pausadas
-          </div>
-          <div class="stat-value">
-            <?php echo $totalVacantesPausadas->body ?>
-
-          </div><!-- Aquí PHP mostrará las pausadas -->
-        </div>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>🏢 Gestión de Empresas</h1>
+        <p>Administra las empresas registradas en la plataforma</p>
+      </div>
+      <div class="header-actions">
+        <a href="agregar-empresa.php" class="btn-add">➕ Registrar Nueva Empresa</a>
       </div>
     </div>
-  </header><!-- Main Container -->
+  </header>
+
+  <!-- Main Container -->
   <main class="container">
-
-    <!-- Aquí irán los mensajes de éxito o error desde PHP -->
-
-    <!-- 
-    <div class="alert alert-success">
-      ✓ Vacante eliminada exitosamente
+    <!-- Filter Section con fondo blanco -->
+    <div class="filter-section bg-white p-4 rounded shadow">
+      <h3 class="filter-title">🔍 Filtros de Búsqueda</h3>
+      <!-- Se mantiene el form para soporte sin JS y deep linking -->
+      <form method="GET" action="" class="filter-form" id="filterForm">
+        <div class="filter-group">
+          <label for="nombre">Nombre de Empresa</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Buscar por nombre..." 
+                 value="<?php echo isset($_GET['nombre']) ? htmlspecialchars($_GET['nombre']) : ''; ?>">
+        </div>
+        <div class="filter-group">
+          <label for="sector">Sector</label>
+          <input type="text" id="sector" name="sector" placeholder="Ej: Tecnología, Salud..." 
+                 value="<?php echo isset($_GET['sector']) ? htmlspecialchars($_GET['sector']) : ''; ?>">
+        </div>
+        <div class="filter-group">
+          <label for="validacion">Estado de Validación</label>
+          <select id="validacion" name="validacion">
+            <option value="">Todos los estados</option>
+            <?php foreach($listarValidaciones as $id => $nombre): ?>
+              <option value="<?php echo $id; ?>" 
+                <?php echo (isset($_GET['validacion']) && $_GET['validacion'] == $id) ? 'selected' : ''; ?>>
+                <?php echo htmlspecialchars($nombre); ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <button type="submit" class="btn-filter" name="buscar" value="buscar">🔍 Buscar</button>
+          <a href="?" class="btn-clear" id="btnClear">✖ Limpiar</a>
+        </div>
+      </form>
     </div>
-    <div class="alert alert-error">
-      ✗ Error al procesar la solicitud
-    </div>
-    <div class="alert alert-info">
-      ℹ No se encontraron vacantes con los filtros aplicados
-    </div>
--->
 
-    <!-- Filter Section -->
-    <!--
-
-   <div class="filter-section">
-    <h3 class="filter-title">🔍 Filtros de Búsqueda</h3>
-    <form method="GET" action="" class="filter-form">
-    <input type="hidden" name="idEmpresa" value=""> 
-    /**Aquí PHP incluirá el ID de la empresa */
-     <div class="filter-group">
-     <label for="titulo">Título</label> 
-     <input type="text" id="titulo" name="titulo" placeholder="Buscar por título...">
-     </div>
-     <div class="filter-group"><label for="estado">Estado</label> 
-     <select id="estado" name="estado"> 
-     <option value="">Todos los estados</option> 
-     <option value="1">Abierta</option> 
-     <option value="2">Cerrada</option> 
-     <option value="3">Pausada</option> 
-     </select>
-     </div>
-     <div class="filter-group"><label for="tipo_contrato">Tipo Contrato</label> 
-     <select id="tipo_contrato" name="tipo_contrato"> 
-     <option value="">Todos los tipos</option> 
-     <option value="1">Tiempo Completo</option> 
-     <option value="2">Medio Tiempo</option> 
-     <option value="3">Por Proyecto</option> 
-     <option value="4">Pasantía</option> 
-     </select>
-     </div>
-     <div class="filter-group">
-     <label for="modalidad">Modalidad</label> 
-     <select id="modalidad" name="modalidad"> 
-     <option value="">Todas las modalidades</option> 
-     <option value="1">Presencial</option> 
-     <option value="2">Remoto</option> 
-     <option value="3">Híbrido</option> </select>
-     </div>
-     <div class="filter-actions">
-     <button type="submit" class="btn-filter">🔍 Buscar</button> 
-     <a href="?idEmpresa=" class="btn-clear">✖ Limpiar</a>
-     </div>
-    </form>
-
-   </div>/** Results Header */
-   <div class="results-header">
-    <div class="results-count">
-     Mostrando: <span>0</span> vacantes 
-     
-     /** Aquí PHP mostrará el conteo filtrado */
-    </div>
-    <form method="GET" action="" class="sort-form"><input type="hidden" name="idEmpresa" value=""> 
-    <label for="ordenar">Ordenar por:</label> 
-    <select id="ordenar" name="ordenar" onchange="this.form.submit()"> 
-    <option value="fecha_desc">Más recientes</option> 
-    <option value="fecha_asc">Más antiguas</option> 
-    <option value="titulo_asc">Título A-Z</option> 
-    <option value="titulo_desc">Título Z-A</option> 
-    <option value="salario_desc">Salario mayor</option> 
-    <option value="salario_asc">Salario menor</option> </select>
-    </form>
-   </div>
--->
-
-
-
-
-<?php if (count($listarVacantesCard) > 0): ?>
+    <!-- Companies Grid -->
+    <div class="companies-grid" id="companiesGrid">
+      <?php if (count($listar) > 0): ?>
         <?php 
           $currentDate = date('Y-m-d');
         ?>
-        <?php foreach ($listarVacantesCard as $vacantes): ?>
+        <?php foreach ($listar as $empresa): ?>
+          <?php
+            $resultVacantes = $vacanteController->ListarVacantesPorEmpresa($empresa['idEmpresas']);
+            $countVacantes = 0;
+            $countAbiertas = 0;
+            
+            if (isset($resultVacantes->status) && strtolower($resultVacantes->status) == "ok" && is_array($resultVacantes->body)) {
+              $countVacantes = count($resultVacantes->body);
+              foreach ($resultVacantes->body as $vacante) {
+                if (isset($vacante['fechaLimite']) && $vacante['fechaLimite'] >= $currentDate) {
+                  $countAbiertas++;
+                }
+              }
+            }
+          ?>
+          <!-- Agregamos data-attributes para facilitar el filtrado con JS -->
+          <div class="company-card" 
+               data-nombre="<?php echo htmlspecialchars(strtolower($empresa['nombreEmpresa'])); ?>"
+               data-sector="<?php echo htmlspecialchars(strtolower($empresa['sector'])); ?>"
+               data-validacion="<?php echo $empresa['EstadoValidacionEmpresa_idEstadoValidacionEmpresa']; ?>">
+            
+            <div class="company-header">
+              <div class="company-icon">🏢</div>
+              <div class="company-title">
+                <h3><?php echo htmlspecialchars($empresa['nombreEmpresa']); ?></h3>
+                <div class="company-sector">Sector: <?php echo htmlspecialchars($empresa['sector']); ?></div>
+              </div>
+              <?php
+                $estado = intval($empresa['EstadoValidacionEmpresa_idEstadoValidacionEmpresa']);
+                $estados = ["", "✓ Validada", "⏳ Pendiente", "✗ Rechazada"];
+                $clasesEstado = ["", "status-validada", "status-pendiente", "status-rechazada"];
+                $textoEstado = isset($estados[$estado]) ? $estados[$estado] : "Desconocido";
+                $claseEstado = isset($clasesEstado[$estado]) ? $clasesEstado[$estado] : "";
+              ?>
+              <span class="validation-status <?php echo $claseEstado; ?>">
+                <?php echo $textoEstado; ?>
+              </span>
+            </div>
 
-    <!-- Vacancies Grid -->
-    <div class="vacancies-grid">
-      <!-- Aquí PHP generará las tarjetas de vacantes dinámicamente -->
-      <!-- Ejemplo de estructura de una tarjeta (comentado para referencia):--->
+            <p class="company-description">
+              <?php echo htmlspecialchars($empresa['descripcion']); ?>
+            </p>
 
-      <div class="vacancy-card">
-        <div class="vacancy-header">
-          <div class="vacancy-title">
-            <h3> <?php echo htmlspecialchars($vacantes['titulo']); ?></h3>
-            <div class="vacancy-id">ID: 123</div>
+            <div class="company-stats">
+              <div class="stat-item">
+                <span class="stat-label">Vacantes</span>
+                <span class="stat-value"><?php echo $countVacantes; ?></span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Abiertas</span>
+                <span class="stat-value"><?php echo $countAbiertas; ?></span>
+              </div>
+            </div>
+
+            <div class="company-footer">
+              <div class="registration-date">📅</div>
+              <div class="company-actions">
+                <a href="perfil-empresa.php?id=<?php echo $empresa['idEmpresas']; ?>" class="btn-profile">👁️ Ver Perfil</a>
+                <a href="vacantes-empresa.php?idEmpresa=<?php echo $empresa['idEmpresas']; ?>" class="btn-vacancies">💼 Ver Vacantes</a>
+                <a href="editar-empresa.php?id=<?php echo $empresa['idEmpresas']; ?>" class="btn-edit">✏️ Editar</a>
+                <form method="POST" action="eliminar-empresa.php" style="display:inline;">
+                  <input type="hidden" name="id" value="<?php echo $empresa['idEmpresas']; ?>">
+                  <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta empresa?')">🗑️ Eliminar</button>
+                </form>
+              </div>
+            </div>
           </div>
-            <span class="tag contract"> <?php echo htmlspecialchars($vacantes['estadoValidacionVacante']); ?></span>
-        </div>
-
-        <div class="vacancy-details">
-          <div class="detail-item">📍 Ubicación: <?php echo htmlspecialchars($vacantes['ubicacion']); ?></div>
-          <div class="detail-item">💰 Salario: $ <?php echo htmlspecialchars($vacantes['salario']); ?></div>
-          <div class="detail-item">📅 Límite: <?php echo htmlspecialchars($vacantes['fechaLimite']); ?></div>
-        </div>
-        <p class="vacancy-description">
-          <?php echo htmlspecialchars($vacantes['descripcion']); ?>
-        </p>
-        <div class="vacancy-footer">
-        <div class="detail-item">* Requisitos: <br /><?php echo htmlspecialchars($vacantes['requisitos']); ?></div>
-        </div>
-        <br />
-        <div class="vacancy-tags">
-          <span class="tag contract"><?php echo htmlspecialchars($vacantes['estadoContrato']); ?></span>
-          <span class="tag modality"><?php echo htmlspecialchars($vacantes['tipoModalidad']); ?></span>
-          <span class="tag salary">$ <?php echo htmlspecialchars($vacantes['salario']); ?></span>
-        </div>
-
-        <div class="vacancy-footer">
-          <div class="posted-date">
-            📅 Publicado: <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
-          </div>
-
-        </div>
-      </div>
-  <?php endforeach; ?>
+        <?php endforeach; ?>
       <?php else: ?>
         <div class="empty-state">
-          <div class="empty-state-icon">
-            📭
-          </div>
-          <h3>No se han encontrado vacantes publicadas</h3>
-          <p>No hay vacantes disponibles.</p>
-          </div>
+          <div class="empty-state-icon">🏢</div>
+          <h3>No se encontraron empresas</h3>
+          <p>No hay empresas registradas en el sistema o no coinciden con los filtros aplicados.</p>
+          <a href="agregar-empresa.php" class="btn-add">➕ Registrar Primera Empresa</a>
         </div>
       <?php endif; ?>
-
-
-
-
-
-
-      <!-- Empty State (mostrar cuando no hay vacantes) -->
-      <!--
-
-  /**se muestra cuando no hay vacantes  */
-  <div class="empty-state">
-     <div class="empty-state-icon">
-      📭
-     </div>
-     <h3>No se han encontrado vacantes publicadas</h3>
-     <p>No hay vacantes disponibles.</p>
+      
+      <!-- Mensaje de "No hay resultados" para el filtro JS -->
+      <div id="no-results-js" class="empty-state hidden" style="display: none;">
+          <div class="empty-state-icon">🔍</div>
+          <h3>No hay coincidencias</h3>
+          <p>Intenta con otros términos de búsqueda.</p>
+      </div>
     </div>
-   </div>
--->
-
-
   </main>
-  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9a1535ac6670b1f2',t:'MTc2MzYxMzAwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
-</body>
 
-</html>
+  <!-- Script para filtrado en tiempo real -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputNombre = document.getElementById('nombre');
+        const inputSector = document.getElementById('sector');
+        const selectValidacion = document.getElementById('validacion');
+        const grid = document.getElementById('companiesGrid');
+        const cards = grid.getElementsByClassName('company-card');
+        const noResultsMsg = document.getElementById('no-results-js');
+        const originalEmptyState = document.querySelector('.companies-grid > .empty-state:not(#no-results-js)');
+
+        function filterCompanies() {
+            const nombre = inputNombre.value.toLowerCase().trim();
+            const sector = inputSector.value.toLowerCase().trim();
+            const validacion = selectValidacion.value;
+            
+            let visibleCount = 0;
+            let hasCards = cards.length > 0;
+
+            Array.from(cards).forEach(card => {
+                const cardNombre = card.getAttribute('data-nombre') || '';
+                const cardSector = card.getAttribute('data-sector') || '';
+                const cardValidacion = card.getAttribute('data-validacion') || '';
+
+                const matchNombre = cardNombre.includes(nombre);
+                const matchSector = cardSector.includes(sector);
+                const matchValidacion = validacion === '' || cardValidacion === validacion;
+
+                if (matchNombre && matchSector && matchValidacion) {
+                    card.style.display = ''; // Restaurar display original (block/flex)
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Manejo de estado vacío
+            if (hasCards) {
+                if (visibleCount === 0) {
+                    if (noResultsMsg) noResultsMsg.style.display = 'flex';
+                    if (originalEmptyState) originalEmptyState.style.display = 'none';
+                } else {
+                    if (noResultsMsg) noResultsMsg.style.display = 'none';
+                }
+            }
+        }
+
+        // Event Listeners para filtrado en tiempo real
+        inputNombre.addEventListener('input', filterCompanies);
+        inputSector.addEventListener('input', filterCompanies);
+        selectValidacion.addEventListener('change', filterCompanies);
+    });
+  </script>
+</body>

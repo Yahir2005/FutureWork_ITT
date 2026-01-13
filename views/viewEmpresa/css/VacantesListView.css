@@ -1,4 +1,7 @@
 
+   /* ========================================
+       Reset y Base
+       ======================================== */
     * {
       margin: 0;
       padding: 0;
@@ -9,13 +12,16 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f5f7fa;
       min-height: 100%;
+      box-sizing: border-box;
     }
 
     html {
       height: 100%;
     }
 
-    /* Header */
+    /* ========================================
+       Header
+       ======================================== */
     .header {
       background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
       color: white;
@@ -92,7 +98,9 @@
       background: rgba(255, 255, 255, 0.3);
     }
 
-    /* Stats Cards */
+    /* ========================================
+       Stats Cards
+       ======================================== */
     .stats-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -119,14 +127,18 @@
       font-weight: 700;
     }
 
-    /* Main Container */
+    /* ========================================
+       Main Container
+       ======================================== */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 30px 20px;
     }
 
-    /* Filter Section */
+    /* ========================================
+       Filter Section
+       ======================================== */
     .filter-section {
       background: white;
       border-radius: 12px;
@@ -223,7 +235,9 @@
       border-color: #6c757d;
     }
 
-    /* Results Header */
+    /* ========================================
+       Results Header
+       ======================================== */
     .results-header {
       display: flex;
       justify-content: space-between;
@@ -265,7 +279,9 @@
       cursor: pointer;
     }
 
-    /* Vacancies Grid */
+    /* ========================================
+       Vacancies Grid
+       ======================================== */
     .vacancies-grid {
       display: grid;
       gap: 20px;
@@ -355,6 +371,7 @@
       margin-bottom: 15px;
       display: -webkit-box;
       -webkit-line-clamp: 3;
+      line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -390,6 +407,9 @@
       color: #856404;
     }
 
+    /* ========================================
+       Vacancy Footer y Acciones
+       ======================================== */
     .vacancy-footer {
       display: flex;
       justify-content: space-between;
@@ -398,6 +418,7 @@
       flex-wrap: wrap;
       padding-top: 15px;
       border-top: 1px solid #e9ecef;
+      margin-top: 15px;
     }
 
     .posted-date {
@@ -464,7 +485,91 @@
       transform: translateY(-2px);
     }
 
-    /* Empty State */
+    /* ========================================
+       Botón de Postulación
+       ======================================== */
+    .btn-postular {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+      cursor: pointer;
+    }
+
+    .btn-postular:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.5);
+      background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+    }
+
+    .btn-postular:active {
+      transform: translateY(0);
+    }
+
+    .btn-postular.postulado {
+      background: #6c757d;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ========================================
+       Toast Message (Mensaje emergente)
+       ======================================== */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      z-index: 1000;
+      animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+      opacity: 0;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
+
+    /* ========================================
+       Empty State
+       ======================================== */
     .empty-state {
       text-align: center;
       padding: 60px 20px;
@@ -490,7 +595,9 @@
       margin-bottom: 20px;
     }
 
-    /* Alert Messages */
+    /* ========================================
+       Alert Messages
+       ======================================== */
     .alert {
       padding: 15px 20px;
       border-radius: 8px;
@@ -520,7 +627,9 @@
       border-left: 4px solid #17a2b8;
     }
 
-    /* Responsive */
+    /* ========================================
+       Responsive
+       ======================================== */
     @media (max-width: 768px) {
       .header-top {
         flex-direction: column;
@@ -568,6 +677,17 @@
       .btn-edit,
       .btn-delete {
         flex: 1;
+      }
+
+      .btn-postular {
+        width: 100%;
+        text-align: center;
+      }
+
+      .toast {
+        right: 10px;
+        left: 10px;
+        top: 10px;
       }
     }
   
