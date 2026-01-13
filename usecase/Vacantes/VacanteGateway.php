@@ -231,7 +231,7 @@ class VacanteGateway implements IVacante{
         $result= [];
         try{
             $mysqlConnector = new MysqlConnector();
-            $sql = "SELECT * FROM Vacantes WHERE idVacante = ".$id;
+            $sql = "SELECT * FROM Vacantes WHERE idVacante = {$id} ";
             $result = $mysqlConnector->consultaRetorno($sql);
             if($result!=false){
                 $result = mysqli_fetch_all($result, MYSQLI_ASSOC);

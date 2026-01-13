@@ -34,7 +34,7 @@ class PostulacionesGateway implements IPostulaciones{
               ep.estadoPostulacion,
               p.fechaPostulacion
             FROM Postulaciones p
-            INNER JOIN estadoPostulacion ep ON ep.idEstadoPostulacion = p.EstadoPostulacion_idEstadoPostulacion
+            INNER JOIN EstadoPostulacion ep ON ep.idEstadoPostulacion = p.EstadoPostulacion_idEstadoPostulacion
             INNER JOIN Postulante po ON p.Postulante_idPostulante = po.idPostulante
             INNER JOIN Usuarios u ON po.Usuarios_idUsuarios = u.idUsuarios
             INNER JOIN Carrera c ON po.Carrera_idCarrera = c.idCarrera
