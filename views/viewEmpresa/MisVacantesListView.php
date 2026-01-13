@@ -210,7 +210,7 @@ $mensaje ="";
                 </div>
               </div>
               <div class="vacancy-actions">
-
+                    <a href="?cargar=VacantePostulantes&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-details">Ver Postulantes</a>
                     <a href="?cargar=VacantesEditView&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-edit">✏️ Editar</a>
                 
                     <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])."?cargar=MisVacantesListView"; ?>" style="display:inline;">

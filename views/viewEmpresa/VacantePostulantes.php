@@ -1,3 +1,58 @@
+    <?php
+  $MessageID = "";
+ 
+  require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+  require_once __DIR__ . "/../../usecase/Postulaciones/PostulacionesController.php";
+
+  $vacanteController = new VacanteController();
+  $postulacionesController = new PostulacionesController();
+  $listaPostulantes = array();
+
+
+  // Inicializar contadores en 0 por defecto
+
+  $totalPostulaciones = 0;
+  $totalRevision = 0;
+  $totalAceptadas = 0;
+  $totalEntrevistaProgramada = 0;            
+
+
+$vacanteId= $_GET['id'];
+$vacante = [];
+$vacanteEditar= $vacanteController->obtenerVacanteporId($vacanteId);
+if($vacanteEditar->status == 'ok'){
+    $vacante = $vacanteEditar->body[0];
+}else{
+    echo $vacanteEditar->message;
+}
+
+
+        // Obtener lista de postulaciones por vacante
+      $postulaciones = $postulacionesController->ListarPostulacionesPorVacante($vacanteId);
+     if($postulaciones->status == "ok"){
+      $listaPostulantes = $postulaciones->body;
+     }
+  
+      // Obtener contadores (asumiendo que los métodos devuelven un objeto con propiedad body)
+      $resulttotalpostulaciones = $postulacionesController->contartotalPostulacionesPorVacante($vacanteId);
+      $resulttotalRevision = $postulacionesController->contartotalRevisionPorVacante($vacanteId);
+      $resulttotalAceptadas = $postulacionesController->contartotalAceptadasPorVacante($vacanteId);
+      $resulttotalEntrevistaProgramada = $postulacionesController->contartotalEntrevistaProgramadaPorVacante($vacanteId);
+
+      // Asignar valores si existen
+      $totalPostulaciones = $resulttotalpostulaciones->body ?? 0;
+      $totalRevision = $resulttotalRevision->body ?? 0;
+      $totalAceptadas = $resulttotalAceptadas->body ?? 0;
+      $totalEntrevistaProgramada = $resulttotalEntrevistaProgramada->body ?? 0;
+
+
+
+
+
+?>
+
+
+
 <!doctype html>
 <html lang="es">
  <head>
@@ -412,6 +467,14 @@
         grid-template-columns: 1fr;
       }
     }
+
+
+
+
+
+
+
+
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
@@ -424,20 +487,20 @@
     <div class="header-text">
      <h1>👥 Postulantes de la Vacante</h1>
      <p>Gestiona y revisa los candidatos que se han postulado</p>
-    </div><a href="mis-vacantes.html" class="btn-back">← Volver a Mis Vacantes</a>
+    </div><a href="?cargar=MisVacantesListView" class="btn-back">← Volver a Mis Vacantes</a>
    </div>
   </header><!-- Main Container -->
   <main class="container"><!-- Vacancy Info -->
    <div class="vacancy-info-card">
-    <h2 class="vacancy-title"><!-- titulo de Vacantes --></h2>
+    <h2 class="vacancy-title"><?php echo htmlspecialchars($vacante['titulo']); ?></h2>
     <div class="vacancy-details">
-     <div class="detail-item"><span class="detail-label">📍 Ubicación</span> <span class="detail-value"><!-- ubicacion --></span>
+     <div class="detail-item"><span class="detail-label">📍 Ubicación</span> <span class="detail-value"><?php echo htmlspecialchars($vacante['ubicacion']); ?></span>
      </div>
-     <div class="detail-item"><span class="detail-label">💰 Salario</span> <span class="detail-value">$<!-- salario --> MXN</span>
+     <div class="detail-item"><span class="detail-label">💰 Salario</span> <span class="detail-value">$<?php echo htmlspecialchars($vacante['salario']); ?> MXN</span>
      </div>
-     <div class="detail-item"><span class="detail-label">📅 Fecha Publicación</span> <span class="detail-value"><!-- fechaPublicacion --></span>
+     <div class="detail-item"><span class="detail-label">📅 Fecha Publicación</span> <span class="detail-value"><?php echo htmlspecialchars($vacante['fechaPublicacion']); ?></span>
      </div>
-     <div class="detail-item"><span class="detail-label">⏰ Fecha Límite</span> <span class="detail-value"><!-- fechaLimite --></span>
+     <div class="detail-item"><span class="detail-label">⏰ Fecha Límite</span> <span class="detail-value"><?php echo htmlspecialchars($vacante['fechaLimite']); ?></span>
      </div>
     </div>
    </div><!-- Stats Grid -->
@@ -447,7 +510,7 @@
       📊
      </div>
      <div class="stat-value">
-      <!-- COUNT total -->
+      <?php echo $totalPostulaciones; ?>
      </div>
      <div class="stat-label">
       Total Postulantes
@@ -458,7 +521,7 @@
       🕐
      </div>
      <div class="stat-value">
-      <!-- COUNT En Revisión -->
+      <?php echo $totalRevision; ?>
      </div>
      <div class="stat-label">
       En Revisión
@@ -469,7 +532,7 @@
       ✅
      </div>
      <div class="stat-value">
-      <!-- COUNT Aceptada -->
+      <?php echo $totalAceptadas; ?>
      </div>
      <div class="stat-label">
       Aceptadas
@@ -480,25 +543,16 @@
       🎯
      </div>
      <div class="stat-value">
-      <!-- COUNT Entrevista -->
+      <?php echo $totalEntrevistaProgramada; ?>
      </div>
      <div class="stat-label">
       En Entrevista
      </div>
     </div>
-   </div><!-- Filters -->
-   <div class="filters-card">
-    <div class="filters-grid">
-     <div class="filter-group"><label for="filterEstado" class="filter-label">Filtrar por Estado</label> <select id="filterEstado" class="filter-select"> <option value="">Todos los estados</option> <option value="En Revisión">En Revisión</option> <option value="Aceptada">Aceptada</option> <option value="Rechazada">Rechazada</option> <option value="Entrevista">Entrevista</option> </select>
-     </div>
-     <div class="filter-group"><label for="filterCarrera" class="filter-label">Filtrar por Carrera</label> <select id="filterCarrera" class="filter-select"> <option value="">Todas las carreras</option> <option value="1">Ingeniería en Sistemas</option> <option value="2">Ingeniería Industrial</option> <option value="3">Ingeniería Mecatrónica</option> <option value="4">Ingeniería en Gestión</option> </select>
-     </div>
-     <div class="filter-group"><label for="filterOrden" class="filter-label">Ordenar por</label> <select id="filterOrden" class="filter-select"> <option value="fecha_desc">Más recientes</option> <option value="fecha_asc">Más antiguos</option> <option value="nombre_asc">Nombre A-Z</option> <option value="nombre_desc">Nombre Z-A</option> </select>
-     </div>
-     <div class="filter-group"><button class="btn-filter" onclick="aplicarFiltros()">🔍 Aplicar Filtros</button>
-     </div>
-    </div>
-   </div><!-- Postulantes Table -->
+   </div>
+
+   
+   <!-- Postulantes  -->
    <div class="table-card">
     <div class="table-header">
      <h2 class="table-title">Lista de Postulantes</h2>
@@ -518,65 +572,29 @@
         <th>Acciones</th>
        </tr>
       </thead>
-      <tbody><!-- 
-            PHP Query:
-            SELECT 
-              p.idPostulacion,
-              u.nombreCompleto,
-              u.email,
-              po.numeroControl,
-              po.telefono,
-              po.ubicacion,
-              po.cvPath,
-              c.nombreCarrera,
-              p.estadoPostulacion,
-              p.fechaPostulacion
-            FROM Postulacion p
-            INNER JOIN Postulante po ON p.Postulantes_idPostulante = po.idPostulante
-            INNER JOIN Usuarios u ON po.Usuarios_idUsuarios = u.idUsuarios
-            INNER JOIN Carrera c ON po.Carrera_idCarrera = c.idCarrera
-            WHERE p.Vacantes_idVacante = ? -- idVacante desde parámetro GET
-            ORDER BY p.fechaPostulacion DESC
-            --> <!-- Ejemplo de fila -->
+      <tbody>
+      <?php if (count($listaPostulantes) > 0): ?>
+
+      <!-- Ejemplo de fila -->
+      <?php foreach ($listaPostulantes as $postulante): ?>
        <tr>
-        <td>#001</td>
-        <td><strong>Juan Pérez García</strong><br><small style="color: #6c757d;">juan.perez@email.com</small></td>
-        <td>Ingeniería en Sistemas Computacionales</td>
-        <td>20240001</td>
-        <td>664-123-4567</td>
-        <td>Tijuana, BC</td>
-        <td>15/01/2024</td>
-        <td><span class="status-badge revision">En Revisión</span></td>
+        <td><?php echo htmlspecialchars($postulante['idPostulacion']); ?></td>
+        <td><strong><?php echo htmlspecialchars($postulante['nombreCompleto']); ?></strong><br><small style="color: #6c757d;"><?php echo htmlspecialchars($postulante['email']); ?></small></td>
+        <td><?php echo htmlspecialchars($postulante['nombreCarrera']); ?></td>
+        <td><?php echo htmlspecialchars($postulante['numeroControl']); ?></td>
+        <td><?php echo htmlspecialchars($postulante['telefono']); ?></td>
+        <td><?php echo htmlspecialchars($postulante['ubicacion']); ?></td>
+        <td><?php echo htmlspecialchars($postulante['fechaPostulacion']); ?></td>
+        <td><span class="status-badge revision"><?php echo htmlspecialchars($postulante['estadoPostulacion']); ?></span></td>
         <td>
-         <div class="action-buttons"><a href="ver-perfil-postulante.html?id=1" class="btn-action btn-view">👁️ Ver</a> <a href="uploads/cv_20240001.pdf" class="btn-action btn-download" download>📄 CV</a> <button class="btn-action btn-accept" onclick="cambiarEstado(1, 'Aceptada')">✅</button> <button class="btn-action btn-reject" onclick="cambiarEstado(1, 'Rechazada')">❌</button>
+         <div class="action-buttons">
+         <a href="uploads/cv_20240001.pdf" class="btn-action btn-download" download>📄 CV</a> 
+         
          </div></td>
        </tr>
-       <tr>
-        <td>#002</td>
-        <td><strong>María González López</strong><br><small style="color: #6c757d;">maria.gonzalez@email.com</small></td>
-        <td>Ingeniería Industrial</td>
-        <td>20240002</td>
-        <td>664-234-5678</td>
-        <td>Mexicali, BC</td>
-        <td>14/01/2024</td>
-        <td><span class="status-badge aceptada">Aceptada</span></td>
-        <td>
-         <div class="action-buttons"><a href="ver-perfil-postulante.html?id=2" class="btn-action btn-view">👁️ Ver</a> <a href="uploads/cv_20240002.pdf" class="btn-action btn-download" download>📄 CV</a> <button class="btn-action btn-accept" onclick="cambiarEstado(2, 'Entrevista')">📞 Entrevista</button>
-         </div></td>
-       </tr>
-       <tr>
-        <td>#003</td>
-        <td><strong>Carlos Ramírez Sánchez</strong><br><small style="color: #6c757d;">carlos.ramirez@email.com</small></td>
-        <td>Ingeniería Mecatrónica</td>
-        <td>20240003</td>
-        <td>664-345-6789</td>
-        <td>Ensenada, BC</td>
-        <td>13/01/2024</td>
-        <td><span class="status-badge entrevista">Entrevista</span></td>
-        <td>
-         <div class="action-buttons"><a href="ver-perfil-postulante.html?id=3" class="btn-action btn-view">👁️ Ver</a> <a href="uploads/cv_20240003.pdf" class="btn-action btn-download" download>📄 CV</a> <button class="btn-action btn-accept" onclick="cambiarEstado(3, 'Aceptada')">✅ Contratar</button>
-         </div></td>
-       </tr><!-- Si no hay postulantes --> <!-- 
+      <?php endforeach; ?>
+    <?php else: ?>
+       
             <tr>
               <td colspan="9">
                 <div class="empty-state">
@@ -586,7 +604,9 @@
                 </div>
               </td>
             </tr>
-            -->
+            
+    <?php endif; ?>
+
       </tbody>
      </table>
     </div>
@@ -873,133 +893,6 @@
       }
     }
   </style>
-  <div class="form-container"><!-- Header -->
-   <div class="form-header">
-    <h1>👤 Crear Perfil de Postulante</h1>
-    <p>Completa tu información para comenzar a postularte</p>
-   </div><!-- Form Body -->
-   <div class="form-body"><!-- Success Message -->
-    <div class="success-message" id="successMessage">
-     <h3>✅ ¡Perfil Creado Exitosamente!</h3>
-     <p>Tu perfil ha sido registrado. Ahora puedes postularte a vacantes.</p>
-    </div><!-- Registration Form -->
-    <form id="postulanteForm" action="procesar-postulante.php" method="POST" enctype="multipart/form-data"><!-- Hidden field for Usuario ID (from session) --> <input type="hidden" name="Usuarios_idUsuarios" value="<!-- idUsuarios desde sesión -->"> <!-- Número de Control -->
-     <div class="form-group"><label for="numeroControl" class="form-label"> Número de Control <span class="required">*</span> </label> <input type="text" id="numeroControl" name="numeroControl" class="form-input" placeholder="Ej: 20240001" maxlength="10" required aria-label="Número de control"> <span class="form-help">Máximo 10 caracteres</span> <span class="error-message" id="errorNumeroControl"></span>
-     </div><!-- Carrera -->
-     <div class="form-group"><label for="Carrera_idCarrera" class="form-label"> Carrera <span class="required">*</span> </label> <select id="Carrera_idCarrera" name="Carrera_idCarrera" class="form-select" required aria-label="Carrera"> <option value="">-- Selecciona tu carrera --</option> <!-- Opciones desde la tabla Carrera --> <option value="1">Ingeniería en Sistemas Computacionales</option> <option value="2">Ingeniería Industrial</option> <option value="3">Ingeniería Mecatrónica</option> <option value="4">Ingeniería en Gestión Empresarial</option> <option value="5">Ingeniería Electrónica</option> <option value="6">Arquitectura</option> </select> <span class="error-message" id="errorCarrera"></span>
-     </div><!-- Teléfono -->
-     <div class="form-group"><label for="telefono" class="form-label"> Teléfono <span class="required">*</span> </label> <input type="tel" id="telefono" name="telefono" class="form-input" placeholder="Ej: 664-123-4567" maxlength="45" required aria-label="Teléfono"> <span class="form-help">Incluye código de área</span> <span class="error-message" id="errorTelefono"></span>
-     </div><!-- Ubicación -->
-     <div class="form-group"><label for="ubicacion" class="form-label"> Ubicación <span class="required">*</span> </label> <input type="text" id="ubicacion" name="ubicacion" class="form-input" placeholder="Ej: Tijuana, Baja California" maxlength="45" required aria-label="Ubicación"> <span class="form-help">Ciudad y estado</span> <span class="error-message" id="errorUbicacion"></span>
-     </div><!-- CV Upload -->
-     <div class="form-group"><label for="cvFile" class="form-label"> Curriculum Vitae (CV) <span class="required">*</span> </label>
-      <div class="file-input-wrapper"><input type="file" id="cvFile" name="cvFile" class="file-input" accept=".pdf,.doc,.docx" required aria-label="Curriculum vitae"> <label for="cvFile" class="file-input-label" id="cvLabel"> 📄 Seleccionar archivo CV (PDF, DOC, DOCX) </label>
-      </div><span class="form-help">Máximo 5MB</span> <span class="error-message" id="errorCV"></span>
-     </div><!-- Submit Button --> <button type="submit" class="btn-submit"> ✅ Crear Perfil de Postulante </button>
-    </form>
-   </div><!-- Info Box -->
-   <div class="info-box">
-    <h4>💡 Información Importante</h4>
-    <p>Asegúrate de completar todos los campos correctamente. Tu CV debe estar en formato PDF, DOC o DOCX y no debe superar los 5MB.</p>
-   </div>
-   <script>
-    // File input handler
-    const cvInput = document.getElementById('cvFile');
-    const cvLabel = document.getElementById('cvLabel');
 
-    cvInput.addEventListener('change', function(e) {
-      const fileName = e.target.files[0]?.name;
-      const fileSize = e.target.files[0]?.size;
-      
-      if (fileName) {
-        // Validate file size (5MB max)
-        if (fileSize > 5 * 1024 * 1024) {
-          const errorCV = document.getElementById('errorCV');
-          errorCV.textContent = 'El archivo no debe superar los 5MB';
-          errorCV.classList.add('show');
-          cvInput.value = '';
-          cvLabel.textContent = '📄 Seleccionar archivo CV (PDF, DOC, DOCX)';
-          cvLabel.classList.remove('has-file');
-          return;
-        }
-
-        cvLabel.textContent = `✅ ${fileName}`;
-        cvLabel.classList.add('has-file');
-        document.getElementById('errorCV').classList.remove('show');
-      }
-    });
-
-    // Form validation and submission
-    document.getElementById('postulanteForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Clear previous errors
-      document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
-      
-      let hasError = false;
-
-      // Validate Número de Control
-      const numeroControl = document.getElementById('numeroControl').value.trim();
-      if (numeroControl.length === 0 || numeroControl.length > 10) {
-        const error = document.getElementById('errorNumeroControl');
-        error.textContent = 'El número de control es obligatorio (máx. 10 caracteres)';
-        error.classList.add('show');
-        hasError = true;
-      }
-
-      // Validate Carrera
-      const carrera = document.getElementById('Carrera_idCarrera').value;
-      if (!carrera) {
-        const error = document.getElementById('errorCarrera');
-        error.textContent = 'Debes seleccionar una carrera';
-        error.classList.add('show');
-        hasError = true;
-      }
-
-      // Validate Teléfono
-      const telefono = document.getElementById('telefono').value.trim();
-      if (telefono.length === 0) {
-        const error = document.getElementById('errorTelefono');
-        error.textContent = 'El teléfono es obligatorio';
-        error.classList.add('show');
-        hasError = true;
-      }
-
-      // Validate Ubicación
-      const ubicacion = document.getElementById('ubicacion').value.trim();
-      if (ubicacion.length === 0) {
-        const error = document.getElementById('errorUbicacion');
-        error.textContent = 'La ubicación es obligatoria';
-        error.classList.add('show');
-        hasError = true;
-      }
-
-      // Validate CV file
-      const cvFile = document.getElementById('cvFile').files[0];
-      if (!cvFile) {
-        const error = document.getElementById('errorCV');
-        error.textContent = 'Debes seleccionar un archivo CV';
-        error.classList.add('show');
-        hasError = true;
-      }
-
-      if (hasError) {
-        return;
-      }
-
-      // Show success message
-      document.getElementById('successMessage').classList.add('show');
-      document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
-
-      // Disable submit button
-      const submitBtn = this.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = '✅ Perfil Creado';
-
-      // In production, submit the form to PHP
-      // this.submit();
-    });
-  </script>
-  </div>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd02f7447bbf863',t:'MTc2ODI1NzkzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
