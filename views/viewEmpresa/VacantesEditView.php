@@ -65,6 +65,13 @@ if(isset($_POST["EditarVacante"])){
 
     if ($resultVacante->status == 'ok') {
         echo "<div class='alert alert-success' role='alert'>✓ Edicion exitoso</div>";
+        $url_destino = 'http://localhost/FutureWork_ITT/views/viewEmpresa/navbarEmpresa.php?cargar=MisVacantesListView'; // Reemplaza esto con tu URL real
+
+// Especifica el retraso en segundos
+$retraso_segundos = 3;
+
+// Envía la cabecera de redirección meta refresh
+header("Refresh: $retraso_segundos; URL=$url_destino");
     } else {
         echo "<div class='alert alert-danger' role='alert'>✗ Error al editar: ".$resultVacante->message."</div>";
     }

@@ -74,7 +74,7 @@ if (isset($_GET["buscar"])) {
         <p>Administra las empresas registradas en la plataforma</p>
       </div>
       <div class="header-actions">
-        <a href="agregar-empresa.php" class="btn-add">➕ Registrar Nueva Empresa</a>
+        
       </div>
     </div>
   </header>
