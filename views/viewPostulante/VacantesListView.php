@@ -308,8 +308,8 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
    </div>
   </main>
   <script>
-    // Configuración
-    const API_URL = 'http://tuservidor.com/api'; // Cambia esto por tu URL real
+    Configuración
+    const API_URL = 'http://localhost/FutureWork_ITT'; // Cambia esto por tu URL real
     const ID_POSTULANTE = 1; // Esto debería venir de la sesión del usuario
 
     // Función para postular

@@ -57,6 +57,9 @@ class RouterPostulante{
             include __DIR__ .'/../view/InicioView.php';
         break;
 
+        case "mis-postulaciones":
+            include __DIR__ .'/../views/viewPostulante/'.$vista.'.php';
+
         case "closeSession":
                 SessionManager::destroySession();
             echo "<script> window.location.href='../../index.php';</script>";
