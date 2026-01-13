@@ -32,9 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['postular'])) {
         $postulacionController = new PostulacionesController();
         $postulacion = new Postulaciones();
         
+        // Estado 1 = "En revisión" (default state for new postulations)
+        $estadoEnRevision = 1;
+        
         $postulacion->set("Postulante_idPostulante", $idPostulante);
         $postulacion->set("Vacante_idVacante", $idVacante);
-        $postulacion->set("EstadoPostulacion_idEstadoPostulacion", 1); // 1 = En revisión
+        $postulacion->set("EstadoPostulacion_idEstadoPostulacion", $estadoEnRevision);
         $postulacion->set("fechaPostulacion", date("Y-m-d H:i:s"));
         
         $response = $postulacionController->InsertarPostulacion($postulacion);
@@ -43,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['postular'])) {
             $mensaje = "¡Postulación exitosa! Tu solicitud ha sido registrada.";
             $tipoMensaje = "success";
         } else {
-            $mensaje = "Error al procesar la postulación: " . $response->message;
+            $mensaje = "Error al procesar la postulación: " . htmlspecialchars($response->message);
             $tipoMensaje = "error";
         }
     } else {
@@ -211,7 +214,12 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
  </head>
  <body>
   <?php if ($mensaje): ?>
-    <div class="alert alert-<?php echo $tipoMensaje; ?>" style="position: fixed; top: 20px; right: 20px; z-index: 1000; padding: 15px; border-radius: 5px; <?php echo $tipoMensaje == 'success' ? 'background-color: #4CAF50;' : 'background-color: #f44336;'; ?> color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+    <?php
+    // Validate $tipoMensaje to prevent CSS injection
+    $tipoMensajeClass = ($tipoMensaje === 'success') ? 'success' : 'error';
+    $backgroundColor = ($tipoMensajeClass === 'success') ? '#4CAF50' : '#f44336';
+    ?>
+    <div class="alert alert-<?php echo $tipoMensajeClass; ?>" style="position: fixed; top: 20px; right: 20px; z-index: 1000; padding: 15px; border-radius: 5px; background-color: <?php echo $backgroundColor; ?>; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
       <?php echo htmlspecialchars($mensaje); ?>
       <button onclick="this.parentElement.remove()" style="margin-left: 10px; background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
     </div>
