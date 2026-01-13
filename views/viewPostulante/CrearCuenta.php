@@ -1,47 +1,26 @@
 <?php
-// 1. Importar archivos (Rutas corregidas)
-require_once __DIR__ . '/../../usecase/Usuario/UsuarioController.php';
-require_once __DIR__ . '/../../usecase/Postulantes/PostulantesController.php'; // Agregada la 's'
-//require_once __DIR__ . '/../../usecase/Carrera/CarreraController.php';
-require_once __DIR__ . '/../../Dto/Postulante.php';
+require_once __DIR__ . '/../../usecase/Postulantes/PostulantesController.php';
+//require_once __DIR__ . '/../../usecase/Carrera/CarrerasController.php';
+require_once __DIR__ . '/../../usecase/Lookup_Tables/Carrera/CarreraController.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
-// 2. Instanciar Controladores
-$usuarioController = new UsuarioController();
-$postulanteController = new PostulantesController(); // Coincide con el nombre de la clase
+session_start();
+
+// -------- Usuario desde sesión --------
+$idUsuario = $_SESSION['idUsuarios'] ?? null;
+
+// -------- Carreras --------
 //$carreraController = new CarreraController();
+//$listarCarreras = [];
+//$carreraController = new CarreraController();
+//var_dump($carreraController);
+$carreraController = new CarreraController();
 
-$mensaje = "";
-$tipoMensaje = ""; 
 
-// 3. Cargar carreras
-$listaCarreras = [];
-$resCarreras = $carreraController->listarCarrera(); // Cambiado a plural
-
-if ($resCarreras && ($resCarreras->status == "ok" || $resCarreras->status == "OK")) {
-    $listaCarreras = $resCarreras->body;
+$resultCarreras = $carreraController->listarCarrera();
+if (isset($resultCarreras->status) && strtolower($resultCarreras->status) === "ok") {
+    $listarCarreras = $resultCarreras->body;
 }
-
-// 4. Procesar POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $datosUsuario = [
-        "nombreCompleto" => $_POST['nombreCompleto'],
-        "email" => $_POST['email'],
-        "password" => password_hash($_POST['password'], PASSWORD_BCRYPT),
-        "rol" => "postulante"
-    ];
-
-    // Cambiado de ListarUsuarios a insertarUsuario (o el nombre que tengas para crear)
-    $resUser = $usuarioController->InsertarUsuario($datosUsuario);
-
-    if ($resUser && ($resUser->status == "ok" || $resUser->status == "OK")) {
-        // Aquí seguiría tu lógica para subir el CV y crear el postulante
-    }
-}
-?>
 ?>
 <!doctype html>
 <html lang="es">
