@@ -15,7 +15,7 @@ if(isset($_POST["enviar"])){
     $usuarioObj = new Usuario();
 
     // 1. Configurar Usuario
-    $usuarioObj->set("Rol_idRol", isset($_POST['Rol_idRol']) ? $_POST['Rol_idRol'] : 1); 
+    $usuarioObj->set("Rol_idRol", 1); 
     $usuarioObj->set("nombreCompleto", $_POST["nombreCompleto"]);
     $usuarioObj->set("email", $_POST["email"]);
     $usuarioObj->set("Password", $_POST["password"]); 
