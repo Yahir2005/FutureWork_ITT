@@ -60,6 +60,33 @@
       $totalAprobadas = $resultVacanteAbierta->body ?? 0;
       $totalCerradas = $resultVacanteCerrada->body ?? 0;
       $totalGeneral = $resultVacantesTotal->body ?? 0;
+
+
+
+$eliminarVacante= $vacanteController;
+
+$mensaje ="";
+
+// 1. Verificar si el formulario de eliminación ha sido enviado
+  if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_vacante'])) {
+      // 2. Validar y sanear la entrada del ID
+      $id_a_eliminar = filter_input(INPUT_POST, 'id_Vacante_Eliminar', FILTER_SANITIZE_NUMBER_INT);
+
+      if ($id_a_eliminar) {
+          try {
+              $resultado= $eliminarVacante->EliminarVacante($id_a_eliminar);
+                    if($resultado->status == "ok"){
+                      header("Location:http://localhost/FutureWork_ITT/views/viewEmpresa/navbarEmpresa.php?cargar=MisVacantesListView");
+                      exit;
+        }
+          } catch (PDOException $e) {
+              
+          }
+      } else {
+
+      }
+    }
+
   }
 ?>
 <!doctype html>
@@ -223,9 +250,9 @@
               <div class="vacancy-actions">
                 <a href="editar-vacante.php?id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-edit">✏️ Editar</a>
                 
-                <form method="POST" action="eliminar-vacante.php" style="display:inline;">
-                    <input type="hidden" name="id" value="<?php echo $vacante['idVacante'] ?? 0; ?>">
-                    <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">🗑️ Eliminar</button>
+<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])."?cargar=MisVacantesListView"; ?>" style="display:inline;">
+                    <input type="hidden" name="id_Vacante_Eliminar" value="<?php echo $vacante['idVacante'] ?? 0; ?>">
+                    <button type="submit"  name="eliminar_vacante" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">🗑️ Eliminar</button>
                 </form>
               </div>
             </div>
