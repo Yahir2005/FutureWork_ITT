@@ -1,3 +1,53 @@
+<?php
+// 1. Importar controladores (Asegúrate de que la ruta sea la que te funcionó antes)
+require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+require_once __DIR__ . "/../../usecase/Postulantes/PostulanteController.php";
+require_once __DIR__ . "/../../usecase/Carrera/CarreraController.php";
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// 2. Instanciar Controladores
+$usuarioController = new UsuarioController();
+$postulanteController = new PostulantesController(); // Revisa que en el archivo NO tenga una 'S' al final
+$carreraController = new CarreraController();
+
+$mensaje = "";
+$tipoMensaje = ""; 
+
+// 3. Cargar carreras
+$listaCarreras = [];
+// CORRECCIÓN: Usualmente el método es 'listarCarreras' (en plural)
+$resCarreras = $carreraController->ListarCarrera(); 
+
+if ($resCarreras && ($resCarreras->status == "ok" || $resCarreras->status == "OK")) {
+    $listaCarreras = $resCarreras->body;
+}
+
+// 4. Procesar POST
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $datosUsuario = [
+        "nombreCompleto" => $_POST['nombreCompleto'],
+        "email" => $_POST['email'],
+        "password" => password_hash($_POST['password'], PASSWORD_BCRYPT),
+        "rol" => "postulante"
+    ];
+
+    // CORRECCIÓN: El método debe ser 'crearUsuario' (en singular)
+    $resUser = $usuarioController->ListarUsuarios($datosUsuario);
+
+    if ($resUser && ($resUser->status == "ok" || $resUser->status == "OK")) {
+        // ... el resto de tu lógica de archivos y crearPostulante ...
+    }
+}
+?>
+
+
+
+
+
+
 <!doctype html>
 <html lang="es">
  <head>
