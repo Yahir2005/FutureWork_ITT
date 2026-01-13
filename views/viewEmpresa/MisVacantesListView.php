@@ -113,7 +113,7 @@ $mensaje ="";
         <div class="header-text">
           <h1>💼 Mis Vacantes Publicadas</h1>
           <p>Administra las ofertas laborales de tu empresa</p>
-        </div><a href="agregar-vacante.html" class="btn-add">➕ Publicar Nueva Vacante</a>
+        </div><a href="?cargar=VacantesAddView" class="btn-add">➕ Publicar Nueva Vacante</a>
       </div><div class="stats-container">
         <div class="stat-card">
           <div class="stat-label">
@@ -151,54 +151,12 @@ $mensaje ="";
     </div>
   </header><main class="container">
     
-    <div class="filter-section">
-      <h3 class="filter-title">🔍 Filtros de Búsqueda</h3>
-      <form method="GET" action="" class="filter-form">
-        <div class="filter-group"><label for="titulo">Título de Vacante</label> <input type="text" id="titulo"
-            name="titulo" placeholder="Buscar por título...">
-        </div>
-        <div class="filter-group"><label for="estado_validacion">Estado de Validación</label> <select
-            id="estado_validacion" name="estado_validacion">
-            <option value="">Todos los estados</option>
-            <option value="1">Aprobada</option>
-            <option value="2">Pendiente</option>
-            <option value="3">Rechazada</option>
-          </select>
-        </div>
-        <div class="filter-group"><label for="tipo_contrato">Tipo de Contrato</label> <select id="tipo_contrato"
-            name="tipo_contrato">
-            <option value="">Todos los tipos</option>
-            <option value="1">Tiempo Completo</option>
-            <option value="2">Medio Tiempo</option>
-            <option value="3">Por Proyecto</option>
-            <option value="4">Pasantía</option>
-          </select>
-        </div>
-        <div class="filter-group"><label for="modalidad">Modalidad</label> <select id="modalidad" name="modalidad">
-            <option value="">Todas las modalidades</option>
-            <option value="1">Presencial</option>
-            <option value="2">Remoto</option>
-            <option value="3">Híbrido</option>
-          </select>
-        </div>
-        <div class="filter-actions"><button type="submit" class="btn-filter">🔍 Buscar</button> <a href="?"
-            class="btn-clear">✖ Limpiar Filtros</a>
-        </div>
-      </form>
-    </div><div class="results-header">
+
+    <div class="results-header">
       <div class="results-count">
         Mostrando: <span><?php echo count($listaVacantes); ?></span> vacantes
       </div>
-      <form method="GET" action="" class="sort-form"><label for="ordenar">Ordenar por:</label> <select id="ordenar"
-          name="ordenar">
-          <option value="fecha_desc">Más recientes</option>
-          <option value="fecha_asc">Más antiguas</option>
-          <option value="titulo_asc">Título A-Z</option>
-          <option value="titulo_desc">Título Z-A</option>
-          <option value="salario_desc">Salario mayor</option>
-          <option value="salario_asc">Salario menor</option>
-        </select>
-      </form>
+
     </div>
 
     <?php if (count($listaVacantes) > 0): ?>
@@ -235,6 +193,10 @@ $mensaje ="";
             <p class="vacancy-description">
               <?php echo htmlspecialchars($vacante['descripcion']); ?>
             </p>
+            <div class="vacancy-description">
+            <div class="detail-item">* Requisitos: <br /><?php echo htmlspecialchars($vacante['requisitos']); ?></div>
+            </div>
+            <br />
 
             <div class="vacancy-tags">
               <span class="tag contract"><?php echo htmlspecialchars($vacante['estadoContrato']); ?></span>
@@ -248,9 +210,10 @@ $mensaje ="";
                 </div>
               </div>
               <div class="vacancy-actions">
-                <a href="editar-vacante.php?id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-edit">✏️ Editar</a>
+
+                    <a href="?cargar=VacantesEditView&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-edit">✏️ Editar</a>
                 
-<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])."?cargar=MisVacantesListView"; ?>" style="display:inline;">
+                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])."?cargar=MisVacantesListView"; ?>" style="display:inline;">
                     <input type="hidden" name="id_Vacante_Eliminar" value="<?php echo $vacante['idVacante'] ?? 0; ?>">
                     <button type="submit"  name="eliminar_vacante" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">🗑️ Eliminar</button>
                 </form>

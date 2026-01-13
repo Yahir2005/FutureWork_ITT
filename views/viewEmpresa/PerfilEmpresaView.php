@@ -38,7 +38,7 @@ $MessageID="";
      <div class="header-text">
       <h1>🏢 Perfil de la empresa</h1>
       <p>Información completa de la empresa</p>
-     </div><a href="editar-perfil-empresa.html" class="btn-edit-profile">✏️ Editar Perfil</a>
+     </div>
     </div>
    </div>
   </header><!-- Main Container -->
@@ -110,7 +110,7 @@ $MessageID="";
     <div class="info-section"><!-- Información General -->
      <div class="info-card">
       <div class="info-card-header">
-       <h3 class="info-card-title">📊 Información General</h3><a href="editar-perfil-empresa.html" class="btn-edit-section">✏️ Editar</a>
+       <h3 class="info-card-title">📊 Información General</h3>
       </div>
 
 
@@ -149,7 +149,7 @@ $MessageID="";
      </div><!-- Descripción de la Empresa -->
      <div class="info-card">
       <div class="info-card-header">
-       <h3 class="info-card-title">📝 Acerca de <?php echo htmlspecialchars($empresa['nombreEmpresa']); ?></h3><a href="editar-perfil-empresa.html" class="btn-edit-section">✏️ Editar</a>
+       <h3 class="info-card-title">📝 Acerca de <?php echo htmlspecialchars($empresa['nombreEmpresa']); ?></h3>
       </div><!-- Descripción (descripcion) -->
       <p class="description-text">
       <?php echo htmlspecialchars($empresa['descripcion']); ?>
@@ -161,7 +161,7 @@ $MessageID="";
       </div><!-- Información de Contacto (desde tabla Usuarios) -->
      <div class="info-card">
       <div class="info-card-header">
-       <h3 class="info-card-title">📧 Información de Contacto</h3><a href="editar-perfil-empresa.html" class="btn-edit-section">✏️ Editar</a>
+       <h3 class="info-card-title">📧 Información de Contacto</h3>
       </div>
       <div class="info-grid"><!-- Nombre Completo del Usuario (nombreCompleto) -->
        <div class="info-item"><span class="info-label">Nombre de Contacto</span> <span class="info-value">
@@ -185,32 +185,7 @@ $MessageID="";
 <?php endforeach; ?>
 
 
-     </div><!-- Vacantes Recientes -->
-     <div class="vacancies-preview">
-      <div class="info-card-header">
-       <h3 class="info-card-title">💼 Vacantes Recientes</h3><a href="mis-vacantes.html" class="btn-edit-section">Ver Todas</a>
-      </div><!-- Lista de Vacantes (se generaría dinámicamente) --> <!-- Ejemplo de vacante: --> <!--
-          <div class="vacancy-item">
-            <div class="vacancy-header">
-              <h4 class="vacancy-title">Desarrollador Full Stack</h4>
-              <span class="vacancy-status status-active">✓ Activa</span>
-            </div>
-            <div class="vacancy-details">
-              <span class="vacancy-detail">📍 Tijuana, BC</span>
-              <span class="vacancy-detail">💰 $25,000 - $35,000</span>
-              <span class="vacancy-detail">📅 Publicada: 15/01/2024</span>
-              <span class="vacancy-detail">👥 12 Postulaciones</span>
-            </div>
-          </div>
-          --> <!-- Empty State (cuando no hay vacantes) -->
-      <div class="empty-state">
-       <div class="empty-state-icon">
-        📭
-       </div>
-       <p>No hay vacantes publicadas aún</p><a href="publicar-vacante.html" class="btn-action btn-primary">➕ Publicar Primera Vacante</a>
-      </div>
-     </div>
-    </div>
+
 
    </div>
   </main>

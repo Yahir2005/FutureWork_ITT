@@ -35,7 +35,6 @@ class VacanteGateway implements IVacante{
     public function ActualizarVacante($id, $vacantes):int{
         $mysqlConnector = new MysqlConnector();
         $sql = "UPDATE Vacantes SET 
-            Empresa_idEmpresa = '{$vacantes->get('Empresa_idEmpresa')}',
             EstadoValidacionVacante_idEstadoValidacionVacante = '{$vacantes->get('EstadoValidacionVacante_idEstadoValidacionVacante')}',
             TipoContrato_idTipoContrato = '{$vacantes->get('TipoContrato_idTipoContrato')}',
             TipoModalidad_idTipoModalidad = '{$vacantes->get('TipoModalidad_idTipoModalidad')}',
@@ -227,5 +226,24 @@ class VacanteGateway implements IVacante{
         $row = mysqli_fetch_assoc($result);
         return (int)($row['total'] ?? 0);
     }
+
+        public function obtenerVacanteporId($id): array{
+        $result= [];
+        try{
+            $mysqlConnector = new MysqlConnector();
+            $sql = "SELECT * FROM Vacantes WHERE idVacante = ".$id;
+            $result = $mysqlConnector->consultaRetorno($sql);
+            if($result!=false){
+                $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            }else{
+                throw new Exception("Error al obtener la vacante");
+            }
+        }catch(Exception $e){
+            throw new Exception("Error al obtener la vacante: ".$e->getMessage());
+        }
+        
+        return $result;
+    }
+
 
 }

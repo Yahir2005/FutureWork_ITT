@@ -247,4 +247,19 @@ class VacanteUseCase{
         }
         return $response;
     }
+
+
+        public function obtenerVacanteporId($id): RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->obtenerVacanteporId($id);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Vacantes listadas correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al listar vacantes: ". $e->getMessage();
+        }
+        return $response;
+    }
 }

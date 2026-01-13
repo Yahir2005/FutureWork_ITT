@@ -221,9 +221,16 @@
                 </div>
               </div>
               <div class="vacancy-actions">
-                <a href="detalle-vacante.php?id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-details">👁️ Ver</a>
-                <a href="editar-vacante.php?id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn-edit">✏️ Editar</a>
-                
+
+                <a href="" class="btn-details">👁️ Ver</a>
+                <button 
+                            type="button" 
+                            onclick="window.location.href='?cargar=VacantesEditView&id=<?php echo $vacante['idVacante'] ?? 0; ?>';" 
+                            class="btn btn-secondary mt-1 mb-2 mr-sm-2 ">
+                            Editar</button>
+
+                <a href="window.location.href='?cargar=VacantesEditView&id=<?php echo $vacante['idVacante'] ?? 0; ?>';" class="btn-edit">✏️ Editar</a>
+                hjbjujhbujo
                 <form method="POST" action="eliminar-vacante.php" style="display:inline;">
                     <input type="hidden" name="id" value="<?php echo $vacante['idVacante'] ?? 0; ?>">
                     <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta vacante?')">🗑️</button>
