@@ -1,8 +1,9 @@
 <?php
-// 1. Importar controladores (Asegúrate de que la ruta sea la que te funcionó antes)
-require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
-require_once __DIR__ . "/../../usecase/Postulantes/PostulanteController.php";
-require_once __DIR__ . "/../../usecase/Carrera/CarreraController.php";
+// 1. Importar archivos (Rutas corregidas)
+require_once __DIR__ . '/../../usecase/Usuario/UsuarioController.php';
+require_once __DIR__ . '/../../usecase/Postulantes/PostulantesController.php'; // Agregada la 's'
+//require_once __DIR__ . '/../../usecase/Carrera/CarreraController.php';
+require_once __DIR__ . '/../../Dto/Postulante.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -10,16 +11,15 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // 2. Instanciar Controladores
 $usuarioController = new UsuarioController();
-$postulanteController = new PostulantesController(); // Revisa que en el archivo NO tenga una 'S' al final
-$carreraController = new CarreraController();
+$postulanteController = new PostulantesController(); // Coincide con el nombre de la clase
+//$carreraController = new CarreraController();
 
 $mensaje = "";
 $tipoMensaje = ""; 
 
 // 3. Cargar carreras
 $listaCarreras = [];
-// CORRECCIÓN: Usualmente el método es 'listarCarreras' (en plural)
-$resCarreras = $carreraController->ListarCarrera(); 
+$resCarreras = $carreraController->listarCarrera(); // Cambiado a plural
 
 if ($resCarreras && ($resCarreras->status == "ok" || $resCarreras->status == "OK")) {
     $listaCarreras = $resCarreras->body;
@@ -34,20 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "rol" => "postulante"
     ];
 
-    // CORRECCIÓN: El método debe ser 'crearUsuario' (en singular)
-    $resUser = $usuarioController->ListarUsuarios($datosUsuario);
+    // Cambiado de ListarUsuarios a insertarUsuario (o el nombre que tengas para crear)
+    $resUser = $usuarioController->InsertarUsuario($datosUsuario);
 
     if ($resUser && ($resUser->status == "ok" || $resUser->status == "OK")) {
-        // ... el resto de tu lógica de archivos y crearPostulante ...
+        // Aquí seguiría tu lógica para subir el CV y crear el postulante
     }
 }
 ?>
-
-
-
-
-
-
+?>
 <!doctype html>
 <html lang="es">
  <head>
