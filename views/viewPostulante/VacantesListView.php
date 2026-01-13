@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['postular'])) {
         $estadoEnRevision = 1;
         
         $postulacion->set("Postulante_idPostulante", $idPostulante);
-        $postulacion->set("Vacante_idVacante", $idVacante);
+        $postulacion->set("Vacantes_idVacante", $idVacante);
         $postulacion->set("EstadoPostulacion_idEstadoPostulacion", $estadoEnRevision);
         $postulacion->set("fechaPostulacion", date("Y-m-d H:i:s"));
         
@@ -215,8 +215,8 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
  <body>
   <?php if ($mensaje): ?>
     <?php
-    // Validate $tipoMensaje to prevent CSS injection
-    $tipoMensajeClass = ($tipoMensaje === 'success') ? 'success' : 'error';
+    // Validate $tipoMensaje using whitelist to prevent CSS injection
+    $tipoMensajeClass = in_array($tipoMensaje, ['success', 'error'], true) ? $tipoMensaje : 'error';
     $backgroundColor = ($tipoMensajeClass === 'success') ? '#4CAF50' : '#f44336';
     ?>
     <div class="alert alert-<?php echo $tipoMensajeClass; ?>" style="position: fixed; top: 20px; right: 20px; z-index: 1000; padding: 15px; border-radius: 5px; background-color: <?php echo $backgroundColor; ?>; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
