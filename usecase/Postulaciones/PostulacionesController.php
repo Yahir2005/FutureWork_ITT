@@ -8,6 +8,42 @@ class PostulacionesController{
         $useCase = new PostulacionesUseCase($gateway);
         return $useCase->InsertarPostulacion($postulacion);
     }
+
+    public function ListarPostulacionesPorVacante($idVacante): RespuestaGenerica{
+        $gatewayDb = new PostulacionesGateway();
+        $usecase = new PostulacionesUseCase($gatewayDb);
+        return $usecase->ListarPostulacionesPorVacante($idVacante);
+    }
+
+    public function contartotalPostulacionesPorVacante($idVacante):RespuestaGenerica{
+        $gatewayDb = new PostulacionesGateway();
+        $usecase = new PostulacionesUseCase($gatewayDb);
+        return $usecase->contartotalPostulacionesPorVacante($idVacante);
+    }
+
+
+        public function contartotalRevisionPorVacante($idVacante):RespuestaGenerica{
+        $gatewayDb = new PostulacionesGateway();
+        $usecase = new PostulacionesUseCase($gatewayDb);
+        return $usecase->contartotalRevisionPorVacante($idVacante);
+    }
+
+
+        public function contartotalAceptadasPorVacante($idVacante):RespuestaGenerica{
+        $gatewayDb = new PostulacionesGateway();
+        $usecase = new PostulacionesUseCase($gatewayDb);
+        return $usecase->contartotalAceptadasPorVacante($idVacante);
+    }
+
+        public function contartotalEntrevistaProgramadaPorVacante($idVacante):RespuestaGenerica{
+        $gatewayDb = new PostulacionesGateway();
+        $usecase = new PostulacionesUseCase($gatewayDb);
+        return $usecase->contartotalEntrevistaProgramadaPorVacante($idVacante);
+    }
+
+
+
+
 }
 /*
 $controller = new PostulacionesController();

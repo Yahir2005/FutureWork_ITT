@@ -56,6 +56,10 @@ class RouterEmpresa{
             include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
+        case 'VacantePostulantes':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+
         case 'PerfilEmpresaView':
             include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
