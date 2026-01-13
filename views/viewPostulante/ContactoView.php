@@ -71,9 +71,9 @@
        </div>
        <h3>Ubicación</h3>
       </div>
-      <p>Instituto Tecnológico de Tijuana<br>
+      <p>Instituto Tecnológico de Tehuacan<br>
         Calzada Tecnológico S/N<br>
-        Tijuana, Baja California, México<br>
+        Tehuacan, Puebla, México<br>
         C.P. 22414</p>
      </div><!-- Social Media Card -->
      <div class="info-card">
