@@ -253,6 +253,21 @@
      <h3>✅ ¡Perfil Creado Exitosamente!</h3>
      <p>Tu perfil ha sido registrado. Ahora puedes postularte a vacantes.</p>
     </div><!-- Registration Form -->
+    <div class="form-row">
+      <div class="form-group"><label for="nombreCompleto" class="form-label"> Nombre Completo <span class="required">*</span> </label> <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-input" placeholder="Ej: Juan Pérez García" maxlength="45" required aria-label="Nombre completo"> <span class="error-message" id="errorNombreCompleto"></span>
+      </div>
+      <div class="form-group"><label for="email" class="form-label"> Correo Electrónico <span class="required">*</span> </label> <input type="email" id="email" name="email" class="form-input" placeholder="empresa@ejemplo.com" maxlength="45" required aria-label="Correo electrónico"> <span class="error-message" id="errorEmail"></span>
+      </div>
+     </div>
+     <div class="form-row">
+      <div class="form-group"><label for="password" class="form-label"> Contraseña <span class="required">*</span> </label>
+       <div class="password-wrapper"><input type="password" id="password" name="password" class="form-input" placeholder="••••••••" maxlength="50" required aria-label="Contraseña"> <button type="button" class="password-toggle" onclick="togglePassword('password')">👁️</button>
+       </div><span class="form-help">Mínimo 8 caracteres</span> <span class="error-message" id="errorPassword"></span>
+      </div>
+      <div class="form-group"><label for="confirmPassword" class="form-label"> Confirmar Contraseña <span class="required">*</span> </label>
+       <div class="password-wrapper"><input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="••••••••" maxlength="50" required aria-label="Confirmar contraseña"> <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">👁️</button>
+       </div><span class="error-message" id="errorConfirmPassword"></span>
+      </div>
     <form id="postulanteForm" action="procesar-postulante.php" method="POST" enctype="multipart/form-data"><!-- Hidden field for Usuario ID (from session) --> <input type="hidden" name="Usuarios_idUsuarios" value="<!-- idUsuarios desde sesión -->"> <!-- Número de Control -->
      <div class="form-group"><label for="numeroControl" class="form-label"> Número de Control <span class="required">*</span> </label> <input type="text" id="numeroControl" name="numeroControl" class="form-input" placeholder="Ej: 20240001" maxlength="10" required aria-label="Número de control"> <span class="form-help">Máximo 10 caracteres</span> <span class="error-message" id="errorNumeroControl"></span>
      </div><!-- Carrera -->
