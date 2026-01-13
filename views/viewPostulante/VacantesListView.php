@@ -149,11 +149,6 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureWork ITT - Vacantes de Empresa</title>
   <link rel="stylesheet" href="css/VacantesListView.css">
-  <style>
-    @view-transition {
-      navigation: auto;
-    }
-  </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
@@ -232,7 +227,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
      <div class="vacancy-footer">
       <div class="posted-date">
        📅 Publicado: 2024-01-15
-      </div><a href="postular-vacante.php?idVacante=101" class="btn-postular"> ✅ Postularme </a>
+      </div><button class="btn-postular" onclick="postular(this, 101)"> ✅ Postularme </button>
      </div>
     </div>
    </div><!-- Vacancy Card 2 -->
@@ -269,7 +264,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
      <div class="vacancy-footer">
       <div class="posted-date">
        📅 Publicado: 2024-01-18
-      </div><a href="postular-vacante.php?idVacante=102" class="btn-postular"> ✅ Postularme </a>
+      </div><button class="btn-postular" onclick="postular(this, 102)"> ✅ Postularme </button>
      </div>
     </div>
    </div><!-- Vacancy Card 3 -->
@@ -306,10 +301,32 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
      <div class="vacancy-footer">
       <div class="posted-date">
        📅 Publicado: 2024-01-20
-      </div><a href="postular-vacante.php?idVacante=103" class="btn-postular"> ✅ Postularme </a>
+      </div><button class="btn-postular" onclick="postular(this, 103)"> ✅ Postularme </button>
      </div>
     </div>
    </div>
   </main>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd23901d2f2f863',t:'MTc2ODI3OTMwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  <script>
+    function postular(button, idVacante) {
+      // Cambiar el estado del botón
+      button.classList.add('postulado');
+      button.innerHTML = '✔️ Postulado';
+      button.disabled = true;
+
+      // Crear mensaje de éxito (toast)
+      const toast = document.createElement('div');
+      toast.className = 'toast show';
+      toast.innerHTML = '🎉 ¡Postulación exitosa! Te contactaremos pronto.';
+      document.body.appendChild(toast);
+
+      // Eliminar el mensaje después de 3 segundos
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+
+      // Aquí puedes agregar código para enviar la postulación al servidor
+      console.log('Postulado a vacante ID:', idVacante);
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd24bdfc415f863',t:'MTc2ODI4MDA3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
