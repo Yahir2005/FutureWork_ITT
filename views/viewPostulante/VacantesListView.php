@@ -1,5 +1,56 @@
 <?php
 require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+require_once __DIR__ . "/../../usecase/Postulaciones/PostulacionesController.php";
+require_once __DIR__ . "/../../Dto/Postulaciones.php";
+require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+require_once __DIR__ . "/../../usecase/Usuario/SessionManager.php";
+
+// Start session and get user info
+SessionManager::startSession();
+$mensaje = "";
+$tipoMensaje = ""; // 'success' or 'error'
+
+// Get user ID from session
+$idUsuario = SessionManager::getUserId();
+$idPostulante = null;
+
+// Get postulante ID from user
+if ($idUsuario) {
+    $usuarioController = new UsuarioController();
+    $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
+    
+    if ($result && strtolower($result->status) == "ok" && isset($result->body['postulanteId'])) {
+        $idPostulante = $result->body['postulanteId'];
+    }
+}
+
+// Handle postulation submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['postular'])) {
+    $idVacante = filter_input(INPUT_POST, 'idVacante', FILTER_SANITIZE_NUMBER_INT);
+    
+    if ($idPostulante && $idVacante) {
+        $postulacionController = new PostulacionesController();
+        $postulacion = new Postulaciones();
+        
+        $postulacion->set("Postulante_idPostulante", $idPostulante);
+        $postulacion->set("Vacante_idVacante", $idVacante);
+        $postulacion->set("EstadoPostulacion_idEstadoPostulacion", 1); // 1 = En revisión
+        $postulacion->set("fechaPostulacion", date("Y-m-d H:i:s"));
+        
+        $response = $postulacionController->InsertarPostulacion($postulacion);
+        
+        if (strtolower($response->status) == "ok") {
+            $mensaje = "¡Postulación exitosa! Tu solicitud ha sido registrada.";
+            $tipoMensaje = "success";
+        } else {
+            $mensaje = "Error al procesar la postulación: " . $response->message;
+            $tipoMensaje = "error";
+        }
+    } else {
+        $mensaje = "Error: No se pudo identificar el postulante o la vacante.";
+        $tipoMensaje = "error";
+    }
+}
 
 $vacanteController = new VacanteController();
 
@@ -9,8 +60,11 @@ $totalVacantesAbiertas = $vacanteController->contarVacantesAbiertas();
 $totalVacantesCerradas = $vacanteController->contarVacantesCerradas();
 $totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
 
-
-
+// Get total counts
+$totalVacantesCount = ($totalVacantes && isset($totalVacantes->body)) ? $totalVacantes->body : 0;
+$totalVacantesAbiertasCount = ($totalVacantesAbiertas && isset($totalVacantesAbiertas->body)) ? $totalVacantesAbiertas->body : 0;
+$totalVacantesCerradasCount = ($totalVacantesCerradas && isset($totalVacantesCerradas->body)) ? $totalVacantesCerradas->body : 0;
+$totalVacantesPausadasCount = ($totalVacantesPausadas && isset($totalVacantesPausadas->body)) ? $totalVacantesPausadas->body : 0;
 
 // --- Empresas ---
 $listarVacantesCard = array();
@@ -155,7 +209,21 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
- <body><!-- Header -->
+ <body>
+  <?php if ($mensaje): ?>
+    <div class="alert alert-<?php echo $tipoMensaje; ?>" style="position: fixed; top: 20px; right: 20px; z-index: 1000; padding: 15px; border-radius: 5px; <?php echo $tipoMensaje == 'success' ? 'background-color: #4CAF50;' : 'background-color: #f44336;'; ?> color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+      <?php echo htmlspecialchars($mensaje); ?>
+      <button onclick="this.parentElement.remove()" style="margin-left: 10px; background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+    </div>
+    <script>
+      setTimeout(function() {
+        var alert = document.querySelector('.alert');
+        if (alert) alert.remove();
+      }, 5000);
+    </script>
+  <?php endif; ?>
+  
+  <!-- Header -->
   <header class="header">
    <div class="header-content"><!-- Stats Cards -->
     <div class="stats-container">
@@ -164,7 +232,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
        📊 Total de Vacantes
       </div>
       <div class="stat-value">
-       24
+       <?php echo $totalVacantesCount; ?>
       </div>
      </div>
      <div class="stat-card">
@@ -172,7 +240,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
        ✅ Vacantes Abiertas
       </div>
       <div class="stat-value">
-       18
+       <?php echo $totalVacantesAbiertasCount; ?>
       </div>
      </div>
      <div class="stat-card">
@@ -180,7 +248,7 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
        ❌ Vacantes Cerradas
       </div>
       <div class="stat-value">
-       4
+       <?php echo $totalVacantesCerradasCount; ?>
       </div>
      </div>
      <div class="stat-card">
@@ -188,246 +256,76 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
        ⏸️ Vacantes Pausadas
       </div>
       <div class="stat-value">
-       2
+       <?php echo $totalVacantesPausadasCount; ?>
       </div>
      </div>
     </div>
    </div>
   </header><!-- Main Container -->
-  <main class="container"><!-- Vacancy Card 1 -->
-   <div class="vacancies-grid">
-    <div class="vacancy-card">
-     <div class="vacancy-header">
-      <div class="vacancy-title">
-       <h3>Desarrollador Full Stack</h3>
-       <div class="vacancy-id">
-        ID: 101
-       </div>
-      </div><span class="tag contract">Abierta</span>
-     </div>
-     <div class="vacancy-details">
-      <div class="detail-item">
-       📍 Ubicación: Ciudad de México
+  <main class="container">
+    <?php if (count($listarVacantesCard) > 0): ?>
+      <div class="vacancies-grid">
+        <?php foreach ($listarVacantesCard as $vacante): ?>
+          <div class="vacancy-card">
+            <div class="vacancy-header">
+              <div class="vacancy-title">
+                <h3><?php echo htmlspecialchars($vacante['titulo'] ?? 'Sin título'); ?></h3>
+                <div class="vacancy-id">
+                  ID: <?php echo htmlspecialchars($vacante['idVacante'] ?? 'N/A'); ?>
+                </div>
+              </div>
+              <span class="tag contract"><?php echo htmlspecialchars($vacante['estadoValidacionVacante'] ?? 'N/A'); ?></span>
+            </div>
+            
+            <div class="vacancy-details">
+              <div class="detail-item">
+                📍 Ubicación: <?php echo htmlspecialchars($vacante['ubicacion'] ?? 'N/A'); ?>
+              </div>
+              <div class="detail-item">
+                💰 Salario: $ <?php echo htmlspecialchars($vacante['salario'] ?? 'N/A'); ?>
+              </div>
+              <div class="detail-item">
+                📅 Límite: <?php echo htmlspecialchars($vacante['fechaLimite'] ?? 'N/A'); ?>
+              </div>
+            </div>
+            
+            <p class="vacancy-description">
+              <?php echo htmlspecialchars($vacante['descripcion'] ?? 'Sin descripción'); ?>
+            </p>
+            
+            <div class="vacancy-footer">
+              <div class="detail-item">
+                * Requisitos: <br>
+                <?php echo htmlspecialchars($vacante['requisitos'] ?? 'No especificados'); ?>
+              </div>
+            </div>
+            <br>
+            
+            <div class="vacancy-tags">
+              <span class="tag contract"><?php echo htmlspecialchars($vacante['estadoContrato'] ?? 'N/A'); ?></span>
+              <span class="tag modality"><?php echo htmlspecialchars($vacante['tipoModalidad'] ?? 'N/A'); ?></span>
+              <span class="tag salary">$ <?php echo htmlspecialchars($vacante['salario'] ?? 'N/A'); ?></span>
+            </div>
+            
+            <div class="vacancy-footer">
+              <div class="posted-date">
+                📅 Publicado: <?php echo htmlspecialchars($vacante['fechaPublicacion'] ?? 'N/A'); ?>
+              </div>
+              <form method="POST" style="display: inline;">
+                <input type="hidden" name="idVacante" value="<?php echo htmlspecialchars($vacante['idVacante'] ?? 0); ?>">
+                <button type="submit" name="postular" class="btn-postular"> ✅ Postularme </button>
+              </form>
+            </div>
+          </div>
+        <?php endforeach; ?>
       </div>
-      <div class="detail-item">
-       💰 Salario: $ 25,000 - 35,000
+    <?php else: ?>
+      <div class="empty-state" style="text-align: center; padding: 40px;">
+        <div style="font-size: 48px; margin-bottom: 20px;">📭</div>
+        <h3>No hay vacantes disponibles</h3>
+        <p>Actualmente no hay vacantes publicadas. Vuelve pronto para ver nuevas oportunidades.</p>
       </div>
-      <div class="detail-item">
-       📅 Límite: 2024-02-15
-      </div>
-     </div>
-     <p class="vacancy-description">Buscamos un desarrollador full stack con experiencia en tecnologías modernas. Únete a nuestro equipo y trabaja en proyectos innovadores que impactan a miles de usuarios.</p>
-     <div class="vacancy-footer">
-      <div class="detail-item">
-       * Requisitos: <br>
-       3+ años de experiencia, JavaScript, React, Node.js, bases de datos SQL/NoSQL
-      </div>
-     </div><br>
-     <div class="vacancy-tags"><span class="tag contract">Tiempo Completo</span> <span class="tag modality">Híbrido</span> <span class="tag salary">$ 25,000 - 35,000</span>
-     </div>
-     <div class="vacancy-footer">
-      <div class="posted-date">
-       📅 Publicado: 2024-01-15
-      </div><button class="btn-postular" onclick="postular(this, 101)"> ✅ Postularme </button>
-     </div>
-    </div>
-   </div><!-- Vacancy Card 2 -->
-   <div class="vacancies-grid">
-    <div class="vacancy-card">
-     <div class="vacancy-header">
-      <div class="vacancy-title">
-       <h3>Diseñador UX/UI</h3>
-       <div class="vacancy-id">
-        ID: 102
-       </div>
-      </div><span class="tag contract">Abierta</span>
-     </div>
-     <div class="vacancy-details">
-      <div class="detail-item">
-       📍 Ubicación: Guadalajara
-      </div>
-      <div class="detail-item">
-       💰 Salario: $ 20,000 - 28,000
-      </div>
-      <div class="detail-item">
-       📅 Límite: 2024-02-20
-      </div>
-     </div>
-     <p class="vacancy-description">Buscamos un diseñador creativo con pasión por crear experiencias de usuario excepcionales. Trabaja con un equipo multidisciplinario en proyectos de alto impacto.</p>
-     <div class="vacancy-footer">
-      <div class="detail-item">
-       * Requisitos: <br>
-       2+ años de experiencia, Figma, Adobe XD, prototipado, investigación de usuarios
-      </div>
-     </div><br>
-     <div class="vacancy-tags"><span class="tag contract">Tiempo Completo</span> <span class="tag modality">Remoto</span> <span class="tag salary">$ 20,000 - 28,000</span>
-     </div>
-     <div class="vacancy-footer">
-      <div class="posted-date">
-       📅 Publicado: 2024-01-18
-      </div><button class="btn-postular" onclick="postular(this, 102)"> ✅ Postularme </button>
-     </div>
-    </div>
-   </div><!-- Vacancy Card 3 -->
-   <div class="vacancies-grid">
-    <div class="vacancy-card">
-     <div class="vacancy-header">
-      <div class="vacancy-title">
-       <h3>Ingeniero DevOps</h3>
-       <div class="vacancy-id">
-        ID: 103
-       </div>
-      </div><span class="tag contract">Abierta</span>
-     </div>
-     <div class="vacancy-details">
-      <div class="detail-item">
-       📍 Ubicación: Monterrey
-      </div>
-      <div class="detail-item">
-       💰 Salario: $ 30,000 - 40,000
-      </div>
-      <div class="detail-item">
-       📅 Límite: 2024-02-25
-      </div>
-     </div>
-     <p class="vacancy-description">Únete como ingeniero DevOps y ayuda a optimizar nuestros procesos de desarrollo. Trabajo con tecnologías cloud y herramientas de automatización de vanguardia.</p>
-     <div class="vacancy-footer">
-      <div class="detail-item">
-       * Requisitos: <br>
-       4+ años de experiencia, AWS/Azure, Docker, Kubernetes, CI/CD, scripting
-      </div>
-     </div><br>
-     <div class="vacancy-tags"><span class="tag contract">Tiempo Completo</span> <span class="tag modality">Presencial</span> <span class="tag salary">$ 30,000 - 40,000</span>
-     </div>
-     <div class="vacancy-footer">
-      <div class="posted-date">
-       📅 Publicado: 2024-01-20
-      </div><button class="btn-postular" onclick="postular(this, 103)"> ✅ Postularme </button>
-     </div>
-    </div>
-   </div>
+    <?php endif; ?>
   </main>
-  <script>
-    Configuración
-    const API_URL = 'http://localhost/FutureWork_ITT'; // Cambia esto por tu URL real
-    const ID_POSTULANTE = 1; // Esto debería venir de la sesión del usuario
-
-    // Función para postular
-    async function postular(button, idVacante) {
-      // Cambiar estado del botón a "cargando"
-      button.classList.add('loading');
-      button.innerHTML = '⏳ Procesando...';
-      button.disabled = true;
-
-      try {
-        // Enviar la postulación al backend
-        const response = await fetch(`${API_URL}/postular.php`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            idPostulante: ID_POSTULANTE,
-            idVacante: idVacante
-          })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          // Cambiar el estado del botón a "postulado"
-          button.classList.remove('loading');
-          button.classList.add('postulado');
-          button.innerHTML = '✔️ Postulado';
-
-          // Crear mensaje de éxito (toast) con opciones
-          mostrarToastExito(idVacante);
-        } else {
-          // Error en la postulación
-          throw new Error(data.message || 'Error al procesar la postulación');
-        }
-
-      } catch (error) {
-        console.error('Error:', error);
-        
-        // Restaurar el botón
-        button.classList.remove('loading');
-        button.disabled = false;
-        button.innerHTML = '✅ Postularme';
-
-        // Mostrar mensaje de error
-        mostrarToastError(error.message);
-      }
-    }
-
-    // Función para mostrar toast de éxito
-    function mostrarToastExito(idVacante) {
-      const toast = document.createElement('div');
-      toast.className = 'toast show';
-      toast.innerHTML = `
-        <div class="toast-header">
-          <span>🎉</span>
-          <span>¡Postulación exitosa!</span>
-        </div>
-        <div class="toast-body">
-          Tu postulación ha sido registrada. Te contactaremos pronto.
-        </div>
-        <div class="toast-actions">
-          <a href="mis-postulaciones.html" class="btn-toast btn-toast-primary">
-            Ver Mis Postulaciones
-          </a>
-          <button class="btn-toast btn-toast-secondary" onclick="cerrarToast(this)">
-            Cerrar
-          </button>
-        </div>
-      `;
-      document.body.appendChild(toast);
-
-      // Eliminar el toast después de 10 segundos
-      setTimeout(() => {
-        if (toast.parentElement) {
-          toast.style.animation = 'slideOut 0.3s ease';
-          setTimeout(() => toast.remove(), 300);
-        }
-      }, 10000);
-    }
-
-    // Función para mostrar toast de error
-    function mostrarToastError(mensaje) {
-      const toast = document.createElement('div');
-      toast.className = 'toast show';
-      toast.style.background = '#dc3545';
-      toast.innerHTML = `
-        <div class="toast-header">
-          <span>❌</span>
-          <span>Error en la postulación</span>
-        </div>
-        <div class="toast-body">
-          ${mensaje}
-        </div>
-        <div class="toast-actions">
-          <button class="btn-toast btn-toast-secondary" onclick="cerrarToast(this)" style="width: 100%">
-            Cerrar
-          </button>
-        </div>
-      `;
-      document.body.appendChild(toast);
-
-      // Eliminar el toast después de 5 segundos
-      setTimeout(() => {
-        if (toast.parentElement) {
-          toast.style.animation = 'slideOut 0.3s ease';
-          setTimeout(() => toast.remove(), 300);
-        }
-      }, 5000);
-    }
-
-    // Función para cerrar el toast manualmente
-    function cerrarToast(button) {
-      const toast = button.closest('.toast');
-      toast.style.animation = 'slideOut 0.3s ease';
-      setTimeout(() => toast.remove(), 300);
-    }
-  </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd3274c7344f863',t:'MTc2ODI4OTA2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
