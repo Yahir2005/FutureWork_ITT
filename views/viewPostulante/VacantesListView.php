@@ -22,7 +22,7 @@ if(strtolower($resultVacantes->status) == "ok"){
 
 
 
-/**Controladores */
+/**Controladores /**
 /*
 require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
 require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
