@@ -62,7 +62,7 @@
        </div>
        <h3>Teléfono</h3>
       </div>
-      <p>Llámanos de Lunes a Viernes de 9:00 AM a 6:00 PM</p><a href="tel:+525512345678">+52 (55) 1234-5678</a>
+      <p>Llámanos de Lunes a Viernes de 9:00 AM a 6:00 PM</p><a href="tel:+525512345678">+52 (55) 238-170-5916</a>
      </div><!-- Location Card -->
      <div class="info-card">
       <div class="info-card-header">
@@ -72,9 +72,9 @@
        <h3>Ubicación</h3>
       </div>
       <p>Instituto Tecnológico de Tehuacan<br>
-        Calzada Tecnológico S/N<br>
+        Libramiento Tecnológico S/N-A.P. 247, Santa María Coapan, Sta María Coapan, 75770 <br>
         Tehuacan, Puebla, México<br>
-        C.P. 22414</p>
+        </p>
      </div><!-- Social Media Card -->
      <div class="info-card">
       <div class="info-card-header">
