@@ -19,26 +19,47 @@ if(!SessionManager::isUserLoggedIn()){
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg" style="background-color: #2a5298; " data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Mi Empresa</a>
+            <a class="navbar-brand text-white" href="#">Mi Empresa</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
+
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="?cargar=Home">Inicio</a>
+                        <a class="nav-link active text-white" aria-current="page" href="?cargar=Home">🏠 Inicio</a>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="?cargar=Empleados">Empleados</a>
+                        <a class="nav-link text-white" href="?cargar=Empleados">👥 Postulante</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        💼 Vacantes
+                    </a>
+                    <ul class="dropdown-menu" style="background-color:#2a5298;">
+                    <li>
+                        <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Vacantes</a>
+                    </li>
+                    <li><a class="dropdown-item text-white" href="?cargar=MisVacantesListView">Mis Vacantes</a></li>
+
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
+                    </ul>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Configuración</a>
+                        <a class="nav-link text-white" href="#">🏢 Empresas</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">📧 Contacto</a>
                     </li>
                 </ul>
             </div>
