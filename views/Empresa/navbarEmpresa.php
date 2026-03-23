@@ -1,11 +1,22 @@
 <?php
-include_once __DIR__ . "/../../router/RouterEmpresa.php";
-include_once __DIR__ . "/../../usecase/Usuario/SessionManager.php";
-require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+    include_once __DIR__ . "/../../router/RouterEmpresa.php";
+    include_once __DIR__ . "/../../usecase/Usuario/SessionManager.php";
+    require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
 
-if(!SessionManager::isUserLoggedIn()){
-      header("Location: ../index.php");
-      exit;
+    $nombreEmpresa = "Mi Empresa";
+
+    if(!SessionManager::isUserLoggedIn()){
+        header("Location: ../index.php");
+        exit;
+    }
+    if (isset($_SESSION["idUsuarios"])) {
+        $idUsuario = $_SESSION["idUsuarios"];
+        $usuarioController = new UsuarioController();
+        $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
+        
+        if ($result && isset($result->body) && isset($result->body['nombreEmpresa'])) {
+            $nombreEmpresa = $result->body['nombreEmpresa'];
+        }
     }
 ?>
 
@@ -21,7 +32,7 @@ if(!SessionManager::isUserLoggedIn()){
 <body>
     <nav class="navbar navbar-expand-lg" style="background-color: #2a5298; " data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="#">Mi Empresa</a>
+            <a class="navbar-brand text-white" href="#"><?php echo $nombreEmpresa; ?></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,24 +45,40 @@ if(!SessionManager::isUserLoggedIn()){
                         <a class="nav-link active text-white" aria-current="page" href="?cargar=Home">🏠 Inicio</a>
                     </li>
                     
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="?cargar=Empleados">👥 Postulante</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            🧔‍♂️ Administradores Empresa
+                        </a>
+                        <ul class="dropdown-menu" style="background-color:#2a5298;">
+                        <li>
+                            <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Administradores</a>
+                        </li>
+                        <li><a class="dropdown-item text-white" href="?cargar=MisVacantesListView">Agregar Administrador</a></li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
+                        </ul>
                     </li>
 
                     <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        💼 Vacantes
-                    </a>
-                    <ul class="dropdown-menu" style="background-color:#2a5298;">
-                    <li>
-                        <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Vacantes</a>
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            💼 Vacantes
+                        </a>
+                        <ul class="dropdown-menu" style="background-color:#2a5298;">
+                        <li>
+                            <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Vacantes</a>
+                        </li>
+                        <li><a class="dropdown-item text-white" href="?cargar=MisVacantesListView">Mis Vacantes</a></li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
+                        </ul>
                     </li>
-                    <li><a class="dropdown-item text-white" href="?cargar=MisVacantesListView">Mis Vacantes</a></li>
 
-                    <li><hr class="dropdown-divider"></li>
-
-                    <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
-                    </ul>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="?cargar=Empleados">👥 Postulante</a>
                     </li>
                     
                     <li class="nav-item">
@@ -61,9 +88,14 @@ if(!SessionManager::isUserLoggedIn()){
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">📧 Contacto</a>
                     </li>
+
                 </ul>
             </div>
         </div>
+        <li class="nav-item ms-lg-auto"> <a class="nav-link text-white fw-bold" href="?cargar=closeSession">
+        🚪 Exit
+            </a>
+        </li>
     </nav>
 
     <section>
