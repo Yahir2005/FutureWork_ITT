@@ -53,11 +53,14 @@
                         <li>
                             <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Administradores</a>
                         </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
                         <li><a class="dropdown-item text-white" href="?cargar=MisVacantesListView">Agregar Administrador</a></li>
 
                         <li><hr class="dropdown-divider"></li>
 
-                        <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item text-white" href="?cargar=VacantesUpdateView">Editar Vacante</a></li>
                         </ul>
                     </li>
 
@@ -69,11 +72,14 @@
                         <li>
                             <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Vacantes</a>
                         </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
                         <li><a class="dropdown-item text-white" href="?cargar=MisVacantesListView">Mis Vacantes</a></li>
 
                         <li><hr class="dropdown-divider"></li>
 
-                        <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item text-white" href="?cargar=VacantesUpdateView">Editar Vacante</a></li>
                         </ul>
                     </li>
 

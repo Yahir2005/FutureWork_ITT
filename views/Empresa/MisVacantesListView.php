@@ -185,8 +185,8 @@
                 🗑️ Eliminar
                 </button>
 
-            <!-- Modal de confirmación -->
-                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                <!-- Modal de confirmación -->
+                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header bg-danger text-white">
@@ -205,9 +205,7 @@
                         </div>
                         </div>
                     </div>
-                    </div>
-
-
+                </div>
               </div>
             </div>
           </div>
