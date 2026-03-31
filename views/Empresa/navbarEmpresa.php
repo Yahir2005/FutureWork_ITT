@@ -69,6 +69,13 @@
                             💼 Vacantes
                         </a>
                         <ul class="dropdown-menu" style="background-color:#2a5298;">
+
+                        <li>
+                            <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Agregar Vacantes</a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
                         <li>
                             <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Vacantes</a>
                         </li>
@@ -99,7 +106,7 @@
             </div>
         </div>
         <li class="nav-item ms-lg-auto"> <a class="nav-link text-white fw-bold" href="?cargar=closeSession">
-        🚪 Exit
+        [Salir]
             </a>
         </li>
     </nav>
