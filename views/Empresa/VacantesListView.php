@@ -76,6 +76,9 @@
             <!-- Encabezado -->
             <div class="d-flex justify-content-between align-items-start mb-2">
               <div>
+                <h4 class="card-title mb-1">
+                  <?php echo htmlspecialchars($vacante['nombreEmpresa']); ?>
+                </h4>
                 <h5 class="card-title mb-1">
                   <?php echo htmlspecialchars($vacante['titulo']); ?>
                 </h5>

@@ -171,6 +171,8 @@ class VacanteGateway implements IVacante{
             EVV.estadoValidacionVacante,
             TC.estadoContrato,
             TM.tipoModalidad,
+            V.Empresa_idEmpresa,
+            E.nombreEmpresa,
             V.idVacante,
             V.titulo,
             V.descripcion,
@@ -187,6 +189,8 @@ class VacanteGateway implements IVacante{
             TipoContrato AS TC ON V.TipoContrato_idTipoContrato = TC.idTipoContrato
         JOIN
             TipoModalidad AS TM ON V.TipoModalidad_idTipoModalidad = TM.idTipoModalidad
+        JOIN
+            Empresas AS E ON V.Empresa_idEmpresa = E.idEmpresas
         ";
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
