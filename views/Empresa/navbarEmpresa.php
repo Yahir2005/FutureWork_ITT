@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg" style="background-color: #2a5298; " data-bs-theme="light">
+    <nav class="navbar navbar-expand-lg py-3" style="background-color: #2a5298; " data-bs-theme="light">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="#"><?php echo $nombreEmpresa; ?></a>
 
