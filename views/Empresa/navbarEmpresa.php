@@ -77,7 +77,7 @@
                         <li><hr class="dropdown-divider"></li>
 
                         <li>
-                            <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Vacantes</a>
+                            <a class="dropdown-item text-white" href="?cargar=VacantesListView">Listar Vacantes</a>
                         </li>
 
                         <li><hr class="dropdown-divider"></li>
