@@ -131,4 +131,29 @@ class EmpresaGateway implements IEmpresa{
         return $result;
 
     }
+
+    public function perfilEmpresa($id): array {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT 
+            E.idEmpresas,
+            E.EstadoValidacionEmpresa_idEstadoValidacionEmpresa,
+            E.Usuarios_idUsuarios,
+            E.nombreEmpresa,
+            E.sector,
+            E.representante,
+            E.descripcion,
+            E.sitioWeb,
+            PE.urlImagenPerfilEmpresa,
+            U.nombreCompleto,
+            U.email,
+            EV.estadoValidacionEmpresa
+        FROM Empresas E 
+        LEFT JOIN ImagenPerfilEmpresa PE ON E.idEmpresas = PE.Empresas_idEmpresas 
+        LEFT JOIN Usuarios U ON E.Usuarios_idUsuarios = U.idUsuarios
+        LEFT JOIN EstadoValidacionEmpresa EV ON E.EstadoValidacionEmpresa_idEstadoValidacionEmpresa = EV.idEstadoValidacionEmpresa
+        WHERE E.idEmpresas = {$id}";
+        
+        $result = $mysqlConnector->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }

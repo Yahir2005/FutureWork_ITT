@@ -24,4 +24,6 @@ interface IEmpresa {
 
     public function agregarAdminEmpresa($idEmpresa, $idUsuario):int;
 
+    public function perfilEmpresa($id): array;
+    
 }

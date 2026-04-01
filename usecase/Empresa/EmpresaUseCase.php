@@ -174,4 +174,18 @@ class EmpresaUseCase{
         }
         return $response;
     }
+
+    public function perfilEmpresa($id): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->perfilEmpresa($id);
+        try {
+            $response-> status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se amostro el perfil correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "No se pudo mostrar el perfil". $e->getMessage();
+        }
+        return $response;
+    }
 } 
