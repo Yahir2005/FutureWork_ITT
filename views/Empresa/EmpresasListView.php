@@ -47,7 +47,7 @@
         <div class="card bg-light shadow-sm">
           <div class="card-body">
             <div class="fw-bold text-muted">📊 Total Empresas</div>
-            <div class="display-6"><?php echo $totalEmpresas ?? 0; ?></div>
+            <div class="display-6"><?php echo $resultTotalEmpresa->body; ?></div>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
         <div class="card bg-light shadow-sm">
           <div class="card-body">
             <div class="fw-bold text-success">✅ Validadas</div>
-            <div class="display-6"><?php echo $totalValidadas ?? 0; ?></div>
+            <div class="display-6"><?php echo $resultTotalEmpresasValida->body; ?></div>
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@
         <div class="card bg-light shadow-sm">
           <div class="card-body">
             <div class="fw-bold text-warning">⏳ Pendientes</div>
-            <div class="display-6"><?php echo $totalPendientes ?? 0; ?></div>
+            <div class="display-6"><?php echo $resultTotalEmpresaPendiente->body; ?></div>
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@
         <div class="card bg-light shadow-sm">
           <div class="card-body">
             <div class="fw-bold text-danger">❌ Rechazadas</div>
-            <div class="display-6"><?php echo $totalRechazadas ?? 0; ?></div>
+            <div class="display-6"><?php echo $resultTotalEmpresaRechazado->body; ?></div>
           </div>
         </div>
       </div>
