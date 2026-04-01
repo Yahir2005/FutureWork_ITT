@@ -1,222 +1,209 @@
 <?php
+$MessageID = "";
+require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
 
-$MessageID="";
-  require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
-  require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
-
-
-  /**Extraer el ID de la empresa*/
-  $idUsuario = $_SESSION["idUsuarios"];
-    
-    $EmpresaController = new EmpresaController();
-    $result = $EmpresaController->obtenerEmpresaPorIdUsuario($idUsuario);
-    $datosEmpresa = $result->body;
-
+/** Extraer el ID de la empresa */
+$idUsuario = $_SESSION["idUsuarios"] ?? null;
+  
+$EmpresaController = new EmpresaController();
+$result = $EmpresaController->obtenerEmpresaPorIdUsuario($idUsuario);
+$datosEmpresa = (strtolower($result->status) == 'ok') ? $result->body : [];
 ?>
-
-
-
-
 
 <!doctype html>
 <html lang="es">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureWork ITT - Perfil de Empresa</title>
-    <link rel="stylesheet" href="css/PerfilEmpresaView.css">
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body><!-- Header -->
-  <?php foreach ($datosEmpresa as $empresa): ?>
-  <header class="header">
-   <div class="header-content">
-    <div class="header-top">
-     <div class="header-text">
-      <h1>🏢 Perfil de la empresa</h1>
-      <p>Información completa de la empresa</p>
-     </div><a href="editar-perfil-empresa.html" class="btn-edit-profile">✏️ Editar Perfil</a>
-    </div>
-   </div>
-  </header><!-- Main Container -->
-  <main class="container"><!-- Alert Messages (mostrar según estado de validación) --> <!-- 
-    <div class="alert alert-success">
-      ✓ Tu empresa ha sido validada y aprobada exitosamente
-    </div>
-    <div class="alert alert-warning">
-      ⏳ Tu empresa está en proceso de validación. Te notificaremos cuando sea aprobada.
-    </div>
-    <div class="alert alert-error">
-      ✗ Tu empresa ha sido rechazada. Por favor revisa los comentarios del administrador.
-    </div>
-    --> <!-- Profile Grid -->
-   <div class="profile-grid"><!-- Profile Card (Sidebar) -->
-    <aside class="profile-card"><!-- Imagen de Perfil (urlImagenPerfilEmpresa) -->
-     <div class="profile-image-container"><!-- Si hay imagen: --> <!-- <img src="URL_DE_LA_IMAGEN" alt="Logo de la empresa" class="profile-image"> --> <!-- Si NO hay imagen (placeholder): -->
-      <div class="profile-image-placeholder">
-       🏢
-      </div>
-     </div> 
-     <h2 class="company-name">
-     <?php echo htmlspecialchars($empresa['nombreEmpresa']); ?>
-     </h2><!-- Sector (sector) -->
-     <p class="company-sector">
-     <?php echo htmlspecialchars($empresa['sector']); ?>
-     </p>
-     <!-- Estado de Validación (EstadoValidacionEmpresa_idEstadoValidacionEmpresa) --> <!-- 1 = Aprobada, 2 = Pendiente, 3 = Rechazada --> 
-     <span class="validation-badge badge-aprobada"> 
-     
-     <?php echo htmlspecialchars($empresa['estadoValidacionEmpresa']); ?>
-     </span> 
-     
-     <!-- 
-        <span class="validation-badge badge-pendiente">
-          ⏳ En Validación
-        </span>
-        <span class="validation-badge badge-rechazada">
-          ✗ Rechazada
-        </span>
-        --> 
-        <!-- Estadísticas -->
-     <div class="profile-stats">
-      <div class="stat-item">
-       <div class="stat-value">
-        <!-- Número -->
-       </div>
-       <div class="stat-label">
-        Vacantes Activas
-       </div>
-      </div>
-      <div class="stat-item">
-       <div class="stat-value">
-        <!-- Número -->
-       </div>
-       <div class="stat-label">
-        Postulaciones
-       </div>
-      </div>
-     </div><!-- Acciones -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+  </style>
+</head>
+<body>
 
-     <div class="profile-actions">
-     <a href="?cargar=MisVacantesListView" class="btn-action btn-primary">📋 Ver Mis Vacantes</a>
-      <a href="?cargar=VacantesAddView" class="btn-action btn-secondary">➕ Publicar Vacante</a>
-     </div>
-    </aside><!-- Info Section (Main Content) -->
-
-
-    <div class="info-section"><!-- Información General -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">📊 Información General</h3><a href="editar-perfil-empresa.html" class="btn-edit-section">✏️ Editar</a>
-      </div>
-
-
-      <div class="info-grid"><!-- ID de Empresa (idEmpresas) -->
-       <div class="info-item">
-       <span class="info-label">ID de Empresa</span> <span class="info-value">
-        <?php echo htmlspecialchars($empresa['idEmpresas']); ?>
-        </span>
-
-       </div><!-- Representante (representante) -->
-       <div class="info-item">
-       <span class="info-label">Representante Legal</span> <span class="info-value">
-       <?php echo htmlspecialchars($empresa['representante']); ?>
-       </span>
-
-       </div><!-- Sitio Web (sitioWeb) -->
-       <div class="info-item"><span class="info-label">Sitio Web</span> <span class="info-value"> 
-       <a href="<!-- sitioWeb -->" target="_blank" rel="noopener noreferrer"> 🌐 <?php echo htmlspecialchars($empresa['sitioWeb']); ?> </a> 
-       </span>
+  <?php if (!empty($datosEmpresa)): ?>
+    <?php foreach ($datosEmpresa as $empresa): ?>
       
-       </div><!-- Sector (sector) -->
-       <div class="info-item"><span class="info-label">Sector Industrial</span> <span class="info-value">
-       <?php echo htmlspecialchars($empresa['sector']); ?>
-       </span>
-       
-       </div><!-- Estado de Validación -->
-       <div class="info-item"><span class="info-label">Estado de Validación</span> <span class="info-value"> 
-       <?php echo htmlspecialchars($empresa['estadoValidacionEmpresa']); ?>
-       </span>
-       </div>
-      </div>
+      <header class="bg-primary text-white py-4 mb-4 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+          <div>
+            <h1 class="h3 mb-1">🏢 Perfil de la Empresa</h1>
+            <p class="mb-0">Información completa de la empresa</p>
+          </div>
+          <a href="?cargar=EmpresaEditView&id=<?php echo htmlspecialchars($empresa['idEmpresas']); ?>" class="btn btn-light text-primary fw-bold shadow-sm">
+            ✏️ Editar Perfil
+          </a>
+        </div>
+      </header>
 
-
-
-
-     </div><!-- Descripción de la Empresa -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">📝 Acerca de <?php echo htmlspecialchars($empresa['nombreEmpresa']); ?></h3><a href="editar-perfil-empresa.html" class="btn-edit-section">✏️ Editar</a>
-      </div><!-- Descripción (descripcion) -->
-      <p class="description-text">
-      <?php echo htmlspecialchars($empresa['descripcion']); ?>
-      </p>
-     
+      <main class="container pb-5">
+        <div class="row g-4">
           
-     
-     
-      </div><!-- Información de Contacto (desde tabla Usuarios) -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">📧 Información de Contacto</h3><a href="editar-perfil-empresa.html" class="btn-edit-section">✏️ Editar</a>
-      </div>
-      <div class="info-grid"><!-- Nombre Completo del Usuario (nombreCompleto) -->
-       <div class="info-item"><span class="info-label">Nombre de Contacto</span> <span class="info-value">
-       <?php echo htmlspecialchars($empresa['nombreCompleto']); ?>
-       </span>
-       </div><!-- Email (email) -->
-       <div class="info-item"><span class="info-label">Correo Electrónico</span> <span class="info-value"> 
-       <a href="mailto:<!-- email -->">📧 
-       <?php echo htmlspecialchars($empresa['email']); ?>
-       </a> </span>
-       
-       </div><!-- ID de Usuario (Usuarios_idUsuarios) -->
-       <div class="info-item"><span class="info-label">ID de Usuario</span> <span class="info-value">
-       <?php echo htmlspecialchars($empresa['idUsuarios']); ?>
-       </span>
-       </div><!-- Rol (desde tabla Usuarios - Rol_idRol) -->
-       <div class="info-item"><span class="info-label">Tipo de Cuenta</span> <span class="info-value">👤 Empresa</span>
-       </div>
-      </div>
+          <div class="col-12 col-lg-4">
+            <aside class="card shadow-sm border-0 text-center h-100">
+              <div class="card-body p-4 d-flex flex-column align-items-center">
+                
+                <?php if (!empty($empresa['urlImagenPerfilEmpresa'])): ?>
+                  <img src="<?php echo htmlspecialchars($empresa['urlImagenPerfilEmpresa']); ?>" 
+                       alt="Logo de <?php echo htmlspecialchars($empresa['nombreEmpresa']); ?>" 
+                       class="rounded-circle mb-3 shadow-sm object-fit-cover" 
+                       style="width: 120px; height: 120px; border: 3px solid #f8f9fa;">
+                <?php else: ?>
+                  <div class="profile-avatar bg-light text-secondary rounded-circle d-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 120px; height: 120px; font-size: 3.5rem;">
+                    🏢
+                  </div>
+                <?php endif; ?>
+                
+                <h3 class="card-title h4 fw-bold mb-1">
+                  <?php echo htmlspecialchars($empresa['nombreEmpresa'] ?? 'Empresa sin nombre'); ?>
+                </h3>
+                <p class="text-muted mb-3">
+                  <?php echo htmlspecialchars($empresa['sector'] ?? 'Sector no definido'); ?>
+                </p>
 
-<?php endforeach; ?>
+                <?php 
+                  $estadoStr = strtolower($empresa['estadoValidacionEmpresa'] ?? '');
+                  $badgeClass = 'bg-secondary';
+                  if (str_contains($estadoStr, 'pend')) $badgeClass = 'bg-warning text-dark';
+                  if (str_contains($estadoStr, 'apro') || str_contains($estadoStr, 'vali')) $badgeClass = 'bg-success';
+                  if (str_contains($estadoStr, 'rech')) $badgeClass = 'bg-danger';
+                ?>
+                <span class="badge <?php echo $badgeClass; ?> rounded-pill px-3 py-2 mb-4">
+                  <?php echo htmlspecialchars($empresa['estadoValidacionEmpresa'] ?? 'Desconocido'); ?>
+                </span>
 
+                <div class="d-grid gap-2 w-100 mt-auto">
+                  <a href="?cargar=MisVacantesListView" class="btn btn-primary">📋 Ver Mis Vacantes</a>
+                  <a href="?cargar=VacantesAddView" class="btn btn-outline-primary">➕ Publicar Vacante</a>
+                  <a href="?cargar=EditarFotoEmpresaView&id=<?php echo htmlspecialchars($empresa['idEmpresas']); ?>" class="btn btn-link text-decoration-none mt-2">📷 Actualizar Logo</a>
+                </div>
 
-     </div><!-- Vacantes Recientes -->
-     <div class="vacancies-preview">
-      <div class="info-card-header">
-       <h3 class="info-card-title">💼 Vacantes Recientes</h3><a href="mis-vacantes.html" class="btn-edit-section">Ver Todas</a>
-      </div><!-- Lista de Vacantes (se generaría dinámicamente) --> <!-- Ejemplo de vacante: --> <!--
-          <div class="vacancy-item">
-            <div class="vacancy-header">
-              <h4 class="vacancy-title">Desarrollador Full Stack</h4>
-              <span class="vacancy-status status-active">✓ Activa</span>
-            </div>
-            <div class="vacancy-details">
-              <span class="vacancy-detail">📍 Tijuana, BC</span>
-              <span class="vacancy-detail">💰 $25,000 - $35,000</span>
-              <span class="vacancy-detail">📅 Publicada: 15/01/2024</span>
-              <span class="vacancy-detail">👥 12 Postulaciones</span>
+              </div>
+            </aside>
+          </div>
+
+          <div class="col-12 col-lg-8">
+            <div class="d-flex flex-column gap-4">
+
+              <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                  <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
+                    <h4 class="card-title h5 m-0">📊 Información General</h4>
+                    <a href="?cargar=EmpresaEditView&id=<?php echo htmlspecialchars($empresa['idEmpresas']); ?>" class="btn btn-sm btn-outline-secondary">✏️ Editar</a>
+                  </div>
+
+                  <div class="row g-4">
+                    <div class="col-sm-6">
+                      <div class="text-muted small fw-bold text-uppercase">ID de Empresa</div>
+                      <div class="fs-6"><?php echo htmlspecialchars($empresa['idEmpresas'] ?? 'N/A'); ?></div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="text-muted small fw-bold text-uppercase">Representante Legal</div>
+                      <div class="fs-6"><?php echo htmlspecialchars($empresa['representante'] ?? 'N/A'); ?></div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="text-muted small fw-bold text-uppercase">Sector Industrial</div>
+                      <div class="fs-6"><?php echo htmlspecialchars($empresa['sector'] ?? 'N/A'); ?></div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="text-muted small fw-bold text-uppercase">Sitio Web</div>
+                      <div class="fs-6 text-truncate">
+                        <?php if (!empty($empresa['sitioWeb'])): ?>
+                          <a href="<?php echo htmlspecialchars($empresa['sitioWeb']); ?>" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                            🌐 Visitar Sitio Web
+                          </a>
+                        <?php else: ?>
+                          N/A
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                  <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                    <h4 class="card-title h5 m-0">📝 Acerca de <?php echo htmlspecialchars($empresa['nombreEmpresa']); ?></h4>
+                    <a href="?cargar=EmpresaEditView&id=<?php echo htmlspecialchars($empresa['idEmpresas']); ?>" class="btn btn-sm btn-outline-secondary">✏️ Editar</a>
+                  </div>
+                  <p class="card-text text-secondary mb-0" style="white-space: pre-wrap;">
+                    <?php echo htmlspecialchars($empresa['descripcion'] ?? 'No hay descripción disponible.'); ?>
+                  </p>
+                </div>
+              </div>
+
+              <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                  <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
+                    <h4 class="card-title h5 m-0">📧 Información de Contacto</h4>
+                    <a href="?cargar=EmpresaEditView&id=<?php echo htmlspecialchars($empresa['idEmpresas']); ?>" class="btn btn-sm btn-outline-secondary">✏️ Editar</a>
+                  </div>
+
+                  <div class="row g-4">
+                    <div class="col-sm-6">
+                      <div class="text-muted small fw-bold text-uppercase">Nombre de Contacto</div>
+                      <div class="fs-6"><?php echo htmlspecialchars($empresa['nombreCompleto'] ?? 'N/A'); ?></div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="text-muted small fw-bold text-uppercase">Correo Electrónico</div>
+                      <div class="fs-6 text-truncate">
+                        <?php if(!empty($empresa['email'])): ?>
+                          <a href="mailto:<?php echo htmlspecialchars($empresa['email']); ?>" class="text-decoration-none">
+                            📧 <?php echo htmlspecialchars($empresa['email']); ?>
+                          </a>
+                        <?php else: ?>
+                          N/A
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="text-muted small fw-bold text-uppercase">ID de Usuario</div>
+                      <div class="fs-6"><?php echo htmlspecialchars($empresa['idUsuarios'] ?? 'N/A'); ?></div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="text-muted small fw-bold text-uppercase">Tipo de Cuenta</div>
+                      <div class="fs-6">👤 Empresa</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card shadow-sm border-0 bg-white">
+                <div class="card-body p-4">
+                  <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
+                    <h4 class="card-title h5 m-0">💼 Vacantes Recientes</h4>
+                    <a href="?cargar=MisVacantesListView" class="btn btn-sm btn-outline-primary">Ver Todas</a>
+                  </div>
+                  
+                  <div class="text-center py-5">
+                    <div class="display-4 text-muted mb-3">📭</div>
+                    <p class="text-muted fw-bold">No hay vacantes publicadas aún</p>
+                    <a href="?cargar=VacantesAddView" class="btn btn-primary mt-2">➕ Publicar Primera Vacante</a>
+                  </div>
+                  
+                </div>
+              </div>
+
             </div>
           </div>
-          --> <!-- Empty State (cuando no hay vacantes) -->
-      <div class="empty-state">
-       <div class="empty-state-icon">
-        📭
-       </div>
-       <p>No hay vacantes publicadas aún</p><a href="publicar-vacante.html" class="btn-action btn-primary">➕ Publicar Primera Vacante</a>
+
+        </div>
+      </main>
+
+    <?php endforeach; ?>
+  <?php else: ?>
+    <div class="container mt-5">
+      <div class="alert alert-warning shadow-sm" role="alert">
+        <h4 class="alert-heading">No se encontró el perfil</h4>
+        <p>No se pudieron cargar los datos de la empresa para el usuario actual. Por favor, verifica tu sesión o completa tu registro.</p>
       </div>
-     </div>
     </div>
+  <?php endif; ?>
 
-   </div>
-  </main>
-
-
-
-
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a1d579922246dba',t:'MTc2MzY5ODI3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
