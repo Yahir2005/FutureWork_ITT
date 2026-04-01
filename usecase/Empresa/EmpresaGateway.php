@@ -123,5 +123,12 @@ class EmpresaGateway implements IEmpresa{
         $row = mysqli_fetch_assoc($result);
         return (int)$row['total'];
     }
-    
+
+    public function agregarAdminEmpresa($idEmpresa, $idUsuario):int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "UPDATE Empresas SET Usuarios_idUsuarios = {$idUsuario} WHERE idEmpresas = {$idEmpresa}";
+        $result = $mysqlConnector->consultaSimple($sql);
+        return $result;
+
+    }
 }

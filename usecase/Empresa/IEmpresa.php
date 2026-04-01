@@ -22,4 +22,6 @@ interface IEmpresa {
 
     public function contarEmpresas():int;
 
+    public function agregarAdminEmpresa($idEmpresa, $idUsuario):int;
+
 }

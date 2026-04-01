@@ -69,7 +69,19 @@ class EmpresaController{
         return $useCase->contarEmpresas();
     }
 
+    public function agregarAdminEmpresa($idEmpresa, $idUsuario):RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->agregarAdminEmpresa($idEmpresa, $idUsuario);
+    }
 }
+/*
+$controller = new EmpresaController();
+$empresa = new Empresa();
+$empresa->set("Usuarios_idUsuarios",3);
+$controller->agregarAdminEmpresa(3,$empresa);
+*/
+
 /*
 $controller = new EmpresaController();
 $empresa = new Empresa();

@@ -161,4 +161,17 @@ class EmpresaUseCase{
         return $response;
     }
 
+    public function agregarAdminEmpresa($idEmpresa, $idUsuario): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->agregarAdminEmpresa($idEmpresa, $idUsuario);
+        try {
+            $response-> status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se agrego el admin a la empresa correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "No se pudo agregar el admin a la empresa". $e->getMessage();
+        }
+        return $response;
+    }
 } 
