@@ -168,6 +168,7 @@ class VacanteGateway implements IVacante{
         $mysqlConnector = new MysqlConnector();
         $sql = "
         SELECT
+            V.EstadoValidacionVacante_idEstadoValidacionVacante,
             EVV.estadoValidacionVacante,
             TC.estadoContrato,
             TM.tipoModalidad,

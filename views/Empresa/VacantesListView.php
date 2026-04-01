@@ -66,6 +66,7 @@
   </div>
 </header>
 
+<!-- Card de vacantes -->
 <div class="p-5">
 <?php if (count($listarVacantesCard) > 0): ?>
   <div class="row">
@@ -84,11 +85,21 @@
                 </h5>
                 <small class="text-muted">ID: #<?php echo htmlspecialchars($vacante['idVacante'] ?? 'N/A'); ?></small>
               </div>
-              <span class="badge bg-primary">
-                <?php echo htmlspecialchars($vacante['estadoValidacionVacante']); ?>
-              </span>
-            </div>
 
+              <?php 
+                  $idEstado = (int)($vacante['EstadoValidacionVacante_idEstadoValidacionVacante'] ?? 0);
+                  $estadoTexto = strtolower(trim((string)($vacante['estadoValidacionVacante'] ?? '')));
+
+                  $badgeClass = 'bg-secondary';
+                  if ($idEstado === 1 || str_contains($estadoTexto, 'pend')) $badgeClass = 'bg-warning text-dark';
+                  if ($idEstado === 2 || str_contains($estadoTexto, 'apro') || str_contains($estadoTexto, 'valid') || str_contains($estadoTexto, 'abier')) $badgeClass = 'bg-success';
+                  if ($idEstado === 3 || str_contains($estadoTexto, 'rech') || str_contains($estadoTexto, 'cerr')) $badgeClass = 'bg-danger';
+                ?>
+                <span class="badge <?php echo $badgeClass; ?>">
+                  <?php echo htmlspecialchars($vacante['estadoValidacionVacante'] ?? 'Desconocido'); ?>
+                </span>
+              </div>
+              
             <!-- Detalles -->
             <ul class="list-unstyled mb-3">
               <li><strong>📍 Ubicación:</strong> <?php echo htmlspecialchars($vacante['ubicacion']); ?></li>
@@ -111,8 +122,10 @@
             <!-- Footer -->
             <div class="d-flex justify-content-between align-items-center mt-auto">
               <small class="text-muted">📅 Publicado: <strong><?php echo htmlspecialchars($vacante['fechaPublicacion']); ?></strong></small>
-              <div class="btn-group">
+              <div class="d-flex gap-2">
                 <a href="?cargar=VacantePostulantes&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn btn-sm btn-outline-primary">Ver Postulantes</a>
+                
+                <a href="?cargar=VacantePostulantes&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn btn-sm btn-outline-primary">👁️ Detalles Vacante</a>
               </div>
             </div>
           </div>
