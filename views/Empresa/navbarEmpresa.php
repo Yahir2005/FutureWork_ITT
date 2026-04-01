@@ -95,7 +95,7 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">🏢 Empresas</a>
+                        <a class="nav-link text-white" href="?cargar=EmpresasListView">🏢 Empresas</a>
                     </li>
 
                     <li class="nav-item">
