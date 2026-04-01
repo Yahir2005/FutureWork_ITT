@@ -18,7 +18,7 @@
     </div>
     <h1>¡Bienvenido a FutureWork ITT!</h1>
     <p>Selecciona el tipo de cuenta que deseas crear para comenzar tu experiencia en nuestra plataforma</p>
-   </div><div class="cards-grid"><a href="viewPostulante/CrearCuenta.php" class="selection-card">
+   </div><div class="cards-grid"><a href="CrearUsuarios/EmpresaAddView.php" class="selection-card">
      <div class="card-icon">
       👤
      </div><h2 class="card-title">Soy Postulante</h2><p class="card-description">Estudiante o egresado del Instituto Tecnológico de Tehuacán buscando oportunidades laborales</p>
@@ -32,7 +32,7 @@
      </ul>
      <div class="card-button">
       Registrarme como Postulante →
-     </div></a> <a href="viewEmpresa/CrearCuentaEmpresa.php" class="selection-card">
+     </div></a> <a href="CrearUsuarios/EmpresaAddView.php" class="selection-card">
      <div class="card-icon">
       🏢
      </div><h2 class="card-title">Soy Empresa</h2><p class="card-description">Empresa buscando talento del Instituto Tecnológico de Tehuacán para fortalecer su equipo</p>
