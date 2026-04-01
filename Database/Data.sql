@@ -31,7 +31,7 @@ CREATE TABLE Postulante(
     Carrera_idCarrera INT NOT NULL,
     Usuarios_idUsuarios INT NOT NULL,
     numeroControl VARCHAR(10),
-    cvPath VARCHAR(100),
+    cvPath VARCHAR(255),
     telefono VARCHAR(45),
     ubicacion VARCHAR(45),
     FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios(idUsuarios),
@@ -60,37 +60,47 @@ CREATE TABLE Empresas(
 );
 
 -- TABLA : Imagenes de Empresa
+CREATE TABLE EmpresaImagenPerfil(
+    idEmpresaPerfilImagen INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(255) NOT NULL,
+    rutaImagenPerfilEmpresa VARCHAR(255)
+);
+
 CREATE TABLE ImagenPerfilEmpresa(
     idImagenEmpresa INT AUTO_INCREMENT PRIMARY KEY,
     Empresas_idEmpresas INT NOT NULL,
-    urlImagenPerfilEmpresa VARCHAR(255),
-    FOREIGN KEY (Empresas_idEmpresas) REFERENCES Empresas(idEmpresas)
+    EmpresaPerfilImagen_idEmpresaPerfilImagen INT NOT NULL,
+    FOREIGN KEY (Empresas_idEmpresas) REFERENCES Empresas(idEmpresas),
+    FOREIGN KEY (EmpresaPerfilImagen_idEmpresaPerfilImagen) REFERENCES EmpresaImagenPerfil(idEmpresaPerfilImagen)
 );
 
 CREATE TABLE ImagenesEmpresa(
     idImagenEmpresa INT AUTO_INCREMENT PRIMARY KEY,
     Empresas_idEmpresas INT NOT NULL,
+    rutaImagenEmpresa VARCHAR(255) NOT NULL,
     urlImagen VARCHAR(255),
     FOREIGN KEY (Empresas_idEmpresas) REFERENCES Empresas(idEmpresas)
 );
 
-CREATE TABLE ImagenEmpresaPerfil(
-    idImagenEmpresaPerfil INT AUTO_INCREMENT PRIMARY KEY,
-    Nombre VARCHAR(255) NOT NULL,
-    rutaImagenPerfilEmpresa VARCHAR(255),
+-- TABLA : Imagenes de Postulante
+CREATE TABLE PostulanteImagenPerfil(
+    idImagenPerfilPostulante INT AUTO_INCREMENT PRIMARY KEY,
+    nombreImagen VARCHAR(255) NOT NULL,
+    rutaImagenPerfilPostulante VARCHAR(255)
 );
 
--- TABLA : Imagenes de Postulante
 CREATE TABLE ImagenesPerfilPostulante(
     idImagenPostulante INT AUTO_INCREMENT PRIMARY KEY,
     Postulante_idPostulante INT NOT NULL,
-    urlImagenPerfilPostulante VARCHAR(255),
-    FOREIGN KEY (Postulante_idPostulante) REFERENCES Postulante(idPostulante)
+    PostulanteImagenPerfil_idImagenPerfilPostulante INT NOT NULL,
+    FOREIGN KEY (Postulante_idPostulante) REFERENCES Postulante(idPostulante),
+    FOREIGN KEY (PostulanteImagenPerfil_idImagenPerfilPostulante) REFERENCES PostulanteImagenPerfil(idImagenPerfilPostulante)
 );
 
 CREATE TABLE ImagenesPostulante(
     idImagenPostulante INT AUTO_INCREMENT PRIMARY KEY,
     Postulante_idPostulante INT NOT NULL,
+    nombreImagen VARCHAR(255) NOT NULL,
     urlImagen VARCHAR(255),
     FOREIGN KEY (Postulante_idPostulante) REFERENCES Postulante(idPostulante)
 );
