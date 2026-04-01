@@ -1,19 +1,21 @@
 <?php
-// Asumo que estas rutas son correctas en tu proyecto
+$mensaje = "";
+// Direcciones
 require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
 require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+require_once __DIR__ . "/../../usecase/Files/ImagenPerfilEmpresa/ImagenesPerfilEmpresaController.php";
+require_once __DIR__ . "/../../Dto/ImagenPerfilEmpresa.php";
 require_once __DIR__ . "/../../Dto/Empresa.php";
 require_once __DIR__ . "/../../Dto/Usuario.php";
 
-$mensaje = "";
+/**Contollers */
+$controllerUsuario = new UsuarioController();
+$controllerEmpresa = new EmpresaController();
+$controllerImagenPerfilEmpresa = new ImagenesPerfilEmpresaController();
+$empresa = new Empresa();
+$usuarioObj = new Usuario();
 
 if(isset($_POST["enviar"])){
-
-    $controllerUsuario = new UsuarioController();
-    $controllerEmpresa = new EmpresaController();
-    $empresa = new Empresa();
-    $usuarioObj = new Usuario();
-
     // 1. Configurar Usuario
     $usuarioObj->set("Rol_idRol", 1); 
     $usuarioObj->set("nombreCompleto", $_POST["nombreCompleto"]);
@@ -27,24 +29,25 @@ if(isset($_POST["enviar"])){
         // 3. Configurar Empresa con el ID del usuario creado
         $empresa->set("Usuarios_idUsuarios", $data);
         $empresa->set("EstadoValidacionEmpresa_idEstadoValidacionEmpresa", 1); // 1 = Pendiente/Validación
-            
         $empresa->set("nombreEmpresa", $_POST["nombreEmpresa"]);
         $empresa->set("sector", $_POST["sector"]);
         $empresa->set("representante", $_POST["representante"]);
         $empresa->set("descripcion", $_POST["descripcion"]);
         $empresa->set("sitioWeb", $_POST["sitioWeb"]);
-
-        // 4. Insertar Empresa
         $resultEmpresa = $controllerEmpresa->insertarEmpresas($empresa);
-            
         if ($resultEmpresa) {
             $mensaje = "success";
         } else {
             $mensaje = "error_empresa";
         }
+        //Insertar imagen de perfil por defecto
+        
+    
     } else {
         $mensaje = "error_usuario";
     }
+
+
 }
 ?>
 <!doctype html>
@@ -138,7 +141,15 @@ if(isset($_POST["enviar"])){
          </div>
          <div class="form-group"><label for="descripcion" class="form-label"> Descripción de la Empresa <span class="required">*</span> </label> <textarea id="descripcion" name="descripcion" class="form-textarea" placeholder="Describe brevemente tu empresa..." required></textarea> <span class="error-message" id="errorDescripcion"></span>
          </div>
-         
+
+        <h3 class="section-title" style="margin-top: 30px;">📷 Registrar Imagen</h3>
+        <div class="modal-body">
+            <form action="" enctype="multipart/form-data" method="POST">
+                    <input type="file" class="form-control" name="imagen"> 
+           </form>
+        </div>
+         <p></p>
+         .
          <div class="form-actions"> 
              <button type="submit" name="enviar" class="btn-submit"> ✅ Registrar Empresa </button>
          </div>
