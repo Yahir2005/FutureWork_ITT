@@ -20,4 +20,6 @@ interface IEmpresa {
 
     public function contarEmpresasPorValidacion($id):int;
 
+    public function contarEmpresas():int;
+
 }

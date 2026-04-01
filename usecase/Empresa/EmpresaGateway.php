@@ -115,4 +115,13 @@ class EmpresaGateway implements IEmpresa{
         $row = mysqli_fetch_assoc($result);
         return (int)$row['total'];
     }
+
+    public function contarEmpresas():int{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT COUNT(*) AS total FROM Empresas";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        $row = mysqli_fetch_assoc($result);
+        return (int)$row['total'];
+    }
+    
 }

@@ -63,6 +63,12 @@ class EmpresaController{
         return $useCase->contarEmpresasPorValidacion($id);
     }
 
+    public function contarEmpresas():RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->contarEmpresas();
+    }
+
 }
 /*
 $controller = new EmpresaController();
@@ -119,5 +125,10 @@ echo $response->message;*/
 /*
 $controller = new EmpresaController();
 $response = $controller->buscarEmpresasPorNombre("Travelnet");
+echo $response->message;
+*/
+/*
+$controller = new EmpresaController();
+$response = $controller->contarEmpresas();
 echo $response->message;
 */

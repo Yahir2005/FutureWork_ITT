@@ -146,5 +146,19 @@ class EmpresaUseCase{
         }
         return $response;
     }
-    
+
+    public function contarEmpresas():RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->contarEmpresas();
+        try {
+            $response-> status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se conto el numero de empresas correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "No se pudo contar el numero de empresas". $e->getMessage();
+        }
+        return $response;
+    }
+
 } 
