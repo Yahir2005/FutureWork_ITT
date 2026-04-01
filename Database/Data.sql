@@ -78,7 +78,6 @@ CREATE TABLE ImagenEmpresaPerfil(
     idImagenEmpresaPerfil INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(255) NOT NULL,
     rutaImagenPerfilEmpresa VARCHAR(255),
-    FOREIGN KEY (Empresas_idEmpresas) REFERENCES Empresas(idEmpresas)
 );
 
 -- TABLA : Imagenes de Postulante
