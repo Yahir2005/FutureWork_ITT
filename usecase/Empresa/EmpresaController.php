@@ -56,6 +56,13 @@ class EmpresaController{
         $useCase = new EmpresaUseCase($gateway);
         return $useCase->obtenerEmpresaPorIdUsuario($id);
     }
+
+    public function contarEmpresasPorValidacion($id):RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->contarEmpresasPorValidacion($id);
+    }
+
 }
 /*
 $controller = new EmpresaController();

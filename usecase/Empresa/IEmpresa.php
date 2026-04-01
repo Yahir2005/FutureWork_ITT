@@ -18,4 +18,6 @@ interface IEmpresa {
 
     public function obtenerEmpresaPorIdUsuario($id):array;
 
+    public function contarEmpresasPorValidacion($id):int;
+
 }
