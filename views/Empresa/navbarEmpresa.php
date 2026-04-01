@@ -86,7 +86,6 @@
 
                         <li><hr class="dropdown-divider"></li>
 
-                        <li><a class="dropdown-item text-white" href="?cargar=VacantesUpdateView">Editar Vacante</a></li>
                         </ul>
                     </li>
 
