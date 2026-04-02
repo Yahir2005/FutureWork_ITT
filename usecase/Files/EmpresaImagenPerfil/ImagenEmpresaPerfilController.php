@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ ."/../../../Dto/ImagenEmpresaPerfil.php";
+require_once __DIR__ ."/../../../Dto/EmpresaImagenPerfil.php";
 require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
 require_once __DIR__ ."/ImagenEmpresaPerfilGateway.php";
 require_once __DIR__ ."/ImagenEmpresaPerfilUseCase.php";
@@ -13,8 +13,8 @@ class ImagenEmpresaPerfilController{
 }
 /*
 $controller = new ImagenEmpresaPerfilController();
-$objImagen = new ImagenEmpresaPerfil();
-$objImagen->set("Nombre", "Imagen de perfil de ffmpresa");
+$objImagen = new EmpresaImagenPerfil();
+$objImagen->set("Nombre", "Imagen de perfil de empresa");
 $objImagen->set("rutaImagenPerfilEmpresa", "ruta/a/la/imaffen.jpg");
 $result = $controller->subirImagenPerfilEmpresa($objImagen);
 echo $result->message;

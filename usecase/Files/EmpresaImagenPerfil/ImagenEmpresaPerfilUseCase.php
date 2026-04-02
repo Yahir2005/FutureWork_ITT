@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ ."/IImagenEmpresaPerfil.php";
-require_once __DIR__ ."/../../../Dto/ImagenEmpresaPerfil.php";
 require_once __DIR__ ."/../../../Dto/RespuestaGenerica.php";
 
 class ImagenEmpresaPerfilUseCase{

@@ -34,13 +34,13 @@ $controller = new ImagenesPerfilEmpresaController();
 $result = $controller->perfilEmpresa(1);
 echo $result->message;
 */
-/*
+
 $controller = new ImagenesPerfilEmpresaController();
 $obj = new ImagenPerfilEmpresa();
 $obj->set("Empresas_idEmpresas",2);
 $obj->set("EmpresaPerfilImagen_idEmpresaPerfilImagen",1);
 $result = $controller->InsertarImagenPerfilEmpresa($obj);
-echo $result->message;*/
+echo $result->message;
 /*
 $controller = new ImagenesPerfilEmpresaController();
 $result = $controller->obtenerImagenes(2);

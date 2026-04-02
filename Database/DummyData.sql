@@ -9,7 +9,8 @@ INSERT INTO Usuarios(Rol_idRol, nombreCompleto, email, Password) VALUES
 (2, 'Ana Sofía Pérez', 'ana.perez@email.com', 'anaPass789'),
 (2, 'Carlos Alberto Gómez', 'carlos.gomez@email.com', 'carlosPass101'),
 (2, 'María Fernanda López', 'maria.lopez@email.com', 'mariaPass112'),
-(3, 'Administrador General', 'admin@futurework.com', 'adminSecurePass');
+(3, 'Administrador General', 'admin@futurework.com', 'adminSecurePass'),
+(1, 'Wendy Paola Ramoz Lopez', 'admin@futurework.com', 'fdsf1234');
 
 -- IDs de Usuarios generados:
 -- 1: Tech Solutions (Empresa)
@@ -38,7 +39,8 @@ INSERT INTO Carrera(nombreCarrera) VALUES
 -- Vinculamos a los Usuarios con Rol_idRol = 1
 INSERT INTO Empresas(Usuarios_idUsuarios, EstadoValidacionEmpresa_idEstadoValidacionEmpresa, nombreEmpresa, sector, representante, descripcion, sitioWeb) VALUES
 (1, 2, 'Tech Solutions SA de CV', 'Tecnología', 'Juan Robles', 'Empresa de desarrollo de software a medida.', 'https://techsolutions.com'),
-(2, 1, 'Innovatec Global', 'Consultoría TI', 'Laura Méndez', 'Consultoría de servicios TI y outsourcing.', 'https://innovatec.com');
+(2, 1, 'Innovatec Global', 'Consultoría TI', 'Laura Méndez', 'Consultoría de servicios TI y outsourcing.', 'https://innovatec.com'),
+(7, 2, 'Wendy Paola Ramoz Lopez', 'Tecnología', 'Wendy Paola Ramoz Lopez', 'Empresa de desarrollo de software a medida.', 'https://techsolutions.com');
 
 -- IDs de Empresas generados:
 -- 1: Tech Solutions (Usuario 1, Validado)
@@ -57,20 +59,29 @@ INSERT INTO Postulante(Carrera_idCarrera, Usuarios_idUsuarios, numeroControl, cv
 -- 3: María López (Usuario 5, Carrera 1)
 
 -- 5. Insertar Imágenes de Perfil (Empresa y Postulante)
-INSERT INTO ImagenPerfilEmpresa(Empresas_idEmpresas, urlImagenPerfilEmpresa) VALUES
-(1, '/img/empresa/1/profile_logo.png');
+-- 5. Insertar Imagen de Perfil de Empresa
+INSERT INTO EmpresaImagenPerfil (Nombre, rutaImagenPerfilEmpresa) VALUES
+('Logo Principal', '/img/empresa/1/profile_logo.png');
 
-INSERT INTO ImagenesPerfilPostulante(Postulante_idPostulante, urlImagenPerfilPostulante) VALUES
-(1, '/img/postulante/1/ana_perfil.jpg'),
-(2, '/img/postulante/2/carlos_perfil.png');
+INSERT INTO ImagenPerfilEmpresa (Empresas_idEmpresas, EmpresaPerfilImagen_idEmpresaPerfilImagen) VALUES
+(1, 1);
 
--- 6. Insertar Imágenes Adicionales (Galería de Empresa y Postulante)
-INSERT INTO ImagenesEmpresa(Empresas_idEmpresas, urlImagen) VALUES
-(1, '/img/empresa/1/oficinas.jpg'),
-(1, '/img/empresa/1/equipo.jpg');
+-- 6. Insertar Imagen de Perfil de Postulante
+INSERT INTO PostulanteImagenPerfil (nombreImagen, rutaImagenPerfilPostulante) VALUES
+('ana_perfil.jpg', '/img/postulante/1/ana_perfil.jpg'),
+('carlos_perfil.png', '/img/postulante/2/carlos_perfil.png');
 
-INSERT INTO ImagenesPostulante(Postulante_idPostulante, urlImagen) VALUES
-(1, '/img/postulante/1/proyecto_hackaton.jpg');
+INSERT INTO ImagenesPerfilPostulante (Postulante_idPostulante, PostulanteImagenPerfil_idImagenPerfilPostulante) VALUES
+(1, 1),
+(2, 2);
+
+-- 7. Insertar Imágenes Adicionales (Galería de Empresa y Postulante)
+INSERT INTO ImagenesEmpresa (Empresas_idEmpresas, rutaImagenEmpresa, urlImagen) VALUES
+(1, '/img/empresa/1/oficinas.jpg', NULL),
+(1, '/img/empresa/1/equipo.jpg', NULL);
+
+INSERT INTO ImagenesPostulante (Postulante_idPostulante, nombreImagen, urlImagen) VALUES
+(1, 'proyecto_hackaton.jpg', '/img/postulante/1/proyecto_hackaton.jpg');
 
 -- 7. Insertar Habilidades (Catálogo)
 INSERT INTO Habilidades(nombreHabilidad) VALUES
