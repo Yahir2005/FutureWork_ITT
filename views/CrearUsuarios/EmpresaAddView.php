@@ -1,5 +1,6 @@
 <?php
     $mensaje = "";
+    $detalleMensaje = "";
     // Direcciones
     require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
     require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
@@ -15,77 +16,89 @@
     $controllerEmpresa = new EmpresaController();
     $controllerImagenEmpresaPerfil = new ImagenEmpresaPerfilController();
     $controllerEmpresaImagenPerfil = new ImagenesPerfilEmpresaController();
+    $empresaImagenPerfilObj = new ImagenPerfilEmpresa();
     $empresa = new Empresa();
     $usuarioObj = new Usuario();
 
-    if(isset($_POST["enviar"])){
-        // 1. Configurar Usuario
-        $usuarioObj->set("Rol_idRol", 1); 
-        $usuarioObj->set("nombreCompleto", $_POST["nombreCompleto"]);
-        $usuarioObj->set("email", $_POST["email"]);
-        $usuarioObj->set("Password", $_POST["password"]); 
+    if (isset($_POST["enviar"])) {
+        $password = $_POST["password"] ?? "";
+        $confirmPassword = $_POST["confirmPassword"] ?? "";
 
-        // 2. Insertar Usuario
-        $resultUsuario = $controllerUsuario->InsertarUsuario($usuarioObj);
-        $data = $resultUsuario->body;
-        if ($resultUsuario > 0) {
-            // 3. Configurar Empresa con el ID del usuario creado
-            $empresa->set("Usuarios_idUsuarios", $data);
-            $empresa->set("EstadoValidacionEmpresa_idEstadoValidacionEmpresa", 1); // 1 = Pendiente/Validación
-            $empresa->set("nombreEmpresa", $_POST["nombreEmpresa"]);
-            $empresa->set("sector", $_POST["sector"]);
-            $empresa->set("representante", $_POST["representante"]);
-            $empresa->set("descripcion", $_POST["descripcion"]);
-            $empresa->set("sitioWeb", $_POST["sitioWeb"]);
-            $resultEmpresa = $controllerEmpresa->insertarEmpresas($empresa);
-            if ($resultEmpresa) {
-                $mensaje = "success";
-            } else {
-                $mensaje = "error_empresa";
-            }
-            //Insertar imagen de perfil por defecto
-            
-            if (isset($_FILES['imagen'])) {  
-                $nombreImg = $_FILES['imagen']['name'];  
-                $ruta      = $_FILES['imagen']['tmp_name']; 
-                $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION)); 
-                $destino   = "archivos/" . $nombreImg;
-                if ($tipoImagen == "jpeg" || $tipoImagen == "png") {
-                    if (move_uploaded_file($ruta, $destino)) {
-                        $imagenObj->set('Ruta',$destino);
-                        $imagenObj->set('Nombre',$nombreImg);
-                        $resultImagenEmpresaPerfi = $controllerEmpresaImagenPerfil->insertarImagenPerfilEmpresa($imagenObj);
-                    if ($resultImagenEmpresaPerfi->status == 'ok') {  
-                        echo "<div class='alert alert-success' role='alert'> Registro exitoso
-                    </div>";
-                    } else {
-                        echo "<div class='alert alert-danger' role='alert'>
-                        Error al registrar".$resultImagenEmpresaPerfi->message;" 
-                        </div>";
+        if ($password !== $confirmPassword) {
+            $mensaje = "error_password";
+        } else {
+            // 1. Configurar Usuario
+            $usuarioObj->set("Rol_idRol", 1);
+            $usuarioObj->set("nombreCompleto", $_POST["nombreCompleto"]);
+            $usuarioObj->set("email", $_POST["email"]);
+            $usuarioObj->set("Password", $password);
+
+            // 2. Insertar Usuario
+            $resultUsuario = $controllerUsuario->InsertarUsuario($usuarioObj);
+            if ($resultUsuario->status === "ok" && !empty($resultUsuario->body)) {
+                $usuarioId = (int)$resultUsuario->body;
+
+                // 3. Configurar Empresa con el ID del usuario creado
+                $empresa->set("Usuarios_idUsuarios", $usuarioId);
+                $empresa->set("EstadoValidacionEmpresa_idEstadoValidacionEmpresa", 1);
+                $empresa->set("nombreEmpresa", $_POST["nombreEmpresa"]);
+                $empresa->set("sector", $_POST["sector"]);
+                $empresa->set("representante", $_POST["representante"]);
+                $empresa->set("descripcion", $_POST["descripcion"]);
+                $empresa->set("sitioWeb", $_POST["sitioWeb"]);
+
+                $resultEmpresa = $controllerEmpresa->insertarEmpresas($empresa);
+                if ($resultEmpresa->status === "ok") {
+                    $empresaIdResponse = $controllerEmpresa->obtenerUltimaEmpresaId();
+                    $empresaId = !empty($empresaIdResponse->body) ? (int)$empresaIdResponse->body : 0;
+                    $mensaje = "success";
+
+                    if (isset($_FILES['imagen']) && !empty($_FILES['imagen']['name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                        $nombreImg = basename($_FILES['imagen']['name']);
+                        $rutaTemporal = $_FILES['imagen']['tmp_name'];
+                        $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION));
+                        $extensionesPermitidas = ["jpg", "jpeg", "png"];
+                        $directorioDestino = __DIR__ . "/archivos/";
+
+                        if (!is_dir($directorioDestino)) {
+                            mkdir($directorioDestino, 0775, true);
+                        }
+
+                        if (in_array($tipoImagen, $extensionesPermitidas, true)) {
+                            $nombreArchivoDestino = uniqid("empresa_", true) . "." . $tipoImagen;
+                            $rutaFisicaDestino = $directorioDestino . $nombreArchivoDestino;
+                            $rutaDb = "views/CrearUsuarios/archivos/" . $nombreArchivoDestino;
+
+                            if (move_uploaded_file($rutaTemporal, $rutaFisicaDestino)) {
+                                $imagenObj = new EmpresaImagenPerfil();
+                                $imagenObj->set("Nombre", $nombreArchivoDestino);
+                                $imagenObj->set("rutaImagenPerfilEmpresa", $rutaDb);
+
+                                $resultImagenEmpresaPerfil = $controllerImagenEmpresaPerfil->subirImagenPerfilEmpresa($imagenObj);
+                                if ($resultImagenEmpresaPerfil->status === "ok" && !empty($resultImagenEmpresaPerfil->body) && $empresaId > 0) {
+                                    $empresaImagenPerfilObj->set("Empresas_idEmpresas", $empresaId);
+                                    $empresaImagenPerfilObj->set("EmpresaPerfilImagen_idEmpresaPerfilImagen", (int)$resultImagenEmpresaPerfil->body);
+                                    $controllerEmpresaImagenPerfil->InsertarImagenPerfilEmpresa($empresaImagenPerfilObj);
+                                } else {
+                                    $mensaje = "warning_imagen";
+                                    $detalleMensaje = "La imagen se subió, pero no se pudo enlazar al perfil.";
+                                }
+                            } else {
+                                $mensaje = "warning_imagen";
+                                $detalleMensaje = "No se pudo mover la imagen al directorio destino.";
+                            }
+                        } else {
+                            $mensaje = "warning_imagen";
+                            $detalleMensaje = "Solo se permiten imágenes JPG, JPEG o PNG.";
+                        }
                     }
+                } else {
+                    $mensaje = "error_empresa";
                 }
             } else {
-                echo "<div class='alert alert-danger' role='alert'>
-                        No se acepta ese formato 
-                        </div>";
+                $mensaje = "error_usuario";
             }
-            /**Enlazar con perfil recien hecho */
-            /*
-            if ($resultEmpresa) {
-                $empresaId = $controllerEmpresa->obtenerUltimaEmpresaId();
-                $empresaImagenPerfil = new EmpresaImagenPerfil();
-                $empresaImagenPerfil->set("Empresa_idEmpresa", $empresaId);
-                $empresaImagenPerfil->set("ImagenPerfilEmpresa_idImagenPerfilEmpresa", $resultImagenEmpresaPerfi->body);
-                $controllerImagenEmpresaPerfil->insertarEmpresaImagenPerfil($empresaImagenPerfil);
-            }
-                */
         }
-        
-        } else {
-            $mensaje = "error_usuario";
-        }
-
-
     }
 ?>
 <!doctype html>
@@ -138,6 +151,10 @@
                 // Redirigir después de 3 segundos si quieres
                 // setTimeout(function(){ window.location.href = 'login.html'; }, 3000);
             </script>
+      <?php elseif($mensaje == "warning_imagen"): ?>
+          <div class="alert alert-error"><?php echo htmlspecialchars($detalleMensaje); ?></div>
+      <?php elseif($mensaje == "error_password"): ?>
+          <div class="alert alert-error">❌ Las contraseñas no coinciden.</div>
        <?php elseif($mensaje == "error_empresa"): ?>
             <div class="alert alert-error">❌ Error al guardar los datos de la empresa.</div>
        <?php elseif($mensaje == "error_usuario"): ?>
@@ -145,7 +162,7 @@
        <?php endif; ?>
 
        <!-- CORRECCIÓN 1: Se agregó id="empresaForm" para que JS lo encuentre -->
-       <form action="" method="POST" id="empresaForm">
+      <form action="" method="POST" enctype="multipart/form-data" id="empresaForm">
          <h3 class="section-title">👤 Datos de Acceso</h3>
          <div class="form-row">
           <div class="form-group"><label for="nombreCompleto" class="form-label"> Nombre Completo <span class="required">*</span> </label> <input type="text" id="nombreCompleto" name="nombreCompleto" class="form-input" placeholder="Ej: Juan Pérez García" maxlength="45" required> <span class="error-message" id="errorNombreCompleto"></span>
@@ -164,7 +181,7 @@
           </div>
          </div>
          
-         <input type="hidden" name="Rol_idRol" value="2"> 
+         <input type="hidden" name="Rol_idRol" value="1"> 
 
          <h3 class="section-title" style="margin-top: 30px;">🏢 Información de la Empresa</h3>
          <div class="form-group"><label for="nombreEmpresa" class="form-label"> Nombre de la Empresa <span class="required">*</span> </label> <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="form-input" placeholder="Ej: Tecnología Avanzada S.A. de C.V." maxlength="45" required> <span class="error-message" id="errorNombreEmpresa"></span>
@@ -181,13 +198,11 @@
          </div>
 
         <h3 class="section-title" style="margin-top: 30px;">📷 Registrar Imagen</h3>
-        <div class="modal-body">
-            <form action="" enctype="multipart/form-data" method="POST">
-                    <input type="file" class="form-control" name="imagen"> 
-           </form>
+        <div class="form-group">
+            <label for="imagen" class="form-label"> Imagen de perfil </label>
+            <input type="file" id="imagen" class="form-input" name="imagen" accept=".jpg,.jpeg,.png">
+            <span class="form-help">Opcional</span>
         </div>
-         <p></p>
-         .
          <div class="form-actions"> 
              <button type="submit" name="enviar" class="btn-submit"> ✅ Registrar Empresa </button>
          </div>

@@ -14,7 +14,7 @@ class ImagenEmpresaPerfilUseCase{
             $respuestaMetodo = $this->gateway->subirImagenPerfilEmpresa($imagenData);
             if($respuestaMetodo){
                 $respuestaGenerica-> status="ok";
-                $respuestaGenerica->body = true;
+                $respuestaGenerica->body = $respuestaMetodo;
                 $respuestaGenerica->message = "Registro exitoso";
             }else{
                 $respuestaGenerica-> status="Error";

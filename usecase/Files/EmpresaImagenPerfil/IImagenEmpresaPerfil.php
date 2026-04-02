@@ -1,6 +1,6 @@
 <?php
 
 interface IImagenEmpresaPerfil {
-    public function subirImagenPerfilEmpresa(EmpresaImagenPerfil $imagenData): bool;
+    public function subirImagenPerfilEmpresa(EmpresaImagenPerfil $imagenData): int;
     
 }

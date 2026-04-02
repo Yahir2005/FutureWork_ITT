@@ -90,11 +90,15 @@ class EmpresaController{
 }
 /*
 $controller = new EmpresaController();
+$result = $controller->obtenerUltimaEmpresaId();
+echo $result->message;
+*/
+/*
+$controller = new EmpresaController();
 $empresa = new Empresa();
 $empresa->set("Usuarios_idUsuarios",3);
 $controller->agregarAdminEmpresa(3,$empresa);
 */
-
 /*
 $controller = new EmpresaController();
 $empresa = new Empresa();
