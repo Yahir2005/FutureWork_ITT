@@ -14,47 +14,47 @@ class RouterPostulante{
         break;
 
         case "navbarPostulante":
-            include_once __DIR__ . ('/../views/viewPostulante/'.$vista.".php");
+            include_once __DIR__ . ('/../views/Postulante/'.$vista.".php");
         break;
 
         case "Home":
-            include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
+            include __DIR__ .('/../views/Postulante/'.$vista.'.php');
         break;
 
         case 'PerfilPostulanteView':
-            include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
+            include __DIR__ .('/../views/Postulante/'.$vista.'.php');
         break;
 
         case 'EmpresasListView':
-            include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
+            include __DIR__ .('/../views/Postulante/'.$vista.'.php');
         break;
 
         case 'VacantesListView':
-            include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
+            include __DIR__ .('/../views/Postulante/'.$vista.'.php');
         break;
 
         case 'ContactoView':
-            include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
+            include __DIR__ .('/../views/Postulante/'.$vista.'.php');
         break;
 
         case 'PostularseView':
-            include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
+            include __DIR__ .('/../views/Postulante/'.$vista.'.php');
         break;
 
         case "Ver_Vacantes":
-            include __DIR__ .'/../view/InicioView.php';
+            include __DIR__ .'/../views/Postulante/InicioView.php';
         break;
 
         case "Ver_Postulantes":
-            include __DIR__ .'/../view/VerPostulantesView.php';
+            include __DIR__ .'/../views/Postulante/VerPostulantesView.php';
         break;
 
         case "Ver_Vacante":
-            include __DIR__ .'/../view/VerVacanteView.php';
+            include __DIR__ .'/../views/Postulante/VerVacanteView.php';
         break;
 
         case "Ver_Contacto":
-            include __DIR__ .'/../view/InicioView.php';
+            include __DIR__ .'/../views/Postulante/InicioView.php';
         break;
 
         case "closeSession":
