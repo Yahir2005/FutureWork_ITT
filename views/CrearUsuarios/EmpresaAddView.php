@@ -56,58 +56,31 @@
                     $empresaIdResponse = $controllerEmpresa->obtenerUltimaEmpresaId();
                     $empresaId = !empty($empresaIdResponse->body) ? (int)$empresaIdResponse->body : 0;
                     $mensaje = "success";
-
+                    //enviar
                     // 4. Lógica de Imagen (Usando las 2 tablas)
-                    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE) {
-                        
-                        if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-                            $nombreImg = basename($_FILES['imagen']['name']);
-                            $rutaTemporal = $_FILES['imagen']['tmp_name'];
-                            $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION));
-                            $extensionesPermitidas = ["jpg", "jpeg", "png", "webp"];
-                            
-                            $directorioDestino = __DIR__ . "/Files/PerfilEmpresa/";
+                    if(isset($_POST["imagen"])){
+                        $nombreImg = $_FILES["imagen"]["name"];
+                        $ruta = $_FILES["imagen"]["tmp_name"];
+                        $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION)); 
+                        $destino   = "/../File/PerfilEmpresa/" . $nombreImg;
+                        if($tipoImagen == "jpeg" || $tipoImagen == "png"){
+                             if(move_uploaded_file($ruta,$destino)){
+                                $imagenObj->set("rutaImagenPerfilEmpresa",$destino);
+                                $imagenObj->set("Nombre",$nombreImg);
+                                $resultImagen=$controllerImagenEmpresaPerfil->subirImagenPerfilEmpresa($imagenObj);
 
-                            if (!file_exists($directorioDestino)) {
-                                mkdir($directorioDestino, 0777, true);
-                            }
-
-                            if (in_array($tipoImagen, $extensionesPermitidas, true)) {
-                                $nombreArchivoDestino = uniqid("empresa_", true) . "." . $tipoImagen;
-                                $rutaFisicaDestino = $directorioDestino . $nombreArchivoDestino;
-                                $rutaDb = "views/CrearUsuarios/Files/PerfilEmpresa/" . $nombreArchivoDestino;
-
-                                if (move_uploaded_file($rutaTemporal, $rutaFisicaDestino)) {
-                                    
-                                    // PASO A: Guardar archivo y ruta en EmpresaImagenPerfil
-                                    $imagenObj->set("Nombre", $nombreArchivoDestino);
-                                    $imagenObj->set("rutaImagenPerfilEmpresa", $rutaDb);
-                                    
-                                    // Tu método devuelve directamente el ID insertado (int)
-                                    $idImagenInsertada = $controllerImagenEmpresaPerfil->subirImagenPerfilEmpresa($imagenObj);
-                                    
-                                    // PASO B: Vincular ese ID con la empresa en ImagenPerfilEmpresa
-                                    if ($idImagenInsertada > 0 && $empresaId > 0) {
-                                        $empresaImagenPerfilObj->set("Empresas_idEmpresas", $empresaId);
-                                        $empresaImagenPerfilObj->set("EmpresaPerfilImagen_idEmpresaPerfilImagen", $idImagenInsertada);
-                                        
-                                        $controllerEmpresaImagenPerfil->InsertarImagenPerfilEmpresa($empresaImagenPerfilObj);
-                                    } else {
-                                        $mensaje = "warning_imagen";
-                                        $detalleMensaje = "La imagen se guardó, pero falló al crear el registro en la base de datos.";
-                                    }
-
-                                } else {
-                                    $mensaje = "warning_imagen";
-                                    $detalleMensaje = "Error de permisos: No se pudo mover la imagen a la carpeta PerfilEmpresa.";
+                                if($resultImagen->status == "ok"){
+                                     echo "<div class='alert alert-success' role='alert'> Registro exitoso</div>";
+                                }else{
+                                    echo "<div class='alert alert-danger' role='alert'>
+                                    Error al registrar".$result->message;" 
+                                    </div>";
                                 }
-                            } else {
-                                $mensaje = "warning_imagen";
-                                $detalleMensaje = "Formato inválido. Solo se permiten imágenes JPG, JPEG, PNG o WEBP.";
                             }
-                        } else {
-                            $mensaje = "warning_imagen";
-                            $detalleMensaje = "El servidor rechazó la imagen. Código de error PHP: " . $_FILES['imagen']['error'];
+                        }else{
+                            echo "<div class='alert alert-danger' role='alert'>
+                            No se acepta ese formato 
+                            </div>";
                         }
                     }
                 } else {
