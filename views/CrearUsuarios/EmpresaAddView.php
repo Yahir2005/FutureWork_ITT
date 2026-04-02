@@ -1,54 +1,84 @@
 <?php
-$mensaje = "";
-// Direcciones
-require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
-require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
-require_once __DIR__ . "/../../usecase/Files/ImagenPerfilEmpresa/ImagenesPerfilEmpresaController.php";
-require_once __DIR__ . "/../../Dto/ImagenPerfilEmpresa.php";
-require_once __DIR__ . "/../../Dto/Empresa.php";
-require_once __DIR__ . "/../../Dto/Usuario.php";
+    $mensaje = "";
+    // Direcciones
+    require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
+    require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+    require_once __DIR__ . "/../../usecase/Files/EmpresaImagenPerfil/ImagenEmpresaPerfilController.php";
+    require_once __DIR__ ."/../../usecase/Files/ImagenPerfilEmpresa/ImagenesPerfilEmpresaController.php";
+    require_once __DIR__ ."/../../Dto/EmpresaImagenPerfil.php";
+    require_once __DIR__ ."/../../Dto/ImagenPerfilEmpresa.php";
+    require_once __DIR__ . "/../../Dto/Empresa.php";
+    require_once __DIR__ . "/../../Dto/Usuario.php";
 
-/**Contollers */
-$controllerUsuario = new UsuarioController();
-$controllerEmpresa = new EmpresaController();
-$controllerImagenPerfilEmpresa = new ImagenesPerfilEmpresaController();
-$empresa = new Empresa();
-$usuarioObj = new Usuario();
+    /**Contollers */
+    $controllerUsuario = new UsuarioController();
+    $controllerEmpresa = new EmpresaController();
+    $controllerImagenEmpresaPerfil = new ImagenEmpresaPerfilController();
+    $controllerEmpresaImagenPerfil = new ImagenesPerfilEmpresaController();
+    $empresa = new Empresa();
+    $usuarioObj = new Usuario();
 
-if(isset($_POST["enviar"])){
-    // 1. Configurar Usuario
-    $usuarioObj->set("Rol_idRol", 1); 
-    $usuarioObj->set("nombreCompleto", $_POST["nombreCompleto"]);
-    $usuarioObj->set("email", $_POST["email"]);
-    $usuarioObj->set("Password", $_POST["password"]); 
+    if(isset($_POST["enviar"])){
+        // 1. Configurar Usuario
+        $usuarioObj->set("Rol_idRol", 1); 
+        $usuarioObj->set("nombreCompleto", $_POST["nombreCompleto"]);
+        $usuarioObj->set("email", $_POST["email"]);
+        $usuarioObj->set("Password", $_POST["password"]); 
 
-    // 2. Insertar Usuario
-    $resultUsuario = $controllerUsuario->InsertarUsuario($usuarioObj);
-    $data = $resultUsuario->body;
-    if ($resultUsuario > 0) {
-        // 3. Configurar Empresa con el ID del usuario creado
-        $empresa->set("Usuarios_idUsuarios", $data);
-        $empresa->set("EstadoValidacionEmpresa_idEstadoValidacionEmpresa", 1); // 1 = Pendiente/Validación
-        $empresa->set("nombreEmpresa", $_POST["nombreEmpresa"]);
-        $empresa->set("sector", $_POST["sector"]);
-        $empresa->set("representante", $_POST["representante"]);
-        $empresa->set("descripcion", $_POST["descripcion"]);
-        $empresa->set("sitioWeb", $_POST["sitioWeb"]);
-        $resultEmpresa = $controllerEmpresa->insertarEmpresas($empresa);
-        if ($resultEmpresa) {
-            $mensaje = "success";
-        } else {
-            $mensaje = "error_empresa";
+        // 2. Insertar Usuario
+        $resultUsuario = $controllerUsuario->InsertarUsuario($usuarioObj);
+        $data = $resultUsuario->body;
+        if ($resultUsuario > 0) {
+            // 3. Configurar Empresa con el ID del usuario creado
+            $empresa->set("Usuarios_idUsuarios", $data);
+            $empresa->set("EstadoValidacionEmpresa_idEstadoValidacionEmpresa", 1); // 1 = Pendiente/Validación
+            $empresa->set("nombreEmpresa", $_POST["nombreEmpresa"]);
+            $empresa->set("sector", $_POST["sector"]);
+            $empresa->set("representante", $_POST["representante"]);
+            $empresa->set("descripcion", $_POST["descripcion"]);
+            $empresa->set("sitioWeb", $_POST["sitioWeb"]);
+            $resultEmpresa = $controllerEmpresa->insertarEmpresas($empresa);
+            if ($resultEmpresa) {
+                $mensaje = "success";
+            } else {
+                $mensaje = "error_empresa";
+            }
+            //Insertar imagen de perfil por defecto
+            
+            if (isset($_FILES['imagen'])) {  
+                $nombreImg = $_FILES['imagen']['name'];  
+                $ruta      = $_FILES['imagen']['tmp_name']; 
+                $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION)); 
+                $destino   = "archivos/" . $nombreImg;
+                if ($tipoImagen == "jpeg" || $tipoImagen == "png") {
+                    if (move_uploaded_file($ruta, $destino)) {
+                        $imagenObj->set('Ruta',$destino);
+                        $imagenObj->set('Nombre',$nombreImg);
+                        $resultImagenEmpresaPerfi = $controllerEmpresaImagenPerfil->insertarImagenPerfilEmpresa($imagenObj);
+                    if ($resultImagenEmpresaPerfi->status == 'ok') {  
+                        echo "<div class='alert alert-success' role='alert'> Registro exitoso
+                    </div>";
+                    } else {
+                        echo "<div class='alert alert-danger' role='alert'>
+                        Error al registrar".$resultImagenEmpresaPerfi->message;" 
+                        </div>";
+                    }
+                }
+            } else {
+                echo "<div class='alert alert-danger' role='alert'>
+                        No se acepta ese formato 
+                        </div>";
+            }
+            /**Enlazar con perfil recien hecho */
+           
         }
-        //Insertar imagen de perfil por defecto
         
-    
-    } else {
-        $mensaje = "error_usuario";
+        } else {
+            $mensaje = "error_usuario";
+        }
+
+
     }
-
-
-}
 ?>
 <!doctype html>
 <html lang="es">
