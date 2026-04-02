@@ -5,9 +5,9 @@ require_once __DIR__ ."/../../DataAccess/MysqlConnector.php";
 class ImagenesPerfilEmpresaGateway implements IImagenesPerfilEmpresa{
     public function InsertarImagenPerfilEmpresa(ImagenPerfilEmpresa $imagenPerfilEmpresa):int{
         $mysqlConnector = new MysqlConnector();
-        $sql ="INSERT INTO ImagenPerfilEmpresa (Empresas_idEmpresas,urlImagenPerfilEmpresa) VALUES 
+        $sql ="INSERT INTO ImagenPerfilEmpresa (Empresas_idEmpresas,EmpresaPerfilImagen_idEmpresaPerfilImagen) VALUES 
         ('{$imagenPerfilEmpresa->get('Empresas_idEmpresas')}',
-        '{$imagenPerfilEmpresa->get('urlImagenPerfilEmpresa')}')";
+        '{$imagenPerfilEmpresa->get('EmpresaPerfilImagen_idEmpresaPerfilImagen')}')";
         $result= $mysqlConnector->consultaSimple( $sql );
         return $result;
     }
@@ -27,7 +27,12 @@ class ImagenesPerfilEmpresaGateway implements IImagenesPerfilEmpresa{
     }
     public function perfilEmpresa($id):array{
         $mysqlConnector = new MysqlConnector();
-        $sql = "SELECT PE.urlImagenPerfilEmpresa,
+        $sql = "SELECT IP.idImagenEmpresa,
+        IP.Empresas_idEmpresas,
+        IP.EmpresaPerfilImagen_idEmpresaPerfilImagen,
+        EIP.idEmpresaPerfilImagen,
+        EIP.Nombre,
+        EIP.rutaImagenPerfilEmpresa,
         E.idEmpresas,
         E.EstadoValidacionEmpresa_idEstadoValidacionEmpresa,
         E.Usuarios_idUsuarios,
@@ -36,9 +41,10 @@ class ImagenesPerfilEmpresaGateway implements IImagenesPerfilEmpresa{
         E.representante,
         E.descripcion,
         E.sitioWeb
-        FROM ImagenPerfilEmpresa PE 
-        JOIN Empresas E ON PE.Empresas_idEmpresas = E.idEmpresas 
-        WHERE idEmpresas = {$id}";
+        FROM ImagenPerfilEmpresa IP 
+        JOIN EmpresaImagenPerfil EIP ON IP.EmpresaPerfilImagen_idEmpresaPerfilImagen = EIP.idEmpresaPerfilImagen
+        JOIN Empresas E ON IP.Empresas_idEmpresas = E.idEmpresas 
+        WHERE E.idEmpresas = {$id}";
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }

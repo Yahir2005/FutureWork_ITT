@@ -10,12 +10,12 @@ class ImagenesPerfilEmpresaUseCase{
 
     public function InsertarImagenPerfilEmpresa(ImagenPerfilEmpresa $imagenPerfilEmpresa):RespuestaGenerica{
         $response = new RespuestaGenerica();
-        $respuestaMetodo = $this->gatewayDb->InsertarImagenPerfilEmpresa($imagenPerfilEmpresa);
         try {
+            $respuestaMetodo = $this->gatewayDb->InsertarImagenPerfilEmpresa($imagenPerfilEmpresa);
             $response->status= "ok";
             $response->body = $respuestaMetodo ;
             $response->message = "Se ha insertado correctamente la imagen del perfil ";
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $response->status = "ERROR";
             $response->message = "Error al insertar la imagen.".$e->getMessage();
         }
@@ -24,12 +24,12 @@ class ImagenesPerfilEmpresaUseCase{
 
     public function eliminarImagen($id):RespuestaGenerica{
         $response = new RespuestaGenerica();
-        $respuestaMetodo = $this->gatewayDb->eliminarImagen($id);
         try {
+            $respuestaMetodo = $this->gatewayDb->eliminarImagen($id);
             $response->status= "ok";
             $response->body = $respuestaMetodo ;
             $response->message = "Se ha eliminado correctamente la imagen del perfil ";
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $response->status = "ERROR";
             $response->message = "Error al eliminar la imagen.".$e->getMessage();
         }
@@ -38,12 +38,12 @@ class ImagenesPerfilEmpresaUseCase{
 
     public function obtenerImagenes($id):RespuestaGenerica{
         $response = new RespuestaGenerica();
-        $respuestaMetodo = $this->gatewayDb->obtenerImagenes($id);
         try {
+            $respuestaMetodo = $this->gatewayDb->obtenerImagenes($id);
             $response->status= "ok";
             $response->body = $respuestaMetodo ;
             $response->message = "Se ha obtenido correctamente la imagen del perfil ";
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $response->status = "ERROR";
             $response->message = "Error al obtener la imagen.".$e->getMessage();
         }
@@ -52,12 +52,12 @@ class ImagenesPerfilEmpresaUseCase{
 
     public function perfilEmpresa($id):RespuestaGenerica{
         $response = new RespuestaGenerica();
-        $respuestaMetodo = $this->gatewayDb->perfilEmpresa($id);
         try {
+            $respuestaMetodo = $this->gatewayDb->perfilEmpresa($id);
             $response->status = "ok";
             $response->body = $respuestaMetodo ;
             $response->message = "Se listaron correctamente los datos del perfil";
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $response->status = "error";
             $response->message = "Error al listar datos del perfil".$e->getMessage();
         }

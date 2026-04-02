@@ -2,8 +2,7 @@
 class ImagenesPerfilPostulante{
     private $idImagenPostulante;
     private $Postulante_idPostulante ;
-    private $urlImagenPerfilPostulante;
-
+    private $PostulanteImagenPerfil_idImagenPerfilPostulante;
     public function __construct(){
 
     }

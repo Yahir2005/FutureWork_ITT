@@ -5,7 +5,7 @@ require_once __DIR__ ."/ImagenEmpresaPerfilGateway.php";
 require_once __DIR__ ."/ImagenEmpresaPerfilUseCase.php";
 
 class ImagenEmpresaPerfilController{
-    public function subirImagenPerfilEmpresa(ImagenEmpresaPerfil $imagenData):RespuestaGenerica{
+    public function subirImagenPerfilEmpresa(EmpresaImagenPerfil $imagenData):RespuestaGenerica{
         $gateway = new ImagenEmpresaPerfilGateway();
         $useCase = new ImagenEmpresaPerfilUseCase($gateway);
         return $useCase->subirImagenPerfilEmpresa($imagenData);

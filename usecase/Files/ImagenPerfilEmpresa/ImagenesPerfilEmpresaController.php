@@ -38,7 +38,7 @@ echo $result->message;
 $controller = new ImagenesPerfilEmpresaController();
 $obj = new ImagenPerfilEmpresa();
 $obj->set("Empresas_idEmpresas",2);
-$obj->set("urlImagenPerfilEmpresa","werrew");
+$obj->set("EmpresaPerfilImagen_idEmpresaPerfilImagen",1);
 $result = $controller->InsertarImagenPerfilEmpresa($obj);
 echo $result->message;*/
 /*

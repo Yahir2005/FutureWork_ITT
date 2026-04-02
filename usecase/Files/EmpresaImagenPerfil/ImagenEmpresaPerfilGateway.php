@@ -4,9 +4,9 @@ require_once __DIR__ ."/../../DataAccess/MysqlConnector.php";
 require_once __DIR__ ."/../../../Dto/ImagenEmpresaPerfil.php";
 
 class ImagenEmpresaPerfilGateway implements IImagenEmpresaPerfil {
-    public function subirImagenPerfilEmpresa(ImagenEmpresaPerfil $imagenData):bool{
+    public function subirImagenPerfilEmpresa(EmpresaImagenPerfil $imagenData):bool{
             $result = false;
-            $query = "INSERT INTO ImagenEmpresaPerfil(Nombre, rutaImagenPerfilEmpresa) VALUES 
+            $query = "INSERT INTO EmpresaImagenPerfil(Nombre, rutaImagenPerfilEmpresa) VALUES 
             ('{$imagenData->get('Nombre')}',
            '{$imagenData->get('rutaImagenPerfilEmpresa')}')";
 

@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ ."/../../../Dto/ImagenPerfilEmpresa.php";
+
 interface IImagenesPerfilEmpresa{
     public function InsertarImagenPerfilEmpresa(ImagenPerfilEmpresa $imagenPerfilEmpresa):int;
 

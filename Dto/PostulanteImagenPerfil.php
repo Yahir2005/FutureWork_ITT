@@ -1,20 +1,17 @@
 <?php
-class ImagenesPostulante{
-    private $idImagenPostulante;
-    private $Postulante_idPostulante;
-    private $nombreImagen;
-    private $urlImagen;
 
-    public function __construct(){
+class PostulanteImagenPerfil {
+    private $idImagenPerfilPostulante;
+    private $nombreImagen;
+    private $rutaImagenPerfilPostulante;
+
+    public function __construct() {
 
     }
-
     public function get($property){
         return $this->$property;
     }
-
     public function set($property,$value){
         $this->$property = $value;
     }
-
 }

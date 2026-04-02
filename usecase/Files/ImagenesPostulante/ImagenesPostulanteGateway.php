@@ -5,7 +5,8 @@ require_once __DIR__ ."/../../DataAccess/MysqlConnector.php";
 class ImagenesPostulanteGateway implements IImagenesPostulante{
     public function InsertarImagenPostulante(ImagenesPostulante $imagenesPostulante):int{
     $mysqlConnector = new MysqlConnector();
-    $sql = "INSERT INTO ImagenesPostulante (Postulante_idPostulante, urlImagen) VALUES ('{$imagenesPostulante->get('Postulante_idPostulante')}',
+    $sql = "INSERT INTO ImagenesPostulante (Postulante_idPostulante, nombreImagen, urlImagen) VALUES ('{$imagenesPostulante->get('Postulante_idPostulante')}',
+    '{$imagenesPostulante->get('nombreImagen')}',
     '{$imagenesPostulante->get('urlImagen')}')";
     $result = $mysqlConnector->consultaSimple($sql);
     return $result;

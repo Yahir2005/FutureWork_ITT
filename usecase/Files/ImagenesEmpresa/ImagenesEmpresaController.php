@@ -26,6 +26,7 @@ class ImagenesEmpresaController{
 $controller = new ImagenesEmpresaController();
 $imagenData = new ImagenesEmpresa();
 $imagenData->set("Empresas_idEmpresas",1);
+$imagenData->set("rutaImagenEmpresa","/adsdsa");
 $imagenData->set("urlImagen","/adsdsa");
 $response = $controller->subirImagenEmpresa($imagenData);
 echo $response->message;*/

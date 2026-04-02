@@ -2,7 +2,8 @@
 class ImagenesEmpresa{
     private $idImagenEmpresa;
     private $Empresas_idEmpresas;
-    private $urlImagenPerfilEmpresa;
+    private $rutaImagenEmpresa;
+    private $urlImagen;
 
     public function __construct(){
 

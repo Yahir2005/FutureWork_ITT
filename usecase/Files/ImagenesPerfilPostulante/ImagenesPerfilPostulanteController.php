@@ -38,7 +38,8 @@ echo $result->message;
 $controller = new ImagenesPerfilPostulanteController;
 $objImagen = new ImagenesPerfilPostulante();
 $objImagen->set("Postulante_idPostulante",1);
-$objImagen->set("urlImagenPerfilPostulante","/sfdsdsf");
+$objImagen->set("nombreImagen","foto_perfil");
+$objImagen->set("rutaImagenPerfilPostulante","/sfdsdsf");
 $result = $controller->InsertarImagenPerfilPostulante($objImagen);
 echo $result->message;*/
 /*

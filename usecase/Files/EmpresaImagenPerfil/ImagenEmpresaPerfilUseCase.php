@@ -9,7 +9,7 @@ class ImagenEmpresaPerfilUseCase{
         $this->gateway = $gateway;
     }
 
-    public function subirImagenPerfilEmpresa(ImagenEmpresaPerfil $imagenData): RespuestaGenerica {
+    public function subirImagenPerfilEmpresa(EmpresaImagenPerfil $imagenData): RespuestaGenerica {
         $respuestaGenerica = new RespuestaGenerica();
         try {
             $respuestaMetodo = $this->gateway->subirImagenPerfilEmpresa($imagenData);

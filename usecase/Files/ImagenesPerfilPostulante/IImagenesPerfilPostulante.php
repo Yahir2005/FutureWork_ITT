@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ ."/../../../Dto/ImagenesPerfilPostulante.php";
+
 interface IImagenesPerfilPostulante{
     public function InsertarImagenPerfilPostulante(ImagenesPerfilPostulante $imagenesPerfilPostulante):int;
 

@@ -7,8 +7,10 @@ class ImagenesEmpresaGateway implements IImagenesEmpresa {
     public function subirImagenEmpresa(ImagenesEmpresa $imagenData): bool {
         $mysqlConnector = new MysqlConnector();
         $result = false;
-        $sql = "INSERT INTO ImagenesEmpresa (Empresas_idEmpresas,urlImagen) VALUES 
-        ('{$imagenData->get('Empresas_idEmpresas')}','{$imagenData->get('urlImagen')}')";
+        $sql = "INSERT INTO ImagenesEmpresa (Empresas_idEmpresas,rutaImagenEmpresa,urlImagen) VALUES 
+        ('{$imagenData->get('Empresas_idEmpresas')}',
+        '{$imagenData->get('rutaImagenEmpresa')}',
+        '{$imagenData->get('urlImagen')}')";
         $result = $mysqlConnector->consultaSimple($sql);
         return $result;
     }

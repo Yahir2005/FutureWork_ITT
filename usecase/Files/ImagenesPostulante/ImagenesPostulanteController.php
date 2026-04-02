@@ -26,6 +26,7 @@ class ImagenesPostulanteController{
 $controller = new ImagenesPostulanteController();
 $obj = new ImagenesPostulante();
 $obj->set("Postulante_idPostulante",2);
+$obj->set("nombreImagen","foto_postulante");
 $obj->set("urlImagen","sfdfds");
 $result = $controller->InsertarImagenPostulante($obj);
 echo $result->message;*/
