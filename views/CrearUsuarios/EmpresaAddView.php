@@ -1,21 +1,25 @@
 <?php
     $mensaje = "";
     $detalleMensaje = "";
+    
     // Direcciones
     require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
     require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
     require_once __DIR__ . "/../../usecase/Files/EmpresaImagenPerfil/ImagenEmpresaPerfilController.php";
     require_once __DIR__ ."/../../usecase/Files/ImagenPerfilEmpresa/ImagenesPerfilEmpresaController.php";
+    
     require_once __DIR__ ."/../../Dto/EmpresaImagenPerfil.php";
     require_once __DIR__ ."/../../Dto/ImagenPerfilEmpresa.php";
     require_once __DIR__ . "/../../Dto/Empresa.php";
     require_once __DIR__ . "/../../Dto/Usuario.php";
 
-    /**Contollers */
+    /** Controllers */
     $controllerUsuario = new UsuarioController();
     $controllerEmpresa = new EmpresaController();
     $controllerImagenEmpresaPerfil = new ImagenEmpresaPerfilController();
     $controllerEmpresaImagenPerfil = new ImagenesPerfilEmpresaController();
+    
+    $imagenObj = new EmpresaImagenPerfil();
     $empresaImagenPerfilObj = new ImagenPerfilEmpresa();
     $empresa = new Empresa();
     $usuarioObj = new Usuario();
@@ -53,43 +57,57 @@
                     $empresaId = !empty($empresaIdResponse->body) ? (int)$empresaIdResponse->body : 0;
                     $mensaje = "success";
 
-                    if (isset($_FILES['imagen']) && !empty($_FILES['imagen']['name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-                        $nombreImg = basename($_FILES['imagen']['name']);
-                        $rutaTemporal = $_FILES['imagen']['tmp_name'];
-                        $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION));
-                        $extensionesPermitidas = ["jpg", "jpeg", "png"];
-                        $directorioDestino = __DIR__ . "/archivos/";
+                    // 4. Lógica de Imagen (Usando las 2 tablas)
+                    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE) {
+                        
+                        if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                            $nombreImg = basename($_FILES['imagen']['name']);
+                            $rutaTemporal = $_FILES['imagen']['tmp_name'];
+                            $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION));
+                            $extensionesPermitidas = ["jpg", "jpeg", "png", "webp"];
+                            
+                            $directorioDestino = __DIR__ . "/Files/PerfilEmpresa/";
 
-                        if (!is_dir($directorioDestino)) {
-                            mkdir($directorioDestino, 0775, true);
-                        }
+                            if (!file_exists($directorioDestino)) {
+                                mkdir($directorioDestino, 0777, true);
+                            }
 
-                        if (in_array($tipoImagen, $extensionesPermitidas, true)) {
-                            $nombreArchivoDestino = uniqid("empresa_", true) . "." . $tipoImagen;
-                            $rutaFisicaDestino = $directorioDestino . $nombreArchivoDestino;
-                            $rutaDb = "views/CrearUsuarios/archivos/" . $nombreArchivoDestino;
+                            if (in_array($tipoImagen, $extensionesPermitidas, true)) {
+                                $nombreArchivoDestino = uniqid("empresa_", true) . "." . $tipoImagen;
+                                $rutaFisicaDestino = $directorioDestino . $nombreArchivoDestino;
+                                $rutaDb = "views/CrearUsuarios/Files/PerfilEmpresa/" . $nombreArchivoDestino;
 
-                            if (move_uploaded_file($rutaTemporal, $rutaFisicaDestino)) {
-                                $imagenObj = new EmpresaImagenPerfil();
-                                $imagenObj->set("Nombre", $nombreArchivoDestino);
-                                $imagenObj->set("rutaImagenPerfilEmpresa", $rutaDb);
+                                if (move_uploaded_file($rutaTemporal, $rutaFisicaDestino)) {
+                                    
+                                    // PASO A: Guardar archivo y ruta en EmpresaImagenPerfil
+                                    $imagenObj->set("Nombre", $nombreArchivoDestino);
+                                    $imagenObj->set("rutaImagenPerfilEmpresa", $rutaDb);
+                                    
+                                    // Tu método devuelve directamente el ID insertado (int)
+                                    $idImagenInsertada = $controllerImagenEmpresaPerfil->subirImagenPerfilEmpresa($imagenObj);
+                                    
+                                    // PASO B: Vincular ese ID con la empresa en ImagenPerfilEmpresa
+                                    if ($idImagenInsertada > 0 && $empresaId > 0) {
+                                        $empresaImagenPerfilObj->set("Empresas_idEmpresas", $empresaId);
+                                        $empresaImagenPerfilObj->set("EmpresaPerfilImagen_idEmpresaPerfilImagen", $idImagenInsertada);
+                                        
+                                        $controllerEmpresaImagenPerfil->InsertarImagenPerfilEmpresa($empresaImagenPerfilObj);
+                                    } else {
+                                        $mensaje = "warning_imagen";
+                                        $detalleMensaje = "La imagen se guardó, pero falló al crear el registro en la base de datos.";
+                                    }
 
-                                $resultImagenEmpresaPerfil = $controllerImagenEmpresaPerfil->subirImagenPerfilEmpresa($imagenObj);
-                                if ($resultImagenEmpresaPerfil->status === "ok" && !empty($resultImagenEmpresaPerfil->body) && $empresaId > 0) {
-                                    $empresaImagenPerfilObj->set("Empresas_idEmpresas", $empresaId);
-                                    $empresaImagenPerfilObj->set("EmpresaPerfilImagen_idEmpresaPerfilImagen", (int)$resultImagenEmpresaPerfil->body);
-                                    $controllerEmpresaImagenPerfil->InsertarImagenPerfilEmpresa($empresaImagenPerfilObj);
                                 } else {
                                     $mensaje = "warning_imagen";
-                                    $detalleMensaje = "La imagen se subió, pero no se pudo enlazar al perfil.";
+                                    $detalleMensaje = "Error de permisos: No se pudo mover la imagen a la carpeta PerfilEmpresa.";
                                 }
                             } else {
                                 $mensaje = "warning_imagen";
-                                $detalleMensaje = "No se pudo mover la imagen al directorio destino.";
+                                $detalleMensaje = "Formato inválido. Solo se permiten imágenes JPG, JPEG, PNG o WEBP.";
                             }
                         } else {
                             $mensaje = "warning_imagen";
-                            $detalleMensaje = "Solo se permiten imágenes JPG, JPEG o PNG.";
+                            $detalleMensaje = "El servidor rechazó la imagen. Código de error PHP: " . $_FILES['imagen']['error'];
                         }
                     }
                 } else {
@@ -107,7 +125,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureWork ITT - Registro de Empresa</title>
- 
   <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
@@ -147,12 +164,8 @@
             <div class="alert alert-success" id="successMessage">
                 ✅ ¡Registro completado con éxito! Tu empresa está en validación.
             </div>
-            <script>
-                // Redirigir después de 3 segundos si quieres
-                // setTimeout(function(){ window.location.href = 'login.html'; }, 3000);
-            </script>
       <?php elseif($mensaje == "warning_imagen"): ?>
-          <div class="alert alert-error"><?php echo htmlspecialchars($detalleMensaje); ?></div>
+          <div class="alert alert-error">⚠️ <?php echo htmlspecialchars($detalleMensaje); ?></div>
       <?php elseif($mensaje == "error_password"): ?>
           <div class="alert alert-error">❌ Las contraseñas no coinciden.</div>
        <?php elseif($mensaje == "error_empresa"): ?>
@@ -161,7 +174,6 @@
             <div class="alert alert-error">❌ Error al crear el usuario. Posiblemente el correo ya existe.</div>
        <?php endif; ?>
 
-       <!-- CORRECCIÓN 1: Se agregó id="empresaForm" para que JS lo encuentre -->
       <form action="" method="POST" enctype="multipart/form-data" id="empresaForm">
          <h3 class="section-title">👤 Datos de Acceso</h3>
          <div class="form-row">
@@ -200,17 +212,13 @@
         <h3 class="section-title" style="margin-top: 30px;">📷 Registrar Imagen</h3>
         <div class="form-group">
             <label for="imagen" class="form-label"> Imagen de perfil </label>
-            <input type="file" id="imagen" class="form-input" name="imagen" accept=".jpg,.jpeg,.png">
+            <input type="file" id="imagen" class="form-input" name="imagen" accept=".jpg,.jpeg,.png,.webp">
             <span class="form-help">Opcional</span>
         </div>
          <div class="form-actions"> 
              <button type="submit" name="enviar" class="btn-submit"> ✅ Registrar Empresa </button>
          </div>
        </form>
-       
-       <div class="back-link" style="text-align:center; margin-top:20px;">
-           <a href="">¿Ya tienes cuenta? Inicia sesión aquí</a>
-       </div>
    </div>
   </div>
 
@@ -226,39 +234,17 @@
     }
 
     document.getElementById('empresaForm').addEventListener('submit', function(e) {
-      // CORRECCIÓN 2: NO usamos preventDefault aquí arriba. Lo usaremos solo si hay error.
-      // e.preventDefault(); 
-      
       document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
       let hasError = false;
 
-      // --- Validaciones ---
-      const nombreCompleto = document.getElementById('nombreCompleto').value.trim();
-      if (nombreCompleto.length === 0) {
-        document.getElementById('errorNombreCompleto').textContent = 'Obligatorio';
-        document.getElementById('errorNombreCompleto').classList.add('show');
-        hasError = true;
-      }
+      if (document.getElementById('nombreCompleto').value.trim().length === 0) hasError = true;
+      if (document.getElementById('password').value.length < 8) hasError = true;
+      if (document.getElementById('password').value !== document.getElementById('confirmPassword').value) hasError = true;
       
-      // (He resumido las validaciones para brevedad, pero funcionan igual)
-      if (document.getElementById('password').value.length < 8) {
-          document.getElementById('errorPassword').textContent = 'Mínimo 8 caracteres';
-          document.getElementById('errorPassword').classList.add('show');
-          hasError = true;
-      }
-      if (document.getElementById('password').value !== document.getElementById('confirmPassword').value) {
-          document.getElementById('errorConfirmPassword').textContent = 'No coinciden';
-          document.getElementById('errorConfirmPassword').classList.add('show');
-          hasError = true;
-      }
-      
-      // CORRECCIÓN 3: Si hay error, DETENEMOS el envío. Si no, dejamos que pase al PHP.
       if (hasError) {
-        e.preventDefault(); // Detiene el envío solo si la validación falla
+        e.preventDefault(); // Detiene el envío si la validación falla
         return;
       }
-
-      // Si el código llega aquí, el formulario se enviará al servidor y el PHP se ejecutará.
     });
   </script>
  </body>
