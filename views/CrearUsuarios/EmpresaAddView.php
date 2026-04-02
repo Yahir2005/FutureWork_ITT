@@ -58,11 +58,11 @@
                     $mensaje = "success";
                     //enviar
                     // 4. Lógica de Imagen (Usando las 2 tablas)
-                    if(isset($_POST["imagen"])){
+                    if(isset($_FILES["imagen"])){
                         $nombreImg = $_FILES["imagen"]["name"];
                         $ruta = $_FILES["imagen"]["tmp_name"];
                         $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION)); 
-                        $destino   = "/../File/PerfilEmpresa/" . $nombreImg;
+                        $destino   = "Files/" . $nombreImg;
                         if($tipoImagen == "jpeg" || $tipoImagen == "png"){
                              if(move_uploaded_file($ruta,$destino)){
                                 $imagenObj->set("rutaImagenPerfilEmpresa",$destino);
