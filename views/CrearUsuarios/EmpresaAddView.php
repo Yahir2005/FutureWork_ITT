@@ -70,7 +70,15 @@
                         </div>";
             }
             /**Enlazar con perfil recien hecho */
-           
+            /*
+            if ($resultEmpresa) {
+                $empresaId = $controllerEmpresa->obtenerUltimaEmpresaId();
+                $empresaImagenPerfil = new EmpresaImagenPerfil();
+                $empresaImagenPerfil->set("Empresa_idEmpresa", $empresaId);
+                $empresaImagenPerfil->set("ImagenPerfilEmpresa_idImagenPerfilEmpresa", $resultImagenEmpresaPerfi->body);
+                $controllerImagenEmpresaPerfil->insertarEmpresaImagenPerfil($empresaImagenPerfil);
+            }
+                */
         }
         
         } else {

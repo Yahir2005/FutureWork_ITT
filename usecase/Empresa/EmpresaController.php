@@ -80,6 +80,13 @@ class EmpresaController{
         $useCase = new EmpresaUseCase($gateway);
         return $useCase->perfilEmpresa($id);
     }
+
+    public function obtenerUltimaEmpresaId(): RespuestaGenerica{
+        $gateway = new EmpresaGateway();
+        $useCase = new EmpresaUseCase($gateway);
+        return $useCase->obtenerUltimaEmpresaId();
+
+    }
 }
 /*
 $controller = new EmpresaController();

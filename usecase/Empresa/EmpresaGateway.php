@@ -156,4 +156,12 @@ class EmpresaGateway implements IEmpresa{
         $result = $mysqlConnector->consultaRetorno($sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function obtenerUltimaEmpresaId(): int {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT MAX(idEmpresas) AS ultimaId FROM Empresas";
+        $result = $mysqlConnector->consultaRetorno($sql);
+        $row = mysqli_fetch_assoc($result);
+        return (int)$row['ultimaId'];
+    }
 }

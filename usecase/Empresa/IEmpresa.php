@@ -26,4 +26,5 @@ interface IEmpresa {
 
     public function perfilEmpresa($id): array;
     
+    public function obtenerUltimaEmpresaId(): int;
 }

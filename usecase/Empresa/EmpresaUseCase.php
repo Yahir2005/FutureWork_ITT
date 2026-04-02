@@ -188,4 +188,18 @@ class EmpresaUseCase{
         }
         return $response;
     }
+
+    public function obtenerUltimaEmpresaId(): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->obtenerUltimaEmpresaId();
+        try {
+            $response-> status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se obtuvo el ID de la ultima empresa correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "No se pudo obtener el ID de la ultima empresa". $e->getMessage();
+        }
+        return $response;
+    }
 } 
