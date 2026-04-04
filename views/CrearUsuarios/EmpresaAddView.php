@@ -52,6 +52,7 @@
                 $empresa->set("sitioWeb", $_POST["sitioWeb"]);
 
                 $resultEmpresa = $controllerEmpresa->insertarEmpresas($empresa);
+                /*
                 if ($resultEmpresa->status === "ok") {
                     $empresaIdResponse = $controllerEmpresa->obtenerUltimaEmpresaId();
                     $empresaId = !empty($empresaIdResponse->body) ? (int)$empresaIdResponse->body : 0;
@@ -86,6 +87,7 @@
                 } else {
                     $mensaje = "error_empresa";
                 }
+                */
             } else {
                 $mensaje = "error_usuario";
             }
