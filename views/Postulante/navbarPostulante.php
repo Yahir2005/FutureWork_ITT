@@ -92,7 +92,7 @@
         </div>
 
         <li class="nav-item ms-lg-auto"> 
-            <a class="nav-link text-white fw-bold" href="?cargar=PerfilPostulanteView">
+            <a class="nav-link text-white fw-bold" href="?cargar=PerfilEmpresaView">
                 Perfil
             </a>
         </li>
