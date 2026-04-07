@@ -1,0 +1,12 @@
+que debe mostrar postulante
+numeroControl VARCHAR(10),
+nombreCompleto VARCHAR(45),
+email VARCHAR(45),
+cvPath VARCHAR(255),
+telefono VARCHAR(45),
+ubicacion VARCHAR(45),
+---certificaciones
+nombre
+organizacionEmisora 
+fechaObtencion
+urlCredencial

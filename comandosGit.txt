@@ -5,4 +5,7 @@
  * * git push origin main // subir los cambios a github
  * * git pull bajar cambios hacer siempre al iniciar 
  * * en caso de choque de repositorios  :wq
+ * * git checkout nombreRama //cambiar nombreRama
+ * * git merge nombreRama a commbinar //combinar ramas
  */
+ 
