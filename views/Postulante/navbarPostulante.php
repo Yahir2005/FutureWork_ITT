@@ -1,9 +1,23 @@
 <?php
     include_once("../../router/RouterPostulante.php");
     include_once __DIR__ ."/../../usecase/Usuario/SessionManager.php";
+    require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
 
     if(!SessionManager::isUserLoggedIn()){
       header("Location: ../index.php");
+      exit;
+    }
+
+    $nombreCompleto = "Mi Perfil";
+
+    if (isset($_SESSION["idUsuarios"])) {
+        $idUsuario = $_SESSION["idUsuarios"];
+        $usuarioController = new UsuarioController();
+        $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
+        
+        if ($result && isset($result->body) && isset($result->body['nombreCompleto'])) {
+            $nombreCompleto = $result->body['nombreCompleto'];
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -18,7 +32,7 @@
 <body>
     <nav class="navbar navbar-expand-lg py-3" style="background-color: #2a5298; " data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="#"><?php echo $nombreEmpresa; ?></a>
+            <a class="navbar-brand text-white" href="#"><?php echo $nombreCompleto; ?></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
