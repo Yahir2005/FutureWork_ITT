@@ -1,14 +1,17 @@
-  <!-- Contenido Principal -->
-  <main class="container">
-    <section class="text-center mb-5">
-      <h1 class="fw-bold">¡Bienvenido a FutureWork ITT! 👋</h1>
-      <p class="lead">
-        Estás navegando como invitado. Explora las oportunidades laborales disponibles y conoce las empresas que buscan talento del Instituto Tecnológico de Tehuacán. Para acceder a todas las funcionalidades, inicia sesión o regístrate.
-      </p>
-    </section>
+  <div class="container mt-5 text-center">
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+        <h1 class="display-5 fw-bold text-primary">¡Bienvenido al Portal de Egresados!</h1>
+        <p class="fs-4">Encuentra tu próxima oportunidad laboral y conecta con las mejores empresas.</p>
+        <hr class="my-4">
+        
+        <div class="d-flex justify-content-center gap-3">
+            <a href="?cargar=Ver_Vacantes" class="btn btn-primary btn-lg px-4">Buscar Vacantes</a>
+            <a href="?cargar=PerfilPostulanteView" class="btn btn-outline-secondary btn-lg px-4">Completar Perfil</a>
+        </div>
+    </div>
 
-      <!-- Cards -->
-      <div class="row g-4">
+
+    <div class="row g-4">
         <div class="col-md-4">
           <a href="?cargar=VacantesListView" class="text-decoration-none text-dark">
           <div class="card h-100 shadow-sm">
@@ -45,7 +48,5 @@
           </div>
         </div>
 
-      </div>
-    </div>
-  </div>
 
+</div>
