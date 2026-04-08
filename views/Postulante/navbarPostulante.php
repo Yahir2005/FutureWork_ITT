@@ -30,8 +30,7 @@
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <!-- Cambié el color a un tono azul más oscuro para diferenciarlo de la empresa -->
-    <nav class="navbar navbar-expand-lg py-3 shadow-sm" style="background-color: #1a3a6c;" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg py-3" style="background-color: #2a5298; " data-bs-theme="light">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="#"><?php echo $nombreCompleto; ?></a>
 
@@ -52,20 +51,20 @@
                         <ul class="dropdown-menu shadow" style="background-color:#1a3a6c;">
                             <li><a class="dropdown-item text-white" href="?cargar=VacantesListView">Explorar Vacantes</a></li>
                             <li><hr class="dropdown-divider border-light"></li>
-                            <li><a class="dropdown-item text-white" href="?cargar=MisPostulacionesView">Mis Postulaciones</a></li>
+                            <li><a class="dropdown-item text-white" href="?cargar=">Mis Postulaciones</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="?cargar=EmpresasListView">🏢 Ver Empresas</a>
+                        <a class="nav-link text-white" href="?cargar=VacantesListView">🏢 Ver Empresas</a>
                     </li>
 
                     <li class="nav-item border-start ms-lg-2 ps-lg-3">
-                        <a class="nav-link text-white" href="?cargar=Ver_Postulantes">👥 Directorio de Egresados</a>
+                        <a class="nav-link text-white" href="?cargar=">👥 Directorio de Egresados</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="?cargar=ContactoView">📧 Ayuda / Contacto</a>
+                        <a class="nav-link text-white" href="?cargar=AcercaDeNosotrosView">📧 Ayuda / Contacto</a>
                     </li>
                 </ul>
 

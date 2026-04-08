@@ -56,4 +56,17 @@ class PostulanteGateway implements IPostulantes {
         $result = $mysqlConnector->consultaSimple($sql);
         return $result;
     }
+
+    public function ObtenerPostulantePorIdUsuario($id): array {
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT p.*, u.nombreCompleto, u.email 
+                FROM Postulante p
+                INNER JOIN Usuarios u ON p.Usuarios_idUsuarios = u.idUsuarios
+                WHERE p.Usuarios_idUsuarios = {$id}";
+                
+        $result = $mysqlConnector->consultaRetorno($sql);
+        
+        $data = mysqli_fetch_assoc($result);
+        return $data ? $data : []; 
+    }
 }
