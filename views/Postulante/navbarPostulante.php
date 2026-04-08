@@ -30,7 +30,8 @@
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg py-3" style="background-color: #2a5298; " data-bs-theme="light">
+    <!-- Cambié el color a un tono azul más oscuro para diferenciarlo de la empresa -->
+    <nav class="navbar navbar-expand-lg py-3 shadow-sm" style="background-color: #1a3a6c;" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="#"><?php echo $nombreCompleto; ?></a>
 
@@ -39,7 +40,6 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active text-white" aria-current="page" href="?cargar=Home">🏠 Inicio</a>
@@ -47,77 +47,48 @@
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            🧔‍♂️ Administradores Empresa
+                            💼 Oportunidades
                         </a>
-                        <ul class="dropdown-menu" style="background-color:#2a5298;">
-                        <li>
-                            <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Listar Administradores</a>
-                        </li>
-
-                        <li><hr class="dropdown-divider"></li>
-
-                        <li><a class="dropdown-item text-white" href="?cargar=MisVacantesListView">Agregar Administrador</a></li>
-
-                        <li><hr class="dropdown-divider"></li>
-
-                        <li><a class="dropdown-item text-white" href="?cargar=VacantesUpdateView">Editar Vacante</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            💼 Vacantes
-                        </a>
-                        <ul class="dropdown-menu" style="background-color:#2a5298;">
-
-                        <li>
-                            <a class="dropdown-item text-white" href="?cargar=VacantesAddView">Agregar Vacantes</a>
-                        </li>
-
-                        <li><hr class="dropdown-divider"></li>
-
-                        <li>
-                            <a class="dropdown-item text-white" href="?cargar=VacantesListView">Listar Vacantes</a>
-                        </li>
-
-                        <li><hr class="dropdown-divider"></li>
-
-                        <li><a class="dropdown-item text-white" href="?cargar=MisVacantesListView">Mis Vacantes</a></li>
-
-                        <li><hr class="dropdown-divider"></li>
-
+                        <ul class="dropdown-menu shadow" style="background-color:#1a3a6c;">
+                            <li><a class="dropdown-item text-white" href="?cargar=VacantesListView">Explorar Vacantes</a></li>
+                            <li><hr class="dropdown-divider border-light"></li>
+                            <li><a class="dropdown-item text-white" href="?cargar=MisPostulacionesView">Mis Postulaciones</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="?cargar=Empleados">👥 Postulante</a>
+                        <a class="nav-link text-white" href="?cargar=EmpresasListView">🏢 Ver Empresas</a>
                     </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="?cargar=EmpresasListView">🏢 Empresas</a>
+
+                    <li class="nav-item border-start ms-lg-2 ps-lg-3">
+                        <a class="nav-link text-white" href="?cargar=Ver_Postulantes">👥 Directorio de Egresados</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">📧 Contacto</a>
+                        <a class="nav-link text-white" href="?cargar=ContactoView">📧 Ayuda / Contacto</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-3"> 
+                        <a class="nav-link text-white fw-bold d-flex align-items-center" href="?cargar=PerfilPostulanteView">
+                            <span class="me-2">👤</span> 
+                        </a>
                     </li>
 
+                    <li class="nav-item"> 
+                        <a class="btn btn-sm btn-outline-warning fw-bold" href="?cargar=closeSession">
+                            Salir
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
-
-        <li class="nav-item ms-lg-auto"> 
-            <a class="nav-link text-white fw-bold" href="?cargar=PerfilEmpresaView">
-                Perfil
-            </a>
-        </li>
-
-        <li class="nav-item ms-3"> 
-            <a class="nav-link text-white fw-bold" href="?cargar=closeSession">
-                Salir
-            </a>
-        </li>
-
     </nav>
+
+    <section class="container-fluid mt-4">
+        
+    </section>
 
     <section>
             <?php

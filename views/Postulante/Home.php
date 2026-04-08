@@ -5,8 +5,7 @@
         <hr class="my-4">
         
         <div class="d-flex justify-content-center gap-3">
-            <a href="?cargar=Ver_Vacantes" class="btn btn-primary btn-lg px-4">Buscar Vacantes</a>
-            <a href="?cargar=PerfilPostulanteView" class="btn btn-outline-secondary btn-lg px-4">Completar Perfil</a>
+            <a href="?cargar=VacantesListView" class="btn btn-primary btn-lg px-4">Buscar Vacantes</a>
         </div>
     </div>
 
