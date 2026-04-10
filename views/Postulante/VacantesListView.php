@@ -121,12 +121,13 @@
 
             <!-- Footer -->
             <div class="d-flex justify-content-between align-items-center mt-auto">
-              <small class="text-muted">📅 Publicado: <strong><?php echo htmlspecialchars($vacante['fechaPublicacion']); ?></strong></small>
-              <div class="d-flex gap-2">
-                <a href="?cargar=VacantePostulantes&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn btn-sm btn-outline-primary">Ver Postulantes</a>
-                
-                <a href="?cargar=VacantePostulantes&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn btn-sm btn-outline-primary">👁️ Detalles Vacante</a>
-              </div>
+                <small class="text-muted">📅 Publicado: <br> <strong><?php echo htmlspecialchars($vacante['fechaPublicacion']); ?></strong> </small>
+                <div class="d-flex gap-2">
+                    <?php if ($idEstado === 1): ?>
+                      <a href="?cargar=GuardarPostulacion&idVacante=<?php echo $vacante['idVacante']; ?>" class="btn btn-sm btn-success fw-bold d-flex align-items-center">Postularme</a>
+                    <?php endif; ?>
+                    <a href="?cargar=VacantePostulantes&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn btn-sm btn-outline-primary d-flex align-items-center">👁️ Detalles Vacante</a>
+                </div>
             </div>
           </div>
         </div>
