@@ -144,7 +144,7 @@ INSERT INTO Vacantes(Empresa_idEmpresa, EstadoValidacionVacante_idEstadoValidaci
 -- Postulante_idPostulante: 1=Ana, 2=Carlos, 3=María
 -- Vacante_idVacante: 1=Java, 2=React, 3=QA
 -- EstadoPostulacion: 1=En revisión, 2=Aceptada, 3=Rechazada, 4=Entrevista
-INSERT INTO Postulaciones(Postulante_idPostulante, Vacante_idVacante, EstadoPostulacion_idEstadoPostulacion, fechaPostulacion) VALUES
+INSERT INTO Postulaciones(Postulante_idPostulante, Vacante_idVacante, EstadoPostulacion_idEstadoPostulacion) VALUES
 (1, 1, 1, NOW() - INTERVAL 5 DAY), -- Ana aplicó a Java Sr. (En revisión)
 (1, 2, 4, NOW() - INTERVAL 4 DAY), -- Ana aplicó a React Jr. (Entrevista Programada)
 (3, 1, 2, NOW() - INTERVAL 3 DAY), -- María aplicó a Java Sr. (Aceptada)

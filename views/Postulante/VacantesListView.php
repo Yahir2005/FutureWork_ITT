@@ -1,8 +1,13 @@
 <?php
     require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+    require_once __DIR__ . "/../../Dto/Postulaciones.php";
+    require_once __DIR__ . "/../../usecase/Postulaciones/PostulacionesController.php";
+    require_once __DIR__ . "/../../usecase/Postulantes/PostulantesController.php";
 
     /*Controllers*/
     $vacanteController = new VacanteController();
+    $postulacionesController = new PostulacionesController(); // Faltaba instanciar
+    $postulanteController = new PostulantesController();
 
     /**Contar total de vacantes */
     $totalVacantes = $vacanteController->contarVacantes();
@@ -15,6 +20,34 @@
     $resultVacantes = $vacanteController->ListarVacantesTotalesCard() ;
     if(strtolower($resultVacantes->status) == "ok"){
     $listarVacantesCard = $resultVacantes->body;
+    }
+
+    // --- Postularse ---
+    if(isset($_POST["btnPostularme"])){
+      $idUsuario = $_SESSION["idUsuarios"];
+      $idVacante = $_POST["idVacantePostular"];
+
+      $resP = $postulanteController->ObtenerPostulantePorIdUsuario($idUsuario);
+            
+      if($resP->status == "ok" && !empty($resP->body)){
+        $idPostulante = $resP->body['idPostulante'];
+
+        $postulacionObject = new Postulaciones();
+        $postulacionObject->set("Postulante_idPostulante", $idPostulante);
+        $postulacionObject->set("Vacante_idVacante", $idVacante);
+        $postulacionObject->set("EstadoPostulacion_idEstadoPostulacion", 1);
+
+        $result = $postulacionesController->InsertarPostulacion($postulacionObject);
+
+        if (strtolower($result->status) == 'ok') {
+          echo "<script>alert('¡Te has postulado con éxito!'); window.location.href='?cargar=VacantesListView';</script>";
+          exit;
+        } else {
+            echo "<div class='alert alert-danger'>Error al postularse: " . $result->message . "</div>";
+        }
+      } else {
+        echo "<div class='alert alert-warning'>Perfil no encontrado</div>";
+      }
     }
 ?>
 
@@ -124,7 +157,10 @@
                 <small class="text-muted">📅 Publicado: <br> <strong><?php echo htmlspecialchars($vacante['fechaPublicacion']); ?></strong> </small>
                 <div class="d-flex gap-2">
                     <?php if ($idEstado === 1): ?>
-                      <a href="?cargar=GuardarPostulacion&idVacante=<?php echo $vacante['idVacante']; ?>" class="btn btn-sm btn-success fw-bold d-flex align-items-center">Postularme</a>
+                      <form method="POST" action="?cargar=VacantesListView">
+                          <input type="hidden" name="idVacantePostular" value="<?php echo $vacante['idVacante']; ?>">
+                          <button type="submit" name="btnPostularme" class="btn btn-sm btn-success fw-bold px-3" onclick="return confirm('¿Confirmas tu postulación?')">Postularme</button>
+                      </form>
                     <?php endif; ?>
                     <a href="?cargar=VacantePostulantes&id=<?php echo $vacante['idVacante'] ?? 0; ?>" class="btn btn-sm btn-outline-primary d-flex align-items-center">👁️ Detalles Vacante</a>
                 </div>

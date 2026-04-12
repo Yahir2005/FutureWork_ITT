@@ -8,12 +8,10 @@ class PostulacionesGateway implements IPostulaciones{
         $mysqlConnector = new MysqlConnector();
         $query = "INSERT INTO Postulaciones (Postulante_idPostulante,
         Vacante_idVacante,
-        EstadoPostulacion_idEstadoPostulacion,
-        fechaPostulacion)
+        EstadoPostulacion_idEstadoPostulacion)
         VALUES ('{$postulacion->get('Postulante_idPostulante')}',
         '{$postulacion->get('Vacante_idVacante')}',
-        '{$postulacion->get('EstadoPostulacion_idEstadoPostulacion')}',
-        '{$postulacion->get('fechaPostulacion')}')";
+        '{$postulacion->get('EstadoPostulacion_idEstadoPostulacion')}')";
         $result = $mysqlConnector->consultaSimple($query);
         return $result;
     }
