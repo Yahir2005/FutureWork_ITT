@@ -1,6 +1,7 @@
 <?php
 interface IPostulaciones{
     public function InsertarPostulacion(Postulaciones $postulacion):int;
+    public function EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante):int;
     public function ListarPostulacionesPorVacante($idVacante):array;
     public function ListarVacantesPostuladasPorPostulante($idPostulante):array;
     

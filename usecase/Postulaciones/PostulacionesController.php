@@ -9,6 +9,12 @@ class PostulacionesController{
         return $useCase->InsertarPostulacion($postulacion);
     }
 
+    public function EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante):RespuestaGenerica{
+        $gatewayDb = new PostulacionesGateway();
+        $usecase = new PostulacionesUseCase($gatewayDb);
+        return $usecase->EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante);
+    }
+
     public function ListarVacantesPostuladasPorPostulante($idPostulante):RespuestaGenerica{
         $gatewayDb = new PostulacionesGateway();
         $usecase = new PostulacionesUseCase($gatewayDb);

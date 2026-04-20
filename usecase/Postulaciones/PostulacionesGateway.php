@@ -16,6 +16,15 @@ class PostulacionesGateway implements IPostulaciones{
         return $result;
     }
 
+    public function EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante):int{
+        $mysqlConnector = new MysqlConnector();
+        $query = "DELETE FROM Postulaciones
+                  WHERE Postulante_idPostulante = {$idPostulante}
+                  AND Vacante_idVacante = {$idVacante}";
+        $result = $mysqlConnector->consultaSimple($query);
+        return $result;
+    }
+
 
     public function ListarPostulacionesPorVacante($idVacante):array{
         $mysqlConnector = new MysqlConnector();

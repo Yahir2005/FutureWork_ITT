@@ -21,6 +21,20 @@ class PostulacionesUseCase{
         return $response;
     }
 
+    public function EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        try {
+            $response->status = "ok";
+            $response->body = $this->gatewayDb->EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante);
+            $response->message = "Se elimino la postulacion";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->body = null;
+            $response->message = "Error al eliminar la postulacion".$e->getMessage();
+        }
+        return $response;
+    }
+
     public function ListarVacantesPostuladasPorPostulante($idPostulante):RespuestaGenerica{
         $response = new RespuestaGenerica();
         $respuestaMetodo = $this->gatewayDb->ListarVacantesPostuladasPorPostulante($idPostulante);

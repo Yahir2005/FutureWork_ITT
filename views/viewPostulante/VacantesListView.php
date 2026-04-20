@@ -56,10 +56,27 @@
       $result = $postulacionesController->InsertarPostulacion($postulacionObject);
 
       if (strtolower($result->status) == 'ok') {
-        echo "<script>alert('¡Te has postulado con éxito!'); window.location.href='?cargar=VacantesListView';</script>";
-        exit;
+        $vacantesPostuladasMap[$idVacante] = true;
       } else {
         echo "<div class='alert alert-danger'>Error al postularse: " . $result->message . "</div>";
+      }
+    }
+  }
+
+  if(isset($_POST["btnDespostularme"])){
+    $idVacante = (int)($_POST["idVacanteDespostular"] ?? 0);
+
+    if (empty($idPostulante)) {
+      echo "<div class='alert alert-warning'>Perfil no encontrado</div>";
+    } elseif (!isset($vacantesPostuladasMap[$idVacante])) {
+      echo "<div class='alert alert-info'>No tienes una postulación activa en esta vacante</div>";
+    } else {
+      $result = $postulacionesController->EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante);
+
+      if (strtolower($result->status) == 'ok') {
+        unset($vacantesPostuladasMap[$idVacante]);
+      } else {
+        echo "<div class='alert alert-danger'>Error al despostularse: " . $result->message . "</div>";
       }
     }
   }
@@ -255,8 +272,12 @@
                           <input type="hidden" name="idVacantePostular" value="<?php echo $idVacanteActual; ?>">
                           <button type="submit" name="btnPostularme" class="btn btn-sm btn-success fw-bold px-3" onclick="return confirm('¿Confirmas tu postulación?')">Postularme</button>
                       </form>
-              <?php elseif ($yaPostulado): ?>
-                      <span class="tag contract">Ya postulaste</span>
+                    <?php elseif ($yaPostulado): ?>
+                      <form method="POST" action="?cargar=VacantesListView" style="display:flex; gap:8px; align-items:center;">
+                    <span class="tag contract">Ya postulaste</span>
+                    <input type="hidden" name="idVacanteDespostular" value="<?php echo $idVacanteActual; ?>">
+                    <button type="submit" name="btnDespostularme" class="btn btn-sm btn-danger fw-bold px-3" onclick="return confirm('¿Deseas retirar tu postulación de esta vacante?')">Despostularme</button>
+                      </form>
               <?php endif; ?>
         </div>
       </div>
