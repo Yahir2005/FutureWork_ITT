@@ -1,23 +1,20 @@
 <?php
-require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+  require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
 
-$vacanteController = new VacanteController();
+  $vacanteController = new VacanteController();
 
-/**Contar total de vacantes */
-$totalVacantes = $vacanteController->contarVacantes();
-$totalVacantesAbiertas = $vacanteController->contarVacantesAbiertas();
-$totalVacantesCerradas = $vacanteController->contarVacantesCerradas();
-$totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
+  /**Contar total de vacantes */
+  $totalVacantes = $vacanteController->contarVacantes();
+  $totalVacantesAbiertas = $vacanteController->contarVacantesAbiertas();
+  $totalVacantesCerradas = $vacanteController->contarVacantesCerradas();
+  $totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
 
-
-
-
-// --- Empresas ---
-$listarVacantesCard = array();
-$resultVacantes = $vacanteController->ListarVacantesTotalesCard() ;
-if(strtolower($resultVacantes->status) == "ok"){
-  $listarVacantesCard = $resultVacantes->body;
-}
+  // --- Empresas ---
+  $listarVacantesCard = array();
+  $resultVacantes = $vacanteController->ListarVacantesTotalesCard() ;
+  if(strtolower($resultVacantes->status) == "ok"){
+    $listarVacantesCard = $resultVacantes->body;
+  }
 
 ?>
 <!doctype html>

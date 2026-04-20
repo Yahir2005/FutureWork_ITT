@@ -21,6 +21,20 @@ class PostulacionesUseCase{
         return $response;
     }
 
+    public function ListarVacantesPostuladasPorPostulante($idPostulante):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->ListarVacantesPostuladasPorPostulante($idPostulante);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Vacantes postuladas listadas correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "Error al listar vacantes postuladas: ". $e->getMessage();
+        }
+        return $response;
+    }
+
 
         public function ListarPostulacionesPorVacante($idVacante):RespuestaGenerica{
         $response = new RespuestaGenerica();

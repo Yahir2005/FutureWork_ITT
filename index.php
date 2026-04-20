@@ -24,12 +24,12 @@
 
                     $_SESSION["idEmpresas"] = $result->body['empresaId']; // usa la clave correcta
                     $_SESSION["idEmpresas"] = $result->body['idEmpresa']; // usa la clave correcta
-                    header("Location:views/Empresa/navbarEmpresa.php?cargar=Home");  
+                    header("Location:views/viewEmpresa/navbarEmpresa.php?cargar=Home");  
                     break;
 
                 case 2: // Postulante
                     $_SESSION["idPostulante"] = $response->body['idPostulante']; // usa la clave correcta
-                    header("Location:views/Postulante/navbarPostulante.php?cargar=Home");
+                    header("Location:views/viewPostulante/navbarPostulante.php?cargar=Home");
                     break;
 
                 default:

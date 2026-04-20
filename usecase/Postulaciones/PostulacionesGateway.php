@@ -42,6 +42,23 @@ class PostulacionesGateway implements IPostulaciones{
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
+    public function ListarVacantesPostuladasPorPostulante($idPostulante):array{
+        $mysqlConnector = new MysqlConnector();
+        $sql = "SELECT Vacante_idVacante FROM Postulaciones WHERE Postulante_idPostulante = {$idPostulante}";
+        $result = $mysqlConnector->consultaRetorno($sql);
+
+        if ($result === false) {
+            return [];
+        }
+
+        $vacantesIds = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $vacantesIds[] = (int)($row['Vacante_idVacante'] ?? 0);
+        }
+
+        return $vacantesIds;
+    }
+
         public function contartotalPostulacionesPorVacante($idVacante):int{
         $mysqlConnector = new MysqlConnector();
         $sql = "

@@ -1,146 +1,69 @@
 <?php
-require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+  require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+  require_once __DIR__ . "/../../Dto/Postulaciones.php";
+  require_once __DIR__ . "/../../usecase/Postulaciones/PostulacionesController.php";
+  require_once __DIR__ . "/../../usecase/Postulantes/PostulantesController.php";
 
-$vacanteController = new VacanteController();
+  $vacanteController = new VacanteController();
+  $postulacionesController = new PostulacionesController(); // Faltaba instanciar
+  $postulanteController = new PostulantesController();
 
-/**Contar total de vacantes */
-$totalVacantes = $vacanteController->contarVacantes();
-$totalVacantesAbiertas = $vacanteController->contarVacantesAbiertas();
-$totalVacantesCerradas = $vacanteController->contarVacantesCerradas();
-$totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
+  /**Contar total de vacantes */
+  $totalVacantes = $vacanteController->contarVacantes();
+  $totalVacantesAbiertas = $vacanteController->contarVacantesAbiertas();
+  $totalVacantesCerradas = $vacanteController->contarVacantesCerradas();
+  $totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
 
+  // --- Empresas ---
+  $listarVacantesCard = array();
+  $resultVacantes = $vacanteController->ListarVacantesTotalesCard() ;
 
-
-
-// --- Empresas ---
-$listarVacantesCard = array();
-$resultVacantes = $vacanteController->ListarVacantesTotalesCard() ;
-if(strtolower($resultVacantes->status) == "ok"){
-  $listarVacantesCard = $resultVacantes->body;
-}
-
-
-
-
-/**Controladores */
-/*
-require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
-require_once __DIR__ . "/../../usecase/Empresa/EmpresaController.php";
-require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
-require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";
-require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoModalidad/TipoModalidadController.php";
-*/
-/**Arrays*/
-/*
-$listarVacantes = array(); // Aquí se almacenarán las vacantes obtenidas
-$listarEmpresa = array(); // Aquí se almacenará la información de la empresa
-$listarValidacionVacante = array();
-$listarTipoContrato = array();
-$listarTipoModalidad = array();*/
-
-/**Contadores */
-/*
-$totalVacantes = 0;
-$totalAbiertas = 0;
-$totalCerradas = 0;
-$totalPausadas = 0;*/
-
-/**Instancias */
-/*
-$vacanteController = new VacanteController();
-$empresaController = new EmpresaController();
-$vacanteValidacionController = new EstadoValidacionVacanteController();
-$TipoContratoController = new TipoContratoController();
-$TipoModalidadController = new TipoModalidadController();*/
-
-/**Listar */
-/*
-if($resultListarValidacionVacante->status == "OK"){
-  $listarValidacionVacante = $resultListarValidacionVacante->body;
-}
-if($resultListarTipoContrato->status == "Ok"){
-  $listarTipoContrato = $resultListarTipoContrato->body;
-}
-
-if($resultListarTipoModalidad->status == "ok"){
-  $listarTipoModalidad = $resultListarTipoModalidad->body;
-}
-if ($resultVacantes && $resultVacantes->status == "ok" && is_array($resultVacantes->body)) {
-  $listarVacantes = $resultVacantes->body;
-  $totalVacantes = count($listarVacantes);
-
-  foreach ($listarVacantes as $vacante) {
-      // Estado de la vacante: campo EstadoValidacionVacante_idEstadoValidacionVacante
-      switch ($vacante['EstadoValidacionVacante_idEstadoValidacionVacante']) {
-          case 1: // Abierta
-              $totalAbiertas++;
-              break;
-          case 2: // Cerrada
-              $totalCerradas++;
-              break;
-          case 3: // Pausada
-              $totalPausadas++;
-              break;
-      }
+  if(strtolower($resultVacantes->status) == "ok"){
+      $listarVacantesCard = $resultVacantes->body;
   }
-}
 
-$vacanteController = new VacanteController();
-$empresaController = new EmpresaController();
-*/
-// 1. Obtener ID de la empresa de la URL
-/*
-$idEmpresa = $_GET['idEmpresa'] ?? null;
-$nombreEmpresa = "Empresa no encontrada";
-*/
-/*if ($idEmpresa) {
-    $resEmpresa = $empresaController->obtenerEmpresaPorId($idEmpresa);
-   if(strtolower($resEmpresa->status()) == "ok") {
-        // Ajusta 'nombreEmpresa' según el nombre real en tu base de datos
-        $nombreEmpresa = $resEmpresa->body['nombreEmpresa'] ?? "Nombre de Empresa";
-    }
-}*/
-// 2. Carga inicial de vacantes
-/*
-$listar = [];
-$resultVacantes = $vacanteController->listarVacantesPorEmpresa($idEmpresa);
-if(strtolower($resultVacantes->status) == "ok"){
-    $listar = $resultVacantes->body;
-}
+  $idUsuario = $_SESSION["idUsuarios"] ?? null;
+  $idPostulante = null;
+  $vacantesPostuladasMap = [];
 
-// 3. Lógica de Filtros (Estilo de tu compañero)
-if (isset($_GET["titulo"]) || isset($_GET["estado"]) || isset($_GET["modalidad"])) {
-    $titulo = trim($_GET["titulo"] ?? "");
-    $estado = trim($_GET["estado"] ?? "");
-    $modalidad = trim($_GET["modalidad"] ?? "");
+  if (!empty($idUsuario)) {
+    $resP = $postulanteController->ObtenerPostulantePorIdUsuario($idUsuario);
+    if ($resP->status == "ok" && !empty($resP->body)) {
+      $idPostulante = (int)$resP->body['idPostulante'];
 
-    $filtrado = $listar;
+      $resVacantesPostuladas = $postulacionesController->ListarVacantesPostuladasPorPostulante($idPostulante);
+      if (strtolower($resVacantesPostuladas->status) == "ok" && is_array($resVacantesPostuladas->body)) {
+        foreach ($resVacantesPostuladas->body as $idVacantePostulada) {
+          $vacantesPostuladasMap[(int)$idVacantePostulada] = true;
+        }
+      }
+    }
+  }
 
-    if (!empty($titulo)) {
-        $filtrado = array_filter($filtrado, function ($v) use ($titulo) {
-            return stripos($v["tituloVacante"], $titulo) !== false;
-        });
+  if(isset($_POST["btnPostularme"])){
+    $idVacante = (int)($_POST["idVacantePostular"] ?? 0);
+
+    if (empty($idPostulante)) {
+      echo "<div class='alert alert-warning'>Perfil no encontrado</div>";
+    } elseif (isset($vacantesPostuladasMap[$idVacante])) {
+      echo "<div class='alert alert-info'>Ya te postulaste a esta vacante</div>";
+    } else {
+      $postulacionObject = new Postulaciones();
+      $postulacionObject->set("Postulante_idPostulante", $idPostulante);
+      $postulacionObject->set("Vacante_idVacante", $idVacante);
+      $postulacionObject->set("EstadoPostulacion_idEstadoPostulacion", 1);
+
+      $result = $postulacionesController->InsertarPostulacion($postulacionObject);
+
+      if (strtolower($result->status) == 'ok') {
+        echo "<script>alert('¡Te has postulado con éxito!'); window.location.href='?cargar=VacantesListView';</script>";
+        exit;
+      } else {
+        echo "<div class='alert alert-danger'>Error al postularse: " . $result->message . "</div>";
+      }
     }
-    if (!empty($estado)) {
-        $filtrado = array_filter($filtrado, function ($v) use ($estado) {
-            return $v["idEstadoVacante"] == $estado;
-        });
-    }
-    if (!empty($modalidad)) {
-        $filtrado = array_filter($filtrado, function ($v) use ($modalidad) {
-            return $v["idModalidad"] == $modalidad;
-        });
-    }
-    $listar = array_values($filtrado);
-}
-*/
-// 4. Estadísticas
-/*
-$totalVacantes = count($listar);
-$abiertas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) == 1));
-$cerradas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) == 2));
-$pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) == 3));
-*/
+  }
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -324,7 +247,17 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
           <div class="posted-date">
             📅 Publicado: <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
           </div>
-
+              <?php $idEstado = (int)($vacantes['EstadoValidacionVacante_idEstadoValidacionVacante'] ?? 0); ?>
+              <?php $idVacanteActual = (int)($vacantes['idVacante'] ?? 0); ?>
+              <?php $yaPostulado = isset($vacantesPostuladasMap[$idVacanteActual]); ?>
+              <?php if ($idEstado === 1 && !$yaPostulado): ?>
+                      <form method="POST" action="?cargar=VacantesListView">
+                          <input type="hidden" name="idVacantePostular" value="<?php echo $idVacanteActual; ?>">
+                          <button type="submit" name="btnPostularme" class="btn btn-sm btn-success fw-bold px-3" onclick="return confirm('¿Confirmas tu postulación?')">Postularme</button>
+                      </form>
+              <?php elseif ($yaPostulado): ?>
+                      <span class="tag contract">Ya postulaste</span>
+              <?php endif; ?>
         </div>
       </div>
   <?php endforeach; ?>
@@ -338,11 +271,6 @@ $pausadas = count(array_filter($listar, fn($v) => ($v['idEstadoVacante'] ?? 0) =
           </div>
         </div>
       <?php endif; ?>
-
-
-
-
-
 
       <!-- Empty State (mostrar cuando no hay vacantes) -->
       <!--
