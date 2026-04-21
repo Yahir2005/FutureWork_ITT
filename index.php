@@ -58,16 +58,16 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FutureWork ITT - Iniciar Sesión</title>
+  <title>Klyvify - Iniciar Sesión</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="views/css/login.css">
  </head>
  <body>
   <div class="login-container"><div class="login-left">
-    <div class="logo"><span class="logo-text">FW</span>
+    <div class="logo"><span class="logo-text">Klyvify</span>
     </div>
-    <h1>FutureWork ITT</h1>
+    <h1>Klyvify</h1>
     <p>Plataforma de Vinculación Laboral del Instituto Tecnológico de Tehuacán</p>
     <div class="features">
      <div class="feature-item"><span class="feature-icon">🎓</span> <span>Conecta con egresados</span>
@@ -80,7 +80,7 @@
    </div><div class="login-right">
     <div class="login-header">
      <h2>Iniciar Sesión</h2>
-     <p>Accede a tu cuenta de FutureWork ITT</p>
+     <p>Accede a tu cuenta de Klyvify</p>
      <?php echo $errorMessage; ?>
     </div>
     
