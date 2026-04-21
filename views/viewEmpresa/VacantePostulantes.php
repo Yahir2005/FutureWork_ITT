@@ -17,42 +17,33 @@
   $totalEntrevistaProgramada = 0;            
 
 
-$vacanteId= $_GET['id'];
-$vacante = [];
-$vacanteEditar= $vacanteController->obtenerVacanteporId($vacanteId);
-if($vacanteEditar->status == 'ok'){
-    $vacante = $vacanteEditar->body[0];
-}else{
-    echo $vacanteEditar->message;
-}
-
-
-        // Obtener lista de postulaciones por vacante
-      $postulaciones = $postulacionesController->ListarPostulacionesPorVacante($vacanteId);
-     if($postulaciones->status == "ok"){
-      $listaPostulantes = $postulaciones->body;
-     }
+  $vacanteId= $_GET['id'];
+  $vacante = [];
+  $vacanteEditar= $vacanteController->obtenerVacanteporId($vacanteId);
+  if($vacanteEditar->status == 'ok'){
+      $vacante = $vacanteEditar->body[0];
+  }else{
+      echo $vacanteEditar->message;
+  }
+    // Obtener lista de postulaciones por vacante
+  $postulaciones = $postulacionesController->ListarPostulacionesPorVacante($vacanteId);
+  if($postulaciones->status == "ok"){
+    $listaPostulantes = $postulaciones->body;
+  }
   
-      // Obtener contadores (asumiendo que los métodos devuelven un objeto con propiedad body)
-      $resulttotalpostulaciones = $postulacionesController->contartotalPostulacionesPorVacante($vacanteId);
-      $resulttotalRevision = $postulacionesController->contartotalRevisionPorVacante($vacanteId);
-      $resulttotalAceptadas = $postulacionesController->contartotalAceptadasPorVacante($vacanteId);
-      $resulttotalEntrevistaProgramada = $postulacionesController->contartotalEntrevistaProgramadaPorVacante($vacanteId);
+  // Obtener contadores (asumiendo que los métodos devuelven un objeto con propiedad body)
+  $resulttotalpostulaciones = $postulacionesController->contartotalPostulacionesPorVacante($vacanteId);
+  $resulttotalRevision = $postulacionesController->contartotalRevisionPorVacante($vacanteId);
+  $resulttotalAceptadas = $postulacionesController->contartotalAceptadasPorVacante($vacanteId);
+  $resulttotalEntrevistaProgramada = $postulacionesController->contartotalEntrevistaProgramadaPorVacante($vacanteId);
 
-      // Asignar valores si existen
-      $totalPostulaciones = $resulttotalpostulaciones->body ?? 0;
-      $totalRevision = $resulttotalRevision->body ?? 0;
-      $totalAceptadas = $resulttotalAceptadas->body ?? 0;
-      $totalEntrevistaProgramada = $resulttotalEntrevistaProgramada->body ?? 0;
-
-
-
-
+  // Asignar valores si existen
+  $totalPostulaciones = $resulttotalpostulaciones->body ?? 0;
+  $totalRevision = $resulttotalRevision->body ?? 0;
+  $totalAceptadas = $resulttotalAceptadas->body ?? 0;
+  $totalEntrevistaProgramada = $resulttotalEntrevistaProgramada->body ?? 0;
 
 ?>
-
-
-
 <!doctype html>
 <html lang="es">
  <head>

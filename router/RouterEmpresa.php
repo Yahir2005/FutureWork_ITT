@@ -10,58 +10,58 @@ class RouterEmpresa{
         break;
 
         case "navbarEmpresa":
-            include_once __DIR__ . ('/../views/Empresa/navbarEmpresa.php');
+            include_once __DIR__ . ('/../views/viewEmpresa/navbarEmpresa.php');
         break;
         
         case 'VacantesView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'Home':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'VacantesListView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'EmpresasMenuView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
         
         case 'AcercaDeNosotrosView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'ContactoView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'VacantesAddView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         
         case 'VacantesEditView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'MisVacantesListView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'EmpresasListView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'VacantesUpdateView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'VacantePostulantes':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'PerfilEmpresaView':
-            include_once __DIR__ .('/../views/Empresa/'. $vista .'.php');
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
         case 'closeSession':

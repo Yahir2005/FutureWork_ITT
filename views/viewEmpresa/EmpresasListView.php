@@ -180,11 +180,6 @@ if (isset($_GET["buscar"])) {
               <div class="company-actions">
                 <a href="perfil-empresa.php?id=<?php echo $empresa['idEmpresas']; ?>" class="btn-profile">👁️ Ver Perfil</a>
                 <a href="vacantes-empresa.php?idEmpresa=<?php echo $empresa['idEmpresas']; ?>" class="btn-vacancies">💼 Ver Vacantes</a>
-                <a href="editar-empresa.php?id=<?php echo $empresa['idEmpresas']; ?>" class="btn-edit">✏️ Editar</a>
-                <form method="POST" action="eliminar-empresa.php" style="display:inline;">
-                  <input type="hidden" name="id" value="<?php echo $empresa['idEmpresas']; ?>">
-                  <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta empresa?')">🗑️ Eliminar</button>
-                </form>
               </div>
             </div>
           </div>

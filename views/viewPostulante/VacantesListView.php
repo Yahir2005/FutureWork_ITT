@@ -84,7 +84,6 @@
 ?>
 <!doctype html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,7 +98,6 @@
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
 </head>
-
 <body><!-- Header -->
   <header class="header">
     <div class="header-content"><!-- Stats Cards -->
@@ -134,16 +132,13 @@
           </div>
           <div class="stat-value">
             <?php echo $totalVacantesPausadas->body ?>
-
           </div><!-- Aquí PHP mostrará las pausadas -->
         </div>
       </div>
     </div>
   </header><!-- Main Container -->
   <main class="container">
-
     <!-- Aquí irán los mensajes de éxito o error desde PHP -->
-
     <!-- 
     <div class="alert alert-success">
       ✓ Vacante eliminada exitosamente
@@ -155,10 +150,8 @@
       ℹ No se encontraron vacantes con los filtros aplicados
     </div>
 -->
-
     <!-- Filter Section -->
     <!--
-
    <div class="filter-section">
     <h3 class="filter-title">🔍 Filtros de Búsqueda</h3>
     <form method="GET" action="" class="filter-form">
@@ -219,9 +212,6 @@
    </div>
 -->
 
-
-
-
 <?php if (count($listarVacantesCard) > 0): ?>
         <?php 
           $currentDate = date('Y-m-d');
@@ -237,7 +227,7 @@
         <div class="vacancy-header">
           <div class="vacancy-title">
             <h3> <?php echo htmlspecialchars($vacantes['titulo']); ?></h3>
-            <div class="vacancy-id">ID: 123</div>
+            <div class="vacancy-id">ID: <?php echo htmlspecialchars($vacantes['idVacante'] ?? 'N/A'); ?></div>
           </div>
             <span class="tag contract"> <?php echo htmlspecialchars($vacantes['estadoValidacionVacante']); ?></span>
         </div>
@@ -265,6 +255,8 @@
             📅 Publicado: <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
           </div>
               <?php $idEstado = (int)($vacantes['EstadoValidacionVacante_idEstadoValidacionVacante'] ?? 0); ?>
+              <?php $estadoTexto = strtolower(trim((string)($vacantes['estadoValidacionVacante'] ?? ''))); ?>
+              <?php if ($idEstado === 0 && $estadoTexto === 'abierta') { $idEstado = 1; } ?>
               <?php $idVacanteActual = (int)($vacantes['idVacante'] ?? 0); ?>
               <?php $yaPostulado = isset($vacantesPostuladasMap[$idVacanteActual]); ?>
               <?php if ($idEstado === 1 && !$yaPostulado): ?>
@@ -278,6 +270,10 @@
                     <input type="hidden" name="idVacanteDespostular" value="<?php echo $idVacanteActual; ?>">
                     <button type="submit" name="btnDespostularme" class="btn btn-sm btn-danger fw-bold px-3" onclick="return confirm('¿Deseas retirar tu postulación de esta vacante?')">Despostularme</button>
                       </form>
+              <?php else: ?>
+                      <button type="button" class="btn btn-sm btn-secondary fw-bold px-3" disabled>
+                        <?php echo $idEstado === 2 ? 'Vacante cerrada' : 'No disponible'; ?>
+                      </button>
               <?php endif; ?>
         </div>
       </div>
@@ -292,10 +288,8 @@
           </div>
         </div>
       <?php endif; ?>
-
       <!-- Empty State (mostrar cuando no hay vacantes) -->
       <!--
-
   /**se muestra cuando no hay vacantes  */
   <div class="empty-state">
      <div class="empty-state-icon">
@@ -306,10 +300,7 @@
     </div>
    </div>
 -->
-
-
   </main>
   <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9a1535ac6670b1f2',t:'MTc2MzYxMzAwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
 </body>
-
 </html>
