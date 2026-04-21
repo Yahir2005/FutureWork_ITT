@@ -52,42 +52,68 @@
                 $empresa->set("sitioWeb", $_POST["sitioWeb"]);
 
                 $resultEmpresa = $controllerEmpresa->insertarEmpresas($empresa);
-                /*
                 if ($resultEmpresa->status === "ok") {
-                    $empresaIdResponse = $controllerEmpresa->obtenerUltimaEmpresaId();
-                    $empresaId = !empty($empresaIdResponse->body) ? (int)$empresaIdResponse->body : 0;
                     $mensaje = "success";
-                    //enviar
-                    // 4. Lógica de Imagen (Usando las 2 tablas)
-                    if(isset($_FILES["imagen"])){
-                        $nombreImg = $_FILES["imagen"]["name"];
-                        $ruta = $_FILES["imagen"]["tmp_name"];
-                        $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION)); 
-                        $destino   = "Files/" . $nombreImg;
-                        if($tipoImagen == "jpeg" || $tipoImagen == "png"){
-                             if(move_uploaded_file($ruta,$destino)){
-                                $imagenObj->set("rutaImagenPerfilEmpresa",$destino);
-                                $imagenObj->set("Nombre",$nombreImg);
-                                $resultImagen=$controllerImagenEmpresaPerfil->subirImagenPerfilEmpresa($imagenObj);
 
-                                if($resultImagen->status == "ok"){
-                                     echo "<div class='alert alert-success' role='alert'> Registro exitoso</div>";
-                                }else{
-                                    echo "<div class='alert alert-danger' role='alert'>
-                                    Error al registrar".$result->message;" 
-                                    </div>";
-                                }
+                    // 4. Lógica de imagen opcional (archivo + registro de ruta + relación con empresa)
+                    if (isset($_FILES["imagen"]) && !empty($_FILES["imagen"]["name"]) && $_FILES["imagen"]["error"] === UPLOAD_ERR_OK) {
+                        $nombreOriginal = $_FILES["imagen"]["name"];
+                        $rutaTemporal = $_FILES["imagen"]["tmp_name"];
+                        $tipoImagen = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
+                        $tiposPermitidos = ["jpg", "jpeg", "png", "webp"];
+
+                        if (in_array($tipoImagen, $tiposPermitidos, true)) {
+                            $carpetaFisica = __DIR__ . "/../Files/PerfilEmpresa/";
+                            if (!is_dir($carpetaFisica)) {
+                                mkdir($carpetaFisica, 0775, true);
                             }
-                        }else{
-                            echo "<div class='alert alert-danger' role='alert'>
-                            No se acepta ese formato 
-                            </div>";
+
+                            $nombreGuardado = "empresa_" . $usuarioId . "_" . time() . "." . $tipoImagen;
+                            $rutaFisicaDestino = $carpetaFisica . $nombreGuardado;
+                            $rutaRelativaGuardada = "views/Files/PerfilEmpresa/" . $nombreGuardado;
+
+                            if (move_uploaded_file($rutaTemporal, $rutaFisicaDestino)) {
+                                $imagenObj->set("rutaImagenPerfilEmpresa", $rutaRelativaGuardada);
+                                $imagenObj->set("Nombre", $nombreGuardado);
+                                $resultImagen = $controllerImagenEmpresaPerfil->subirImagenPerfilEmpresa($imagenObj);
+
+                                if ($resultImagen->status === "ok" && !empty($resultImagen->body)) {
+                                    $empresaCreadaResp = $controllerEmpresa->obtenerEmpresaPorIdUsuario($usuarioId);
+                                    $empresaId = 0;
+
+                                    if ($empresaCreadaResp->status === "ok" && !empty($empresaCreadaResp->body) && isset($empresaCreadaResp->body[0]["idEmpresas"])) {
+                                        $empresaId = (int)$empresaCreadaResp->body[0]["idEmpresas"];
+                                    }
+
+                                    if ($empresaId > 0) {
+                                        $empresaImagenPerfilObj->set("Empresas_idEmpresas", $empresaId);
+                                        $empresaImagenPerfilObj->set("EmpresaPerfilImagen_idEmpresaPerfilImagen", (int)$resultImagen->body);
+                                        $resultRelacion = $controllerEmpresaImagenPerfil->InsertarImagenPerfilEmpresa($empresaImagenPerfilObj);
+
+                                        if ($resultRelacion->status !== "ok") {
+                                            $mensaje = "warning_imagen";
+                                            $detalleMensaje = "La empresa se registró, pero no se pudo relacionar la imagen.";
+                                        }
+                                    } else {
+                                        $mensaje = "warning_imagen";
+                                        $detalleMensaje = "La empresa se registró, pero no se encontró su ID para asociar la imagen.";
+                                    }
+                                } else {
+                                    $mensaje = "warning_imagen";
+                                    $detalleMensaje = "La empresa se registró, pero falló el registro de la imagen en base de datos.";
+                                }
+                            } else {
+                                $mensaje = "warning_imagen";
+                                $detalleMensaje = "La empresa se registró, pero no se pudo guardar el archivo de imagen.";
+                            }
+                        } else {
+                            $mensaje = "warning_imagen";
+                            $detalleMensaje = "Formato de imagen no permitido. Usa: jpg, jpeg, png o webp.";
                         }
                     }
                 } else {
                     $mensaje = "error_empresa";
                 }
-                */
             } else {
                 $mensaje = "error_usuario";
             }
