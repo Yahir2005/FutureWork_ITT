@@ -52,42 +52,52 @@
                 $empresa->set("sitioWeb", $_POST["sitioWeb"]);
 
                 $resultEmpresa = $controllerEmpresa->insertarEmpresas($empresa);
-                /*
+                
+                
                 if ($resultEmpresa->status === "ok") {
                     $empresaIdResponse = $controllerEmpresa->obtenerUltimaEmpresaId();
                     $empresaId = !empty($empresaIdResponse->body) ? (int)$empresaIdResponse->body : 0;
                     $mensaje = "success";
                     //enviar
-                    // 4. Lógica de Imagen (Usando las 2 tablas)
-                    if(isset($_FILES["imagen"])){
+                    // 4. Lógica de Imagen (Usando las 2 tablas) = Registrar imagen de perfil de la empresa
+                    if(isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === 0 && is_uploaded_file($_FILES["imagen"]["tmp_name"])){
                         $nombreImg = $_FILES["imagen"]["name"];
                         $ruta = $_FILES["imagen"]["tmp_name"];
-                        $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION)); 
-                        $destino   = "Files/" . $nombreImg;
-                        if($tipoImagen == "jpeg" || $tipoImagen == "png"){
-                             if(move_uploaded_file($ruta,$destino)){
-                                $imagenObj->set("rutaImagenPerfilEmpresa",$destino);
+                        $tipoImagen = strtolower(pathinfo($nombreImg, PATHINFO_EXTENSION));
+                        $nombreImg = time() . "_" . basename($_FILES["imagen"]["name"]);
+                        $destino = __DIR__ . "/../Files/ImagenesEmpresa/" . $nombreImg;
+                        if($tipoImagen == "jpeg" || $tipoImagen == "png" || $tipoImagen == "jpg"){
+                            if(move_uploaded_file($ruta,$destino)){
+                                $rutaBD = "views/Files/ImagenesEmpresa/" . $nombreImg;
+                                $imagenObj->set("rutaImagenPerfilEmpresa", $rutaBD);
                                 $imagenObj->set("Nombre",$nombreImg);
                                 $resultImagen=$controllerImagenEmpresaPerfil->subirImagenPerfilEmpresa($imagenObj);
+                                $imagenId = $resultImagen->body;
+
+                                $empresaImagenPerfilObj->set("Empresas_idEmpresas", $empresaId);
+                                $empresaImagenPerfilObj->set("EmpresaPerfilImagen_idEmpresaPerfilImagen", $imagenId);
+
+                                $resultRelacion = $controllerEmpresaImagenPerfil->InsertarImagenPerfilEmpresa($empresaImagenPerfilObj);
 
                                 if($resultImagen->status == "ok"){
-                                     echo "<div class='alert alert-success' role='alert'> Registro exitoso</div>";
+                                    echo "<div class='alert alert-success' role='alert'> Registro exitoso</div>";
                                 }else{
                                     echo "<div class='alert alert-danger' role='alert'>
-                                    Error al registrar".$result->message;" 
+                                    Error al registrar ".$resultImagen->message."
                                     </div>";
                                 }
                             }
                         }else{
                             echo "<div class='alert alert-danger' role='alert'>
-                            No se acepta ese formato 
+                            No se acepta ese formato
                             </div>";
                         }
                     }
                 } else {
                     $mensaje = "error_empresa";
                 }
-                */
+                
+                
             } else {
                 $mensaje = "error_usuario";
             }
@@ -168,7 +178,7 @@
           </div>
          </div>
          
-         <input type="hidden" name="Rol_idRol" value="1"> 
+         <input type="hidden" name="Rol_idRol" value="1">
 
          <h3 class="section-title" style="margin-top: 30px;">🏢 Información de la Empresa</h3>
          <div class="form-group"><label for="nombreEmpresa" class="form-label"> Nombre de la Empresa <span class="required">*</span> </label> <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="form-input" placeholder="Ej: Tecnología Avanzada S.A. de C.V." maxlength="45" required> <span class="error-message" id="errorNombreEmpresa"></span>
@@ -187,10 +197,10 @@
         <h3 class="section-title" style="margin-top: 30px;">📷 Registrar Imagen</h3>
         <div class="form-group">
             <label for="imagen" class="form-label"> Imagen de perfil </label>
-            <input type="file" id="imagen" class="form-input" name="imagen" accept=".jpg,.jpeg,.png,.webp">
+            <input type="file" id="imagen" class="form-input" name="imagen" accept=".jpg,.jpeg,.png">
             <span class="form-help">Opcional</span>
         </div>
-         <div class="form-actions"> 
+         <div class="form-actions">
              <button type="submit" name="enviar" class="btn-submit"> ✅ Registrar Empresa </button>
          </div>
        </form>
@@ -207,7 +217,7 @@
         input.type = 'password'; button.textContent = '👁️';
       }
     }
-
+/*
     document.getElementById('empresaForm').addEventListener('submit', function(e) {
       document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
       let hasError = false;
@@ -220,7 +230,7 @@
         e.preventDefault(); // Detiene el envío si la validación falla
         return;
       }
-    });
+    });*/
   </script>
  </body>
 </html>
