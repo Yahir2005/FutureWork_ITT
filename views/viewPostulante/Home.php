@@ -6,7 +6,7 @@
   </nav><!-- Contenido Principal -->
   <main class="main-content">
    <section class="welcome-section">
-    <h1>¡Bienvenido a FutureWork ITT! 👋</h1>
+    <h1>¡Bienvenido a Klivify! 👋</h1>
     <p>Estás navegando como invitado. Explora las oportunidades laborales disponibles y conoce las empresas que buscan talento del Instituto Tecnológico de Tehuacán. Para acceder a todas las funcionalidades, inicia sesión o regístrate.</p>
    </section>
    <div class="info-cards">
