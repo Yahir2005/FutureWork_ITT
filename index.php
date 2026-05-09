@@ -65,10 +65,12 @@
  </head>
  <body>
   <div class="login-container"><div class="login-left">
-    <div class="logo"><span class="logo-text">Klyvify</span>
-    </div>
+    <div class="logo">
+    <!-- El nombre del archivo debe ser exacto (mayúsculas y espacios incluidos) -->
+    <img src="LOGO KLIVYFY.png" alt="Logo" style="width: 80%; height: auto;">
+</div>
     <h1>Klyvify</h1>
-    <p>Plataforma de Vinculación Laboral del Instituto Tecnológico de Tehuacán</p>
+    <p>Sistema Inteligente de Vinculacion Laboral y Gestion de Talento</p>
     <div class="features">
      <div class="feature-item"><span class="feature-icon">🎓</span> <span>Conecta con egresados</span>
      </div>
