@@ -11,7 +11,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FutureWork ITT - Inicio Invitado</title>
+  <title>Klivify - Inicio Invitado</title>
     <link rel="stylesheet" href="css/navbar.css">
   <style>
     
@@ -25,8 +25,8 @@
   <nav class="navbar">
    <div class="navbar-container"><!-- Logo --> <a href="index.php" class="navbar-logo">
      <div class="logo-circle">
-      FW
-     </div><span class="logo-text">FutureWork ITT</span> </a> <!-- Menú de Navegación -->
+      k
+     </div><span class="logo-text">Klivify</span> </a> <!-- Menú de Navegación -->
     <ul class="navbar-menu">
      <li><a href="index.php" class="active">🏠 Inicio</a></li>
      <li><a href="vacantes.php">💼 Vacantes</a></li>
@@ -55,7 +55,7 @@
   </nav><!-- Contenido Principal -->
   <main class="main-content">
    <section class="welcome-section">
-    <h1>¡Bienvenido a FutureWork ITT! 👋</h1>
+    <h1>¡Bienvenido a Klivify! 👋</h1>
     <p>Estás navegando como invitado. Explora las oportunidades laborales disponibles y conoce las empresas que buscan talento del Instituto Tecnológico de Tehuacán. Para acceder a todas las funcionalidades, inicia sesión o regístrate.</p>
    </section>
    <div class="info-cards">
