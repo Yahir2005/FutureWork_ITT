@@ -5,262 +5,417 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
 
-// ✅ Protege la vista (si no hay sesión, manda al login o a donde corresponda)
+// ✅ Protección de sesión
 $idUsuario = $_SESSION["idUsuarios"] ?? null;
+
 if (!$idUsuario) {
-    // Ajusta esta ruta si tu login está en otra ubicación
     header("Location: /FutureWork_ITT/");
     exit;
 }
 
 /* Variables */
 $datosUsuario = [];
-$datosPostulante = [];   // por ahora vacío hasta ubicar el módulo correcto
-$nombreCarrera = "No asignada";
+$datosPostulante = [];
+$nombreCarrera = "Ingeniería en Sistemas Computacionales";
 
 /* Controladores */
 $usuarioController = new UsuarioController();
 
-/* 1) Usuario */
+/* Usuario */
 $resultUsuario = $usuarioController->obtenerUsuarioPorId($idUsuario);
+
 if ($resultUsuario && strtolower($resultUsuario->status ?? '') === "ok") {
     $datosUsuario = (array) $resultUsuario->body;
 }
 ?>
 
-
-
-
 <!doctype html>
 <html lang="es">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FutureWork ITT - Perfil de Postulante</title>
+  <title>Klivify - Perfil Profesional</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/PerfilPostulanteView.css">
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body><!-- Header -->
-  <header class="header">
-   <div class="header-content">
-    <div class="header-top">
-     <div class="header-text">
-      <h1>👤 Mi Perfil</h1>
-      <p>Información personal y profesional</p>
-     </div><a href="editar-perfil-postulante.html" class="btn-edit-profile">✏️ Editar Perfil</a>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @view-transition {
+      navigation: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Fondo decorativo -->
+<div class="bg-orb orb-1"></div>
+<div class="bg-orb orb-2"></div>
+<div class="bg-orb orb-3"></div>
+
+<!-- HEADER -->
+<header class="header">
+
+  <div class="header-content">
+
+    <div class="header-left">
+      <div class="hero-badge">
+        ✨ Perfil Inteligente Klivify
+      </div>
+
+      <h1>
+        Bienvenido,
+        <span>
+          <?php echo htmlspecialchars($datosUsuario["nombreCompleto"] ?? "Usuario"); ?>
+        </span>
+      </h1>
+
+      <p>
+        Administra tu información profesional, habilidades y postulaciones desde una experiencia moderna e intuitiva.
+      </p>
+
+      <div class="hero-buttons">
+
+        <!-- ✅ REDIRECCION EDITAR PERFIL -->
+        <a href="?cargar=EditarPerfilPostulanteView" class="btn-primary">
+          ✏️ Editar Perfil
+        </a>
+
+        <!-- ✅ REDIRECCION VACANTES -->
+        <a href="?cargar=VacantesListView" class="btn-secondary">
+          🚀 Explorar Vacantes
+        </a>
+
+      </div>
     </div>
-   </div>
-  </header><!-- Main Container -->
-  <main class="container"><!-- Alert Messages --> <!-- 
-    <div class="alert alert-success">
-      ✓ Tu perfil ha sido actualizado exitosamente
+
+    <!-- Avatar 3D -->
+    <div class="hero-avatar">
+      <div class="avatar-circle">
+        👨‍💻
+      </div>
     </div>
-    <div class="alert alert-info">
-      ℹ Completa tu perfil al 100% para aumentar tus oportunidades
-    </div>
-    --> <!-- Profile Grid -->
-   <div class="profile-grid"><!-- Profile Card (Sidebar) -->
-    <aside class="profile-card"><!-- Imagen de Perfil -->
-     <div class="profile-image-container"><!-- Si hay imagen: --> <!-- <img src="URL_DE_LA_IMAGEN" alt="Foto de perfil" class="profile-image"> --> <!-- Si NO hay imagen (placeholder): -->
-      <div class="profile-image-placeholder">
-       👤
-      </div>
-     </div><!-- Nombre Completo (nombreCompleto de Usuarios) -->
-     <h2 class="user-name"><!-- nombreCompleto --></h2><!-- Carrera (nombreCarrera de Carrera) -->
-     <p class="user-career"><!-- nombreCarrera --></p><!-- Estado --> <span class="user-status"> ✓ Perfil Activo </span> <!-- Estadísticas -->
-     <div class="profile-stats">
-      <div class="stat-item">
-       <div class="stat-value">
-        <!-- Número -->
-       </div>
-       <div class="stat-label">
-        Postulaciones
-       </div>
-      </div>
-      <div class="stat-item">
-       <div class="stat-value">
-        <!-- Número -->
-       </div>
-       <div class="stat-label">
-        En Proceso
-       </div>
-      </div>
-     </div><!-- Acciones -->
-     <div class="profile-actions"><a href="buscar-vacantes.html" class="btn-action btn-primary">🔍 Buscar Vacantes</a> <a href="mis-postulaciones.html" class="btn-action btn-secondary">📋 Mis Postulaciones</a> <a href="<!-- cvPath -->" class="btn-action btn-success" download>📄 Descargar CV</a>
-     </div>
-    </aside><!-- Info Section (Main Content) -->
-    <div class="info-section"><!-- Información Personal -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">📋 Información Personal</h3><a href="editar-perfil-postulante.html" class="btn-edit-section">✏️ Editar</a>
-      </div>
-      <div class="info-grid"><!-- Nombre Completo -->
-       <div class="info-item"><span class="info-label">Nombre Completo</span> <span class="info-value"><!-- nombreCompleto --></span>
-       </div><!-- Email -->
-       <div class="info-item"><span class="info-label">Correo Electrónico</span> <span class="info-value"> <a href="mailto:<!-- email -->">📧 <!-- email --></a> </span>
-       </div><!-- Tel��fono -->
-       <div class="info-item"><span class="info-label">Teléfono</span> <span class="info-value">📞 <!-- telefono --></span>
-       </div><!-- Fecha de Nacimiento -->
-       <div class="info-item"><span class="info-label">Fecha de Nacimiento</span> <span class="info-value">🎂 <!-- fechaNacimiento --></span>
-       </div><!-- Dirección -->
-       <div class="info-item"><span class="info-label">Dirección</span> <span class="info-value">📍 <!-- direccion --></span>
-       </div><!-- Fecha de Registro -->
-       <div class="info-item"><span class="info-label">Miembro Desde</span> <span class="info-value">📅 <!-- fechaRegistro --></span>
-       </div>
-      </div>
-     </div><!-- Información Académica -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">🎓 Información Académica</h3><a href="editar-perfil-postulante.html" class="btn-edit-section">✏️ Editar</a>
-      </div>
-      <div class="info-grid"><!-- Carrera (nombreCarrera de Carrera) -->
-       <div class="info-item"><span class="info-label">Carrera</span> <span class="info-value"><!-- nombreCarrera --></span>
-       </div><!-- ID de Carrera (Carrera_idCarrera) -->
-       <div class="info-item"><span class="info-label">ID de Carrera</span> <span class="info-value">🆔 #<!-- Carrera_idCarrera --></span>
-       </div><!-- Número de Control (numeroControl de Postulante) -->
-       <div class="info-item"><span class="info-label">Número de Control</span> <span class="info-value">🎓 <!-- numeroControl --></span>
-       </div><!-- CV Path (cvPath de Postulante) -->
-       <div class="info-item"><span class="info-label">Currículum Vitae</span> <span class="info-value"> <!-- Si hay CV: --> <!-- <a href="<!-- cvPath -->" target="_blank"&gt;📄 Ver CV --&gt; <!-- Si NO hay CV: --> <span style="color: #6c757d;">No disponible</span> </span>
-       </div>
-      </div>
-     </div><!-- Habilidades -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">💡 Habilidades y Competencias</h3><a href="editar-perfil-postulante.html" class="btn-edit-section">✏️ Editar</a>
-      </div>
-      <div class="skills-container"><!-- Ejemplo de habilidades (se generarían dinámicamente) --> <!--
-            <span class="skill-tag">JavaScript</span>
-            <span class="skill-tag">React</span>
-            <span class="skill-tag">Node.js</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">Trabajo en Equipo</span>
-            <span class="skill-tag">Liderazgo</span>
-            <span class="skill-tag">Comunicación</span>
-            --> <!-- Empty State -->
-       <div class="empty-state" style="width: 100%;">
-        <div class="empty-state-icon">
-         💡
+
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="container">
+
+  <div class="profile-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar-card">
+
+      <div class="profile-image-container">
+
+        <div class="profile-image-placeholder">
+          👤
         </div>
-        <p>No has agregado habilidades aún</p><a href="editar-perfil-postulante.html" class="btn-action btn-primary">➕ Agregar Habilidades</a>
-       </div>
+
       </div>
-     </div><!-- Experiencia Laboral -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">💼 Experiencia Laboral</h3><a href="editar-perfil-postulante.html" class="btn-edit-section">✏️ Editar</a>
-      </div>
-      <div class="experience-list"><!-- Ejemplo de experiencia (se generaría dinámicamente) --> <!--
-            <div class="experience-item">
-              <div class="experience-header">
-                <div class="experience-title">
-                  <h4>Desarrollador Frontend</h4>
-                  <p class="experience-company">Tech Solutions SA de CV</p>
-                </div>
-                <span class="experience-period">📅 Ene 2023 - Actualidad</span>
-              </div>
-              <p class="experience-description">
-                Desarrollo de interfaces de usuario responsivas utilizando React y TypeScript. 
-                Colaboración con equipos multidisciplinarios para implementar nuevas funcionalidades.
-              </p>
-            </div>
-            --> <!-- Empty State -->
-       <div class="empty-state">
-        <div class="empty-state-icon">
-         💼
+
+      <h2 class="user-name">
+        <?php echo htmlspecialchars($datosUsuario["nombreCompleto"] ?? "Usuario"); ?>
+      </h2>
+
+      <p class="user-career">
+        🎓 <?php echo htmlspecialchars($nombreCarrera); ?>
+      </p>
+
+      <span class="profile-status">
+        ✓ Perfil Activo
+      </span>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <h3>12</h3>
+          <p>Postulaciones</p>
         </div>
-        <p>No has agregado experiencia laboral aún</p><a href="editar-perfil-postulante.html" class="btn-action btn-primary">➕ Agregar Experiencia</a>
-       </div>
-      </div>
-     </div><!-- Idiomas -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">🌐 Idiomas</h3><a href="editar-perfil-postulante.html" class="btn-edit-section">✏️ Editar</a>
-      </div>
-      <div class="languages-list"><!-- Ejemplo de idiomas (se generarían dinámicamente) --> <!--
-            <div class="language-item">
-              <div class="language-name">Español</div>
-              <div class="language-level">Nativo</div>
-            </div>
-            <div class="language-item">
-              <div class="language-name">Inglés</div>
-              <div class="language-level">Avanzado</div>
-            </div>
-            <div class="language-item">
-              <div class="language-name">Francés</div>
-              <div class="language-level">Intermedio</div>
-            </div>
-            --> <!-- Empty State -->
-       <div class="empty-state" style="grid-column: 1 / -1;">
-        <div class="empty-state-icon">
-         🌐
+
+        <div class="stat-card">
+          <h3>4</h3>
+          <p>Entrevistas</p>
         </div>
-        <p>No has agregado idiomas aún</p><a href="editar-perfil-postulante.html" class="btn-action btn-primary">➕ Agregar Idiomas</a>
-       </div>
+
       </div>
-     </div><!-- Certificaciones -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">🏆 Certificaciones</h3><a href="editar-perfil-postulante.html" class="btn-edit-section">✏️ Editar</a>
+
+      <!-- Acciones -->
+      <div class="sidebar-actions">
+
+        <!-- ✅ REDIRECCION VACANTES -->
+        <a href="?cargar=VacantesListView" class="sidebar-btn primary">
+          🔍 Buscar Vacantes
+        </a>
+
+        <!-- ✅ REDIRECCION POSTULACIONES -->
+        <a href="?cargar=MisPostulacionesView" class="sidebar-btn secondary">
+          📋 Mis Postulaciones
+        </a>
+
+        <a href="#" class="sidebar-btn success">
+          📄 Descargar CV
+        </a>
+
       </div>
-      <div class="certifications-list"><!-- Ejemplo de certificaciones (se generarían dinámicamente) --> <!--
-            <div class="certification-item">
-              <div class="certification-info">
-                <h4>AWS Certified Solutions Architect</h4>
-                <p>Amazon Web Services</p>
-              </div>
-              <span class="certification-date">📅 Dic 2023</span>
-            </div>
-            <div class="certification-item">
-              <div class="certification-info">
-                <h4>Professional Scrum Master I</h4>
-                <p>Scrum.org</p>
-              </div>
-              <span class="certification-date">📅 Jun 2023</span>
-            </div>
-            --> <!-- Empty State -->
-       <div class="empty-state">
-        <div class="empty-state-icon">
-         🏆
+
+    </aside>
+
+    <!-- CONTENT -->
+    <section class="content-section">
+
+      <!-- PERSONAL -->
+      <div class="glass-card">
+
+        <div class="card-header">
+          <h3>📋 Información Personal</h3>
+
+          <!-- ✅ REDIRECCION -->
+          <a href="?cargar=EditarPerfilPostulanteView" class="edit-btn">
+            ✏️ Editar
+          </a>
         </div>
-        <p>No has agregado certificaciones aún</p><a href="editar-perfil-postulante.html" class="btn-action btn-primary">➕ Agregar Certificaciones</a>
-       </div>
-      </div>
-     </div><!-- Postulaciones Recientes -->
-     <div class="info-card">
-      <div class="info-card-header">
-       <h3 class="info-card-title">📨 Postulaciones Recientes</h3><a href="mis-postulaciones.html" class="btn-edit-section">Ver Todas</a>
-      </div>
-      <div class="applications-list"><!-- Ejemplo de postulaciones (se generarían dinámicamente) --> <!--
-            <div class="application-item">
-              <div class="application-header">
-                <div class="application-title">
-                  <h4>Desarrollador Full Stack</h4>
-                  <p class="application-company">Tech Innovations SA</p>
-                </div>
-                <span class="application-status status-reviewing">🔍 En Revisión</span>
-              </div>
-              <div class="application-details">
-                <span>📅 Postulado: 15/01/2024</span>
-                <span>📍 Tijuana, BC</span>
-                <span>💰 $25,000 - $35,000</span>
-              </div>
-            </div>
-            --> <!-- Empty State -->
-       <div class="empty-state">
-        <div class="empty-state-icon">
-         📭
+
+        <div class="info-grid">
+
+          <div class="info-item">
+            <span class="label">Nombre Completo</span>
+            <span class="value">
+              <?php echo htmlspecialchars($datosUsuario["nombreCompleto"] ?? "No disponible"); ?>
+            </span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Correo Electrónico</span>
+
+            <span class="value">
+              📧 <?php echo htmlspecialchars($datosUsuario["correo"] ?? "correo@klivify.com"); ?>
+            </span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Teléfono</span>
+            <span class="value">
+              📞 2381705916
+            </span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Dirección</span>
+            <span class="value">
+              📍 Tehuacán, Puebla, México
+            </span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Miembro Desde</span>
+            <span class="value">
+              📅 2025
+            </span>
+          </div>
+
         </div>
-        <p>No has realizado postulaciones aún</p><a href="buscar-vacantes.html" class="btn-action btn-primary">🔍 Buscar Vacantes</a>
-       </div>
+
       </div>
-     </div>
-    </div>
-   </div>
-  </main>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a1d7d8850196dba',t:'MTc2MzY5OTgzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+      <!-- ACADEMICO -->
+      <div class="glass-card">
+
+        <div class="card-header">
+          <h3>🎓 Información Académica</h3>
+
+          <a href="?cargar=EditarPerfilPostulanteView" class="edit-btn">
+            ✏️ Editar
+          </a>
+        </div>
+
+        <div class="info-grid">
+
+          <div class="info-item">
+            <span class="label">Carrera</span>
+            <span class="value">
+              <?php echo htmlspecialchars($nombreCarrera); ?>
+            </span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Número de Control</span>
+            <span class="value">
+              🎓 22123456
+            </span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Estado Académico</span>
+            <span class="value">
+              ✅ Activo
+            </span>
+          </div>
+
+          <div class="info-item">
+            <span class="label">Currículum</span>
+            <span class="value">
+              📄 Disponible
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- HABILIDADES -->
+      <div class="glass-card">
+
+        <div class="card-header">
+          <h3>💡 Habilidades</h3>
+
+          <a href="?cargar=EditarPerfilPostulanteView" class="edit-btn">
+            ➕ Agregar
+          </a>
+        </div>
+
+        <div class="skills-container">
+
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">PHP</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">UI/UX</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Tailwind</span>
+
+        </div>
+
+      </div>
+
+      <!-- EXPERIENCIA -->
+      <div class="glass-card">
+
+        <div class="card-header">
+          <h3>💼 Experiencia Profesional</h3>
+
+          <a href="?cargar=EditarPerfilPostulanteView" class="edit-btn">
+            ➕ Agregar
+          </a>
+        </div>
+
+        <div class="timeline">
+
+          <div class="timeline-item">
+
+            <div class="timeline-icon">
+              🚀
+            </div>
+
+            <div class="timeline-content">
+              <h4>Frontend Developer</h4>
+              <p>Klivify Labs</p>
+              <span>2024 - Actualidad</span>
+            </div>
+
+          </div>
+
+          <div class="timeline-item">
+
+            <div class="timeline-icon">
+              💻
+            </div>
+
+            <div class="timeline-content">
+              <h4>UI Designer</h4>
+              <p>Creative Studio</p>
+              <span>2023 - 2024</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CERTIFICACIONES -->
+      <div class="glass-card">
+
+        <div class="card-header">
+          <h3>🏆 Certificaciones</h3>
+
+          <a href="?cargar=EditarPerfilPostulanteView" class="edit-btn">
+            ➕ Agregar
+          </a>
+        </div>
+
+        <div class="certifications-grid">
+
+          <div class="cert-card">
+            🧠 JavaScript Advanced
+          </div>
+
+          <div class="cert-card">
+            ☁️ AWS Cloud
+          </div>
+
+          <div class="cert-card">
+            🎨 UI/UX Professional
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- POSTULACIONES -->
+      <div class="glass-card">
+
+        <div class="card-header">
+          <h3>📨 Postulaciones Recientes</h3>
+
+          <a href="?cargar=MisPostulacionesView" class="edit-btn">
+            Ver Todas
+          </a>
+        </div>
+
+        <div class="applications-list">
+
+          <div class="application-card">
+
+            <div>
+              <h4>Frontend Developer</h4>
+              <p>Klivify Tech</p>
+            </div>
+
+            <span class="status reviewing">
+              🔍 En revisión
+            </span>
+
+          </div>
+
+          <div class="application-card">
+
+            <div>
+              <h4>Diseñador UX/UI</h4>
+              <p>Creative Labs</p>
+            </div>
+
+            <span class="status accepted">
+              ✅ Aceptada
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+</body>
 </html>

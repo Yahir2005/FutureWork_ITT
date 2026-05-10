@@ -63,7 +63,12 @@ class RouterPostulante{
                     //header("Location:../index.php");
                     //exit();
         break;
+
+        case 'EditarPerfilPostulanteView':
+            include __DIR__ .('/../views/viewPostulante/'.$vista.'.php');
+        break;
         }
+        
         
     }
      public function validarGET($variable){
