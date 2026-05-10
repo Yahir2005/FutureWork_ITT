@@ -107,19 +107,7 @@ new VacanteController();
 
         </div>
 
-        <div class="header-actions">
-
-            <a
-            href="agregar-empresa.php"
-            class="btn-add">
-
-                <i class="fa-solid fa-plus"></i>
-
-                Registrar Empresa
-
-            </a>
-
-        </div>
+        
 
     </div>
 
