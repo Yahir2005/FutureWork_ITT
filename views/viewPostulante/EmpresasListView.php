@@ -3,257 +3,599 @@ require_once __DIR__ . '/../../usecase/Empresa/EmpresaController.php';
 require_once __DIR__ . '/../../usecase/Lookup_Tables/EstadoValidacionEmpresa/EstadoValidacionEmpresaController.php';
 require_once __DIR__ . '/../../usecase/Vacantes/VacanteController.php';
 
-// --- Validaciones ---
+/* =========================
+   VALIDACIONES
+========================= */
+
 $listarValidaciones = array();
-$estadoValidacionEmpresaController = new EstadoValidacionEmpresaController();
-$resultValidaciones = $estadoValidacionEmpresaController->ListarValidacionesEmpresa();
+
+$estadoValidacionEmpresaController =
+new EstadoValidacionEmpresaController();
+
+$resultValidaciones =
+$estadoValidacionEmpresaController
+->ListarValidacionesEmpresa();
+
 if(strtolower($resultValidaciones->status) == "ok"){
-  foreach($resultValidaciones->body as $estado){
-    $listarValidaciones[$estado["idEstadoValidacionEmpresa"]] = $estado["estadoValidacionEmpresa"];
-  }
+
+    foreach($resultValidaciones->body as $estado){
+
+        $listarValidaciones[
+        $estado["idEstadoValidacionEmpresa"]
+        ] = $estado["estadoValidacionEmpresa"];
+
+    }
+
 }
 
-// --- Empresas ---
+/* =========================
+   EMPRESAS
+========================= */
+
 $controller = new EmpresaController();
+
 $listar = array();
-$resultEmpresas = $controller->listarEmpresas(); 
+
+$resultEmpresas =
+$controller->listarEmpresas();
+
 if(strtolower($resultEmpresas->status) == "ok"){
-  $listar = $resultEmpresas->body;
+
+    $listar = $resultEmpresas->body;
+
 }
 
-// --- Vacantes ---
-$vacanteController = new VacanteController();
+/* =========================
+   VACANTES
+========================= */
 
-// --- Filtros (PHP Fallback) ---
-// Se mantiene el filtrado PHP por si JavaScript falla o para la carga inicial con parámetros
-if (isset($_GET["buscar"])) {
+$vacanteController =
+new VacanteController();
 
-    $nombre = trim($_GET["nombre"] ?? "");
-    $sector = trim($_GET["sector"] ?? "");
-    $validacion = trim($_GET["validacion"] ?? "");
-
-    // Filtrar siempre sobre el array completo $listar para mayor consistencia
-    $filtrado = $listar;
-
-    if (!empty($nombre)) {
-        $filtrado = array_filter($filtrado, function ($empresa) use ($nombre) {
-            return stripos($empresa["nombreEmpresa"], $nombre) !== false;
-        });
-    }
-
-    if (!empty($sector)) {
-        $filtrado = array_filter($filtrado, function ($empresa) use ($sector) {
-            return stripos($empresa["sector"], $sector) !== false;
-        });
-    }
-
-    if (!empty($validacion)) {
-        $filtrado = array_filter($filtrado, function ($empresa) use ($validacion) {
-            return $empresa["EstadoValidacionEmpresa_idEstadoValidacionEmpresa"] == $validacion;
-        });
-    }
-
-    $listar = array_values($filtrado);
-}
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FutureWork ITT - Listado de Empresas</title>
-  <link rel="stylesheet" href="css/EmpresasListView.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+
+    <meta charset="UTF-8">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Klivify | Gestión de Empresas
+    </title>
+
+    <!-- CSS -->
+    <link
+    rel="stylesheet"
+    href="css/EmpresasListView.css">
+
+    <!-- FONT AWESOME -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
+
 <body>
-  <!-- Header -->
-  <header class="header">
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header class="header">
+
     <div class="header-content">
-      <div class="header-text">
-        <h1>🏢 Gestión de Empresas</h1>
-        <p>Administra las empresas registradas en la plataforma</p>
-      </div>
-      <div class="header-actions">
-        <a href="agregar-empresa.php" class="btn-add">➕ Registrar Nueva Empresa</a>
-      </div>
-    </div>
-  </header>
 
-  <!-- Main Container -->
-  <main class="container">
-    <!-- Filter Section con fondo blanco -->
-    <div class="filter-section bg-white p-4 rounded shadow">
-      <h3 class="filter-title">🔍 Filtros de Búsqueda</h3>
-      <!-- Se mantiene el form para soporte sin JS y deep linking -->
-      <form method="GET" action="" class="filter-form" id="filterForm">
-        <div class="filter-group">
-          <label for="nombre">Nombre de Empresa</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Buscar por nombre..." 
-                 value="<?php echo isset($_GET['nombre']) ? htmlspecialchars($_GET['nombre']) : ''; ?>">
-        </div>
-        <div class="filter-group">
-          <label for="sector">Sector</label>
-          <input type="text" id="sector" name="sector" placeholder="Ej: Tecnología, Salud..." 
-                 value="<?php echo isset($_GET['sector']) ? htmlspecialchars($_GET['sector']) : ''; ?>">
-        </div>
-        <div class="filter-group">
-          <label for="validacion">Estado de Validación</label>
-          <select id="validacion" name="validacion">
-            <option value="">Todos los estados</option>
-            <?php foreach($listarValidaciones as $id => $nombre): ?>
-              <option value="<?php echo $id; ?>" 
-                <?php echo (isset($_GET['validacion']) && $_GET['validacion'] == $id) ? 'selected' : ''; ?>>
-                <?php echo htmlspecialchars($nombre); ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-        <div class="filter-actions">
-          <button type="submit" class="btn-filter" name="buscar" value="buscar">🔍 Buscar</button>
-          <a href="?" class="btn-clear" id="btnClear">✖ Limpiar</a>
-        </div>
-      </form>
-    </div>
+        <div class="header-text">
 
-    <!-- Companies Grid -->
-    <div class="companies-grid" id="companiesGrid">
-      <?php if (count($listar) > 0): ?>
-        <?php 
-          $currentDate = date('Y-m-d');
-        ?>
-        <?php foreach ($listar as $empresa): ?>
-          <?php
-            $resultVacantes = $vacanteController->ListarVacantesPorEmpresa($empresa['idEmpresas']);
-            $countVacantes = 0;
-            $countAbiertas = 0;
-            
-            if (isset($resultVacantes->status) && strtolower($resultVacantes->status) == "ok" && is_array($resultVacantes->body)) {
-              $countVacantes = count($resultVacantes->body);
-              foreach ($resultVacantes->body as $vacante) {
-                if (isset($vacante['fechaLimite']) && $vacante['fechaLimite'] >= $currentDate) {
-                  $countAbiertas++;
-                }
-              }
-            }
-          ?>
-          <!-- Agregamos data-attributes para facilitar el filtrado con JS -->
-          <div class="company-card" 
-               data-nombre="<?php echo htmlspecialchars(strtolower($empresa['nombreEmpresa'])); ?>"
-               data-sector="<?php echo htmlspecialchars(strtolower($empresa['sector'])); ?>"
-               data-validacion="<?php echo $empresa['EstadoValidacionEmpresa_idEstadoValidacionEmpresa']; ?>">
-            
-            <div class="company-header">
-              <div class="company-icon">🏢</div>
-              <div class="company-title">
-                <h3><?php echo htmlspecialchars($empresa['nombreEmpresa']); ?></h3>
-                <div class="company-sector">Sector: <?php echo htmlspecialchars($empresa['sector']); ?></div>
-              </div>
-              <?php
-                $estado = intval($empresa['EstadoValidacionEmpresa_idEstadoValidacionEmpresa']);
-                $estados = ["", "✓ Validada", "⏳ Pendiente", "✗ Rechazada"];
-                $clasesEstado = ["", "status-validada", "status-pendiente", "status-rechazada"];
-                $textoEstado = isset($estados[$estado]) ? $estados[$estado] : "Desconocido";
-                $claseEstado = isset($clasesEstado[$estado]) ? $clasesEstado[$estado] : "";
-              ?>
-              <span class="validation-status <?php echo $claseEstado; ?>">
-                <?php echo $textoEstado; ?>
-              </span>
-            </div>
+            <h1>
+                🚀 Gestión Inteligente de Empresas
+            </h1>
 
-            <p class="company-description">
-              <?php echo htmlspecialchars($empresa['descripcion']); ?>
+            <p>
+                Administra compañías, vacantes y conexiones
+                empresariales con una experiencia UIX moderna.
             </p>
 
-            <div class="company-stats">
-              <div class="stat-item">
-                <span class="stat-label">Vacantes</span>
-                <span class="stat-value"><?php echo $countVacantes; ?></span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Abiertas</span>
-                <span class="stat-value"><?php echo $countAbiertas; ?></span>
-              </div>
-            </div>
-
-            <div class="company-footer">
-              <div class="registration-date">📅</div>
-              <div class="company-actions">
-                <a href="perfil-empresa.php?id=<?php echo $empresa['idEmpresas']; ?>" class="btn-profile">👁️ Ver Perfil</a>
-                <a href="vacantes-empresa.php?idEmpresa=<?php echo $empresa['idEmpresas']; ?>" class="btn-vacancies">💼 Ver Vacantes</a>
-              </div>
-            </div>
-          </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <div class="empty-state">
-          <div class="empty-state-icon">🏢</div>
-          <h3>No se encontraron empresas</h3>
-          <p>No hay empresas registradas en el sistema o no coinciden con los filtros aplicados.</p>
-          <a href="agregar-empresa.php" class="btn-add">➕ Registrar Primera Empresa</a>
         </div>
-      <?php endif; ?>
-      
-      <!-- Mensaje de "No hay resultados" para el filtro JS -->
-      <div id="no-results-js" class="empty-state hidden" style="display: none;">
-          <div class="empty-state-icon">🔍</div>
-          <h3>No hay coincidencias</h3>
-          <p>Intenta con otros términos de búsqueda.</p>
-      </div>
+
+        <div class="header-actions">
+
+            <a
+            href="agregar-empresa.php"
+            class="btn-add">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Registrar Empresa
+
+            </a>
+
+        </div>
+
     </div>
-  </main>
 
-  <!-- Script para filtrado en tiempo real -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const inputNombre = document.getElementById('nombre');
-        const inputSector = document.getElementById('sector');
-        const selectValidacion = document.getElementById('validacion');
-        const grid = document.getElementById('companiesGrid');
-        const cards = grid.getElementsByClassName('company-card');
-        const noResultsMsg = document.getElementById('no-results-js');
-        const originalEmptyState = document.querySelector('.companies-grid > .empty-state:not(#no-results-js)');
+</header>
 
-        function filterCompanies() {
-            const nombre = inputNombre.value.toLowerCase().trim();
-            const sector = inputSector.value.toLowerCase().trim();
-            const validacion = selectValidacion.value;
-            
-            let visibleCount = 0;
-            let hasCards = cards.length > 0;
+<!-- =====================================
+     MAIN
+===================================== -->
 
-            Array.from(cards).forEach(card => {
-                const cardNombre = card.getAttribute('data-nombre') || '';
-                const cardSector = card.getAttribute('data-sector') || '';
-                const cardValidacion = card.getAttribute('data-validacion') || '';
+<main class="container">
 
-                const matchNombre = cardNombre.includes(nombre);
-                const matchSector = cardSector.includes(sector);
-                const matchValidacion = validacion === '' || cardValidacion === validacion;
+<!-- =====================================
+     FILTROS
+===================================== -->
 
-                if (matchNombre && matchSector && matchValidacion) {
-                    card.style.display = ''; // Restaurar display original (block/flex)
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+<section class="filter-section">
 
-            // Manejo de estado vacío
-            if (hasCards) {
-                if (visibleCount === 0) {
-                    if (noResultsMsg) noResultsMsg.style.display = 'flex';
-                    if (originalEmptyState) originalEmptyState.style.display = 'none';
-                } else {
-                    if (noResultsMsg) noResultsMsg.style.display = 'none';
-                }
-            }
+    <div class="filter-header">
+
+        <h2>
+            🔍 Buscar Empresas
+        </h2>
+
+        <p>
+            Filtra compañías registradas por nombre,
+            sector o validación.
+        </p>
+
+    </div>
+
+    <!-- FORM SIN ACTION -->
+    <form class="filter-form" id="filterForm">
+
+        <!-- NOMBRE -->
+
+        <div class="filter-group">
+
+            <label for="nombre">
+
+                Nombre Empresa
+
+            </label>
+
+            <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Ej. TechVerse">
+
+        </div>
+
+        <!-- SECTOR -->
+
+        <div class="filter-group">
+
+            <label for="sector">
+
+                Sector
+
+            </label>
+
+            <input
+            type="text"
+            id="sector"
+            name="sector"
+            placeholder="Tecnología, Salud...">
+
+        </div>
+
+        <!-- VALIDACION -->
+
+        <div class="filter-group">
+
+            <label for="validacion">
+
+                Estado
+
+            </label>
+
+            <select
+            id="validacion"
+            name="validacion">
+
+                <option value="">
+                    Todos
+                </option>
+
+                <?php foreach($listarValidaciones as $id => $nombre): ?>
+
+                <option value="<?php echo $id; ?>">
+
+                    <?php echo htmlspecialchars($nombre); ?>
+
+                </option>
+
+                <?php endforeach; ?>
+
+            </select>
+
+        </div>
+
+        <!-- BOTONES -->
+
+        <div class="filter-actions">
+
+            <button
+            type="button"
+            class="btn-filter">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Buscar
+
+            </button>
+
+            <button
+            type="reset"
+            class="btn-clear"
+            id="btnClear">
+
+                <i class="fa-solid fa-rotate-left"></i>
+
+                Limpiar
+
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+<!-- =====================================
+     GRID EMPRESAS
+===================================== -->
+
+<section
+class="companies-grid"
+id="companiesGrid">
+
+<!-- =====================================
+     EMPRESAS REALES
+===================================== -->
+
+<?php if (count($listar) > 0): ?>
+
+<?php
+$currentDate = date('Y-m-d');
+?>
+
+<?php foreach ($listar as $empresa): ?>
+
+<?php
+
+$resultVacantes =
+$vacanteController
+->ListarVacantesPorEmpresa(
+$empresa['idEmpresas']
+);
+
+$countVacantes = 0;
+$countAbiertas = 0;
+
+if (
+isset($resultVacantes->status)
+&&
+strtolower($resultVacantes->status) == "ok"
+&&
+is_array($resultVacantes->body)
+){
+
+    $countVacantes =
+    count($resultVacantes->body);
+
+    foreach(
+    $resultVacantes->body
+    as $vacante
+    ){
+
+        if(
+        isset($vacante['fechaLimite'])
+        &&
+        $vacante['fechaLimite']
+        >=
+        $currentDate
+        ){
+
+            $countAbiertas++;
+
         }
 
-        // Event Listeners para filtrado en tiempo real
-        inputNombre.addEventListener('input', filterCompanies);
-        inputSector.addEventListener('input', filterCompanies);
-        selectValidacion.addEventListener('change', filterCompanies);
+    }
+
+}
+
+?>
+
+<div
+class="company-card"
+
+data-nombre="<?php echo htmlspecialchars(strtolower($empresa['nombreEmpresa'])); ?>"
+
+data-sector="<?php echo htmlspecialchars(strtolower($empresa['sector'])); ?>"
+
+data-validacion="<?php echo $empresa['EstadoValidacionEmpresa_idEstadoValidacionEmpresa']; ?>">
+
+    <!-- TOP -->
+
+    <div class="company-top">
+
+        <div class="company-logo">
+
+            <i class="fa-solid fa-building"></i>
+
+        </div>
+
+        <?php
+
+        $estado =
+        intval(
+        $empresa['EstadoValidacionEmpresa_idEstadoValidacionEmpresa']
+        );
+
+        $estados = [
+            "",
+            "✓ Validada",
+            "⏳ Pendiente",
+            "✗ Rechazada"
+        ];
+
+        $clasesEstado = [
+            "",
+            "status-validada",
+            "status-pendiente",
+            "status-rechazada"
+        ];
+
+        $textoEstado =
+        isset($estados[$estado])
+        ?
+        $estados[$estado]
+        :
+        "Desconocido";
+
+        $claseEstado =
+        isset($clasesEstado[$estado])
+        ?
+        $clasesEstado[$estado]
+        :
+        "";
+
+        ?>
+
+        <span
+        class="validation-status <?php echo $claseEstado; ?>">
+
+            <?php echo $textoEstado; ?>
+
+        </span>
+
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="company-content">
+
+        <h3>
+
+            <?php
+            echo htmlspecialchars(
+            $empresa['nombreEmpresa']
+            );
+            ?>
+
+        </h3>
+
+        <span class="company-sector">
+
+            <?php
+            echo htmlspecialchars(
+            $empresa['sector']
+            );
+            ?>
+
+        </span>
+
+        <p class="company-description">
+
+            <?php
+            echo htmlspecialchars(
+            $empresa['descripcion']
+            );
+            ?>
+
+        </p>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="company-stats">
+
+        <div class="stat-box">
+
+            <h4>
+
+                <?php echo $countVacantes; ?>
+
+            </h4>
+
+            <p>
+                Vacantes
+            </p>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h4>
+
+                <?php echo $countAbiertas; ?>
+
+            </h4>
+
+            <p>
+                Abiertas
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+
+    <div class="company-actions">
+
+        <a
+        href="perfil-empresa.php?id=<?php echo $empresa['idEmpresas']; ?>"
+        class="btn-profile">
+
+            <i class="fa-solid fa-eye"></i>
+
+            Perfil
+
+        </a>
+
+        <a
+        href="vacantes-empresa.php?idEmpresa=<?php echo $empresa['idEmpresas']; ?>"
+        class="btn-vacancies">
+
+            <i class="fa-solid fa-briefcase"></i>
+
+            Vacantes
+
+        </a>
+
+    </div>
+
+</div>
+
+<?php endforeach; ?>
+
+<?php endif; ?>
+
+</section>
+
+</main>
+
+<!-- =====================================
+     FILTROS JS EN TIEMPO REAL
+===================================== -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const inputNombre =
+    document.getElementById('nombre');
+
+    const inputSector =
+    document.getElementById('sector');
+
+    const selectValidacion =
+    document.getElementById('validacion');
+
+    const btnClear =
+    document.getElementById('btnClear');
+
+    const cards =
+    document.querySelectorAll('.company-card');
+
+    function filtrarEmpresas(){
+
+        const nombre =
+        inputNombre.value.toLowerCase();
+
+        const sector =
+        inputSector.value.toLowerCase();
+
+        const validacion =
+        selectValidacion.value;
+
+        cards.forEach(card => {
+
+            const cardNombre =
+            card.dataset.nombre || '';
+
+            const cardSector =
+            card.dataset.sector || '';
+
+            const cardValidacion =
+            card.dataset.validacion || '';
+
+            const coincideNombre =
+            cardNombre.includes(nombre);
+
+            const coincideSector =
+            cardSector.includes(sector);
+
+            const coincideValidacion =
+            validacion === ''
+            ||
+            cardValidacion === validacion;
+
+            if(
+                coincideNombre
+                &&
+                coincideSector
+                &&
+                coincideValidacion
+            ){
+
+                card.style.display = 'block';
+
+            }else{
+
+                card.style.display = 'none';
+
+            }
+
+        });
+
+    }
+
+    inputNombre.addEventListener(
+    'input',
+    filtrarEmpresas
+    );
+
+    inputSector.addEventListener(
+    'input',
+    filtrarEmpresas
+    );
+
+    selectValidacion.addEventListener(
+    'change',
+    filtrarEmpresas
+    );
+
+    btnClear.addEventListener('click', () => {
+
+        setTimeout(() => {
+
+            cards.forEach(card => {
+
+                card.style.display = 'block';
+
+            });
+
+        }, 50);
+
     });
-  </script>
+
+});
+
+</script>
+
 </body>
 </html>
