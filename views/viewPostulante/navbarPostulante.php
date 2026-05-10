@@ -18,10 +18,11 @@
     <title>Klivify - Inicio Postulante</title>
 
     <!-- CSS ORIGINAL -->
-<link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 
-<!-- NUEVO CSS PERSONALIZADO -->
-<link rel="stylesheet" href="../css/NavbarPostulante.css">
+    <!-- NUEVO CSS PERSONALIZADO -->
+    <link rel="stylesheet" href="./css/NavbarPostulante.css">
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 

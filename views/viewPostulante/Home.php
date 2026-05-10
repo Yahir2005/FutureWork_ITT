@@ -1,39 +1,175 @@
 <?php
 
 ?>
-<html>
- <body><!-- Navbar -->
-  </nav><!-- Contenido Principal -->
-  <main class="main-content">
-   <section class="welcome-section">
-    <h1>¡Bienvenido a Klivify! 👋</h1>
-    <p>Estás navegando como invitado. Explora las oportunidades laborales disponibles y conoce las empresas que buscan talento del Instituto Tecnológico de Tehuacán. Para acceder a todas las funcionalidades, inicia sesión o regístrate.</p>
-   </section>
-   <div class="info-cards">
-    <div class="info-card">
-     <div class="info-card-icon">
-      💼
-     </div>
-     <h3>Explora Vacantes</h3>
-     <p>Descubre las oportunidades laborales publicadas por empresas que buscan egresados del ITT. Filtra por carrera, ubicación y tipo de empleo.</p>
-    </div>
-    <div class="info-card">
-     <div class="info-card-icon">
-      🏢
-     </div>
-     <h3>Conoce Empresas</h3>
-     <p>Explora el directorio de empresas asociadas y conoce más sobre sus valores, cultura organizacional y oportunidades de crecimiento.</p>
-    </div>
-    <div class="info-card">
-     <div class="info-card-icon">
-      🎓
-     </div>
-     <h3>Regístrate Ahora</h3>
-     <p>Crea tu cuenta para postularte a vacantes, recibir notificaciones personalizadas y conectar directamente con reclutadores.</p>
-    </div>
-   </div>
-  </main>
-  </div>
-  </body>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99cb2b7fe078ae76',t:'MTc2MjgzNjYzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Klivify</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/Home.css">
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- HERO -->
+        <section class="welcome-section">
+
+            <span class="badge-home">
+                🚀 Plataforma Oficial de Vinculación Profesional
+            </span>
+
+            <h1>
+                Conecta tu talento con el futuro en
+                <span class="text-gradient">Klivify</span>
+            </h1>
+
+            <p>
+                Descubre oportunidades laborales, prácticas profesionales y
+                empresas que buscan estudiantes y egresados del Instituto
+                Tecnológico de Tehuacán. Todo en una sola plataforma moderna,
+                rápida y profesional.
+            </p>
+
+           
+
+        </section>
+
+        <!-- CARDS -->
+        <section class="info-cards">
+
+            <!-- CARD 1 -->
+            <div class="info-card">
+
+                <div class="info-card-icon">
+                    💼
+                </div>
+
+                <h3>Vacantes Profesionales</h3>
+
+                <p>
+                    Encuentra oportunidades laborales adaptadas a tu carrera,
+                    experiencia y objetivos profesionales.
+                </p>
+
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="info-card">
+
+                <div class="info-card-icon">
+                    🏢
+                </div>
+
+                <h3>Empresas Reconocidas</h3>
+
+                <p>
+                    Descubre empresas aliadas interesadas en contratar talento
+                    universitario con visión y preparación profesional.
+                </p>
+
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="info-card">
+
+                <div class="info-card-icon">
+                    🎓
+                </div>
+
+                <h3>Impulsa tu Carrera</h3>
+
+                <p>
+                    Crea tu perfil, postúlate fácilmente y conecta directamente
+                    con reclutadores desde cualquier dispositivo.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- VALUE SECTION -->
+        <section class="value-section">
+
+            <h2>
+                Más que una bolsa de trabajo
+            </h2>
+
+            <p>
+                Klivify fue creada para fortalecer la conexión entre estudiantes,
+                egresados y empresas. Nuestra plataforma busca impulsar el
+                crecimiento profesional del talento universitario mediante
+                oportunidades reales y conexiones estratégicas.
+            </p>
+
+            <div class="value-items">
+
+                <!-- ITEM -->
+                <div class="value-item">
+
+                    <div class="info-card-icon">
+                        ⚡
+                    </div>
+
+                    <h4>Postulación Rápida</h4>
+
+                    <p>
+                        Aplica a vacantes en pocos pasos con una experiencia
+                        moderna e intuitiva.
+                    </p>
+
+                </div>
+
+                <!-- ITEM -->
+                <div class="value-item">
+
+                    <div class="info-card-icon">
+                        🔔
+                    </div>
+
+                    <h4>Notificaciones Inteligentes</h4>
+
+                    <p>
+                        Recibe alertas personalizadas sobre nuevas oportunidades
+                        relacionadas con tu perfil.
+                    </p>
+
+                </div>
+
+                <!-- ITEM -->
+                <div class="value-item">
+
+                    <div class="info-card-icon">
+                        🤝
+                    </div>
+
+                    <h4>Conexión Directa</h4>
+
+                    <p>
+                        Comunícate con empresas y reclutadores de forma rápida y
+                        profesional.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
 </html>
