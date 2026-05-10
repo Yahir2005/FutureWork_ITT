@@ -7,6 +7,7 @@
  */
 class RespuestaGenerica
 {
+    // ... resto de tu código
     /**
      * @var string Status of the response
      */

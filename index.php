@@ -52,6 +52,7 @@
         exit();
     }
 ?>
+
 <!doctype html>
 <!-- El resto del HTML no cambia -->
 <html lang="es">
@@ -65,12 +66,20 @@
  </head>
  <body>
   <div class="login-container"><div class="login-left">
+   <div class="login-left">
+
     <div class="logo">
-    <!-- El nombre del archivo debe ser exacto (mayúsculas y espacios incluidos) -->
-    <img src="LOGO KLIVYFY.png" alt="Logo" style="width: 80%; height: auto;">
+   <img src="LOGO PNG AZUL.PNG" alt="Logo Klivify">
 </div>
-    <h1>Klyvify</h1>
-    <p>Sistema Inteligente de Vinculacion Laboral y Gestion de Talento</p>
+
+    <h1>Klivify</h1>
+
+    <p>
+      Sistema Inteligente de Vinculación Laboral y Gestión de Talento
+    </p>
+
+</div>
+    
     <div class="features">
      <div class="feature-item"><span class="feature-icon">🎓</span> <span>Conecta con egresados</span>
      </div>
