@@ -63,14 +63,7 @@ body{
     );
 
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.welcome-section p{
-    max-width: 850px;
-    margin: auto;
-    font-size: 1.1rem;
-    line-height: 1.9;
+    background-clip: text;
     color: #475569;
 }
 
