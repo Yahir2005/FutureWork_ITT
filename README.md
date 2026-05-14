@@ -1,2 +1,2 @@
-# FutureWork_ITT
-Proyecto tipo Linkedin, pero exclusivo para el TecNM Tehuacan
+Klivify 
+Sistema Inteligente de Vinculacion Loboral y Gestion de Talento 
