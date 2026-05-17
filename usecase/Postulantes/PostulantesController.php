@@ -35,6 +35,12 @@ class PostulantesController {
         $useCase = new PostulantesUseCase($gateway);
         return $useCase->ObtenerPostulantePorIdUsuario($id);
     }
+
+    public function PerfilPostulante($id): RespuestaGenerica {
+        $gatewayDb = new PostulanteGateway();
+        $useCase = new PostulantesUseCase($gatewayDb);
+        return $useCase->PerfilPostulante($id);
+    }
 }
 /*
 $controller = new  PostulantesController();
@@ -48,3 +54,7 @@ $postulante->set("ubicacion","tehuacan");
 $result = $controller->InsertarPostulante($postulante);
 echo $result->body;
 */
+
+$controller = new PostulantesController();
+$result = $controller->PerfilPostulante(1);
+echo $result->message;

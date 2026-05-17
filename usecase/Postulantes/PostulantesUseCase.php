@@ -84,4 +84,18 @@ class PostulantesUseCase {
         }
         return $response;
     }
+
+    public function PerfilPostulante($id): RespuestaGenerica {
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb->PerfilPostulante($id);
+        try {
+            $response-> status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Se obtuvo la empresa por ID de usuario correctamente";
+        } catch (Exception $e) {
+            $response->status = "error";
+            $response->message = "No se pudo obtener la empresa por ID de usuario". $e->getMessage();
+        }
+        return $response;
+    }
 }
