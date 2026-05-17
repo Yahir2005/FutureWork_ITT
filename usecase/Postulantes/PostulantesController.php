@@ -54,7 +54,8 @@ $postulante->set("ubicacion","tehuacan");
 $result = $controller->InsertarPostulante($postulante);
 echo $result->body;
 */
-
+/*
 $controller = new PostulantesController();
 $result = $controller->PerfilPostulante(1);
 echo $result->message;
+*/
