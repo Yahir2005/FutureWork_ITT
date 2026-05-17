@@ -70,32 +70,40 @@ class PostulanteGateway implements IPostulantes {
         return $data ? $data : []; 
     }
 
-    public function PerfilPostulante($id): array{
-        $mysqlConnector = new MysqlConnector();
-        $sql = "SELECT 
-            u.idUsuarios,
-            u.nombreCompleto,
-            u.email,
-            r.nombreRol,
-            c.nombreCarrera,
-            cert.nombre AS nombreCertificacion,
-            h.nombreHabilidad
-        FROM Postulante p
-        INNER JOIN Usuarios u 
-            ON p.Usuarios_idUsuarios = u.idUsuarios
-        INNER JOIN Rol r 
-            ON u.Rol_idRol = r.idRol
-        INNER JOIN Carrera c 
-            ON p.Carrera_idCarrera = c.idCarrera
-        LEFT JOIN Postulante_Certificacion pc 
-            ON p.idPostulante = pc.Postulante_idPostulante
-        LEFT JOIN Certificaciones cert 
-            ON pc.Certificaciones_idCertificacion = cert.idCertificacion
-        LEFT JOIN Postulante_Habilidades ph 
-            ON p.idPostulante = ph.Postulante_idPostulante
-        LEFT JOIN Habilidades h 
-            ON ph.Habilidades_idHabilidad = h.idHabilidad WHERE p.Usuarios_idUsuarios = {$id}";
-        $result = $mysqlConnector->consultaRetorno($sql);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    public function PerfilPostulante($id): array {
+    $mysqlConnector = new MysqlConnector();
+    $id = intval($id); // Sanitizar
+    
+    $sql = "SELECT 
+        u.idUsuarios,
+        u.nombreCompleto,
+        u.email,
+        r.nombreRol,
+        c.nombreCarrera,
+        cert.nombre AS nombreCertificacion,
+        h.nombreHabilidad
+    FROM Postulante p
+    INNER JOIN Usuarios u 
+        ON p.Usuarios_idUsuarios = u.idUsuarios
+    INNER JOIN Rol r 
+        ON u.Rol_idRol = r.idRol
+    INNER JOIN Carrera c 
+        ON p.Carrera_idCarrera = c.idCarrera
+    LEFT JOIN Postulante_Certificacion pc 
+        ON p.idPostulante = pc.Postulante_idPostulante
+    LEFT JOIN Certificaciones cert 
+        ON pc.Certificaciones_idCertificacion = cert.idCertificacion
+    LEFT JOIN Postulante_Habilidades ph 
+        ON p.idPostulante = ph.Postulante_idPostulante
+    LEFT JOIN Habilidades h 
+        ON ph.Habilidades_idHabilidad = h.idHabilidad
+    WHERE p.Usuarios_idUsuarios = $id";
+    
+    $result = $mysqlConnector->consultaRetorno($sql);
+    if (!$result) {
+        throw new Exception("Error en la consulta SQL");
     }
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
 }
