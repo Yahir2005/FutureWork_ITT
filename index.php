@@ -69,7 +69,7 @@
    <div class="login-left">
 
     <div class="logo">
-   <img src="LOGO PNG AZUL.PNG" alt="Logo Klivify">
+   <img src="LOGO_PNG_AZUL.png" alt="Logo Klivify">
 </div>
 
     <h1>Klivify</h1>
@@ -117,7 +117,7 @@
      ¿No tienes cuenta? <a href="views/OpcionUser.php">Regístrate aquí</a>
     </div>
    </div>
-  </div>        
+  </div>
   <script>
    function togglePassword(button) {
     const passwordField = document.getElementById('password');
