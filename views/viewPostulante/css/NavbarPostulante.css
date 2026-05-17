@@ -1,406 +1,49 @@
-/* =========================================
-   NAVBAR PREMIUM KLIVIFY
-   ========================================= */
+/* ===================================================
+   HOJA DE ESTILOS LIMPIA - SOLO APARIENCIA ESTÉTICA
+   =================================================== */
 
-/* RESET GENERAL */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Fondo degradado premium del Navbar */
+.style-navbar-premium {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px 0;
 }
 
-/* BODY */
-body{
-    font-family: 'Segoe UI', sans-serif;
-    background: #f5f7fa;
+/* Espaciado del texto del logo */
+.letter-spacing-custom {
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
-/* =========================================
-   NAVBAR GENERAL
-   ========================================= */
-
-.navbar{
-
-    background: linear-gradient(
-        135deg,
-        #0f172a 0%,
-        #1e3a8a 100%
-    ) !important;
-
-    height: 82px !important;
-
-    display: flex;
-    align-items: center;
-
-    box-shadow:
-        0 4px 18px rgba(0,0,0,0.18);
-
-    border-bottom:
-        1px solid rgba(255,255,255,0.08);
-
-    position: sticky;
-    top: 0;
-    z-index: 999;
+/* Efecto Hover sutil en los enlaces del menú */
+.style-nav-item {
+    transition: all 0.2s ease-in-out;
+}
+.style-nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    transform: translateY(-1px);
 }
 
-/* =========================================
-   CONTENEDOR
-   ========================================= */
-
-.navbar-container{
-
-    width: 100% !important;
-
-    max-width: 1450px !important;
-
-    margin: auto !important;
-
-    padding: 0 35px !important;
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    justify-content: space-between !important;
+/* Blur de fondo opcional para el badge de usuario */
+.style-user-badge {
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* =========================================
-   LOGO SECTION
-   ========================================= */
-
-.navbar-logo{
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    /* separación logo y texto */
-    gap: 16px !important;
-
-    text-decoration: none !important;
-
-    transition: all .3s ease;
-
-    /* separación izquierda */
-    margin-left: 8px !important;
+/* Botón salir diseño */
+.style-btn-salir {
+    background-color: #dc2626;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+.style-btn-salir:hover {
+    background-color: #b91c1c;
+    transform: translateY(-1px);
 }
 
-/* Hover logo */
-.navbar-logo:hover{
-
-    transform: scale(1.02);
-}
-
-/* =========================================
-   CONTENEDOR LOGO
-   ========================================= */
-
-.logo-circle{
-
-    background: transparent !important;
-
-    border-radius: 0 !important;
-
-    width: auto !important;
-
-    height: auto !important;
-
-    overflow: visible !important;
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    justify-content: center !important;
-
-    box-shadow: none !important;
-
-    margin: 0 !important;
-
-    padding: 0 !important;
-
-    border: none !important;
-}
-
-/* Elimina círculos falsos */
-.logo-circle::before,
-.logo-circle::after{
-
-    display: none !important;
-
-    content: none !important;
-}
-
-/* =========================================
-   IMAGEN LOGO
-   ========================================= */
-
-.logo-img{
-
-    /* MÁS PEQUEÑO */
-    width: 40px !important;
-
-    height: 40px !important;
-
-    object-fit: contain !important;
-
-    display: block !important;
-
-    transition: all .3s ease;
-}
-
-/* =========================================
-   TEXTO LOGO
-   ========================================= */
-
-.logo-text{
-
-    color: white !important;
-
-    /* MÁS PEQUEÑO */
-    font-size: 18px !important;
-
-    font-weight: 800 !important;
-
-    letter-spacing: .5px !important;
-
-    font-family: 'Segoe UI', sans-serif !important;
-
-    text-shadow:
-        0 2px 8px rgba(0,0,0,.20);
-}
-
-/* =========================================
-   MENÚ
-   ========================================= */
-
-.navbar-menu{
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    gap: 10px !important;
-
-    list-style: none !important;
-
-    margin: 0 !important;
-}
-
-/* LINKS MENÚ */
-.navbar-menu li a{
-
-    color: white !important;
-
-    text-decoration: none !important;
-
-    font-size: 14px !important;
-
-    font-weight: 700 !important;
-
-    padding: 10px 16px !important;
-
-    border-radius: 12px !important;
-
-    transition: all .25s ease !important;
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    gap: 6px !important;
-
-    letter-spacing: .2px;
-
-    position: relative;
-}
-
-/* Hover links */
-.navbar-menu li a:hover{
-
-    background:
-        rgba(255,255,255,0.12) !important;
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 6px 18px rgba(0,0,0,0.15);
-}
-
-/* =========================================
-   ACCIONES DERECHA
-   ========================================= */
-
-.navbar-actions{
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    gap: 12px !important;
-}
-
-/* =========================================
-   USER BADGE
-   ========================================= */
-
-.user-badge{
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    gap: 10px !important;
-
-    background:
-        rgba(255,255,255,0.12) !important;
-
-    padding: 8px 14px !important;
-
-    border-radius: 50px !important;
-
-    backdrop-filter: blur(10px);
-
-    transition: all .3s ease;
-}
-
-/* Hover badge */
-.user-badge:hover{
-
-    background:
-        rgba(255,255,255,0.18) !important;
-}
-
-/* =========================================
-   ICONO USUARIO
-   ========================================= */
-
-.user-icon{
-
-    width: 34px !important;
-
-    height: 34px !important;
-
-    border-radius: 50% !important;
-
-    background: white !important;
-
-    color: #1e3a8a !important;
-
-    display: flex !important;
-
-    align-items: center !important;
-
-    justify-content: center !important;
-
-    font-size: 15px !important;
-
-    font-weight: bold !important;
-}
-
-/* TEXTO POSTULANTE */
-.user-badge a{
-
-    color: white !important;
-
-    text-decoration: none !important;
-
-    font-weight: 700 !important;
-
-    font-size: 14px !important;
-}
-
-/* =========================================
-   BOTÓN SALIR
-   ========================================= */
-
-.navbar-actions .flex{
-
-    padding: 10px 18px !important;
-
-    border-radius: 12px !important;
-
-    font-size: 14px !important;
-
-    font-weight: 800 !important;
-
-    transition: all .3s ease !important;
-
-    box-shadow:
-        0 6px 16px rgba(239,68,68,.25);
-}
-
-/* Hover botón salir */
-.navbar-actions .flex:hover{
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 10px 25px rgba(239,68,68,.35);
-}
-
-/* =========================================
-   RESPONSIVE TABLET
-   ========================================= */
-
-@media(max-width:992px){
-
-    .navbar{
-
-        height: auto !important;
-
-        padding: 15px 0 !important;
-    }
-
-    .navbar-container{
-
-        flex-direction: column !important;
-
-        gap: 15px !important;
-    }
-
-    .navbar-menu{
-
-        flex-wrap: wrap !important;
-
-        justify-content: center !important;
-    }
-
-    .navbar-actions{
-
-        flex-wrap: wrap !important;
-
-        justify-content: center !important;
-    }
-}
-
-/* =========================================
-   RESPONSIVE MOBILE
-   ========================================= */
-
-@media(max-width:768px){
-
-    .logo-img{
-
-        width: 34px !important;
-
-        height: 34px !important;
-    }
-
-    .logo-text{
-
-        font-size: 16px !important;
-    }
-
-    .navbar-menu li a{
-
-        font-size: 13px !important;
-
-        padding: 8px 12px !important;
-    }
-
-    .navbar-logo{
-
-        gap: 10px !important;
+/* Asegura que los botones ocupen el 100% solo en pantallas móviles */
+@media (max-width: 991.98px) {
+    .w-100-mobile {
+        width: 100% !important;
     }
 }

@@ -17,14 +17,11 @@
 
     <title>Klivify - Inicio Postulante</title>
 
-    <!-- CSS ORIGINAL -->
-    <link rel="stylesheet" href="../css/navbar.css">
-
-    <!-- NUEVO CSS PERSONALIZADO -->
-    <link rel="stylesheet" href="./css/NavbarPostulante.css">
-
-    <!-- Bootstrap -->
+    <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- TU HOJA DE ESTILOS PERSONALIZADA (Premium UI) -->
+    <link rel="stylesheet" href="./css/NavbarPostulante.css">
 
     <style>
         @view-transition {
@@ -34,144 +31,96 @@
 
     <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
     <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
-    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
+   <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm style-navbar-premium">
+    <div class="container">
+        
+        <a class="navbar-brand d-flex align-items-center gap-3 text-white fw-bold" href="?cargar=Home">
+            <img 
+                src="../../LOGO KLIVYFY.png" 
+                alt="Klifify Logo" 
+                width="40" 
+                height="40" 
+                class="d-inline-block align-top object-contain"
+            >
+            <span class="fs-5 letter-spacing-custom">Klivify</span>
+        </a>
 
-        <div class="navbar-container">
+        <button 
+            class="navbar-toggler border-0" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNavMain" 
+            aria-controls="navbarNavMain" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <!-- LOGO -->
-            <a href="?cargar=Home" class="navbar-logo">
-
-                <div class="logo-circle">
-
-                    <img 
-                        src="../../LOGO KLIVYFY.png" 
-                        alt="Klivify Logo" 
-                        class="logo-img"
-                    >
-
-                </div>
-
-                <span class="logo-text">
-                    Klivify
-                </span>
-
-            </a>
-
-            <!-- MENÚ -->
-            <ul class="navbar-menu">
-
-                <li>
-                    <a class="nav-link" href="?cargar=Home">
-                        🏠 Inicio
-                    </a>
+        <div class="collapse navbar-collapse" id="navbarNavMain">
+            
+            <ul class="navbar-nav mx-auto mb-3 mb-lg-0 gap-1 text-center">
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-semibold px-3 py-2 rounded-3 style-nav-item" href="?cargar=Home">🏠 Inicio</a>
                 </li>
-
-                <li>
-                    <a class="nav-link" href="?cargar=VacantesListView">
-                        💼 Vacantes
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-semibold px-3 py-2 rounded-3 style-nav-item" href="?cargar=VacantesListView">💼 Vacantes</a>
                 </li>
-
-                <li>
-                    <a class="nav-link" href="?cargar=EmpresasListView">
-                        🏢 Empresas
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-semibold px-3 py-2 rounded-3 style-nav-item" href="?cargar=EmpresasListView">🏢 Empresas</a>
                 </li>
-
-                <li>
-                    <a class="nav-link" href="?cargar=AcercaDeNosotrosView">
-                        ℹ️ Nosotros
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-semibold px-3 py-2 rounded-3 style-nav-item" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a>
                 </li>
-
-                <li>
-                    <a class="nav-link" href="?cargar=ContactoView">
-                        📧 Contacto
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-semibold px-3 py-2 rounded-3 style-nav-item" href="?cargar=ContactoView">📧 Contacto</a>
                 </li>
-
             </ul>
 
-            <!-- ACCIONES DERECHA -->
-            <div class="navbar-actions">
-
-                <!-- PERFIL -->
-                <div class="user-badge">
-
-                    <div class="user-icon">
+            <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
+                
+                <div class="d-flex align-items-center gap-2 bg-white bg-opacity-10 text-white rounded-pill px-3 py-2 style-user-badge w-100-mobile justify-content-center">
+                    <div class="d-flex align-items-center justify-content-center bg-white text-primary rounded-circle fw-bold" style="width: 30px; height: 30px; font-size: 14px;">
                         👤
                     </div>
-
-                    <a 
-                        class="nav-link text-white text-decoration-none" 
-                        href="?cargar=PerfilPostulanteView"
-                    >
-                        <span>Postulante</span>
+                    <a href="?cargar=PerfilPostulanteView" class="text-white text-decoration-none fw-bold small">
+                        Postulante
                     </a>
-
                 </div>
 
-                <!-- BOTÓN SALIR -->
-                <a 
-                    href="?cargar=closeSession"
-                    class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded transition duration-300 ease-in-out shadow-md"
-                >
-
-                    <span>🚪</span>
-
-                    <span>Salir</span>
-
+                <a href="?cargar=closeSession" class="btn btn-danger fw-bold btn-sm px-3 py-2 rounded-3 d-flex align-items-center gap-2 shadow-sm w-100-mobile justify-content-center style-btn-salir">
+                    <span>🚪</span> Salir
                 </a>
 
             </div>
 
         </div>
-
-    </nav>
+    </div>
+</nav>
 
     <!-- CONTENIDO -->
     <main>
-
         <section>
-
             <?php
-
                 $enrutador = new RouterPostulante();
-
                 if(isset($_GET['cargar'])){
-
                     if($enrutador->validarGET($_GET['cargar'])){
-
                         $enrutador->cargarVista($_GET['cargar']);
-
                     } else {
-
-                        echo "
-                            <p class='text-center mt-5'>
-                                Página no encontrada.
-                            </p>
-                        ";
+                        echo "<p class='text-center mt-5'>Página no encontrada.</p>";
                     }
-
                 } else {
-
                     $enrutador->cargarVista('Home');
-
                 }
-
             ?>
-
         </section>
-
     </main>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS Bundle -->
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
