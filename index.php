@@ -117,7 +117,7 @@
      ¿No tienes cuenta? <a href="views/OpcionUser.php">Regístrate aquí</a>
     </div>
    </div>
-  </div>
+  </div>        
   <script>
    function togglePassword(button) {
     const passwordField = document.getElementById('password');
