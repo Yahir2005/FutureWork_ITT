@@ -10,7 +10,7 @@ INSERT INTO Usuarios(Rol_idRol, nombreCompleto, email, Password) VALUES
 (2, 'Carlos Alberto Gómez', 'carlos.gomez@email.com', 'carlosPass101'),
 (2, 'María Fernanda López', 'maria.lopez@email.com', 'mariaPass112'),
 (3, 'Administrador General', 'admin@futurework.com', 'adminSecurePass'),
-(1, 'Wendy Paola Ramoz Lopez', 'admin@futurework.com', 'fdsf1234');
+(1, 'Juarez Duran Luis Yahir', 'admin2@futurework.com', 'fdsf1234');
 
 -- IDs de Usuarios generados:
 -- 1: Tech Solutions (Empresa)
@@ -40,7 +40,7 @@ INSERT INTO Carrera(nombreCarrera) VALUES
 INSERT INTO Empresas(Usuarios_idUsuarios, EstadoValidacionEmpresa_idEstadoValidacionEmpresa, nombreEmpresa, sector, representante, descripcion, sitioWeb) VALUES
 (1, 2, 'Tech Solutions SA de CV', 'Tecnología', 'Juan Robles', 'Empresa de desarrollo de software a medida.', 'https://techsolutions.com'),
 (2, 1, 'Innovatec Global', 'Consultoría TI', 'Laura Méndez', 'Consultoría de servicios TI y outsourcing.', 'https://innovatec.com'),
-(7, 2, 'Wendy Paola Ramoz Lopez', 'Tecnología', 'Wendy Paola Ramoz Lopez', 'Empresa de desarrollo de software a medida.', 'https://techsolutions.com');
+(7, 2, 'CNX', 'Tecnología', 'Pedro Sanchez', 'Empresa de desarrollo de instalaciones de internet.', 'https://techsolutions.com');
 
 -- IDs de Empresas generados:
 -- 1: Tech Solutions (Usuario 1, Validado)
