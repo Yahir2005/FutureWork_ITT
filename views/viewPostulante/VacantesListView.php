@@ -49,18 +49,14 @@
   // POSTULARME
   // ==========================
   if(isset($_POST["btnPostularme"])){
-
     $idVacante = (int)($_POST["idVacantePostular"] ?? 0);
-
     if (!empty($idPostulante) && !isset($vacantesPostuladasMap[$idVacante])) {
-
       $postulacionObject = new Postulaciones();
       $postulacionObject->set("Postulante_idPostulante", $idPostulante);
       $postulacionObject->set("Vacante_idVacante", $idVacante);
       $postulacionObject->set("EstadoPostulacion_idEstadoPostulacion", 1);
 
       $result = $postulacionesController->InsertarPostulacion($postulacionObject);
-
       if (strtolower($result->status) == 'ok') {
           $vacantesPostuladasMap[$idVacante] = true;
       }
@@ -71,14 +67,9 @@
   // DESPOSTULARME
   // ==========================
   if(isset($_POST["btnDespostularme"])){
-
     $idVacante = (int)($_POST["idVacanteDespostular"] ?? 0);
-
     if (!empty($idPostulante) && isset($vacantesPostuladasMap[$idVacante])) {
-
-      $result = $postulacionesController
-          ->EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante);
-
+      $result = $postulacionesController->EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante);
       if (strtolower($result->status) == 'ok') {
           unset($vacantesPostuladasMap[$idVacante]);
       }
@@ -86,79 +77,68 @@
   }
 ?>
 
-<!doctype html>
-<html lang="es">
-<head>
+<link rel="stylesheet" href="css/VacantesListView.css">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<header class="bg-white text-dark py-4 border-bottom">
+  <div class="container">
+    <!-- Encabezado superior -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="h3 mb-1">💼 Vacantes Publicadas Por Empresas</h1>
+        <p class="mb-0">Ver las ofertas laborales de las empresas</p>
+      </div>
+    </div>
 
-  <title>Klivify - Vacantes Disponibles</title>
+    <!-- Tarjetas de estadísticas -->
+   <div class="container my-5 text-center">
+    <div class="row g-4">
+      
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card bg-body-tertiary border-0 shadow-sm h-100 rounded-4">
+          <div class="card-body py-4">
+            <div class="fs-3 mb-1">📊</div>
+            <div class="fw-bold text-secondary small text-uppercase">Total de Vacantes</div>
+            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars($totalVacantes->body); ?></div>
+          </div>
+        </div>
+      </div>
 
-  <link rel="stylesheet" href="css/VacantesListView.css">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card bg-body-tertiary border-0 shadow-sm h-100 rounded-4">
+          <div class="card-body py-4">
+            <div class="fs-3 mb-1">✅</div>
+            <div class="fw-bold text-secondary small text-uppercase">Aprobadas</div>
+            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars($totalVacantesAbiertas->body); ?></div>
+          </div>
+        </div>
+      </div>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card bg-body-tertiary border-0 shadow-sm h-100 rounded-4">
+          <div class="card-body py-4">
+            <div class="fs-3 mb-1">⏳</div>
+            <div class="fw-bold text-secondary small text-uppercase">En Pausa</div>
+            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars($totalVacantesPausadas->body); ?></div>
+          </div>
+        </div>
+      </div>
 
-</head>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card bg-body-tertiary border-0 shadow-sm h-100 rounded-4">
+          <div class="card-body py-4">
+            <div class="fs-3 mb-1">❌</div>
+            <div class="fw-bold text-secondary small text-uppercase">Cerradas</div>
+            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars($totalVacantesCerradas->body); ?></div>
+          </div>
+        </div>
+      </div>
 
-<body>
-
-<!-- HERO -->
-<section class="hero">
-
-  <div class="hero-glow hero-glow-1"></div>
-  <div class="hero-glow hero-glow-2"></div>
-
-  <div class="hero-content">
-
-    <span class="hero-badge">
-      ✨ Plataforma Inteligente de Empleo
-    </span>
-
-    <h1>
-      Explora las mejores <span>vacantes</span>
-    </h1>
-
-    <p>
-      Encuentra oportunidades reales, modernas y profesionales
-      diseñadas para impulsar tu futuro dentro de Klivify.
-    </p>
-
+    </div>
+</div>
   </div>
+</header>
 
-  <!-- STATS -->
-  <div class="stats-grid">
-
-    <div class="stat-card">
-      <div class="stat-icon">📊</div>
-      <h2><?php echo $totalVacantes->body ?></h2>
-      <p>Total de Vacantes</p>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon">✅</div>
-      <h2><?php echo $totalVacantesAbiertas->body ?></h2>
-      <p>Vacantes Abiertas</p>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon">❌</div>
-      <h2><?php echo $totalVacantesCerradas->body ?></h2>
-      <p>Vacantes Cerradas</p>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon">⏸️</div>
-      <h2><?php echo $totalVacantesPausadas->body ?></h2>
-      <p>Vacantes Pausadas</p>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- MAIN -->
-<main class="main-container">
+<div class="vacantes-main-container">
 
 <?php if (count($listarVacantesCard) > 0): ?>
 
@@ -175,46 +155,30 @@
       }
 
       $idVacanteActual = (int)($vacantes['idVacante'] ?? 0);
-
       $yaPostulado = isset($vacantesPostuladasMap[$idVacanteActual]);
     ?>
 
     <div class="vacancy-card">
-
       <div class="card-glow"></div>
 
       <div class="vacancy-top">
-
         <div>
           <h2 class="vacancy-title">
             <?php echo htmlspecialchars($vacantes['titulo']); ?>
           </h2>
-
           <span class="vacancy-id">
             ID #<?php echo htmlspecialchars($vacantes['idVacante']); ?>
           </span>
         </div>
-
         <span class="status-badge">
           <?php echo htmlspecialchars($vacantes['estadoValidacionVacante']); ?>
         </span>
-
       </div>
 
       <div class="vacancy-info">
-
-        <div class="info-item">
-          📍 <?php echo htmlspecialchars($vacantes['ubicacion']); ?>
-        </div>
-
-        <div class="info-item">
-          💰 $<?php echo htmlspecialchars($vacantes['salario']); ?>
-        </div>
-
-        <div class="info-item">
-          📅 <?php echo htmlspecialchars($vacantes['fechaLimite']); ?>
-        </div>
-
+        <div class="info-item">📍 <?php echo htmlspecialchars($vacantes['ubicacion']); ?></div>
+        <div class="info-item">💰 $<?php echo htmlspecialchars($vacantes['salario']); ?></div>
+        <div class="info-item">📅 <?php echo htmlspecialchars($vacantes['fechaLimite']); ?></div>
       </div>
 
       <p class="vacancy-description">
@@ -223,96 +187,42 @@
 
       <div class="requirements-box">
         <h4>✨ Requisitos</h4>
-
-        <p>
-          <?php echo htmlspecialchars($vacantes['requisitos']); ?>
-        </p>
+        <p><?php echo htmlspecialchars($vacantes['requisitos']); ?></p>
       </div>
 
       <div class="tags">
-
-        <span class="tag">
-          <?php echo htmlspecialchars($vacantes['estadoContrato']); ?>
-        </span>
-
-        <span class="tag">
-          <?php echo htmlspecialchars($vacantes['tipoModalidad']); ?>
-        </span>
-
-        <span class="tag salary-tag">
-          $<?php echo htmlspecialchars($vacantes['salario']); ?>
-        </span>
-
+        <span class="tag"><?php echo htmlspecialchars($vacantes['estadoContrato']); ?></span>
+        <span class="tag"><?php echo htmlspecialchars($vacantes['tipoModalidad']); ?></span>
+        <span class="tag salary-tag">$<?php echo htmlspecialchars($vacantes['salario']); ?></span>
       </div>
 
       <div class="vacancy-footer">
-
         <span class="published-date">
-          🕒 Publicado:
-          <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
+          🕒 Publicado: <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
         </span>
 
-        <!-- BOTONES FUNCIONANDO -->
         <div class="action-buttons">
-
         <?php if ($idEstado === 1 && !$yaPostulado): ?>
-
           <form method="POST" action="?cargar=VacantesListView">
-
-            <input
-              type="hidden"
-              name="idVacantePostular"
-              value="<?php echo $idVacanteActual; ?>"
-            >
-
-            <button
-              type="submit"
-              name="btnPostularme"
-              class="btn-postular"
-            >
+            <input type="hidden" name="idVacantePostular" value="<?php echo $idVacanteActual; ?>">
+            <button type="submit" name="btnPostularme" class="btn-postular">
               🚀 Postularme
             </button>
-
           </form>
 
         <?php elseif ($yaPostulado): ?>
-
-          <div class="already-postulated">
-            ✅ Ya postulaste
-          </div>
-
+          <div class="already-postulated">✅ Ya postulaste</div>
           <form method="POST" action="?cargar=VacantesListView">
-
-            <input
-              type="hidden"
-              name="idVacanteDespostular"
-              value="<?php echo $idVacanteActual; ?>"
-            >
-
-            <button
-              type="submit"
-              name="btnDespostularme"
-              class="btn-despostular"
-            >
+            <input type="hidden" name="idVacanteDespostular" value="<?php echo $idVacanteActual; ?>">
+            <button type="submit" name="btnDespostularme" class="btn-despostular">
               ❌ Despostularme
             </button>
-
           </form>
 
         <?php else: ?>
-
-          <button
-            type="button"
-            class="btn-disabled"
-            disabled
-          >
-            Vacante Cerrada
-          </button>
-
+          <button type="button" class="btn-disabled" disabled>Vacante Cerrada</button>
         <?php endif; ?>
-
         </div>
-
       </div>
 
     </div>
@@ -324,22 +234,11 @@
 <?php else: ?>
 
   <div class="empty-state">
-
-    <div class="empty-icon">
-      📭
-    </div>
-
+    <div class="empty-icon">📭</div>
     <h2>No hay vacantes disponibles</h2>
-
-    <p>
-      Actualmente no existen vacantes publicadas.
-    </p>
-
+    <p>Actualmente no existen vacantes publicadas.</p>
   </div>
 
 <?php endif; ?>
 
-</main>
-
-</body>
-</html>
+</div>
