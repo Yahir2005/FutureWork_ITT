@@ -8,5 +8,7 @@ interface IPostulanteCertificacion{
     public function ActualizarPostulanteCertificacion ($id, $postulanteCertificacion):int;
     
     public function EliminarPostulanteCertificacion($id):int;
+
+    public function listarCertificaciones($id):array;
     
 }

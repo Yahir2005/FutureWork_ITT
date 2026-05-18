@@ -66,4 +66,18 @@ class PostulanteCertificacionUseCase{
         return $response;
     }
 
+    public function listarCertificaciones($id):RespuestaGenerica{
+        $response = new RespuestaGenerica();
+        $respuestaMetodo = $this->gatewayDb-> listarCertificaciones($id);
+        try {
+            $response->status = "ok";
+            $response->body = $respuestaMetodo;
+            $response->message = "Postulante Certificacion listada correctamente";
+        } catch (Exception $e) {
+            $response->status = "Error";
+            $response->message = "Error al eliminar Postulante Certificacion: ". $e->getMessage();
+        }
+        return $response;
+    }
+
 }

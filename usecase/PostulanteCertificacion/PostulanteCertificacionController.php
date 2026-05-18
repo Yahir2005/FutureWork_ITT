@@ -33,7 +33,18 @@ class   PostulanteCertificacionController {
         return $response;
     }
 
+    public function listarCertificaciones($id):RespuestaGenerica{
+        $gatewayDb = new PostulanteCertificacionGateway();
+        $usecase = new PostulanteCertificacionUseCase($gatewayDb);
+        $response = $usecase->listarCertificaciones($id);
+        return $response;
+    }
+
 }
+
+$controller = new PostulanteCertificacionController();
+$result = $controller->listarCertificaciones(3);
+echo $result->message;
 /*$controller = new PostulanteCertificacionController();
 $result  = $controller->listarPostulanteCertificacion();
 echo $result->message;*/

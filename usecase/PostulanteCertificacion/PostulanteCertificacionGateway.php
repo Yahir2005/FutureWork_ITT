@@ -44,4 +44,22 @@ class PostulanteCertificacionGateway implements IPostulanteCertificacion{
         return $result;
     }
      
+    public function listarCertificaciones($id):array{
+        $objSQL = new MysqlConnector();
+        $sql = "SELECT 
+                u.idUsuarios,
+                cp.Postulante_idPostulante,
+                cp.Certificaciones_idCertificacion,
+                c.nombre,
+                c.organizacionEmisora,
+                c.fechaObtencion,
+                c.urlCredencial
+            FROM Postulante p
+            INNER JOIN Usuarios u ON p.Usuarios_idUsuarios = u.idUsuarios
+            INNER JOIN Postulante_Certificacion cp ON p.idPostulante = cp.Postulante_idPostulante
+            INNER JOIN Certificaciones c ON cp.Certificaciones_idCertificacion = c.idCertificacion
+        WHERE u.idUsuarios = {$id}";
+        $result = $objSQL ->consultaRetorno($sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 } 
