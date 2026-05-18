@@ -36,7 +36,7 @@ $certificaciones = [];
 if ($rawPerfil && strtolower($rawPerfil->status ?? '') === "ok" && !empty($rawPerfil->body)) {
     
     // Al usar GROUP BY, extraemos la única fila desde el BODY del objeto
-    $perfilBase = $rawPerfil->body;
+    $perfilBase = is_object($rawPerfil->body) ? (array) $rawPerfil->body : $rawPerfil->body;
 
     // Rompemos el string separado por comas en un array limpio
     if (!empty($perfilBase['Habilidades'])) {

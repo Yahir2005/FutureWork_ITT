@@ -1,0 +1,247 @@
+/* ===================================================
+   RESET
+=================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ===================================================
+   BODY
+=================================================== */
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:#f8fafc;
+}
+
+/* ===================================================
+   NAVBAR PRINCIPAL
+=================================================== */
+
+.style-navbar-premium{
+
+    background: linear-gradient(
+        135deg,
+        #0f172a 0%,
+        #1e3a8a 100%
+    ) !important;
+
+    min-height: 85px;
+
+    padding: 12px 0;
+
+    box-shadow:
+        0 4px 20px rgba(0,0,0,0.18);
+
+    z-index:9999;
+}
+
+/* ===================================================
+   CONTENEDOR
+=================================================== */
+
+.navbar .container{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+/* ===================================================
+   LOGO
+=================================================== */
+
+.navbar-brand{
+
+    display:flex !important;
+
+    align-items:center;
+
+    color:white !important;
+
+    font-size:1.3rem;
+
+    font-weight:bold;
+
+    text-decoration:none;
+}
+
+.navbar-brand img{
+
+    object-fit:contain;
+}
+
+.letter-spacing-custom{
+
+    letter-spacing:.5px;
+}
+
+/* ===================================================
+   NAV LINKS
+=================================================== */
+
+.navbar-nav{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.nav-link{
+
+    color:white !important;
+
+    font-weight:600;
+
+    padding:10px 18px !important;
+
+    border-radius:12px;
+
+    transition:all .2s ease;
+}
+
+/* Hover */
+
+.style-nav-item:hover{
+
+    background:
+        rgba(255,255,255,0.12);
+
+    transform:
+        translateY(-1px);
+}
+
+/* ===================================================
+   DROPDOWN
+=================================================== */
+
+.dropdown-menu{
+
+    background:#0f172a;
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    padding:10px;
+
+    min-width:240px;
+}
+
+.dropdown-item{
+
+    color:white;
+
+    border-radius:12px;
+
+    padding:12px 14px;
+
+    transition:all .2s ease;
+}
+
+.dropdown-item:hover{
+
+    background:
+        rgba(255,255,255,0.10);
+
+    color:white;
+
+    padding-left:22px;
+}
+
+/* ===================================================
+   USER BADGE
+=================================================== */
+
+.style-user-badge{
+
+    background:
+        rgba(255,255,255,0.10);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(10px);
+
+    transition:all .2s ease;
+}
+
+.style-user-badge:hover{
+
+    background:
+        rgba(255,255,255,0.16);
+}
+
+/* ===================================================
+   USER ICON
+=================================================== */
+
+.user-circle{
+
+    width:32px;
+    height:32px;
+
+    background:white;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+/* ===================================================
+   BOTÓN SALIR
+=================================================== */
+
+.style-btn-salir{
+
+    transition:all .2s ease;
+}
+
+.style-btn-salir:hover{
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 8px 18px rgba(220,53,69,.35);
+}
+
+/* ===================================================
+   RESPONSIVE
+=================================================== */
+
+@media(max-width:991px){
+
+    .navbar-collapse{
+
+        padding-top:20px;
+    }
+
+    .navbar-nav{
+
+        margin-bottom:20px;
+    }
+
+    .nav-link{
+
+        text-align:center;
+    }
+
+    .navbar .container{
+
+        align-items:flex-start;
+    }
+
+}

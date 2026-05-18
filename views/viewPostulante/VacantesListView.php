@@ -98,7 +98,7 @@
           <div class="card-body py-4">
             <div class="fs-3 mb-1">📊</div>
             <div class="fw-bold text-secondary small text-uppercase">Total de Vacantes</div>
-            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars($totalVacantes->body); ?></div>
+            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars((string)($totalVacantes->body)); ?></div>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@
           <div class="card-body py-4">
             <div class="fs-3 mb-1">✅</div>
             <div class="fw-bold text-secondary small text-uppercase">Aprobadas</div>
-            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars($totalVacantesAbiertas->body); ?></div>
+            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars((string)($totalVacantesAbiertas->body)); ?></div>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
           <div class="card-body py-4">
             <div class="fs-3 mb-1">⏳</div>
             <div class="fw-bold text-secondary small text-uppercase">En Pausa</div>
-            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars($totalVacantesPausadas->body); ?></div>
+            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars((string)($totalVacantesPausadas->body)); ?></div>
           </div>
         </div>
       </div>
@@ -128,7 +128,7 @@
           <div class="card-body py-4">
             <div class="fs-3 mb-1">❌</div>
             <div class="fw-bold text-secondary small text-uppercase">Cerradas</div>
-            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars($totalVacantesCerradas->body); ?></div>
+            <div class="display-6 fw-bold text-dark mt-1"><?php echo htmlspecialchars((string)($totalVacantesCerradas->body)); ?></div>
           </div>
         </div>
       </div>

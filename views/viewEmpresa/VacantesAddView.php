@@ -1,47 +1,61 @@
 <?php
-  $MessageID = "";
- // muestra el valor
-  require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
-  require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
-  require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
-  require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";
-  require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoModalidad/TipoModalidadController.php";
-  require_once __DIR__ . "/../../Dto/Vacantes.php";
-  /*Arrays*/
-  $listarValidacionVacante = array();
-  $listarTipoContrato = array();
-  $listarTipoModalidad = array();
-  /*Controllers*/
-  $usuarioController = new UsuarioController();
-  $vacanteController = new VacanteController();
-  $vacanteValidacionController = new EstadoValidacionVacanteController();
-  $TipoContratoController = new TipoContratoController();
-  $TipoModalidadController = new TipoModalidadController();
-  /*resultListar */
-  $resultListarValidacionVacante = $vacanteValidacionController->listarEstadoValidacionVacante();
-  $resultListarTipoContrato = $TipoContratoController->listarTipoContrato();
-  $resultListarTipoModalidad = $TipoModalidadController->listarTipoModalidad();
+require_once __DIR__ . "/../../usecase/Usuario/UsuarioController.php";
+require_once __DIR__ . "/../../usecase/Vacantes/VacanteController.php";
+require_once __DIR__ . "/../../usecase/Lookup_Tables/EstadoValidacionVacante/EstadoValidacionVacanteController.php";
+require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoContrato/TipoContratoController.php";
+require_once __DIR__ . "/../../usecase/Lookup_Tables/TipoModalidad/TipoModalidadController.php";
+require_once __DIR__ . "/../../Dto/Vacantes.php";
 
-  /**listar */
-  if($resultListarValidacionVacante->status == "OK"){
+/* ARRAYS */
+$listarValidacionVacante = [];
+$listarTipoContrato = [];
+$listarTipoModalidad = [];
+
+/* CONTROLLERS */
+$usuarioController = new UsuarioController();
+$vacanteController = new VacanteController();
+$vacanteValidacionController = new EstadoValidacionVacanteController();
+$TipoContratoController = new TipoContratoController();
+$TipoModalidadController = new TipoModalidadController();
+
+/* LISTAR */
+$resultListarValidacionVacante = $vacanteValidacionController->listarEstadoValidacionVacante();
+$resultListarTipoContrato = $TipoContratoController->listarTipoContrato();
+$resultListarTipoModalidad = $TipoModalidadController->listarTipoModalidad();
+
+if($resultListarValidacionVacante->status == "OK"){
     $listarValidacionVacante = $resultListarValidacionVacante->body;
-  }
-  if($resultListarTipoContrato->status == "Ok"){
-    $listarTipoContrato = $resultListarTipoContrato->body;
-  }
+}
 
-  if($resultListarTipoModalidad->status == "ok"){
+if($resultListarTipoContrato->status == "Ok"){
+    $listarTipoContrato = $resultListarTipoContrato->body;
+}
+
+if($resultListarTipoModalidad->status == "ok"){
     $listarTipoModalidad = $resultListarTipoModalidad->body;
-  }
-  /**Extraer el ID de la empresa*/
-  $idUsuario = $_SESSION["idUsuarios"];
-  
-  
-/**Insertar  */
+}
+
+/* INSERTAR */
 if(isset($_POST["registrarVacante"])){
+
+    $idUsuario = $_SESSION["idUsuarios"];
+
     $result = $usuarioController->obtenerEntidadPorUsuario($idUsuario);
+
     $datos = $result->body;
-    $idEmpresa = $datos['empresaId'];
+
+    $idEmpresa = null;
+    if (is_array($datos) || $datos instanceof ArrayAccess) {
+        $idEmpresa = $datos['empresaId'] ?? null;
+    } elseif (is_object($datos)) {
+        $idEmpresa = $datos->empresaId ?? null;
+    }
+
+    if (empty($idEmpresa)) {
+        echo "<div class='alert alert-danger'>❌ No se pudo obtener la empresa asociada al usuario.</div>";
+        return;
+    }
+
     $vacanteObject = new Vacantes();
 
     $vacanteObject->set("Empresa_idEmpresa", $idEmpresa);
@@ -58,115 +72,394 @@ if(isset($_POST["registrarVacante"])){
     $resultVacante = $vacanteController->InsertarVacante($vacanteObject);
 
     if ($resultVacante->status == 'ok') {
-        echo "<div class='alert alert-success' role='alert'>✓ Registro exitoso</div>";
+
+        echo "
+        <div class='alert alert-success'>
+            ✅ Vacante publicada correctamente
+        </div>
+        ";
+
     } else {
-        echo "<div class='alert alert-danger' role='alert'>✗ Error al registrar: ".$resultVacante->message."</div>";
+
+        echo "
+        <div class='alert alert-danger'>
+            ❌ Error al registrar:
+            ".$resultVacante->message."
+        </div>
+        ";
     }
 }
-
-  
 ?>
-<!doctype html>
-<html lang="es">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FutureWork ITT - Agregar Vacante</title>
-    <link rel="stylesheet" href="css/VacantesAddView.css">
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body><!-- Header -->
- <?php echo $MessageID; ?>
-  <header class="header">
-   <div class="header-content">
-    <h1>💼 Agregar Nueva Vacante</h1>
-    <p>Publica una nueva oportunidad laboral para estudiantes y egresados del ITT</p>
-   </div>
-  </header><!-- Main Container -->
-  <main class="container"><!-- Aquí irán los mensajes de éxito o error desde PHP --> <!-- 
-    <div class="alert alert-success">
-      ✓ ¡Vacante agregada exitosamente!
-    </div>
-    <div class="alert alert-error">
-      ✗ Error al agregar la vacante. Por favor, verifica los datos.
-    </div>
-    -->
-   <form method="POST" action=""><!-- Información Básica -->
-    <div class="form-section">
-     <h3 class="section-title">📋 Información Básica</h3>
-     <div class="form-grid">
-      <div class="form-group form-group-full"><label for="titulo">Título de la Vacante<span class="required">*</span></label> <input type="text" id="titulo" name="titulo" required placeholder="Ej: Desarrollador Full Stack Junior">
-      </div>
-      <div class="form-group form-group-full"><label for="descripcion">Descripción de la Vacante<span class="required">*</span></label> <textarea id="descripcion" name="descripcion" required placeholder="Describe las responsabilidades, funciones y beneficios del puesto..."></textarea>
-      </div>
-      <div class="form-group"><label for="ubicacion">Ubicación<span class="required">*</span></label> <input type="text" id="ubicacion" name="ubicacion" required placeholder="Ej: Tehuacán, Puebla">
-      </div>
-      <div class="form-group"><label for="salario">Salario Mensual</label> <input type="number" id="salario" name="salario" min="0" step="0.01" placeholder="Ej: 15000.00"> <span class="input-hint">Opcional - Salario en pesos mexicanos</span>
-      </div>
-      <div class="form-group"><label for="fechaLimite">Fecha Límite de Postulación</label> <input type="date" id="fechaLimite" name="fechaLimite"> <span class="input-hint">Opcional - Fecha límite para recibir postulaciones</span>
-      </div>
-      </div>
-     </div>
-    </div><!-- Detalles del Contrato -->
-    <div class="form-section">
-     <h3 class="section-title">💼 Detalles del Contrato</h3>
-     <div class="form-grid">
-     
-     <!-- Estado de la Vacante -->
-        <div class="form-group">
-          <label for="idEstadoValidacionVacante">Estado de la Vacante<span class="required">*</span></label>
-          <select id="idEstadoValidacionVacante" name="idEstadoValidacionVacante" required>
-            <option value="">Selecciona el estado</option>
-            <?php foreach($listarValidacionVacante as $item): ?>
-              <option value="<?= $item['idEstadoValidacionVacante'] ?>">
-                <?= $item['estadoValidacionVacante'] ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
+
+<link rel="stylesheet" href="css/VacantesAddView.css?v=5">
+
+<div class="main-wrapper">
+
+    <!-- =========================================
+         HERO SECTION
+    ========================================== -->
+    <section class="hero-vacante">
+
+        <div class="hero-content">
+
+            <div class="hero-left">
+
+                <div class="hero-badge">
+                    🚀 Reclutamiento Empresarial Premium
+                </div>
+
+                <h1 class="hero-title">
+                    Publica una Nueva Vacante
+                </h1>
+
+                <p class="hero-text">
+                    Encuentra talento universitario altamente capacitado
+                    mediante una experiencia moderna, intuitiva y profesional
+                    diseñada para empresas innovadoras.
+                </p>
+
+                <div class="hero-mini-stats">
+
+                    <div class="mini-stat-card">
+                        <strong>+5K</strong>
+                        <span>Estudiantes</span>
+                    </div>
+
+                    <div class="mini-stat-card">
+                        <strong>+120</strong>
+                        <span>Empresas</span>
+                    </div>
+
+                    <div class="mini-stat-card">
+                        <strong>24/7</strong>
+                        <span>Postulaciones</span>
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-      <!-- Tipo de Contrato -->
-      <div class="form-group">
-        <label for="idTipoContrato">Tipo de Contrato<span class="required">*</span></label>
-        <select id="idTipoContrato" name="idTipoContrato" required>
-          <option value="">Selecciona el tipo de contrato</option>
-          <?php foreach($listarTipoContrato as $tipo): ?>
-            <option value="<?= $tipo['idTipoContrato'] ?>">
-              <?= $tipo['estadoContrato'] ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
-      </div>
+        <!-- DECORATIONS -->
+        <div class="hero-floating float-1">💼</div>
+        <div class="hero-floating float-2">🚀</div>
+        <div class="hero-floating float-3">🏢</div>
 
-      <!-- Modalidad de Trabajo -->
-      <div class="form-group">
-        <label for="idTipoModalidad">Modalidad de Trabajo<span class="required">*</span></label>
-        <select id="idTipoModalidad" name="idTipoModalidad" required>
-          <option value="">Selecciona la modalidad</option>
-          <?php foreach($listarTipoModalidad as $modalidad): ?>
-            <option value="<?= $modalidad['idTipoModalidad'] ?>">
-              <?= $modalidad['tipoModalidad'] ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
-      </div>
+        <div class="building building-1"></div>
+        <div class="building building-2"></div>
 
-     </div>
-    </div><!-- Requisitos -->
-    <div class="form-section">
-     <h3 class="section-title">🎓 Requisitos y Habilidades</h3>
-     <div class="form-grid">
-      <div class="form-group form-group-full"><label for="requisitos">Requisitos del Puesto</label> <textarea id="requisitos" name="requisitos" placeholder="Lista los requisitos, habilidades técnicas, conocimientos y experiencia necesaria para el puesto..."></textarea> <span class="input-hint">Opcional - Describe los requisitos académicos, técnicos y de experiencia</span>
-      </div>
-     </div>
-    </div><!-- Form Actions -->
-    <div class="form-actions"><button type="submit" name="registrarVacante" class="btn-submit">💼 Publicar Vacante</button>
-<a href="?cargar=Home" class="btn-cancel">✖ Cancelar</a>
+    </section>
+
+    <!-- =========================================
+         FORM
+    ========================================== -->
+    <div class="form-wrapper">
+
+        <form method="POST" action="">
+
+            <!-- =============================
+                 INFORMACIÓN GENERAL
+            ============================== -->
+            <div class="form-card">
+
+                <div class="card-glow"></div>
+
+                <h2 class="section-title">
+                    <span>📋</span>
+                    Información General
+                </h2>
+
+                <p class="section-description">
+                    Datos principales de la vacante laboral.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- TITULO -->
+                    <div class="form-group">
+
+                        <label for="titulo">
+                            Título de la Vacante
+                            <span class="required">*</span>
+                        </label>
+
+                        <div class="input-container">
+
+                            <span class="input-icon">💼</span>
+
+                            <input
+                                type="text"
+                                id="titulo"
+                                name="titulo"
+                                required
+                                placeholder="Ej: Desarrollador Frontend React"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- UBICACION -->
+                    <div class="form-group">
+
+                        <label for="ubicacion">
+                            Ubicación
+                            <span class="required">*</span>
+                        </label>
+
+                        <div class="input-container">
+
+                            <span class="input-icon">📍</span>
+
+                            <input
+                                type="text"
+                                id="ubicacion"
+                                name="ubicacion"
+                                required
+                                placeholder="Ej: Puebla, México"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- SALARIO -->
+                    <div class="form-group">
+
+                        <label for="salario">
+                            Salario Mensual
+                        </label>
+
+                        <div class="input-container">
+
+                            <span class="input-icon">💰</span>
+
+                            <input
+                                type="number"
+                                id="salario"
+                                name="salario"
+                                min="0"
+                                step="0.01"
+                                placeholder="Ej: 15000"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- FECHA -->
+                    <div class="form-group">
+
+                        <label for="fechaLimite">
+                            Fecha Límite
+                        </label>
+
+                        <div class="input-container">
+
+                            <span class="input-icon">📅</span>
+
+                            <input
+                                type="date"
+                                id="fechaLimite"
+                                name="fechaLimite"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- DESCRIPCION -->
+                    <div class="form-group form-group-full">
+
+                        <label for="descripcion">
+                            Descripción
+                            <span class="required">*</span>
+                        </label>
+
+                        <textarea
+                            id="descripcion"
+                            name="descripcion"
+                            required
+                            placeholder="Describe funciones, responsabilidades, beneficios y objetivos del puesto..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =============================
+                 CONFIGURACIÓN
+            ============================== -->
+            <div class="form-card">
+
+                <div class="card-glow"></div>
+
+                <h2 class="section-title">
+                    <span>⚙️</span>
+                    Configuración de Vacante
+                </h2>
+
+                <p class="section-description">
+                    Define modalidad, contrato y estado de publicación.
+                </p>
+
+                <div class="form-grid">
+
+                    <!-- ESTADO -->
+                    <div class="form-group">
+
+                        <label for="idEstadoValidacionVacante">
+                            Estado
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="idEstadoValidacionVacante"
+                            name="idEstadoValidacionVacante"
+                            required
+                        >
+
+                            <option value="">
+                                Selecciona un estado
+                            </option>
+
+                            <?php foreach($listarValidacionVacante as $item): ?>
+
+                                <option value="<?= $item['idEstadoValidacionVacante'] ?>">
+
+                                    <?= $item['estadoValidacionVacante'] ?>
+
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
+
+                    <!-- CONTRATO -->
+                    <div class="form-group">
+
+                        <label for="idTipoContrato">
+                            Tipo de Contrato
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="idTipoContrato"
+                            name="idTipoContrato"
+                            required
+                        >
+
+                            <option value="">
+                                Selecciona contrato
+                            </option>
+
+                            <?php foreach($listarTipoContrato as $tipo): ?>
+
+                                <option value="<?= $tipo['idTipoContrato'] ?>">
+
+                                    <?= $tipo['estadoContrato'] ?>
+
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
+
+                    <!-- MODALIDAD -->
+                    <div class="form-group">
+
+                        <label for="idTipoModalidad">
+                            Modalidad
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="idTipoModalidad"
+                            name="idTipoModalidad"
+                            required
+                        >
+
+                            <option value="">
+                                Selecciona modalidad
+                            </option>
+
+                            <?php foreach($listarTipoModalidad as $modalidad): ?>
+
+                                <option value="<?= $modalidad['idTipoModalidad'] ?>">
+
+                                    <?= $modalidad['tipoModalidad'] ?>
+
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =============================
+                 REQUISITOS
+            ============================== -->
+            <div class="form-card">
+
+                <div class="card-glow"></div>
+
+                <h2 class="section-title">
+                    <span>🎓</span>
+                    Requisitos y Habilidades
+                </h2>
+
+                <p class="section-description">
+                    Define conocimientos técnicos y habilidades necesarias.
+                </p>
+
+                <div class="form-group">
+
+                    <textarea
+                        id="requisitos"
+                        name="requisitos"
+                        placeholder="Ej: React, Laravel, APIs REST, Git, trabajo en equipo, metodologías ágiles..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+            <!-- =============================
+                 ACTIONS
+            ============================== -->
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    name="registrarVacante"
+                    class="btn-submit"
+                >
+                    🚀 Publicar Vacante
+                </button>
+
+                <a
+                    href="?cargar=Home"
+                    class="btn-cancel"
+                >
+                    ✖ Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
-   </form>
-  </main>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a0d230292e8b1f2',t:'MTc2MzUyODM1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+
+</div>

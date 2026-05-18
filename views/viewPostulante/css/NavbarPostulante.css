@@ -1,49 +1,224 @@
-/* ===================================================
-   HOJA DE ESTILOS LIMPIA - SOLO APARIENCIA ESTÉTICA
-   =================================================== */
+/* ==========================================
+   RESET GENERAL
+========================================== */
 
-/* Fondo degradado premium del Navbar */
-.style-navbar-premium {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 0;
-}
-
-/* Espaciado del texto del logo */
-.letter-spacing-custom {
-    letter-spacing: 0.5px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* Efecto Hover sutil en los enlaces del menú */
-.style-nav-item {
-    transition: all 0.2s ease-in-out;
-}
-.style-nav-item:hover {
-    background-color: rgba(255, 255, 255, 0.12) !important;
-    transform: translateY(-1px);
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f4f7fb;
+    overflow-x:hidden;
 }
 
-/* Blur de fondo opcional para el badge de usuario */
-.style-user-badge {
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+/* ==========================================
+   NAVBAR PREMIUM
+========================================== */
+
+.navbar-klivify{
+    background:
+        linear-gradient(
+            135deg,
+            #081028 0%,
+            #10265c 50%,
+            #1d4ed8 100%
+        );
+        
+    padding:14px 0;
+
+    border-bottom:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.18);
+
+    backdrop-filter: blur(12px);
+
+    z-index:9999;
 }
 
-/* Botón salir diseño */
-.style-btn-salir {
-    background-color: #dc2626;
-    border: none;
-    transition: all 0.2s ease-in-out;
-}
-.style-btn-salir:hover {
-    background-color: #b91c1c;
-    transform: translateY(-1px);
+/* ==========================================
+   LOGO
+========================================== */
+
+.logo-klivify{
+    width:42px;
+    height:42px;
+    object-fit:contain;
+
+    filter:
+        drop-shadow(0 4px 10px rgba(255,255,255,0.15));
 }
 
-/* Asegura que los botones ocupen el 100% solo en pantallas móviles */
-@media (max-width: 991.98px) {
-    .w-100-mobile {
-        width: 100% !important;
+.brand-text span{
+    color:white;
+    font-size:1.4rem;
+    font-weight:700;
+    letter-spacing:0.5px;
+}
+
+/* ==========================================
+   LINKS
+========================================== */
+
+.nav-link-klivify{
+    color:rgba(255,255,255,0.92) !important;
+
+    font-weight:500;
+
+    padding:10px 18px !important;
+
+    border-radius:14px;
+
+    transition:all .25s ease;
+
+    position:relative;
+}
+
+.nav-link-klivify:hover{
+
+    background:rgba(255,255,255,0.12);
+
+    color:white !important;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(255,255,255,0.08);
+}
+
+/* ==========================================
+   USER BADGE
+========================================== */
+
+.user-badge{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    background:rgba(255,255,255,0.10);
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    padding:10px 18px;
+
+    border-radius:50px;
+
+    backdrop-filter:blur(14px);
+
+    transition:all .25s ease;
+}
+
+.user-badge:hover{
+
+    background:rgba(255,255,255,0.18);
+
+    transform:translateY(-2px);
+}
+
+.user-icon{
+
+    width:34px;
+    height:34px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:white;
+
+    color:#1d4ed8;
+
+    font-size:14px;
+}
+
+.user-text{
+    color:white;
+    font-weight:600;
+    font-size:14px;
+}
+
+/* ==========================================
+   BOTON SALIR
+========================================== */
+
+.btn-salir{
+
+    background:linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+
+    color:white;
+
+    padding:10px 20px;
+
+    border-radius:14px;
+
+    font-weight:600;
+
+    transition:all .25s ease;
+
+    box-shadow:
+        0 10px 24px rgba(220,38,38,0.25);
+}
+
+.btn-salir:hover{
+
+    background:linear-gradient(
+        135deg,
+        #dc2626,
+        #b91c1c
+    );
+
+    color:white;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 14px 28px rgba(220,38,38,0.35);
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:991px){
+
+    .navbar-collapse{
+
+        margin-top:20px;
+
+        background:rgba(8,16,40,0.98);
+
+        padding:20px;
+
+        border-radius:20px;
+
+        border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .navbar-nav{
+
+        margin-bottom:20px;
+    }
+
+    .nav-link-klivify{
+
+        width:100%;
+        text-align:center;
+    }
+
+    .user-badge,
+    .btn-salir{
+
+        width:100%;
+        justify-content:center;
     }
 }
