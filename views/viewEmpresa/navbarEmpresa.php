@@ -18,8 +18,34 @@
 
     <title>Klivify - Inicio Empresa</title>
 
+<<<<<<< HEAD
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+=======
+    <li><a class="nav-link" href="?cargar=EmpresasListView">🏢 Empresas</a></li> 
+     <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
+     <li><a class="nav-link" href="?cargar=ContactoView">📧 Contacto</a></li>
+     <li><a class="nav-link" href="?cargar=Chatbot"> Chatbot</a></li>
+     
+    </ul><!-- Acciones -->
+    <div class="navbar-actions">
+     <div class="user-badge">
+      <div class="user-icon">
+       👤
+      </div><a class="nav-link" href="?cargar=PerfilEmpresaView"><span>Empresa</span></a>
+     </div></a>
+    </div>
+      <a href="?cargar=closeSession" 
+            class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded transition duration-300 ease-in-out shadow-md">
+              <span>🚪</span> 
+            <span>Salir</span>
+      </a>
+   </div>
+   <script>
+    // Obtener los elementos por sus IDs
+    const toggle = document.getElementById('vacantesDropdownToggle');
+    const menu = document.getElementById('vacantesDropdownMenu');
+>>>>>>> b8ac664a7663ede9a42ba31f1203695f6d4fc749
 
     <!-- CSS PERSONALIZADO -->
     <link rel="stylesheet" href="./css/NavbarEmpresa.css">
