@@ -127,7 +127,8 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ mensaje: message })
+                // CORRECCIÓN 1: Cambiado 'mensaje' por 'message' para que Pydantic lo acepte
+                body: JSON.stringify({ message: message })
             });
 
             if (!response.ok) {
@@ -138,7 +139,9 @@
             
             // 4. Ocultar indicador y mostrar la respuesta de la IA
             typingIndicator.style.display = 'none';
-            appendMessage(data.respuesta, 'bot');
+            
+            // CORRECCIÓN 2: Cambiado 'data.respuesta' por 'data.response' que es lo que manda tu Python
+            appendMessage(data.response, 'bot');
 
         } catch (error) {
             console.error('Error:', error);
