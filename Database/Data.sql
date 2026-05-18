@@ -15,7 +15,7 @@ CREATE TABLE Usuarios(
     Rol_idRol INT NOT NULL,
     nombreCompleto VARCHAR(45),
     email VARCHAR(45),
-    Password VARCHAR(50),
+    Password VARCHAR(255),
     fechaRegistro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Rol_idRol) REFERENCES Rol(idRol)
 );
@@ -34,6 +34,7 @@ CREATE TABLE Postulante(
     cvPath VARCHAR(255),
     telefono VARCHAR(45),
     ubicacion VARCHAR(45),
+    perfil_vector VECTOR(768),
     FOREIGN KEY (Usuarios_idUsuarios) REFERENCES Usuarios(idUsuarios),
     FOREIGN KEY (Carrera_idCarrera) REFERENCES Carrera(idCarrera)
 );
