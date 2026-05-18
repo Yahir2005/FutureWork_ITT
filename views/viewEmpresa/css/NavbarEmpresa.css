@@ -1,6 +1,6 @@
-/* ===================================================
+/* =========================================
    RESET
-=================================================== */
+========================================= */
 
 *{
     margin:0;
@@ -8,240 +8,313 @@
     box-sizing:border-box;
 }
 
-/* ===================================================
-   BODY
-=================================================== */
-
+html,
 body{
-    font-family:'Segoe UI',sans-serif;
-    background:#f8fafc;
+    width:100%;
+    min-height:100vh;
+
+    font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a
+    );
+
+    overflow-x:hidden;
 }
 
-/* ===================================================
-   NAVBAR PRINCIPAL
-=================================================== */
+/* =========================================
+   NAVBAR
+========================================= */
 
-.style-navbar-premium{
+.navbar-klivify{
 
-    background: linear-gradient(
-        135deg,
-        #0f172a 0%,
-        #1e3a8a 100%
-    ) !important;
+    background:
+    rgba(10,20,50,.92);
 
-    min-height: 85px;
+    backdrop-filter:
+    blur(18px);
 
-    padding: 12px 0;
+    border-bottom:
+    1px solid rgba(255,255,255,.08);
 
-    box-shadow:
-        0 4px 20px rgba(0,0,0,0.18);
+    padding:
+    14px 0;
 
     z-index:9999;
 }
 
-/* ===================================================
-   CONTENEDOR
-=================================================== */
+/* LOGO */
 
-.navbar .container{
+.navbar-logo{
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-}
-
-/* ===================================================
-   LOGO
-=================================================== */
-
-.navbar-brand{
-
-    display:flex !important;
-
-    align-items:center;
-
-    color:white !important;
-
-    font-size:1.3rem;
-
-    font-weight:bold;
-
-    text-decoration:none;
-}
-
-.navbar-brand img{
+    width:42px;
+    height:42px;
 
     object-fit:contain;
 }
 
-.letter-spacing-custom{
+.brand-text{
+
+    color:white;
+
+    font-weight:800;
+
+    font-size:1.2rem;
 
     letter-spacing:.5px;
 }
 
-/* ===================================================
-   NAV LINKS
-=================================================== */
+/* NAV LINKS */
 
-.navbar-nav{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-}
-
-.nav-link{
+.nav-link-klivify{
 
     color:white !important;
 
     font-weight:600;
 
-    padding:10px 18px !important;
+    padding:
+    10px 16px !important;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    transition:all .2s ease;
+    transition:.3s ease;
 }
 
-/* Hover */
-
-.style-nav-item:hover{
+.nav-link-klivify:hover{
 
     background:
-        rgba(255,255,255,0.12);
+    rgba(255,255,255,.10);
 
     transform:
-        translateY(-1px);
+    translateY(-2px);
 }
 
-/* ===================================================
-   DROPDOWN
-=================================================== */
+/* DROPDOWN */
 
-.dropdown-menu{
+.dropdown-menu-klivify{
 
-    background:#0f172a;
+    background:
+    #111827;
 
     border:none;
 
     border-radius:18px;
 
-    overflow:hidden;
-
     padding:10px;
 
-    min-width:240px;
+    margin-top:10px;
 }
 
-.dropdown-item{
+.dropdown-menu-klivify .dropdown-item{
 
     color:white;
 
     border-radius:12px;
 
-    padding:12px 14px;
+    padding:
+    12px 14px;
 
-    transition:all .2s ease;
+    font-weight:500;
+
+    transition:.3s ease;
 }
 
-.dropdown-item:hover{
+.dropdown-menu-klivify .dropdown-item:hover{
 
     background:
-        rgba(255,255,255,0.10);
+    #2563eb;
+
+    color:white;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.navbar-actions{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+/* PERFIL */
+
+.profile-badge{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    text-decoration:none;
+
+    background:
+    rgba(255,255,255,.10);
 
     color:white;
 
-    padding-left:22px;
+    padding:
+    8px 14px;
+
+    border-radius:50px;
+
+    transition:.3s ease;
 }
 
-/* ===================================================
-   USER BADGE
-=================================================== */
+.profile-badge:hover{
 
-.style-user-badge{
+    color:white;
 
     background:
-        rgba(255,255,255,0.10);
+    rgba(255,255,255,.16);
 
-    border:
-        1px solid rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(10px);
-
-    transition:all .2s ease;
+    transform:
+    translateY(-2px);
 }
 
-.style-user-badge:hover{
+.profile-icon{
 
-    background:
-        rgba(255,255,255,0.16);
-}
-
-/* ===================================================
-   USER ICON
-=================================================== */
-
-.user-circle{
-
-    width:32px;
-    height:32px;
-
-    background:white;
+    width:34px;
+    height:34px;
 
     border-radius:50%;
 
+    background:white;
+
+    color:#2563eb;
+
     display:flex;
-
     align-items:center;
-
     justify-content:center;
+
+    font-size:14px;
 }
 
-/* ===================================================
-   BOTÓN SALIR
-=================================================== */
+/* CHATBOT */
 
-.style-btn-salir{
+.chatbot-link{
 
-    transition:all .2s ease;
+    background:
+    rgba(37,99,235,.18);
 }
 
-.style-btn-salir:hover{
+/* SALIR */
 
-    transform:translateY(-1px);
+.logout-btn{
 
-    box-shadow:
-        0 8px 18px rgba(220,53,69,.35);
+    text-decoration:none;
+
+    background:
+    #ef4444;
+
+    color:white;
+
+    padding:
+    10px 16px;
+
+    border-radius:14px;
+
+    font-weight:700;
+
+    transition:.3s ease;
 }
 
-/* ===================================================
+.logout-btn:hover{
+
+    background:
+    #dc2626;
+
+    color:white;
+
+    transform:
+    translateY(-2px);
+}
+
+/* =========================================
+   MAIN LAYOUT
+========================================= */
+
+.main-layout{
+
+    width:100%;
+
+    min-height:100vh;
+
+    padding-top:95px;
+}
+
+.content-layout{
+
+    width:100%;
+}
+
+/* =========================================
+   ERROR PAGE
+========================================= */
+
+.page-error{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    min-height:60vh;
+
+    color:white;
+
+    font-size:2rem;
+    font-weight:700;
+}
+
+/* =========================================
    RESPONSIVE
-=================================================== */
+========================================= */
 
 @media(max-width:991px){
 
     .navbar-collapse{
 
-        padding-top:20px;
+        background:
+        rgba(15,23,42,.98);
+
+        margin-top:16px;
+
+        padding:20px;
+
+        border-radius:22px;
     }
 
     .navbar-nav{
 
-        margin-bottom:20px;
+        gap:10px;
     }
 
-    .nav-link{
+    .navbar-actions{
+
+        margin-top:20px;
+
+        flex-direction:column;
+
+        width:100%;
+    }
+
+    .profile-badge,
+    .logout-btn{
+
+        width:100%;
+
+        justify-content:center;
+    }
+
+    .nav-link-klivify{
 
         text-align:center;
-    }
-
-    .navbar .container{
-
-        align-items:flex-start;
     }
 
 }
