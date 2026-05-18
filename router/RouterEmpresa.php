@@ -64,6 +64,10 @@ class RouterEmpresa{
             include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
         break;
 
+        case 'Chatbot':
+            include_once __DIR__ .('/../views/viewEmpresa/'. $vista .'.php');
+        break;
+//Chatbot
         case 'closeSession':
             SessionManager::destroySession();
             echo "<script> window.location.href='../../index.php';</script>";

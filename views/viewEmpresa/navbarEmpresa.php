@@ -60,6 +60,7 @@
     <li><a class="nav-link" href="?cargar=EmpresasListView">🏢 Empresas</a></li> 
      <li><a class="nav-link" href="?cargar=AcercaDeNosotrosView">ℹ️ Nosotros</a></li>
      <li><a class="nav-link" href="?cargar=ContactoView">📧 Contacto</a></li>
+     <li><a class="nav-link" href="?cargar=Chatbot"> Chatbot</a></li>
      
     </ul><!-- Acciones -->
     <div class="navbar-actions">
