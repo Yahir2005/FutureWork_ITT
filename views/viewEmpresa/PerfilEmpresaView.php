@@ -468,23 +468,7 @@
 
       <main class="company-main-container">
          
-         <?php 
-            $idEstadoVal = intval($empresa['EstadoValidacionEmpresa_idEstadoValidacionEmpresa'] ?? 2); 
-         ?>
          
-         <?php if($idEstadoVal === 1): ?>
-            <div class="company-alert company-alert-success">
-               ✓ Tu empresa ha sido validada y aprobada exitosamente en el sistema de vinculación profesional.
-            </div>
-         <?php elseif($idEstadoVal === 3): ?>
-            <div class="company-alert company-alert-error">
-               ✗ Tu empresa ha sido rechazada. Por favor revisa los comentarios del administrador o actualiza tus credenciales legales.
-            </div>
-         <?php else: ?>
-            <div class="company-alert company-alert-warning">
-               ⏳ Tu empresa está en proceso de validación. Te notificaremos cuando sea aprobada para publicar ofertas laborales.
-            </div>
-         <?php endif; ?>
 
          <div class="company-profile-grid">
             
@@ -502,16 +486,7 @@
                <p class="company-sector-sub">
                   💼 Sector: <?php echo htmlspecialchars($empresa['sector'] ?? 'No especificado'); ?>
                </p>
-               
-               <?php 
-                  $claseBadge = 'badge-pendiente';
-                  if($idEstadoVal === 1) $claseBadge = 'badge-aprobada';
-                  if($idEstadoVal === 3) $claseBadge = 'badge-rechazada';
-               ?>
-               <span class="company-validation-badge <?php echo $claseBadge; ?>"> 
-                  <?php echo htmlspecialchars($empresa['estadoValidacionEmpresa'] ?? 'En Validación'); ?>
-               </span> 
-               
+                              
                <div class="company-profile-stats">
                   <div class="company-stat-item">
                      <div class="company-stat-value">0</div>
