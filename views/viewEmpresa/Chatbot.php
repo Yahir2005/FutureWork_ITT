@@ -59,7 +59,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h5 class="mb-0">Futurework ITT IA</h5>
+                        <h5 class="mb-0">Klivify IA</h5>
                         <small class="text-white-50">Buscador de Talento Semántico</small>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="px-4 pb-2 typing-indicator" id="typingIndicator">
-                    La IA está analizando candidatos...
+                    La IA está analizando ...
                 </div>
 
                 <div class="card-footer bg-white p-3 border-0">

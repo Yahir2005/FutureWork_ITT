@@ -459,13 +459,6 @@
       }
     }
 
-
-
-
-
-
-
-
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
