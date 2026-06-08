@@ -4,23 +4,33 @@ require_once __DIR__ .'/IUsuarioGateway.php';
 
 class UsuarioGatewey implements IUsuarioGateway{
     public function InsertarUsuario(Usuario $usuario): int{
-        $idInsertado=0;
-        $sqlQuery = "INSERT INTO Usuarios(Rol_idRol,
-        nombreCompleto,
-        email,
-        Password) VALUES
-        ('{$usuario->get('Rol_idRol')}',
-        '{$usuario->get('nombreCompleto')}',
-        '{$usuario->get('email')}',
-        '{$usuario->get('Password')}')";
         $mysqlObj = new MysqlConnector();
+        $conn = $mysqlObj->getConnection(); // Obtenemos el objeto mysqli nativo
+
+        // 1. Encriptar la contraseña (¡Adiós texto plano!)
+        $passwordHash = password_hash($usuario->get('Password'), PASSWORD_DEFAULT);
+        
+        // 2. Preparar la consulta con marcadores (?)
+        $sqlQuery = "INSERT INTO Usuarios(Rol_idRol, nombreCompleto, email, Password) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sqlQuery);
+        
+        if(!$stmt){
+             throw new Exception("Error al preparar la consulta de inserción.");
+        }
+
+        $rol = $usuario->get('Rol_idRol');
+        $nombre = $usuario->get('nombreCompleto');
+        $email = $usuario->get('email');
+
+        // 3. Vincular los parámetros ('isss' = 1 integer, 3 strings)
+        $stmt->bind_param("isss", $rol, $nombre, $email, $passwordHash);
+
         try {
-            $mysqlObj->consultaSimple($sqlQuery);
-            $idInsertado = $mysqlObj->getConnection()->insert_id;
+            $stmt->execute();
+            return $stmt->insert_id;
         } catch (Exception $e) {
             throw new Exception("Error al insertar usuario");
         }
-        return $idInsertado;
     }
 
     public function ListarUsuarios(): array
@@ -58,22 +68,31 @@ class UsuarioGatewey implements IUsuarioGateway{
     }
 
     public function iniciarSesion(string $usuario, string $contrasena): array {
-        $sql = "SELECT idUsuarios, Rol_idRol FROM Usuarios 
-                WHERE email='$usuario'
-                AND Password='$contrasena'";
-
         $mysqlObj = new MysqlConnector();
-        $result = $mysqlObj->consultaRetorno($sql);
-        $row = mysqli_fetch_assoc($result);
-        if ($row) {
+        $conn = $mysqlObj->getConnection();
+
+        // 1. Buscamos al usuario SOLO por su email usando sentencia preparada
+        $sql = "SELECT idUsuarios, Rol_idRol, Password FROM Usuarios WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        
+        if(!$stmt){
+            throw new Exception("Error al preparar la consulta de inicio de sesión.");
+        }
+
+        $stmt->bind_param("s", $usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        // 2. Si el correo existe, validamos el hash de la contraseña contra lo ingresado
+        if ($row && password_verify($contrasena, $row['Password'])) {
+            // Por seguridad, eliminamos el hash del array antes de devolverlo al UseCase
+            unset($row['Password']); 
             return $row;
         } else {
-
             throw new Exception("Usuario o contraseña incorrectos");
         }
     }
-
-
 
     public function obtenerUsuarioPorId($id):array{
         $mysqlConnector = new MysqlConnector();
