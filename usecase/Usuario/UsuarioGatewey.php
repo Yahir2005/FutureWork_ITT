@@ -5,12 +5,10 @@ require_once __DIR__ .'/IUsuarioGateway.php';
 class UsuarioGatewey implements IUsuarioGateway{
     public function InsertarUsuario(Usuario $usuario): int{
         $mysqlObj = new MysqlConnector();
-        $conn = $mysqlObj->getConnection(); // Obtenemos el objeto mysqli nativo
+        $conn = $mysqlObj->getConnection();
 
-        // 1. Encriptar la contraseña (¡Adiós texto plano!)
         $passwordHash = password_hash($usuario->get('Password'), PASSWORD_DEFAULT);
         
-        // 2. Preparar la consulta con marcadores (?)
         $sqlQuery = "INSERT INTO Usuarios(Rol_idRol, nombreCompleto, email, Password) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sqlQuery);
         
@@ -22,7 +20,6 @@ class UsuarioGatewey implements IUsuarioGateway{
         $nombre = $usuario->get('nombreCompleto');
         $email = $usuario->get('email');
 
-        // 3. Vincular los parámetros ('isss' = 1 integer, 3 strings)
         $stmt->bind_param("isss", $rol, $nombre, $email, $passwordHash);
 
         try {
@@ -71,7 +68,6 @@ class UsuarioGatewey implements IUsuarioGateway{
         $mysqlObj = new MysqlConnector();
         $conn = $mysqlObj->getConnection();
 
-        // 1. Buscamos al usuario SOLO por su email usando sentencia preparada
         $sql = "SELECT idUsuarios, Rol_idRol, Password FROM Usuarios WHERE email = ?";
         $stmt = $conn->prepare($sql);
         
@@ -84,9 +80,8 @@ class UsuarioGatewey implements IUsuarioGateway{
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
 
-        // 2. Si el correo existe, validamos el hash de la contraseña contra lo ingresado
         if ($row && password_verify($contrasena, $row['Password'])) {
-            // Por seguridad, eliminamos el hash del array antes de devolverlo al UseCase
+
             unset($row['Password']); 
             return $row;
         } else {

@@ -231,9 +231,8 @@ class VacanteGateway implements IVacante{
             $result = [];
             try {
                 $mysqlObj = new MysqlConnector();
-                $conn = $mysqlObj->getConnection(); // Usamos la conexión nativa mysqli
+                $conn = $mysqlObj->getConnection(); 
                 
-                // 1. Ponemos un marcador (?) en lugar de la variable
                 $sql = "SELECT * FROM Vacantes WHERE idVacante = ?";
                 $stmt = $conn->prepare($sql);
                 
@@ -241,14 +240,11 @@ class VacanteGateway implements IVacante{
                     throw new Exception("Error al preparar la consulta de vacante.");
                 }
                 
-                // 2. Forzamos a que el ID sea estrictamente un número entero
                 $idEntero = (int)$id;
                 
-                // 3. Vinculamos el parámetro ('i' = integer) y ejecutamos
                 $stmt->bind_param("i", $idEntero);
                 $stmt->execute();
                 
-                // 4. Obtenemos los resultados
                 $resultSet = $stmt->get_result();
                 
                 if ($resultSet) {
