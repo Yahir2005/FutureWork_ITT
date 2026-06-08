@@ -9,9 +9,6 @@ $totalVacantesAbiertas = $vacanteController->contarVacantesAbiertas();
 $totalVacantesCerradas = $vacanteController->contarVacantesCerradas();
 $totalVacantesPausadas = $vacanteController->contarVacantesPausadas();
 
-
-
-
 // --- Empresas ---
 $listarVacantesCard = array();
 $resultVacantes = $vacanteController->ListarVacantesTotalesCard() ;
@@ -19,32 +16,61 @@ if(strtolower($resultVacantes->status) == "ok"){
   $listarVacantesCard = $resultVacantes->body;
 }
 
-    if(isset($_POST["btnPostularme"])){
-      $idUsuario = $_SESSION["idUsuarios"];
-      $idVacante = $_POST["idVacantePostular"];
+  $idUsuario = $_SESSION["idUsuarios"] ?? null;
+  $idPostulante = null;
+  $vacantesPostuladasMap = [];
 
-      $resP = $postulanteController->ObtenerPostulantePorIdUsuario($idUsuario);
-            
-      if($resP->status == "ok" && !empty($resP->body)){
-        $idPostulante = $resP->body['idPostulante'];
+  if (!empty($idUsuario)) {
+    $resP = $postulanteController->ObtenerPostulantePorIdUsuario($idUsuario);
 
-        $postulacionObject = new Postulaciones();
-        $postulacionObject->set("Postulante_idPostulante", $idPostulante);
-        $postulacionObject->set("Vacante_idVacante", $idVacante);
-        $postulacionObject->set("EstadoPostulacion_idEstadoPostulacion", 1);
+    if ($resP->status == "ok" && !empty($resP->body)) {
+      $idPostulante = (int)(is_array($resP->body)
+          ? $resP->body['idPostulante']
+          : $resP->body->idPostulante);
 
-        $result = $postulacionesController->InsertarPostulacion($postulacionObject);
+      $resVacantesPostuladas = $postulacionesController->ListarVacantesPostuladasPorPostulante($idPostulante);
 
-        if (strtolower($result->status) == 'ok') {
-          echo "<script>alert('¡Te has postulado con éxito!'); window.location.href='?cargar=VacantesListView';</script>";
-          exit;
-        } else {
-            echo "<div class='alert alert-danger'>Error al postularse: " . $result->message . "</div>";
+      if (
+        strtolower($resVacantesPostuladas->status) == "ok" &&
+        is_array($resVacantesPostuladas->body)
+      ) {
+        foreach ($resVacantesPostuladas->body as $idVacantePostulada) {
+          $vacantesPostuladasMap[(int)$idVacantePostulada] = true;
         }
-      } else {
-        echo "<div class='alert alert-warning'>Perfil no encontrado</div>";
       }
     }
+  }
+
+  // ==========================
+  // POSTULARME
+  // ==========================
+  if(isset($_POST["btnPostularme"])){
+    $idVacante = (int)($_POST["idVacantePostular"] ?? 0);
+    if (!empty($idPostulante) && !isset($vacantesPostuladasMap[$idVacante])) {
+      $postulacionObject = new Postulaciones();
+      $postulacionObject->set("Postulante_idPostulante", $idPostulante);
+      $postulacionObject->set("Vacante_idVacante", $idVacante);
+      $postulacionObject->set("EstadoPostulacion_idEstadoPostulacion", 1);
+
+      $result = $postulacionesController->InsertarPostulacion($postulacionObject);
+      if (strtolower($result->status) == 'ok') {
+          $vacantesPostuladasMap[$idVacante] = true;
+      }
+    }
+  }
+
+  // ==========================
+  // DESPOSTULARME
+  // ==========================
+  if(isset($_POST["btnDespostularme"])){
+    $idVacante = (int)($_POST["idVacanteDespostular"] ?? 0);
+    if (!empty($idPostulante) && isset($vacantesPostuladasMap[$idVacante])) {
+      $result = $postulacionesController->EliminarPostulacionPorVacanteYPostulante($idPostulante, $idVacante);
+      if (strtolower($result->status) == 'ok') {
+          unset($vacantesPostuladasMap[$idVacante]);
+      }
+    }
+  }
 
 ?>
 <!doctype html>
@@ -226,10 +252,31 @@ if(strtolower($resultVacantes->status) == "ok"){
         </div>
 
         <div class="vacancy-footer">
-          <div class="posted-date">
-            📅 Publicado: <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
-          </div>
+        <span class="published-date">
+          🕒 Publicado: <?php echo htmlspecialchars($vacantes['fechaPublicacion']); ?>
+        </span>
 
+        <div class="action-buttons">
+        <?php if ($idEstado === 1 && !$yaPostulado): ?>
+          <form method="POST" action="?cargar=VacantesListView">
+            <input type="hidden" name="idVacantePostular" value="<?php echo $idVacanteActual; ?>">
+            <button type="submit" name="btnPostularme" class="btn-postular">
+              🚀 Postularme
+            </button>
+          </form>
+
+        <?php elseif ($yaPostulado): ?>
+          <div class="already-postulated">✅ Ya postulaste</div>
+          <form method="POST" action="?cargar=VacantesListView">
+            <input type="hidden" name="idVacanteDespostular" value="<?php echo $idVacanteActual; ?>">
+            <button type="submit" name="btnDespostularme" class="btn-despostular">
+              ❌ Despostularme
+            </button>
+          </form>
+
+        <?php else: ?>
+          <button type="button" class="btn-disabled" disabled>Vacante Cerrada</button>
+        <?php endif; ?>
         </div>
       </div>
   <?php endforeach; ?>
@@ -243,11 +290,6 @@ if(strtolower($resultVacantes->status) == "ok"){
           </div>
         </div>
       <?php endif; ?>
-
-
-
-
-
 
       <!-- Empty State (mostrar cuando no hay vacantes) -->
       <!--
