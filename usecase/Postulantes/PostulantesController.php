@@ -29,6 +29,12 @@ class PostulantesController {
         $useCase = new PostulantesUseCase($gatewayDb);
         return $useCase->EliminarPostulante($id);
     }
+
+    public function ObtenerPostulantePorIdUsuario($id): RespuestaGenerica {
+        $gateway = new PostulanteGateway();
+        $useCase = new PostulantesUseCase($gateway);
+        return $useCase->ObtenerPostulantePorIdUsuario($id);
+    }
 }
 /*
 $controller = new  PostulantesController();
