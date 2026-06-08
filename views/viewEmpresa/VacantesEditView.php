@@ -76,14 +76,6 @@ header("Refresh: $retraso_segundos; URL=$url_destino");
         echo "<div class='alert alert-danger' role='alert'>✗ Error al editar: ".$resultVacante->message."</div>";
     }
 }
-
-
-
-
-
-
-
-
   
 ?>
 <!doctype html>

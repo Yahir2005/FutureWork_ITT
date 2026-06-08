@@ -227,23 +227,41 @@ class VacanteGateway implements IVacante{
         return (int)($row['total'] ?? 0);
     }
 
-        public function obtenerVacanteporId($id): array{
-        $result= [];
-        try{
-            $mysqlConnector = new MysqlConnector();
-            $sql = "SELECT * FROM Vacantes WHERE idVacante = {$id} ";
-            $result = $mysqlConnector->consultaRetorno($sql);
-            if($result!=false){
-                $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
-            }else{
-                throw new Exception("Error al obtener la vacante");
+    public function obtenerVacanteporId($id): array{
+            $result = [];
+            try {
+                $mysqlObj = new MysqlConnector();
+                $conn = $mysqlObj->getConnection(); // Usamos la conexión nativa mysqli
+                
+                // 1. Ponemos un marcador (?) en lugar de la variable
+                $sql = "SELECT * FROM Vacantes WHERE idVacante = ?";
+                $stmt = $conn->prepare($sql);
+                
+                if (!$stmt) {
+                    throw new Exception("Error al preparar la consulta de vacante.");
+                }
+                
+                // 2. Forzamos a que el ID sea estrictamente un número entero
+                $idEntero = (int)$id;
+                
+                // 3. Vinculamos el parámetro ('i' = integer) y ejecutamos
+                $stmt->bind_param("i", $idEntero);
+                $stmt->execute();
+                
+                // 4. Obtenemos los resultados
+                $resultSet = $stmt->get_result();
+                
+                if ($resultSet) {
+                    $result = $resultSet->fetch_all(MYSQLI_ASSOC);
+                } else {
+                    throw new Exception("Error al obtener la vacante");
+                }
+                
+            } catch (Exception $e) {
+                throw new Exception("Error al obtener la vacante: " . $e->getMessage());
             }
-        }catch(Exception $e){
-            throw new Exception("Error al obtener la vacante: ".$e->getMessage());
+            
+            return $result;
         }
-        
-        return $result;
-    }
-
 
 }
